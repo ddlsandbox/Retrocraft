@@ -1,0 +1,18 @@
+# Items
+item.ingot_copper.name=Lingote de Cobre
+item.ingot_manolium.name=Lingote de Manolium
+item.ingot_manolazium.name=Lingote de Manolacium
+
+# Blocks
+tile.ore_copper.name=Mena de Cobre
+tile.ore_manolite.name=Mena de Manolita
+tile.block_enchantorium.name=El Encantorium
+
+# Test
+tile.pedestal_manolium.name=Pedestal de Manolium
+item.sword_manolium.name=Espada de Manolium
+item.sword_manolazium.name=Espadón de Manolazium
+
+# Mod title
+itemGroup.retrocraft=RetroCraft
+

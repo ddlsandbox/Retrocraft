@@ -1,0 +1,25 @@
+entity.DragonMounts.DragonMount.air.name=Hava Dragonu
+entity.DragonMounts.DragonMount.end.name=Ender Dragonu
+entity.DragonMounts.DragonMount.fire.name=Ateş Dragonu
+entity.DragonMounts.DragonMount.ghost.name=Hayalet Dragonu
+entity.DragonMounts.DragonMount.ice.name=Buz Dragonu
+entity.DragonMounts.DragonMount.name=Ender Dragonu
+entity.DragonMounts.DragonMount.nether.name=Nether Dragonu
+entity.DragonMounts.DragonMount.water.name=Su Dragonu
+entity.DragonMounts.DragonMount.forest.name=Orman Dragonu
+
+commands.dragon.nodragons=Etrafında hiç dragon yok
+commands.dragon.canttame=Dragonları evcilleştiremezsin
+
+dragon.lifeStage.egg=yumurta
+dragon.lifeStage.hatchling=yavru
+dragon.lifeStage.juvenile=genç
+dragon.lifeStage.adult=yetişkin
+dragon.owned=Dragon emirlerini yapmıyor.
+dragon.mountNotice=%s ve %s tuşları ile yukarı ve aşağı uç.
+
+key.categories.dragonmount=Dragon Kontrolleri
+key.dragon.flyUp=Yukarı Uç
+key.dragon.flyDown=Aşağı Uç
+
+attribute.name.generic.movementSpeedAir=Hız (Havada)

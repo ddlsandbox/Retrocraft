@@ -1,0 +1,12 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"normal": {
+			"model": "retrocraft:pedestal_manolium"
+		},
+		"inventory": {
+			"model": "retrocraft:pedestal_manolium",
+			"transform": "forge:default-block"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "retrocraft:blocks/ore_copper",
+    "textures": {
+        "inventory": "retrocraft:blocks/ore_copper"
+    }
+}

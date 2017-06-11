@@ -1,0 +1,16 @@
+[
+{
+ "modid": "retrocraft",
+ "name": "RetroCraft",
+ "description": "Here you can add short description what your mod does.",
+ "version": "0.1.0",
+ "mcversion": "1.11.2",
+ "url": "http://www.yourmodsite.com",
+ "updateUrl": "",
+ "authorList": ["YourAuthorName", "Author2"],
+ "credits": "For all lovely people who like modded Minecraft!",
+ "logoFile": "logo.png",
+ "screenshots": [],
+ "dependencies": [mod_minecraftForge]
+}
+]

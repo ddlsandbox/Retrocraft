@@ -1,0 +1,25 @@
+entity.DragonMounts.DragonMount.air.name=Smok powietrza
+entity.DragonMounts.DragonMount.end.name=Smok Końca
+entity.DragonMounts.DragonMount.fire.name=Smok ognia
+entity.DragonMounts.DragonMount.ghost.name=Smok duch
+entity.DragonMounts.DragonMount.ice.name=Smok lodu
+entity.DragonMounts.DragonMount.name=Smok Końca
+entity.DragonMounts.DragonMount.nether.name=Smok netheru
+entity.DragonMounts.DragonMount.water.name=Smok wody
+entity.DragonMounts.DragonMount.forest.name=Smok leśny
+
+commands.dragon.nodragons=Nie ma smoków w pobliżu
+commands.dragon.canttame=Nie możesz oswoić smoka
+
+dragon.lifeStage.egg=wykluwanie
+dragon.lifeStage.hatchling=pisklę
+dragon.lifeStage.juvenile=dziecko
+dragon.lifeStage.adult=dorosły
+dragon.owned=Ten smok się ciebie nie słucha.
+dragon.mountNotice=Naciśnij %s i %s, aby lecieć do góry lub na dół
+
+key.categories.dragonmount=Sterowanie smokiem
+key.dragon.flyUp=Leć w górę
+key.dragon.flyDown=Leć w dół
+
+attribute.name.generic.movementSpeedAir=Szybkość
