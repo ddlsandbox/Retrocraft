@@ -1,0 +1,12 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"normal": {
+			"model": "retrocraft:block_enchanter"
+		},
+		"inventory": {
+			"model": "retrocraft:block_enchanter",
+			"transform": "forge:default-block"
+		}
+	}
+}

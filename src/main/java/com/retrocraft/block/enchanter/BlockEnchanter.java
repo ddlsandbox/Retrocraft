@@ -26,6 +26,18 @@ public class BlockEnchanter extends BlockTileEntity<TileEntityEnchanter> {
 	}
 
 	@Override
+	@Deprecated
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	@Deprecated
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+	
+	@Override
 	public BlockEnchanter setCreativeTab(CreativeTabs tab) {
 		super.setCreativeTab(tab);
 		return this;

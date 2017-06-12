@@ -4,6 +4,7 @@ import com.retrocraft.RetroCraft;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ItemOreDict;
 import com.retrocraft.block.enchanter.BlockEnchanter;
+import com.retrocraft.block.multifurnace.BlockMultifurnace;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -16,6 +17,7 @@ public class ModBlocks {
 	public static BlockPedestal pedestalManolium;
 
 	public static BlockEnchantorium blockEnchantorium;
+	public static BlockMultifurnace blockMultifurnace;
 	public static BlockEnchanter blockEnchanter;
 
 	//public static BlockCounter counter;
@@ -27,6 +29,7 @@ public class ModBlocks {
 
 		blockEnchantorium = register(new BlockEnchantorium("block_enchantorium").setCreativeTab(RetroCraft.creativeTab));
 		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
+		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
 		//counter = register(new BlockCounter());
 	}
 

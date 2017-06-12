@@ -39,7 +39,7 @@ public class GuiEnchanter extends GuiContainer {
 	private ArrayList<GuiEnchanterLabel> enchantmentArray = new ArrayList<GuiEnchanterLabel>();
 	private Map<Integer, Integer> enchantments;
 
-	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(RetroCraft.modId, "textures/gui/Enchanter.png");
+	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(RetroCraft.modId, "textures/gui/enchanter.png");
 	private ContainerEnchanter container;
 
 	private double sliderIndex = 0;

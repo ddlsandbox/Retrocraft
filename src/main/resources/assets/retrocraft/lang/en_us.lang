@@ -7,6 +7,8 @@ item.ingot_manolazium.name=Manolazium Ingot
 tile.ore_copper.name=Copper Ore
 tile.ore_manolite.name=Manolite Ore
 tile.block_enchantorium.name=The Enchantorium
+tile.multifurnace.name=Multifurnace
+tile.block_enchanter.name=The Enchanter
 
 tile.pedestal_manolium.name=Manolium Pedestal
 item.sword_manolium.name=Manolium Sword

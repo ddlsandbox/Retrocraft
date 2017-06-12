@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+      "burning_sides_count=0": { "model": "retrocraft:multifurnace0"},
+      "burning_sides_count=1": { "model": "retrocraft:multifurnace1"},
+      "burning_sides_count=2": { "model": "retrocraft:multifurnace2"},
+      "burning_sides_count=3": { "model": "retrocraft:multifurnace3"},
+      "burning_sides_count=4": { "model": "retrocraft:multifurnace4"},
+      "inventory": {
+			"model": "retrocraft:multifurnace0",
+			"transform": "forge:default-block"
+		}
+    }
+}

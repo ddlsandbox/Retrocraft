@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.retrocraft.RetroCraft;
 import com.retrocraft.block.enchantorium.EnchantHelper;
 
 import net.minecraft.enchantment.Enchantment;
@@ -12,6 +11,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -401,28 +401,28 @@ public class ContainerEnchanter extends Container {
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 
-		boolean allFieldsHaveChanged = false;
-		boolean fieldHasChanged [] = new boolean[tileInventoryFurnace.getFieldCount()];
-		if (cachedFields == null) {
-			cachedFields = new int[tileInventoryFurnace.getFieldCount()];
-			allFieldsHaveChanged = true;
-		}
-		for (int i = 0; i < cachedFields.length; ++i) {
-			if (allFieldsHaveChanged || cachedFields[i] != tileInventoryFurnace.getField(i)) {
-				cachedFields[i] = tileInventoryFurnace.getField(i);
-				fieldHasChanged[i] = true;
-			}
-		}
-
-		// go through the list of listeners (players using this container) and update them if necessary
-		for (IContainerListener listener : this.listeners) {
-			for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount(); ++fieldID) {
-				if (fieldHasChanged[fieldID]) {
-					// Note that although sendProgressBarUpdate takes 2 ints on a server these are truncated to shorts
-					listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
-				}
-			}
-		}
+//		boolean allFieldsHaveChanged = false;
+//		boolean fieldHasChanged [] = new boolean[tileInventoryFurnace.getFieldCount()];
+//		if (cachedFields == null) {
+//			cachedFields = new int[tileInventoryFurnace.getFieldCount()];
+//			allFieldsHaveChanged = true;
+//		}
+//		for (int i = 0; i < cachedFields.length; ++i) {
+//			if (allFieldsHaveChanged || cachedFields[i] != tileInventoryFurnace.getField(i)) {
+//				cachedFields[i] = tileInventoryFurnace.getField(i);
+//				fieldHasChanged[i] = true;
+//			}
+//		}
+//
+//		// go through the list of listeners (players using this container) and update them if necessary
+//		for (IContainerListener listener : this.listeners) {
+//			for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount(); ++fieldID) {
+//				if (fieldHasChanged[fieldID]) {
+//					// Note that although sendProgressBarUpdate takes 2 ints on a server these are truncated to shorts
+//					listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
+//				}
+//			}
+//		}
 	}
 
 }
