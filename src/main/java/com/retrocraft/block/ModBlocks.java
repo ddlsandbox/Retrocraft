@@ -3,6 +3,7 @@ package com.retrocraft.block;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ItemOreDict;
+import com.retrocraft.block.enchanter.BlockEnchanter;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -13,17 +14,19 @@ public class ModBlocks {
 	public static BlockOre oreCopper;
 	public static BlockOre oreManolite;
 	public static BlockPedestal pedestalManolium;
-	
+
 	public static BlockEnchantorium blockEnchantorium;
+	public static BlockEnchanter blockEnchanter;
 
 	//public static BlockCounter counter;
-	
+
 	public static void init() {
 		oreCopper = register(new BlockOre("ore_copper", "oreCopper").setCreativeTab(RetroCraft.creativeTab));
 		oreManolite = register(new BlockOre("ore_manolite", "oreManolite").setCreativeTab(RetroCraft.creativeTab));
 		pedestalManolium = register(new BlockPedestal("pedestal_manolium").setCreativeTab(RetroCraft.creativeTab));
-		
+
 		blockEnchantorium = register(new BlockEnchantorium("block_enchantorium").setCreativeTab(RetroCraft.creativeTab));
+		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
 		//counter = register(new BlockCounter());
 	}
 
@@ -40,16 +43,16 @@ public class ModBlocks {
 		if (block instanceof ItemOreDict) {
 			((ItemOreDict)block).initOreDict();
 		}
-		
+
 		if (itemBlock instanceof ItemOreDict) {
 			((ItemOreDict)itemBlock).initOreDict();
 		}
-		
+
 		if (block instanceof BlockTileEntity) {
-			GameRegistry.registerTileEntity(((BlockTileEntity<?>)block).getTileEntityClass(), 
+			GameRegistry.registerTileEntity(((BlockTileEntity<?>)block).getTileEntityClass(),
 					block.getRegistryName().toString());
 		}
-		
+
 		return block;
 	}
 
