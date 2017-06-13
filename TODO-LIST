@@ -1,0 +1,20 @@
+"Multifurnace"
+  - Combination of regular furnace and hoppers that contains 3 inventories for
+    items, fuel and output.
+  - Custom textures
+
+"Hammers/Excavators"
+  - Tools for 3x3 mining/digging
+  - Stream axes
+
+"Waypoint/Teleporters"
+
+Fix "Enchanter"
+  - Basic enchanter
+  - Multistructure for reducing level requirements
+
+Split "Enchanter" + "Repairer"
+
+Decoration:
+  - Big ropes
+  - Illumination
