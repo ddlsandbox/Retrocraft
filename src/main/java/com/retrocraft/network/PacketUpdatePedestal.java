@@ -49,7 +49,6 @@ public class PacketUpdatePedestal implements IMessage {
 		@Override
 		public IMessage onMessage(PacketUpdatePedestal message, MessageContext ctx) {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
-				System.out.println("[RETROCRAFT MSG] update pedestal");
 				TileEntityPedestal te = (TileEntityPedestal)Minecraft.getMinecraft().world.getTileEntity(message.pos);
 				te.inventory.setStackInSlot(0, message.stack);
 				te.lastChangeTime = message.lastChangeTime;

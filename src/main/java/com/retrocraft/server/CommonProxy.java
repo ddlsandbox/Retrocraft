@@ -24,7 +24,6 @@ public class CommonProxy {
     public void onPreInit(FMLPreInitializationEvent event) {
 //        GameRegistry.register(BlockDragonBreedEgg.INSTANCE.setRegistryName("dragon_egg"));
 //        GameRegistry.register(ItemDragonBreedEgg.INSTANCE.setRegistryName("dragon_egg"));
-    	System.out.println("MOD is loading!");
 //   	 ModItems.init();
    	 ModBlocks.init();
    	 

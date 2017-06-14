@@ -37,8 +37,6 @@ public class ContainerEnchanter extends Container {
 
 	public ContainerEnchanter(InventoryPlayer playerInv, final TileEntityEnchanter enchanter) {
 
-		System.out.println("[RETROCRAFT] Created enchanter container");
-
 		this.enchanter = enchanter;
 
 		IItemHandler inventory = enchanter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
@@ -89,7 +87,6 @@ public class ContainerEnchanter extends Container {
 
 	@Override
 	public void onCraftMatrixChanged(IInventory par1IInventory) {
-		System.out.println("[RETROCRAFT] Craftchange");
 		super.onCraftMatrixChanged(par1IInventory);
 
 		last_inventory = par1IInventory;
@@ -161,8 +158,6 @@ public class ContainerEnchanter extends Container {
 	 * items
 	 */
 	private void readItems() {
-
-		System.out.println("[RETROCRAFT] Read enchanter items");
 
 		Slot slot = inventorySlots.get(0);
 		ItemStack itemStack = slot.getStack();

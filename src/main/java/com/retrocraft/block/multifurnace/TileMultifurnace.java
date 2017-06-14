@@ -511,7 +511,6 @@ public class TileMultifurnace extends TileEntity implements IInventory, ITickabl
 		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
 			return burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID];
 		}
-		System.err.println("Invalid field ID in TileInventorySmelting.getField:" + id);
 		return 0;
 	}
 
@@ -525,7 +524,7 @@ public class TileMultifurnace extends TileEntity implements IInventory, ITickabl
 		} else if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
 			burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID] = value;
 		} else {
-			System.err.println("Invalid field ID in TileInventorySmelting.setField:" + id);
+			System.err.print("[RETROCRAFT] Error: Invalid field ID in TileInventorySmelting.setField:" + id);
 		}
 	}
 

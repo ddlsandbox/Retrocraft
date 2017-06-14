@@ -58,10 +58,8 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	public void update() {
 		// The block update (for renderer) is only required on client side, but the lighting is required on both, since
 		//    the client needs it for rendering and the server needs it for crop growth etc
-		System.out.println("[RETROCRAFT] Tile: Update request");
 		if (itemStacks[FIRST_OUTPUT_SLOT].getCount() == 1) {
 			if (world.isRemote) {
-				System.out.println("[RETROCRAFT] Tile: Update performed");
 				IBlockState iblockstate = this.world.getBlockState(pos);
 				repairItem();
 				final int FLAGS = 3;  // I'm not sure what these flags do, exactly.
@@ -109,12 +107,10 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	 */
 	public boolean repairItem()
 	{
-		System.out.println("[RETROCRAFT] Tile: Repair request");
 		final ItemStack inputStack = itemStacks[FIRST_INPUT_SLOT];
 		if (inputStack.isEmpty())
 			return false;
 		
-		System.out.println("[RETROCRAFT] Tile: Repair done");
 		inputStack.setItemDamage(0);
 		itemStacks[FIRST_OUTPUT_SLOT] = inputStack.copy();
 		
@@ -281,7 +277,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket()
   {
-	  System.out.println("[RETROCRAFT] Tile: SPacketUpdateTileEntity");
     NBTTagCompound updateTagDescribingTileEntityState = getUpdateTag();
     final int METADATA = 0;
     return new SPacketUpdateTileEntity(this.pos, METADATA, updateTagDescribingTileEntityState);
@@ -291,7 +286,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     NBTTagCompound updateTagDescribingTileEntityState = pkt.getNbtCompound();
     handleUpdateTag(updateTagDescribingTileEntityState);
-    System.out.println("[RETROCRAFT] Tile: ondatapacket");
   }
 
   /* Creates a tag containing the TileEntity information, used by vanilla to transmit from server to client
@@ -300,7 +294,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
   @Override
   public NBTTagCompound getUpdateTag()
   {
-	  System.out.println("[RETROCRAFT] Tile: getUpdateTag");
 		NBTTagCompound nbtTagCompound = new NBTTagCompound();
 		writeToNBT(nbtTagCompound);
     return nbtTagCompound;
@@ -312,7 +305,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
   @Override
   public void handleUpdateTag(NBTTagCompound tag)
   {
-	  System.out.println("[RETROCRAFT] Tile: handleupdatetag");
     this.readFromNBT(tag);
   }
   //------------------------
@@ -361,7 +353,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 //		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
 //			return burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID];
 //		}
-//		System.err.println("Invalid field ID in TileInventorySmelting.getField:" + id);
 		return 0;
 	}
 
@@ -375,7 +366,7 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 //		} else if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
 //			burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID] = value;
 //		} else {
-//			System.err.println("Invalid field ID in TileInventorySmelting.setField:" + id);
+//			System.err.println("[RETROCRAFT] Error: Invalid field ID in TileInventorySmelting.setField:" + id);
 //		}
 	}
 

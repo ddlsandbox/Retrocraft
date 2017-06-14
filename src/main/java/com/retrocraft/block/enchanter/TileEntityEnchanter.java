@@ -91,9 +91,7 @@ public class TileEntityEnchanter extends TileEntity {
 
     public final void sendUpdate(){
 
-    	// System.out.println("[RETROCRAFT] Send update MSG");
     	// RetroCraft.network.sendToServer(new PacketUpdateEnchanter(this));
-    	// System.out.println("[RETROCRAFT] Sent update MSG");
 
         if(this.world != null && !this.world.isRemote){
             NBTTagCompound compound = new NBTTagCompound();
@@ -117,7 +115,6 @@ public class TileEntityEnchanter extends TileEntity {
     public void enchantCurrent(HashMap<Integer, Integer> map,
 			HashMap<Integer, Integer> levels)
 	{
-    	System.out.println("[RETROCRAFT] Container Enchant!");
     	final ItemStack itemStack = inventory.getStackInSlot(0);
     	EnchantHelper.setEnchantments(map, itemStack, levels);
     	

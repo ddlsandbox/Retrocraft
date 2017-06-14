@@ -53,7 +53,6 @@ public class GuiRepairer extends GuiContainer {
        
         switch (par1GuiButton.id) {
             case 0:
-            	System.out.println("[RETROCRAFT] GUI: Repair");
             	containerRepairer.repairItem();
             	tileEntity.update();
             	tileEntity.markDirty();

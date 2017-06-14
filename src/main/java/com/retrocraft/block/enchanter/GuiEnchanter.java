@@ -249,25 +249,20 @@ public class GuiEnchanter extends GuiContainer {
         switch (par1GuiButton.id) {
             case 0:
                 if (enchants.size() > 0) {
-                	playerInv.player.sendMessage(new TextComponentString("ACTION TRIGGERED!!!"));
-            		System.out.println("[RETROCRAFT] To Enchant 1");
+                	playerInv.player.sendMessage(new TextComponentString("Enchanted!"));
                     //RetroCraft.network.sendToServer(new PacketEnchant(enchants, levels, totalCost));
                 	try {
                 		container.enchant(playerInv.player, enchants, levels, totalCost);
                 	} catch (Exception e) {
-                		playerInv.player.sendMessage(new TextComponentString("Exception!!!"));
+              			System.err.print("[RETROCRAFT] Error enchanting item");
                 	}
                 }
-                else
-                	playerInv.player.sendMessage(new TextComponentString("Ommited ACTION 1!!!"));
                 return;
             case 1:
                 if (enchants.size() == 0) {
-                	playerInv.player.sendMessage(new TextComponentString("ACTION 2!!!"));
+                	playerInv.player.sendMessage(new TextComponentString("Repaired!"));
                     //EnchantingPlus.network.sendToServer(new PacketRepair(totalCost));
                 }
-                else
-                	playerInv.player.sendMessage(new TextComponentString("Ommited ACTION 2!!!"));
                 return;
             case 2:
 //                EnchantingPlus.network.sendToServer(new PacketGui(player.getDisplayName(), 1, x, y, z));

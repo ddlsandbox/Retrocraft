@@ -49,7 +49,6 @@ public class PacketUpdateEnchantorium implements IMessage {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				TileEntityEnchantorium te = (TileEntityEnchantorium)Minecraft.getMinecraft().world.getTileEntity(message.pos);
 				te.inventory.setStackInSlot(0, message.stack);
-				System.out.println("[RETROCRAFT MSG] update");
 //				te.lastChangeTime = message.lastChangeTime;
 			});
 			return null;

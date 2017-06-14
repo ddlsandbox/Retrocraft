@@ -152,7 +152,7 @@ public class ContainerMultifurnace extends Container {
 				return ItemStack.EMPTY;  //EMPTY_ITEM;
 			}
 		} else {
-			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
+			System.err.print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;  //EMPTY_ITEM;
 		}
 

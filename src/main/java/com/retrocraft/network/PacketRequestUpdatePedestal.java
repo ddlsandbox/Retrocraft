@@ -46,7 +46,6 @@ public class PacketRequestUpdatePedestal implements IMessage {
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.dimension);
 			TileEntityPedestal te = (TileEntityPedestal)world.getTileEntity(message.pos);
 			if (te != null) {
-				System.out.println("[RETROCRAFT MSG] request update pedestal");
 				return new PacketUpdatePedestal(te);
 			} else {
 				return null;

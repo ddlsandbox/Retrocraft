@@ -162,7 +162,7 @@ public class ContainerRepairer extends Container {
 				return ItemStack.EMPTY;  //EMPTY_ITEM;
 			}
 		} else {
-			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
+			System.err.print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;  //EMPTY_ITEM;
 		}
 
@@ -192,7 +192,7 @@ public class ContainerRepairer extends Container {
 		super.detectAndSendChanges();
 		if (!tileInventoryFurnace.getStackInSlot(1).isEmpty())
 			for (IContainerListener listener : this.listeners) {
-				System.out.println("[RETROCRAFT] Container: Notify listeners!");
+				//System.out.println("[RETROCRAFT] Container: Notify listeners!");
 			}
 	}
 

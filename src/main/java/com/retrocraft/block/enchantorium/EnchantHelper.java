@@ -23,7 +23,6 @@ public class EnchantHelper {
 				ALL_ENCHANTMENTS.add(i);
 			}
 		}
-		System.out.println("[RETROCRAFT] Added enchantments: " + ALL_ENCHANTMENTS.size());
    }
    
    public static boolean isEnchantmentsCompatible (Enchantment ench1, Enchantment ench2) {
