@@ -1,6 +1,8 @@
 {
-    "parent": "retrocraft:blocks/ore_manolite",
+    "parent": "retrocraft:block/block_repairer_base",
     "textures": {
-        "inventory": "retrocraft:blocks/ore_manolite"
+        "particle": "retrocraft:blocks/ore_manolite",
+        "body": "retrocraft:blocks/ore_manolite",
+        "top": "blocks/anvil_base"
     }
 }

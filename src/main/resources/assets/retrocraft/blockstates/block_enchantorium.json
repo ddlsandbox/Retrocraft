@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "retrocraft:blocks/ore_manolite"
+            "all": "retrocraft:ore_manolite"
         }
     },
     "variants": {

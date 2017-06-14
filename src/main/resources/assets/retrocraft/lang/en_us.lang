@@ -1,19 +1,22 @@
-# Items
+# Mod title
+itemGroup.retrocraft=RetroCraft
+
+# Items.materials
+
 item.ingot_copper.name=Copper Ingot
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
 
-# Blocks
 tile.ore_copper.name=Copper Ore
 tile.ore_manolite.name=Manolite Ore
-tile.block_enchantorium.name=The Enchantorium
-tile.multifurnace.name=Multifurnace
-tile.block_enchanter.name=The Enchanter
 
-tile.pedestal_manolium.name=Manolium Pedestal
+# Items.weapons
 item.sword_manolium.name=Manolium Sword
 item.sword_manolazium.name=Manolazium Great Sword
 
-# Mod title
-itemGroup.retrocraft=RetroCraft
-
+# Entities
+tile.block_enchantorium.name=The Enchantorium
+tile.multifurnace.name=Multifurnace
+tile.block_enchanter.name=The Enchanter
+tile.block_repairer.name=Repairer
+tile.pedestal_manolium.name=Manolium Pedestal

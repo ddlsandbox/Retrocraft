@@ -1,16 +1,12 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "textures": {
-            "all": "retrocraft:blocks/ore_manolite"
-        }
-    },
-    "variants": {
-        "normal": {
-            "model": "cube_all"
-        },
-        "inventory": {
-            "model": "cube_all"
-        }
-    }
+	"forge_marker": 1,
+	"variants": {
+		"normal": {
+			"model": "retrocraft:block_repairer"
+		},
+		"inventory": {
+			"model": "retrocraft:block_repairer",
+			"transform": "forge:default-block"
+		}
+	}
 }

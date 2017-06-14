@@ -1,6 +1,6 @@
 {
-    "parent": "retrocraft:blocks/ore_manolite",
+    "parent": "block/cube_all",
     "textures": {
-        "inventory": "retrocraft:blocks/ore_manolite"
+        "all": "retrocraft:blocks/ore_manolite"
     }
 }

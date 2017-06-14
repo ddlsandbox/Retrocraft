@@ -138,6 +138,7 @@ public class BlockRepairer extends BlockTileEntity<TileRepairer>
 	// used by the renderer to control lighting and visibility of other blocks.
 	// set to false because this block doesn't fill the entire 1x1x1 space
 	@Override
+	@Deprecated
 	public boolean isOpaqueCube(IBlockState iBlockState) {
 		return false;
 	}
@@ -146,6 +147,7 @@ public class BlockRepairer extends BlockTileEntity<TileRepairer>
 	// (eg) wall or fence to control whether the fence joins itself to this block
 	// set to false because this block doesn't fill the entire 1x1x1 space
 	@Override
+	@Deprecated
 	public boolean isFullCube(IBlockState iBlockState) {
 		return false;
 	}
