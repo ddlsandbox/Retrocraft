@@ -1,10 +1,11 @@
 package com.retrocraft.block;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.item.ItemModelProvider;
-import com.retrocraft.item.ItemOreDict;
 import com.retrocraft.block.enchanter.BlockEnchanter;
 import com.retrocraft.block.multifurnace.BlockMultifurnace;
+import com.retrocraft.block.repairer.BlockRepairer;
+import com.retrocraft.item.ItemModelProvider;
+import com.retrocraft.item.ItemOreDict;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -19,8 +20,7 @@ public class ModBlocks {
 	public static BlockEnchantorium blockEnchantorium;
 	public static BlockMultifurnace blockMultifurnace;
 	public static BlockEnchanter blockEnchanter;
-
-	//public static BlockCounter counter;
+	public static BlockRepairer blockRepairer;
 
 	public static void init() {
 		oreCopper = register(new BlockOre("ore_copper", "oreCopper").setCreativeTab(RetroCraft.creativeTab));
@@ -30,7 +30,7 @@ public class ModBlocks {
 		blockEnchantorium = register(new BlockEnchantorium("block_enchantorium").setCreativeTab(RetroCraft.creativeTab));
 		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
 		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
-		//counter = register(new BlockCounter());
+		blockRepairer = register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {

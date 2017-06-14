@@ -10,6 +10,7 @@
 package com.retrocraft;
 
 import com.retrocraft.block.ModBlocks;
+import com.retrocraft.block.repairer.PacketRepairer;
 import com.retrocraft.entity.ModEntities;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.network.PacketRequestUpdateEnchantorium;
@@ -78,6 +79,7 @@ public class RetroCraft {
 		network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
 		network.registerMessage(new PacketUpdateEnchantorium.Handler(), PacketUpdateEnchantorium.class, 3, Side.CLIENT);
 		network.registerMessage(new PacketRequestUpdateEnchantorium.Handler(), PacketRequestUpdateEnchantorium.class, 4, Side.SERVER);
+		network.registerMessage(new PacketRepairer.Handler(), PacketRepairer.class, 5, Side.SERVER);
 		
 		proxy.registerRenderers();
 		

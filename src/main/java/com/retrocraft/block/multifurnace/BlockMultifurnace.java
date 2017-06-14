@@ -1,6 +1,11 @@
 package com.retrocraft.block.multifurnace;
 
-import net.minecraft.block.BlockContainer;
+import javax.annotation.Nullable;
+
+import com.retrocraft.ModGuiHandler;
+import com.retrocraft.RetroCraft;
+import com.retrocraft.block.BlockTileEntity;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
@@ -10,7 +15,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -22,14 +26,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-
-import com.retrocraft.ModGuiHandler;
-import com.retrocraft.RetroCraft;
-import com.retrocraft.block.BlockTileEntity;
-import com.retrocraft.block.enchanter.BlockEnchanter;
-import com.retrocraft.block.enchanter.TileEntityEnchanter;
 
 
 /**

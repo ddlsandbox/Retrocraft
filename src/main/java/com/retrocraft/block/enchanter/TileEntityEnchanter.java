@@ -5,8 +5,6 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 import com.retrocraft.block.enchantorium.EnchantHelper;
-import com.retrocraft.network.PacketClientToServer;
-import com.retrocraft.network.PacketHandler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -108,12 +105,12 @@ public class TileEntityEnchanter extends TileEntity {
             data.setInteger("X", this.pos.getX());
             data.setInteger("Y", this.pos.getY());
             data.setInteger("Z", this.pos.getZ());
-            PacketHandler.theNetwork.sendToAllAround(
-            		new PacketClientToServer(
-            				data,
-            				PacketHandler.TILE_ENTITY_HANDLER),
-            		new NetworkRegistry.TargetPoint(this.world.provider.getDimension(),
-            				this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
+//            PacketHandler.theNetwork.sendToAllAround(
+//            		new PacketClientToServer(
+//            				data,
+//            				PacketHandler.TILE_ENTITY_HANDLER),
+//            		new NetworkRegistry.TargetPoint(this.world.provider.getDimension(),
+//            				this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), 64));
         }
     }
 

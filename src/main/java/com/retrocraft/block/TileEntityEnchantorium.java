@@ -6,12 +6,9 @@ import javax.annotation.Nullable;
 
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.enchantorium.EnchantHelper;
-import com.retrocraft.network.PacketClientToServer;
-import com.retrocraft.network.PacketHandler;
 import com.retrocraft.network.PacketRequestUpdateEnchantorium;
 import com.retrocraft.network.PacketUpdateEnchantorium;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

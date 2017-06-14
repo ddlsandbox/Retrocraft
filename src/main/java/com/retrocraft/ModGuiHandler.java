@@ -1,14 +1,17 @@
 package com.retrocraft;
 
 import com.retrocraft.block.TileEntityEnchantorium;
+import com.retrocraft.block.enchanter.ContainerEnchanter;
+import com.retrocraft.block.enchanter.GuiEnchanter;
+import com.retrocraft.block.enchanter.TileEntityEnchanter;
 import com.retrocraft.block.enchantorium.ContainerEnchantorium;
 import com.retrocraft.block.enchantorium.GuiEnchantorium;
 import com.retrocraft.block.multifurnace.ContainerMultifurnace;
 import com.retrocraft.block.multifurnace.GuiMultifurnace;
 import com.retrocraft.block.multifurnace.TileMultifurnace;
-import com.retrocraft.block.enchanter.ContainerEnchanter;
-import com.retrocraft.block.enchanter.GuiEnchanter;
-import com.retrocraft.block.enchanter.TileEntityEnchanter;
+import com.retrocraft.block.repairer.ContainerRepairer;
+import com.retrocraft.block.repairer.GuiRepairer;
+import com.retrocraft.block.repairer.TileRepairer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -25,6 +28,7 @@ public class ModGuiHandler implements IGuiHandler {
 	public static final int ENCHANTORIUM = 0;
 	public static final int ENCHANTER = 1;
 	public static final int MULTIFURNACE = 2;
+	public static final int REPAIRER = 3;
 
 	@Override
 	public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -48,6 +52,11 @@ public class ModGuiHandler implements IGuiHandler {
 						player.inventory,
 						(TileMultifurnace)world.getTileEntity(
 								new BlockPos(x, y, z)));
+			case REPAIRER:
+				return new ContainerRepairer(
+						player.inventory,
+						(TileRepairer)world.getTileEntity(
+								new BlockPos(x, y, z)));
 			default:
 				return null;
 		}
@@ -69,6 +78,15 @@ public class ModGuiHandler implements IGuiHandler {
 						player.inventory,
 						(TileMultifurnace)world.getTileEntity(
 								new BlockPos(x, y, z)));
+			case REPAIRER:
+				return new GuiRepairer(
+						player.inventory,
+						(TileRepairer)world.getTileEntity(
+								new BlockPos(x, y, z)),
+						new ContainerRepairer(player.inventory,
+								(TileRepairer)world.getTileEntity(
+										new BlockPos(x, y, z)))
+						);
 			default:
 				return null;
 		}

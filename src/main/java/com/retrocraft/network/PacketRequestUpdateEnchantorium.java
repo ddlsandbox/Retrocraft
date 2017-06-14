@@ -1,7 +1,10 @@
 package com.retrocraft.network;
 
 import com.retrocraft.block.TileEntityEnchantorium;
+import com.retrocraft.block.enchantorium.ContainerEnchantorium;
+import com.retrocraft.block.repairer.ContainerRepairer;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -44,13 +47,16 @@ public class PacketRequestUpdateEnchantorium implements IMessage {
 		public PacketUpdateEnchantorium onMessage(PacketRequestUpdateEnchantorium message, MessageContext ctx) {
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.dimension);
 			TileEntityEnchantorium te = (TileEntityEnchantorium)world.getTileEntity(message.pos);
-			if (te != null) {
-				System.out.println("[RETROCRAFT MSG] request new");
-				return new PacketUpdateEnchantorium(te);
-			} else {
-				System.out.println("[RETROCRAFT MSG] request null");
-				return null;
-			}
+			EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
+			serverPlayer.openContainer.detectAndSendChanges();
+			
+			 try {
+//                 ((ContainerEnchantorium) serverPlayer.openContainer).enchant(serverPlayer, map, levels, cost);();
+             }
+             catch (final Exception e) {
+             }
+			 
+			return null;
 		}
 	
 	}
