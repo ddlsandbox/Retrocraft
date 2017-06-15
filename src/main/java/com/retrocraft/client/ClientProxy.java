@@ -3,6 +3,8 @@ package com.retrocraft.client;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.pedestal.TESRPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
+import com.retrocraft.machine.enchanter.TESREnchanter;
+import com.retrocraft.machine.enchanter.TileEntityEnchanter;
 import com.retrocraft.server.CommonProxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -29,6 +31,7 @@ public class ClientProxy extends CommonProxy {
     @Override
 	public void registerRenderers() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class, new TESREnchanter());
 	}
     
     @Override
