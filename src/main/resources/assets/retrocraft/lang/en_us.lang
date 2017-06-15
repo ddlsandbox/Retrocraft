@@ -11,6 +11,19 @@ tile.ore_copper.name=Copper Ore
 tile.ore_manolite.name=Manolite Ore
 
 # Items.weapons
+item.hammer_stone.name=Stone Hammer
+item.hammer_iron.name=Iron Hammer
+item.hammer_gold.name=Gold Hammer
+item.hammer_diamond.name=Diamond Hammer
+item.hammer_emerald.name=Emerald Hammer
+item.hammer_manolium.name=Manolium Hammer
+
+item.streamaxe_manolium.name=Manolium Stream Axe
+
+item.excavator_manolium.name=Manolium Excavator
+
+item.etool_manolium.name=Manolium MegaTool
+
 item.sword_manolium.name=Manolium Sword
 item.sword_manolazium.name=Manolazium Great Sword
 

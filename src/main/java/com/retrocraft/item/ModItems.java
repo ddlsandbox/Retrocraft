@@ -1,9 +1,14 @@
 package com.retrocraft.item;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.item.tool.ItemSword;
+import com.retrocraft.item.tool.ToolEverything;
+import com.retrocraft.item.tool.ToolExcavator;
+import com.retrocraft.item.tool.ToolHammer;
+import com.retrocraft.item.tool.ToolStreamAxe;
+import com.retrocraft.item.weapon.ItemSword;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
@@ -14,6 +19,18 @@ public class ModItems {
 	public static ItemOre ingotManolazium;
 	
 	public static ItemSword manoliumSword;
+	
+	/* hammer */
+	public static ToolHammer stoneHammer;
+	public static ToolHammer ironHammer;
+	public static ToolHammer goldHammer;
+	public static ToolHammer diamondHammer;
+	public static ToolHammer emeraldHammer;
+	public static ToolHammer manoliumHammer;
+	
+	public static ToolExcavator manoliumExcavator;
+	public static ToolEverything manoliumETool;
+	public static ToolStreamAxe manoliumStreamAxe;
 	public static ItemSword manolaziumSword;
 	
 	public static void init() {
@@ -22,6 +39,17 @@ public class ModItems {
 		ingotManolazium = register(new ItemOre("ingot_manolazium", "ingotManolazium").setCreativeTab(RetroCraft.creativeTab));
 		
 		manoliumSword = register(new ItemSword(RetroCraft.manoliumToolMaterial, "sword_manolium").setCreativeTab(RetroCraft.creativeTab));
+		
+		stoneHammer = register(new ToolHammer(ToolMaterial.STONE, "hammer_stone").setCreativeTab(RetroCraft.creativeTab));
+		ironHammer = register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_iron").setCreativeTab(RetroCraft.creativeTab));
+		goldHammer = register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_gold").setCreativeTab(RetroCraft.creativeTab));
+		diamondHammer = register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab));
+		emeraldHammer = register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_emerald").setCreativeTab(RetroCraft.creativeTab));
+		manoliumHammer = register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
+		
+		manoliumExcavator = register(new ToolExcavator(RetroCraft.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab));
+		manoliumStreamAxe = register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab));
+		manoliumETool = register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 		manolaziumSword = register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	}
 	

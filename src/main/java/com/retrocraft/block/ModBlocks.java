@@ -1,11 +1,12 @@
 package com.retrocraft.block;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.block.enchanter.BlockEnchanter;
-import com.retrocraft.block.multifurnace.BlockMultifurnace;
-import com.retrocraft.block.repairer.BlockRepairer;
+import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ItemOreDict;
+import com.retrocraft.machine.enchanter.BlockEnchanter;
+import com.retrocraft.machine.multifurnace.BlockMultifurnace;
+import com.retrocraft.machine.repairer.BlockRepairer;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -17,7 +18,6 @@ public class ModBlocks {
 	public static BlockOre oreManolite;
 	public static BlockPedestal pedestalManolium;
 
-	public static BlockEnchantorium blockEnchantorium;
 	public static BlockMultifurnace blockMultifurnace;
 	public static BlockEnchanter blockEnchanter;
 	public static BlockRepairer blockRepairer;
@@ -27,7 +27,6 @@ public class ModBlocks {
 		oreManolite = register(new BlockOre("ore_manolite", "oreManolite").setCreativeTab(RetroCraft.creativeTab));
 		pedestalManolium = register(new BlockPedestal("pedestal_manolium").setCreativeTab(RetroCraft.creativeTab));
 
-		blockEnchantorium = register(new BlockEnchantorium("block_enchantorium").setCreativeTab(RetroCraft.creativeTab));
 		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
 		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
 		blockRepairer = register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));

@@ -1,17 +1,14 @@
 package com.retrocraft;
 
-import com.retrocraft.block.TileEntityEnchantorium;
-import com.retrocraft.block.enchanter.ContainerEnchanter;
-import com.retrocraft.block.enchanter.GuiEnchanter;
-import com.retrocraft.block.enchanter.TileEntityEnchanter;
-import com.retrocraft.block.enchantorium.ContainerEnchantorium;
-import com.retrocraft.block.enchantorium.GuiEnchantorium;
-import com.retrocraft.block.multifurnace.ContainerMultifurnace;
-import com.retrocraft.block.multifurnace.GuiMultifurnace;
-import com.retrocraft.block.multifurnace.TileMultifurnace;
-import com.retrocraft.block.repairer.ContainerRepairer;
-import com.retrocraft.block.repairer.GuiRepairer;
-import com.retrocraft.block.repairer.TileRepairer;
+import com.retrocraft.machine.enchanter.ContainerEnchanter;
+import com.retrocraft.machine.enchanter.GuiEnchanter;
+import com.retrocraft.machine.enchanter.TileEntityEnchanter;
+import com.retrocraft.machine.multifurnace.ContainerMultifurnace;
+import com.retrocraft.machine.multifurnace.GuiMultifurnace;
+import com.retrocraft.machine.multifurnace.TileMultifurnace;
+import com.retrocraft.machine.repairer.ContainerRepairer;
+import com.retrocraft.machine.repairer.GuiRepairer;
+import com.retrocraft.machine.repairer.TileRepairer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -25,10 +22,9 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
  * some pieces of information.
  */
 public class ModGuiHandler implements IGuiHandler {
-	public static final int ENCHANTORIUM = 0;
-	public static final int ENCHANTER = 1;
+	public static final int ENCHANTER    = 0;
+	public static final int REPAIRER     = 1;
 	public static final int MULTIFURNACE = 2;
-	public static final int REPAIRER = 3;
 
 	@Override
 	public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -37,11 +33,6 @@ public class ModGuiHandler implements IGuiHandler {
 		 * for the given ID, player, world, and position.
 		 */
 		switch (ID) {
-			case ENCHANTORIUM:
-				return new ContainerEnchantorium(
-						player.inventory,
-						(TileEntityEnchantorium)world.getTileEntity(
-								new BlockPos(x, y, z)));
 			case ENCHANTER:
 				return new ContainerEnchanter(
 						player.inventory,
@@ -65,10 +56,6 @@ public class ModGuiHandler implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		switch (ID) {
-			case ENCHANTORIUM:
-				return new GuiEnchantorium(
-						getServerGuiElement(ID, player, world, x, y, z),
-						player.inventory);
 			case ENCHANTER:
 				return new GuiEnchanter(
 						getServerGuiElement(ID, player, world, x, y, z),

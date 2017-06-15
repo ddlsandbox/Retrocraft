@@ -1,8 +1,8 @@
 package com.retrocraft.client;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.block.TESRPedestal;
-import com.retrocraft.block.TileEntityPedestal;
+import com.retrocraft.block.pedestal.TESRPedestal;
+import com.retrocraft.block.pedestal.TileEntityPedestal;
 import com.retrocraft.server.CommonProxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,37 +19,6 @@ public class ClientProxy extends CommonProxy {
 	public void registerItemRenderer(Item item, int meta, String id) {
 	  ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(RetroCraft.modId + ":" + id, "inventory"));
 	}
-
-    @Override
-    public void onPreInit(FMLPreInitializationEvent event) {
-        super.onPreInit(event);
-        
-        // register dragon entity renderer
-        //RenderingRegistry.registerEntityRenderingHandler(
-        //        EntityTameableDragon.class, DragonRenderer::new);
-        
-        // register item renderer for dragon egg block variants
-        //ResourceLocation eggModelItemLoc = new ResourceLocation(DragonMounts.AID, "dragon_egg");
-        //Item itemBlockDragonEgg = Item.REGISTRY.getObject(eggModelItemLoc);
-        //EnumDragonBreed.META_MAPPING.forEach((breed, meta) -> {
-        //    ModelResourceLocation eggModelLoc = new ModelResourceLocation(DragonMounts.AID + ":dragon_egg", "breed=" + breed.getName());
-        //    ModelLoader.setCustomModelResourceLocation(itemBlockDragonEgg, meta, eggModelLoc);
-        //});
-    }
-
-    @Override
-    public void onInit(FMLInitializationEvent evt) {
-        super.onInit(evt);
-    }
-
-    @Override
-    public void onPostInit(FMLPostInitializationEvent event) {
-        super.onPostInit(event);
-        
-//        if (DragonMounts.instance.getConfig().isDebug()) {
-//            MinecraftForge.EVENT_BUS.register(new GuiDragonDebug());
-//        }
-    }
     
     @Override
     public String localize(String unlocalized, Object... args) {
@@ -61,5 +30,23 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class, new TESRPedestal());
 	}
+    
+    @Override
+    public void loadModels() {
+//    	Stopwatch watch = Stopwatch.createStarted();
+//        Logger.info("Binding tools to model renderer started");
+//            for (int i = 0; i < MaterialLoader.Materials.length; i++) {
+//                MinecraftForgeClient.registerItemRenderer(ToolLoader.hammers[i], new HammerRenderer(Reference.Materials[i]));
+//                    log(ToolLoader.hammers[i]);
+//                MinecraftForgeClient.registerItemRenderer(ToolLoader.excavators[i], new ExcavatorRenderer(Reference.Materials[i]));
+//                    log(ToolLoader.excavators[i]);
+//                MinecraftForgeClient.registerItemRenderer(ToolLoader.lumberAxes[i], new LumberAxeRenderer(Reference.Materials[i]));
+//                    log(ToolLoader.lumberAxes[i]);
+//                MinecraftForgeClient.registerItemRenderer(ToolLoader.sickles[i], new SickleRenderer(Reference.Materials[i]));
+//                    log(ToolLoader.sickles[i]);
+//            }
+//    Logger.info("Binding all tools to model renderer finished after " + watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+//    }
+    }
 }
 

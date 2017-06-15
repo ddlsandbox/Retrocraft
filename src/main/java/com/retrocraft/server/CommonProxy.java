@@ -21,44 +21,14 @@ public class CommonProxy {
 
   	}
     
-    public void onPreInit(FMLPreInitializationEvent event) {
-//        GameRegistry.register(BlockDragonBreedEgg.INSTANCE.setRegistryName("dragon_egg"));
-//        GameRegistry.register(ItemDragonBreedEgg.INSTANCE.setRegistryName("dragon_egg"));
-//   	 ModItems.init();
-   	 ModBlocks.init();
-   	 
-//       config = new DragonMountsConfig(new Configuration(evt.getSuggestedConfigurationFile()));
-    }
-    
-    public void onInit(FMLInitializationEvent evt) {
-        registerEntities();
-
-//        MinecraftForge.EVENT_BUS.register(new DragonEggBlockHandler());
-    }
-
-    public void onPostInit(FMLPostInitializationEvent event) {
-    }
-    
-    public void onServerStarting(FMLServerStartingEvent evt) {
-//        MinecraftServer server = evt.getServer();
-//        ServerCommandManager cmdman = (ServerCommandManager) server.getCommandManager(); 
-//        cmdman.registerCommand(new CommandDragon());
-    }
-    
-    public void onServerStopped(FMLServerStoppedEvent evt) {
-    }
-    
-    private void registerEntities() {
-//        ResourceLocation res = new ResourceLocation(RetroCraft.AID, "dragon");
-//        EntityRegistry.registerModEntity(res, EntityTameableDragon.class, "DragonMount",
-//                ENTITY_ID, RetroCraft.instance, ENTITY_TRACKING_RANGE, ENTITY_UPDATE_FREQ,
-//                ENTITY_SEND_VELO_UPDATES);
-    }
-    
     public String localize(String unlocalized, Object... args) {
 		return I18n.translateToLocalFormatted(unlocalized, args);
 	}
     
     public void registerRenderers() {
 	}
+    
+    public void loadModels() {
+    	
+    }
 }

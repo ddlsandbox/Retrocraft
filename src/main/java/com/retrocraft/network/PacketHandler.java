@@ -1,7 +1,6 @@
 package com.retrocraft.network;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.block.repairer.PacketRepairer;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;

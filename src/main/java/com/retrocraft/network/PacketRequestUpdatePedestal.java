@@ -1,13 +1,14 @@
 package com.retrocraft.network;
 
-import com.retrocraft.block.TileEntityPedestal;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import com.retrocraft.block.pedestal.TileEntityPedestal;
+
 import io.netty.buffer.ByteBuf;
 
 public class PacketRequestUpdatePedestal implements IMessage {

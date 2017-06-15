@@ -10,12 +10,13 @@
 package com.retrocraft;
 
 import com.retrocraft.block.ModBlocks;
-import com.retrocraft.block.repairer.PacketRepairer;
 import com.retrocraft.entity.ModEntities;
 import com.retrocraft.item.ModItems;
-import com.retrocraft.network.PacketRequestUpdateEnchantorium;
+import com.retrocraft.network.PacketEnchant;
+import com.retrocraft.network.PacketRepairer;
+import com.retrocraft.network.PacketRequestUpdateEnchanter;
 import com.retrocraft.network.PacketRequestUpdatePedestal;
-import com.retrocraft.network.PacketUpdateEnchantorium;
+import com.retrocraft.network.PacketUpdateEnchanter;
 import com.retrocraft.network.PacketUpdatePedestal;
 import com.retrocraft.recipe.RetrocraftRecipes;
 import com.retrocraft.server.CommonProxy;
@@ -76,9 +77,10 @@ public class RetroCraft {
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
 		network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 0, Side.CLIENT);
 		network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 1, Side.SERVER);
-		network.registerMessage(new PacketUpdateEnchantorium.Handler(), PacketUpdateEnchantorium.class, 3, Side.CLIENT);
-		network.registerMessage(new PacketRequestUpdateEnchantorium.Handler(), PacketRequestUpdateEnchantorium.class, 4, Side.SERVER);
+		network.registerMessage(new PacketUpdateEnchanter.Handler(), PacketUpdateEnchanter.class, 3, Side.CLIENT);
+		network.registerMessage(new PacketRequestUpdateEnchanter.Handler(), PacketRequestUpdateEnchanter.class, 4, Side.SERVER);
 		network.registerMessage(new PacketRepairer.Handler(), PacketRepairer.class, 5, Side.SERVER);
+		network.registerMessage(new PacketEnchant.Handler(), PacketEnchant.class, 6, Side.SERVER);
 		
 		proxy.registerRenderers();
 		
