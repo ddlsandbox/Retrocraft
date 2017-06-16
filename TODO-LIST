@@ -18,3 +18,13 @@ Split "Enchanter" + "Repairer"
 Decoration:
   - Big ropes
   - Illumination
+
+Energy:
+  - Thaum:    The basic unit of magical strength; it is the amount of magic 
+              needed to create one small white pigeon or three normal-sized 
+              billiard balls
+
+Materials:
+  - Octirion: A strange, iridescent metal that is highly valued. It radiates 
+              dangerous amounts of raw enchantment and is so unstable it can 
+              only exist in a universe saturated with raw magic
