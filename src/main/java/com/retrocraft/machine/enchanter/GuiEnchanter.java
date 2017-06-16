@@ -284,15 +284,16 @@ public class GuiEnchanter extends GuiContainer
       {
         handleChangedEnchantment(enchantments, item);
       }
-    } else if (!levelChanged())
-    {
-      totalCost += container.repairCostMax();
-
-      for (final GuiEnchanterLabel item : enchantmentArray)
-      {
-        item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
-      }
     }
+//    else if (!levelChanged())
+//    {
+//      totalCost += container.repairCostMax();
+//
+//      for (final GuiEnchanterLabel item : enchantmentArray)
+//      {
+//        item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
+//      }
+//    }
   }
 
   private void handleChangedEnchantment(Map<Enchantment, Integer> enchantments,

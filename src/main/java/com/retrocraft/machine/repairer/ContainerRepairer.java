@@ -1,7 +1,11 @@
 package com.retrocraft.machine.repairer;
 
+import java.util.Map;
+
 import com.retrocraft.common.ContainerBase;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -165,6 +169,47 @@ public class ContainerRepairer extends ContainerBase
     tileInventoryFurnace.setField(id, data);
   }
 
+//  public int repairCostMax()
+//  {
+//
+//    final double repairFactor = 1.5;
+//    final ItemStack itemStack = inventorySlots.get(0).getStack();
+//    if (itemStack == null)
+//      return 0;
+//
+//    if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
+//      return 0;
+//
+//    int cost = 0;
+//
+//    final Map<Enchantment, Integer> enchantments = EnchantmentHelper
+//        .getEnchantments(itemStack);
+//
+//    for (final Enchantment enchantment : enchantments.keySet())
+//    {
+//      final Integer enchantmentLevel = enchantments.get(enchantment);
+//
+//      cost += enchantmentCost(enchantment, enchantmentLevel, 0);
+//    }
+//
+//    final int maxDamage = itemStack.getMaxDamage();
+//    final int displayDamage = itemStack.getItemDamage();
+//    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
+//
+//    if (enchantability <= 1)
+//    {
+//      enchantability = 10;
+//    }
+//
+//    final double percentDamage = 1
+//        - (maxDamage - displayDamage) / (double) maxDamage;
+//
+//    double totalCost = (percentDamage * cost) / enchantability;
+//
+//    totalCost *= 2 * repairFactor;
+//
+//    return (int) Math.max(1, totalCost);
+//  }
   // SlotSmeltableInput is a slot for input items
   public class SlotRepairableInput extends Slot
   {

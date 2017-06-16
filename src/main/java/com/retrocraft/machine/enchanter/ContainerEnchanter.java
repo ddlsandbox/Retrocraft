@@ -6,16 +6,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.retrocraft.common.ContainerBase;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
@@ -23,27 +22,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerEnchanter extends Container
+public class ContainerEnchanter extends ContainerBase
 {
 
   private static final int MAINSLOT_X  = 36;
   private static final int MAINSLOT_Y  = 17;
-  private static final int INVENTORY_X = 43;
-  private static final int INVENTORY_Y = 91;
-  private static final int EQUIPMENT_X = 6;
-  private static final int EQUIPMENT_Y = 23;
-  private static final int HOTBAR_X    = 43;
-  private static final int HOTBAR_Y    = 149;
 
-  private static final int SLOT_X_SPACING = 18;
-  private static final int SLOT_Y_SPACING = 18;
-
-  private static final int                  EQUIPMENT_SLOTS[]     =
-  { 39, 38, 37, 36, 40 };
-  public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[]
-  { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST,
-      EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET,
-      EntityEquipmentSlot.OFFHAND };
 
   private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
   private final TileEntityEnchanter enchanter;
@@ -51,12 +35,22 @@ public class ContainerEnchanter extends Container
   public ContainerEnchanter(InventoryPlayer playerInv,
       final TileEntityEnchanter enchanter)
   {
-
+    super(true, true);
+    
+    guiHotbarPosX = 43;
+    guiHotbarPosY = 149;
+    guiInventoryPosX = 43;
+    guiInventoryPosY = 91;
+    guiEquipmentPosX = 7;
+    guiEquipmentPosY = 24;
+    
     this.enchanter = enchanter;
 
     IItemHandler inventory = enchanter.getCapability(
         CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
 
+    addVanillaSlots(playerInv);
+    
     addSlotToContainer( /* custom slot */
         new SlotItemHandler(inventory, 0, MAINSLOT_X, MAINSLOT_Y)
         {
@@ -82,49 +76,6 @@ public class ContainerEnchanter extends Container
             enchanter.markDirty();
           }
         });
-
-    for (int i = 0; i < 3; i++)
-    {
-      for (int j = 0; j < 9; j++)
-      {
-        addSlotToContainer(
-            new Slot(playerInv, j + i * 9 + 9, INVENTORY_X + j * SLOT_X_SPACING,
-                INVENTORY_Y + i * SLOT_Y_SPACING));
-      }
-    }
-
-    for (int k = 0; k < 5; k++)
-    {
-      final int armorType = k;
-      final int slotNumber = EQUIPMENT_SLOTS[k];
-      addSlotToContainer(
-          new Slot(playerInv, slotNumber, EQUIPMENT_X, EQUIPMENT_Y + k * 19)
-          {
-            @Override
-            public int getSlotStackLimit()
-            {
-
-              return 1;
-            }
-
-            @Override
-            public boolean isItemValid(ItemStack par1ItemStack)
-            {
-              EntityEquipmentSlot entityEquipmentSlot = VALID_EQUIPMENT_SLOTS[armorType];
-              Item item = (par1ItemStack == null ? null
-                  : par1ItemStack.getItem());
-              return item != null && item.isValidArmor(par1ItemStack,
-                  entityEquipmentSlot, playerInv.player);
-            }
-          });
-    }
-
-    for (int k = 0; k < 9; k++)
-    {
-      addSlotToContainer(new Slot(playerInv, k, /* item */
-          HOTBAR_X + k * SLOT_X_SPACING, /* x */
-          HOTBAR_Y)); /* y */
-    }
   }
 
   public Map<Enchantment, Integer> getEnchantments()
@@ -160,39 +111,39 @@ public class ContainerEnchanter extends Container
   // slot items could be moved.
   // otherwise, returns a copy of the source stack
   @Override
-  public ItemStack transferStackInSlot(EntityPlayer player, int index)
+  public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
   {
     ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = inventorySlots.get(index);
+    Slot slot = inventorySlots.get(sourceSlotIndex);
 
     if (slot != null && slot.getHasStack())
     {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
 
-      int containerSlots = inventorySlots.size()
-          - player.inventory.mainInventory.size();
+//      int containerSlots = inventorySlots.size()
+//          - player.inventory.mainInventory.size();
 
-      if (index < containerSlots)
+      if (isVanillaSlot(sourceSlotIndex))
       {
-        if (!this.mergeItemStack(itemstack1, containerSlots,
-            inventorySlots.size(), true))
+        if (!this.mergeItemStack(itemstack1, customFirstSlotIndex, customFirstSlotIndex+1, false))
         {
           return ItemStack.EMPTY;
         }
-      } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
+      }
+      else
       {
-        return ItemStack.EMPTY;
+        if (!this.mergeItemStack(itemstack1, vanillaFirstSlotIndex,
+            vanillaFirstSlotIndex + vanillaSlotCount, true))
+        {
+          return ItemStack.EMPTY;
+        }
       }
 
       if (itemstack1.getCount() == 0)
       {
         slot.putStack(ItemStack.EMPTY);
       }
-      // else
-      // {
-      // slot.onSlotChanged();
-      // }
 
       if (itemstack1.getCount() == itemstack.getCount())
       {
@@ -232,12 +183,10 @@ public class ContainerEnchanter extends Container
   private void readItems()
   {
 
-    Slot slot = inventorySlots.get(0);
+    Slot slot = inventorySlots.get(customFirstSlotIndex);
     ItemStack itemStack = slot.getStack();
 
     final HashMap<Enchantment, Integer> temp = new LinkedHashMap<Enchantment, Integer>();
-    // final HashMap<Integer, Integer> temp2 = new LinkedHashMap<Integer,
-    // Integer>();
 
     if (itemStack != null)
     {
@@ -277,7 +226,7 @@ public class ContainerEnchanter extends Container
       int cost) throws Exception
   {
 
-    final ItemStack itemstack = inventorySlots.get(0).getStack();
+    final ItemStack itemstack = inventorySlots.get(customFirstSlotIndex).getStack();
     final HashMap<Enchantment, Integer> temp = new HashMap<Enchantment, Integer>();
     int serverCost = 0;
 
@@ -354,7 +303,7 @@ public class ContainerEnchanter extends Container
   {
 
     final double costFactor = 1.0;
-    final ItemStack itemStack = inventorySlots.get(0).getStack();
+    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex).getStack();
     if (itemStack == null)
       return 0;
 
@@ -392,7 +341,7 @@ public class ContainerEnchanter extends Container
       Integer level)
   {
 
-    final ItemStack itemStack = inventorySlots.get(0).getStack();
+    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex).getStack();
     final double costFactor = 1.0;
 
     if (itemStack == null)
@@ -433,47 +382,7 @@ public class ContainerEnchanter extends Container
     return Math.min(adjustedCost, -enchantmentCost);
   }
 
-  public int repairCostMax()
-  {
-
-    final double repairFactor = 1.5;
-    final ItemStack itemStack = inventorySlots.get(0).getStack();
-    if (itemStack == null)
-      return 0;
-
-    if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
-      return 0;
-
-    int cost = 0;
-
-    final Map<Enchantment, Integer> enchantments = EnchantmentHelper
-        .getEnchantments(itemStack);
-
-    for (final Enchantment enchantment : enchantments.keySet())
-    {
-      final Integer enchantmentLevel = enchantments.get(enchantment);
-
-      cost += enchantmentCost(enchantment, enchantmentLevel, 0);
-    }
-
-    final int maxDamage = itemStack.getMaxDamage();
-    final int displayDamage = itemStack.getItemDamage();
-    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
-
-    if (enchantability <= 1)
-    {
-      enchantability = 10;
-    }
-
-    final double percentDamage = 1
-        - (maxDamage - displayDamage) / (double) maxDamage;
-
-    double totalCost = (percentDamage * cost) / enchantability;
-
-    totalCost *= 2 * repairFactor;
-
-    return (int) Math.max(1, totalCost);
-  }
+  
 
   /* Client Synchronization */
 
