@@ -20,329 +20,406 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
-public class GuiEnchanter extends GuiContainer {
+public class GuiEnchanter extends GuiContainer
+{
 
-	private static final int BUTTON_X = 36;
-	private static final int BUTTON_Z = 36;
+  private static final int BUTTON_X = 36;
+  private static final int BUTTON_Z = 36;
 
-	private static final int ENCHANTLIST_X = 62;
-	private static final int ENCHANTLIST_Z_MIN = 18;
-	private static final int ENCHANTLIST_Z_MAX = 86;
+  private static final int ENCHANTLIST_X     = 62;
+  private static final int ENCHANTLIST_Z_MIN = 18;
+  private static final int ENCHANTLIST_Z_MAX = 86;
 
-	private static final int SCROLLBAR_X = 206;
-	private static final int SCROLLBAR_WIDTH = 11;
+  private static final int SCROLLBAR_X     = 206;
+  private static final int SCROLLBAR_WIDTH = 11;
 
-	private static final int guiOffset = 0;
+  private static final int SCROLL_IMG_OFFSET_X = 0;
+  private static final int SCROLL_IMG_OFFSET_Y = 182;
+  private static final int SCROLL_IMG_WIDTH    = 12;
+  private static final int SCROLL_IMG_HEIGHT   = 15;
 
-	private InventoryPlayer playerInv;
-	private ArrayList<GuiEnchanterLabel> enchantmentArray = new ArrayList<GuiEnchanterLabel>();
-	private Map<Enchantment, Integer> enchantments;
+  private static final int guiOffset = 0;
 
-	private static final ResourceLocation BG_TEXTURE = new ResourceLocation(RetroCraft.modId,
-			"textures/gui/enchanter.png");
-	private ContainerEnchanter container;
+  private InventoryPlayer              playerInv;
+  private ArrayList<GuiEnchanterLabel> enchantmentArray = new ArrayList<GuiEnchanterLabel>();
+  private Map<Enchantment, Integer>    enchantments;
 
-	private double sliderIndex = 0;
-	private boolean clicked = false;
-	private boolean sliding = false;
-	private double enchantingPages = 0;
-	private int totalCost = 0;
+  private static final ResourceLocation BG_TEXTURE = new ResourceLocation(
+      RetroCraft.modId, "textures/gui/enchanter.png");
+  private ContainerEnchanter            container;
 
-	public GuiEnchanter(Container containerEnchanter, InventoryPlayer playerInv) {
-		super(containerEnchanter);
+  private double  sliderIndex     = 0;
+  private boolean clicked         = false;
+  private boolean sliding         = false;
+  private double  enchantingPages = 0;
+  private int     totalCost       = 0;
 
-		this.xSize = 235;
-		this.ySize = 182;
+  public GuiEnchanter(Container containerEnchanter, InventoryPlayer playerInv)
+  {
+    super(containerEnchanter);
 
-		this.playerInv = playerInv;
-		this.container = (ContainerEnchanter) containerEnchanter;
-	}
+    this.xSize = 235;
+    this.ySize = 182;
 
-	@Override
-	public void initGui() {
-		super.initGui();
-		buttonList.add(new GuiButton(0, guiLeft + BUTTON_X, guiTop + BUTTON_Z, 18, 14, "E"));
-	}
+    this.playerInv = playerInv;
+    this.container = (ContainerEnchanter) containerEnchanter;
+  }
 
-	@Override
-	protected void actionPerformed(GuiButton par1GuiButton) {
+  @Override
+  public void initGui()
+  {
+    super.initGui();
+    buttonList.add(
+        new GuiButton(0, guiLeft + BUTTON_X, guiTop + BUTTON_Z, 18, 14, "E"));
+  }
 
-		final HashMap<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
+  @Override
+  protected void actionPerformed(GuiButton par1GuiButton)
+  {
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			final Integer newLevel = enchantments.get(item.enchantment);
-			if (item.enchantmentLevel != newLevel && !item.locked) {
-				enchants.put(item.enchantment, item.enchantmentLevel);
-				playerInv.player.sendMessage(new TextComponentString("Apply enchantment "+ item.enchantment.getName()));
-			}
-		}
-		playerInv.player.sendMessage(new TextComponentString("Apply " + enchants.size() + " enchantments"));
-		System.out.println("[RETROCRAFT] Apply " + enchants.size() + " enchantments");
+    final HashMap<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
 
-		if (enchants.size() > 0) {
-			playerInv.player.sendMessage(new TextComponentString("Enchanting..."));
-			try {
-				if (container.enchant(playerInv.player, enchants, totalCost))
-				{
-					RetroCraft.network.sendToServer(new PacketEnchant(enchants, totalCost));
-				}
-				playerInv.player.sendMessage(new TextComponentString("Enchanted!"));
-			} catch (Exception e) {
-				playerInv.player.sendMessage(new TextComponentString(e.getMessage()));
-			}
-		}
-		return;
-	}
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      final Integer newLevel = enchantments.get(item.enchantment);
+      if (item.enchantmentLevel != newLevel && !item.locked)
+      {
+        enchants.put(item.enchantment, item.enchantmentLevel);
+        playerInv.player.sendMessage(new TextComponentString(
+            "Apply enchantment " + item.enchantment.getName()));
+      }
+    }
+    playerInv.player.sendMessage(
+        new TextComponentString("Apply " + enchants.size() + " enchantments"));
+    System.out
+        .println("[RETROCRAFT] Apply " + enchants.size() + " enchantments");
 
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    if (enchants.size() > 0)
+    {
+      playerInv.player.sendMessage(new TextComponentString("Enchanting..."));
+      try
+      {
+        // if (container.enchant(playerInv.player, enchants, totalCost))
+        RetroCraft.network.sendToServer(new PacketEnchant(enchants, totalCost));
+        playerInv.player.sendMessage(new TextComponentString("Enchanted!"));
+      } catch (Exception e)
+      {
+        playerInv.player.sendMessage(new TextComponentString(e.getMessage()));
+      }
+    }
+    return;
+  }
 
-		boolean flag = Mouse.isButtonDown(0);
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX,
+      int mouseY)
+  {
 
-		/*
-		 * reset the GL color to solid white, instead of potentially something
-		 * else. If we don’t reset it, and the color isn’t already white, our
-		 * texture would be tinted with that color.
-		 */
-		GlStateManager.disableLighting();
-		GlStateManager.disableDepth();
-		GlStateManager.color(1, 1, 1, 1);
+    boolean flag = Mouse.isButtonDown(0);
 
-		/*
-		 * bind the background texture that we’ve specified in our BG_TEXTURE
-		 * field to Minecraft’s rendering engine, so that when we render a
-		 * rectangle with a texture on it, the correct texture is used.
-		 */
-		mc.getTextureManager().bindTexture(BG_TEXTURE);
+    /*
+     * reset the GL color to solid white, instead of potentially something else.
+     * If we don’t reset it, and the color isn’t already white, our texture
+     * would be tinted with that color.
+     */
+    GlStateManager.disableLighting();
+    GlStateManager.disableDepth();
+    GlStateManager.color(1, 1, 1, 1);
 
-		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+    /*
+     * bind the background texture that we’ve specified in our BG_TEXTURE field
+     * to Minecraft’s rendering engine, so that when we render a rectangle with
+     * a texture on it, the correct texture is used.
+     */
+    mc.getTextureManager().bindTexture(BG_TEXTURE);
 
-		// enchantmentArray = convertMapToGuiItems(
-		// container.getEnchantments(),
-		// ENCHANTLIST_X + guiLeft,
-		// ENCHANTLIST_Z_MIN + guiTop);
+    drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			if (item.yPos < guiTop + ENCHANTLIST_Z_MIN || item.yPos >= guiTop + ENCHANTLIST_Z_MAX) {
-				item.show(false);
-			} else {
-				item.show(true);
-			}
-			item.draw(fontRendererObj);
-		}
+    // enchantmentArray = convertMapToGuiItems(
+    // container.getEnchantments(),
+    // ENCHANTLIST_X + guiLeft,
+    // ENCHANTLIST_Z_MIN + guiTop);
 
-		final int adjustedMouseX = mouseX - guiLeft;
-		final int adjustedMouseY = mouseY - guiTop;
-		
-		// mc.renderEngine.bindTexture(texture);
-		int tempY = adjustedMouseY - 16;
-		if (tempY <= 0) {
-			tempY = 0;
-		} else if (tempY >= 57) {
-			tempY = 57;
-		}
-		sliderIndex = sliding ? Math.round((tempY / 57D * enchantingPages) / .25) * .25 : sliderIndex;
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      item.show(
+             item.yPos >= guiTop + ENCHANTLIST_Z_MIN
+          && item.yPos  < guiTop + ENCHANTLIST_Z_MAX);
+      item.draw(fontRendererObj);
+    }
 
-		if (sliderIndex >= enchantingPages) {
-			sliderIndex = enchantingPages;
-		}
+    final int adjustedMouseX = mouseX - guiLeft;
+    final int adjustedMouseY = mouseY - guiTop;
 
-		double sliderY = sliding ? tempY : 57 * (sliderIndex / enchantingPages);
+    // mc.renderEngine.bindTexture(texture);
+    int tempY = adjustedMouseY - 16;
+    if (tempY <= 0)
+    {
+      tempY = 0;
+    } else if (tempY >= 57)
+    {
+      tempY = 57;
+    }
+    sliderIndex = sliding
+        ? Math.round((tempY / 57D * enchantingPages) / .25) * .25 : sliderIndex;
 
-		drawTexturedModalRect(guiLeft + guiOffset + SCROLLBAR_X, // 180
-				guiTop + 16 + (int) sliderY, 0, 182, 12, 15);
+    if (sliderIndex >= enchantingPages)
+    {
+      sliderIndex = enchantingPages;
+    }
 
-		if (!clicked && flag) {
-			for (final GuiEnchanterLabel item : enchantmentArray) {
-				if (getItemFromPos(mouseX, mouseY) == item && !item.locked) {
-					item.dragging = true;
-				}
-			}
-			if (adjustedMouseX <= SCROLLBAR_X + SCROLLBAR_WIDTH + guiOffset
-					&& adjustedMouseX >= SCROLLBAR_X + guiOffset) {
-				if (enchantingPages != 0) {
-					sliding = true;
-				}
-			}
-		}
+    double sliderY = sliding ? tempY : 57 * (sliderIndex / enchantingPages);
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			if (item.dragging && getItemFromPos(mouseX, mouseY) != item) {
-				item.dragging = false;
-			}
-		}
+    drawTexturedModalRect(guiLeft + guiOffset + SCROLLBAR_X, // 180
+        guiTop + 16 + (int) sliderY, SCROLL_IMG_OFFSET_X, SCROLL_IMG_OFFSET_Y,
+        SCROLL_IMG_WIDTH, SCROLL_IMG_HEIGHT);
 
-		if (!flag) {
-			for (final GuiEnchanterLabel item : enchantmentArray) {
-				if (getItemFromPos(mouseX, mouseY) == item) {
-					item.dragging = false;
-				}
-			}
-			sliding = false;
-		}
+    if (!clicked && flag)
+    {
+      for (final GuiEnchanterLabel item : enchantmentArray)
+      {
+        if (getItemFromPos(mouseX, mouseY) == item && !item.locked)
+        {
+          item.dragging = true;
+        }
+      }
+      if (adjustedMouseX <= SCROLLBAR_X + SCROLLBAR_WIDTH + guiOffset
+          && adjustedMouseX >= SCROLLBAR_X + guiOffset)
+      {
+        if (enchantingPages != 0)
+        {
+          sliding = true;
+        }
+      }
+    }
 
-		clicked = flag;
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      if (item.dragging && getItemFromPos(mouseX, mouseY) != item)
+      {
+        item.dragging = false;
+      }
+    }
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			if (item.dragging) {
-				item.scroll(adjustedMouseX - ENCHANTLIST_X, // TODO: or 36??
-						ENCHANTLIST_X + guiLeft);
-			}
-		}
-	}
+    if (!flag)
+    {
+      for (final GuiEnchanterLabel item : enchantmentArray)
+      {
+        if (getItemFromPos(mouseX, mouseY) == item)
+        {
+          item.dragging = false;
+        }
+      }
+      sliding = false;
+    }
 
-	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String name = RetroCraft.proxy.localize(ModBlocks.blockEnchanter.getUnlocalizedName() + ".name");
-		FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
-		fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, /* x */
-				2, /* z */
-				0x404040);
-	}
+    clicked = flag;
 
-	@Override
-	public void updateScreen() {
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      if (item.dragging)
+      {
+        item.scroll(adjustedMouseX - ENCHANTLIST_X, // TODO: or 36??
+            ENCHANTLIST_X + guiLeft);
+      }
+    }
+  }
 
-		super.updateScreen();
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+  {
+    String name = RetroCraft.proxy
+        .localize(ModBlocks.blockEnchanter.getUnlocalizedName() + ".name");
+    FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+    fontRenderer.drawString(name,
+        xSize / 2 - fontRenderer.getStringWidth(name) / 2, /* x */
+        2, /* z */
+        0x404040);
+  }
 
-		// final Map<Integer, Integer> enchantments =
-		// updateEnchantments(container.getEnchantments());
+  @Override
+  public void updateScreen()
+  {
 
-		// handleChangedScreenSize(enchantments);
-		enableEnchantments();
-		if (container.getEnchantments() != this.enchantments) {
-			this.enchantments = container.getEnchantments();
-			enchantmentArray = convertMapToGuiItems(this.enchantments, ENCHANTLIST_X + guiLeft,
-					ENCHANTLIST_Z_MIN + guiTop);
-		}
-		enchantingPages = enchantmentArray.size() / 4.0 > 1 ? enchantmentArray.size() / 4.0 - 1.0 : 0;
-		totalCost = 0;
+    super.updateScreen();
 
-		handleChangedEnchantments(enchantments);
-	}
+    // final Map<Integer, Integer> enchantments =
+    // updateEnchantments(container.getEnchantments());
 
-	protected boolean levelChanged() {
+    // handleChangedScreenSize(enchantments);
+    enableEnchantments();
+    if (container.getEnchantments() != this.enchantments)
+    {
+      this.enchantments = container.getEnchantments();
+      enchantmentArray = convertMapToGuiItems(this.enchantments,
+          ENCHANTLIST_X + guiLeft, ENCHANTLIST_Z_MIN + guiTop);
+    }
+    enchantingPages = enchantmentArray.size() / 4.0 > 1
+        ? enchantmentArray.size() / 4.0 - 1.0 : 0;
+    totalCost = 0;
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			if (item.enchantmentLevel != item.currentLevel) {
-				return true;
-			}
-		}
-		return false;
-	}
+    handleChangedEnchantments(enchantments);
+  }
 
-	private void handleChangedEnchantments(Map<Enchantment, Integer> enchantments) {
+  protected boolean levelChanged()
+  {
 
-		if (!enchantmentArray.isEmpty() && levelChanged()) {
-			for (final GuiEnchanterLabel item : enchantmentArray) {
-				handleChangedEnchantment(enchantments, item);
-			}
-		} else if (!levelChanged()) {
-			totalCost += container.repairCostMax();
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      if (item.enchantmentLevel != item.currentLevel)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 
-			for (final GuiEnchanterLabel item : enchantmentArray) {
-				item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
-			}
-		}
-	}
+  private void handleChangedEnchantments(Map<Enchantment, Integer> enchantments)
+  {
 
-	private void handleChangedEnchantment(Map<Enchantment, Integer> enchantments, GuiEnchanterLabel item) {
+    if (!enchantmentArray.isEmpty() && levelChanged())
+    {
+      for (final GuiEnchanterLabel item : enchantmentArray)
+      {
+        handleChangedEnchantment(enchantments, item);
+      }
+    } else if (!levelChanged())
+    {
+      totalCost += container.repairCostMax();
 
-		item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
+      for (final GuiEnchanterLabel item : enchantmentArray)
+      {
+        item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
+      }
+    }
+  }
 
-		final Integer level = enchantments.get(item.enchantment);
-		if (!item.locked && item.enchantmentLevel > level) {
-			int temp = totalCost + container.enchantmentCost(item.enchantment, item.enchantmentLevel, level);
+  private void handleChangedEnchantment(Map<Enchantment, Integer> enchantments,
+      GuiEnchanterLabel item)
+  {
 
-			if (!container.canPurchase(playerInv.player, temp)) {
-				while (item.enchantmentLevel > 0) {
-					item.dragging = false;
-					item.enchantmentLevel--;
-					temp = totalCost + container.enchantmentCost(item.enchantment, item.enchantmentLevel, level);
-					if (container.canPurchase(playerInv.player, temp)) {
-						break;
-					}
+    item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
 
-				}
-			}
-			
-			totalCost = temp;
-		} else if (item.enchantmentLevel < level && !item.locked) {
-			if (EnchantHelper.containsEnchantment(
-					container.getInventory().get(0).getTagCompound().getTagList("restrictions", 10),
-					Enchantment.getEnchantmentID(item.enchantment), item.enchantmentLevel)) {
-				totalCost += container.disenchantmentCost(item.enchantment, item.enchantmentLevel, level);
-			} else {
-				totalCost = 0;
-			}
-		}
-	}
+    final Integer level = enchantments.get(item.enchantment);
+    if (!item.locked && item.enchantmentLevel > level)
+    {
+      int temp = totalCost + container.enchantmentCost(item.enchantment,
+          item.enchantmentLevel, level);
 
-	private GuiEnchanterLabel getItemFromPos(int x, int y) {
+      if (!container.canPurchase(playerInv.player, temp))
+      {
+        while (item.enchantmentLevel > 0)
+        {
+          item.dragging = false;
+          item.enchantmentLevel--;
+          temp = totalCost + container.enchantmentCost(item.enchantment,
+              item.enchantmentLevel, level);
+          if (container.canPurchase(playerInv.player, temp))
+          {
+            break;
+          }
 
-		if (x < guiLeft + ENCHANTLIST_X || x > guiLeft + ENCHANTLIST_X + GuiEnchanterLabel.WIDTH + 5) {
-			return null;
-		}
+        }
+      }
 
-		for (final GuiEnchanterLabel item : enchantmentArray) {
-			if (!item.show) {
-				continue;
-			}
-			if (y >= item.yPos && y <= item.yPos + item.HEIGHT) {
-				return item;
-			}
-		}
-		return null;
-	}
+      totalCost = temp;
+    } else if (item.enchantmentLevel < level && !item.locked)
+    {
+      if (EnchantHelper.containsEnchantment(
+          container.getInventory().get(0).getTagCompound()
+              .getTagList("restrictions", 10),
+          Enchantment.getEnchantmentID(item.enchantment),
+          item.enchantmentLevel))
+      {
+        totalCost += container.disenchantmentCost(item.enchantment,
+            item.enchantmentLevel, level);
+      } else
+      {
+        totalCost = 0;
+      }
+    }
+  }
 
-	private void enableEnchantments() {
+  private GuiEnchanterLabel getItemFromPos(int x, int y)
+  {
 
-		for (GuiEnchanterLabel item : enchantmentArray) {
-			item.locked = false;
-		}
+    if (x < guiLeft + ENCHANTLIST_X
+        || x > guiLeft + ENCHANTLIST_X + GuiEnchanterLabel.WIDTH + 5)
+    {
+      return null;
+    }
 
-		for (GuiEnchanterLabel item : enchantmentArray) {
-			if (item.enchantmentLevel != 0) {
-				for (final GuiEnchanterLabel item2 : enchantmentArray) {
-					if (item == item2)
-						continue;
+    for (final GuiEnchanterLabel item : enchantmentArray)
+    {
+      if (!item.show)
+      {
+        continue;
+      }
+      if (y >= item.yPos && y <= item.yPos + GuiEnchanterLabel.HEIGHT)
+      {
+        return item;
+      }
+    }
+    return null;
+  }
 
-					if (!EnchantHelper.isEnchantmentsCompatible(item.enchantment, item2.enchantment)) {
-						item2.locked = true;
-					}
-				}
-			}
-		}
-	}
+  private void enableEnchantments()
+  {
 
-	/**
-	 * Converts map to arraylist of gui items
-	 *
-	 * @param map
-	 *            the map of enchantments to convert
-	 * @param x
-	 *            starting x position
-	 * @param y
-	 *            starting y position
-	 * @return the arraylist of gui items
-	 */
-	private ArrayList<GuiEnchanterLabel> convertMapToGuiItems(final Map<Enchantment, Integer> map, int x, int y) {
+    for (GuiEnchanterLabel item : enchantmentArray)
+    {
+      item.locked = false;
+    }
 
-		final ArrayList<GuiEnchanterLabel> temp = new ArrayList<GuiEnchanterLabel>();
+    for (GuiEnchanterLabel item : enchantmentArray)
+    {
+      if (item.enchantmentLevel != 0)
+      {
+        for (final GuiEnchanterLabel item2 : enchantmentArray)
+        {
+          if (item == item2)
+            continue;
 
-		if (map == null)
-			return temp;
+          if (!EnchantHelper.isEnchantmentsCompatible(item.enchantment,
+              item2.enchantment))
+          {
+            item2.locked = true;
+          }
+        }
+      }
+    }
+  }
 
-		int i = 0;
-		int yPos = y;
-		for (Enchantment obj : map.keySet()) {
-			temp.add(new GuiEnchanterLabel(container, obj, map.get(obj), x, yPos));
-			i++;
-			yPos = y + i * 18;
-		}
+  /**
+   * Converts map to arraylist of gui items
+   *
+   * @param map
+   *          the map of enchantments to convert
+   * @param x
+   *          starting x position
+   * @param y
+   *          starting y position
+   * @return the arraylist of gui items
+   */
+  private ArrayList<GuiEnchanterLabel> convertMapToGuiItems(
+      final Map<Enchantment, Integer> map, int x, int y)
+  {
 
-		return temp;
-	}
+    final ArrayList<GuiEnchanterLabel> temp = new ArrayList<GuiEnchanterLabel>();
+
+    if (map == null)
+      return temp;
+
+    int i = 0;
+    int yPos = y;
+    for (Enchantment obj : map.keySet())
+    {
+      temp.add(new GuiEnchanterLabel(obj, map.get(obj), x, yPos));
+      i++;
+      yPos = y + i * 18;
+    }
+
+    return temp;
+  }
 }

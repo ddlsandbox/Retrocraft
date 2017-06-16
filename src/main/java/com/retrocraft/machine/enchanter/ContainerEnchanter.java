@@ -11,9 +11,11 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
@@ -21,403 +23,507 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerEnchanter extends Container {
+public class ContainerEnchanter extends Container
+{
 
-	private static final int MAINSLOT_X = 36;
-	private static final int MAINSLOT_Z = 17;
-	private static final int INVENTORY_X = 43;
-	private static final int INVENTORY_Z = 91;
-	private static final int HOTBAR_X = 43;
-	private static final int HOTBAR_Z = 149;
+  private static final int MAINSLOT_X  = 36;
+  private static final int MAINSLOT_Y  = 17;
+  private static final int INVENTORY_X = 43;
+  private static final int INVENTORY_Y = 91;
+  private static final int EQUIPMENT_X = 6;
+  private static final int EQUIPMENT_Y = 23;
+  private static final int HOTBAR_X    = 43;
+  private static final int HOTBAR_Y    = 149;
 
-	private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
-	private final TileEntityEnchanter enchanter;
+  private static final int SLOT_X_SPACING = 18;
+  private static final int SLOT_Y_SPACING = 18;
 
-	private IInventory last_inventory;
+  private static final int                  EQUIPMENT_SLOTS[]     =
+  { 39, 38, 37, 36, 40 };
+  public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[]
+  { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST,
+      EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET,
+      EntityEquipmentSlot.OFFHAND };
 
-	public ContainerEnchanter(InventoryPlayer playerInv, final TileEntityEnchanter enchanter) {
+  private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
+  private final TileEntityEnchanter enchanter;
 
-		this.enchanter = enchanter;
+  public ContainerEnchanter(InventoryPlayer playerInv,
+      final TileEntityEnchanter enchanter)
+  {
 
-		IItemHandler inventory = enchanter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
-				EnumFacing.NORTH);
+    this.enchanter = enchanter;
 
-		addSlotToContainer( /* custom slot */
-			new SlotItemHandler(inventory, 0, MAINSLOT_X, MAINSLOT_Z) {
+    IItemHandler inventory = enchanter.getCapability(
+        CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
 
-				@Override
-				public int getSlotStackLimit() {
-					return 1;
-				}
+    addSlotToContainer( /* custom slot */
+        new SlotItemHandler(inventory, 0, MAINSLOT_X, MAINSLOT_Y)
+        {
 
-				@Override
-				public boolean isItemValid(ItemStack par1ItemStack) {
+          @Override
+          public int getSlotStackLimit()
+          {
+            return 1;
+          }
 
-					return par1ItemStack.isItemEnchantable() || par1ItemStack.isItemEnchanted();
-				}
+          @Override
+          public boolean isItemValid(ItemStack itemStack)
+          {
+            return itemStack.getItem() != Items.BOOK
+                && (itemStack.isItemEnchantable()
+                    || itemStack.isItemEnchanted());
+          }
 
-				@Override
-				public void onSlotChanged() {
-					enchanter.markDirty();
-				}
-			});
+          @Override
+          public void onSlotChanged()
+          {
+            readItems();
+            enchanter.markDirty();
+          }
+        });
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(playerInv, j + i * 9 + 9, INVENTORY_X + j * 18, INVENTORY_Z + i * 18));
-			}
-		}
+    for (int i = 0; i < 3; i++)
+    {
+      for (int j = 0; j < 9; j++)
+      {
+        addSlotToContainer(
+            new Slot(playerInv, j + i * 9 + 9, INVENTORY_X + j * SLOT_X_SPACING,
+                INVENTORY_Y + i * SLOT_Y_SPACING));
+      }
+    }
 
-		for (int k = 0; k < 9; k++) {
-			addSlotToContainer(new Slot(playerInv, k, /* item */
-					HOTBAR_X + k * 18, /* x */
-					HOTBAR_Z)); /* z */
-		}
-	}
+    for (int k = 0; k < 5; k++)
+    {
+      final int armorType = k;
+      final int slotNumber = EQUIPMENT_SLOTS[k];
+      addSlotToContainer(
+          new Slot(playerInv, slotNumber, EQUIPMENT_X, EQUIPMENT_Y + k * 19)
+          {
+            @Override
+            public int getSlotStackLimit()
+            {
 
-	public Map<Enchantment, Integer> getEnchantments() {
+              return 1;
+            }
 
-		return enchantments;
-	}
+            @Override
+            public boolean isItemValid(ItemStack par1ItemStack)
+            {
+              EntityEquipmentSlot entityEquipmentSlot = VALID_EQUIPMENT_SLOTS[armorType];
+              Item item = (par1ItemStack == null ? null
+                  : par1ItemStack.getItem());
+              return item != null && item.isValidArmor(par1ItemStack,
+                  entityEquipmentSlot, playerInv.player);
+            }
+          });
+    }
 
-	@Override
-	public boolean canInteractWith(EntityPlayer player) {
-		return true;
-	}
+    for (int k = 0; k < 9; k++)
+    {
+      addSlotToContainer(new Slot(playerInv, k, /* item */
+          HOTBAR_X + k * SLOT_X_SPACING, /* x */
+          HOTBAR_Y)); /* y */
+    }
+  }
 
-	@Override
-	public void onCraftMatrixChanged(IInventory par1IInventory) {
-		super.onCraftMatrixChanged(par1IInventory);
+  public Map<Enchantment, Integer> getEnchantments()
+  {
+    return enchantments;
+  }
 
-		last_inventory = par1IInventory;
-		// enchanter.markDirty();
-		readItems();
-	}
+  @Override
+  public boolean canInteractWith(EntityPlayer player)
+  {
+    return true;
+  }
 
-	// This is where you specify what happens when a player shift clicks a slot in the gui
-	//  (when you shift click a slot in the TileEntity Inventory, it moves it to the first available position in the hotbar and/or
-	//    player inventory.  When you you shift-click a hotbar or player inventory item, it moves it to the first available
-	//    position in the TileEntity inventory - either input or fuel as appropriate for the item you clicked)
-	// At the very least you must override this and return EMPTY_ITEM or the game will crash when the player shift clicks a slot
-	// returns EMPTY_ITEM if the source slot is empty, or if none of the source slot items could be moved.
-	//   otherwise, returns a copy of the source stack
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+  @Override
+  public void onContainerClosed(EntityPlayer p_onContainerClosed_1_)
+  {
+    // TODO Auto-generated method stub
+    super.onContainerClosed(p_onContainerClosed_1_);
+    System.out.println("[RETROCRAFT] CONTAINER CLOSED");
+  }
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
+  // This is where you specify what happens when a player shift clicks a slot in
+  // the gui
+  // (when you shift click a slot in the TileEntity Inventory, it moves it to
+  // the first available position in the hotbar and/or
+  // player inventory. When you you shift-click a hotbar or player inventory
+  // item, it moves it to the first available
+  // position in the TileEntity inventory - either input or fuel as appropriate
+  // for the item you clicked)
+  // At the very least you must override this and return EMPTY_ITEM or the game
+  // will crash when the player shift clicks a slot
+  // returns EMPTY_ITEM if the source slot is empty, or if none of the source
+  // slot items could be moved.
+  // otherwise, returns a copy of the source stack
+  @Override
+  public ItemStack transferStackInSlot(EntityPlayer player, int index)
+  {
+    ItemStack itemstack = ItemStack.EMPTY;
+    Slot slot = inventorySlots.get(index);
 
-			int containerSlots = inventorySlots.size() - player.inventory.mainInventory.size();
+    if (slot != null && slot.getHasStack())
+    {
+      ItemStack itemstack1 = slot.getStack();
+      itemstack = itemstack1.copy();
 
-			if (index < containerSlots) {
-				if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
-				return ItemStack.EMPTY;
-			}
+      int containerSlots = inventorySlots.size()
+          - player.inventory.mainInventory.size();
 
-			if (itemstack1.getCount() == 0) {
-				slot.putStack(ItemStack.EMPTY);
-			} else {
-				slot.onSlotChanged();
-			}
-
-			if (itemstack1.getCount() == itemstack.getCount()) {
-				return ItemStack.EMPTY;
-			}
-
-			slot.onTake(player, itemstack1);
-		}
-
-		readItems();
-
-		return itemstack;
-	}
-
-	private void addEnchantsFor(ItemStack itemStack, HashMap<Enchantment, Integer> temp) {
-
-		for (int i : EnchantHelper.ALL_ENCHANTMENTS) {
-			final Enchantment obj = Enchantment.getEnchantmentByID(i);
-			addEnchantFor(itemStack, temp, obj);
-		}
-	}
-
-	private void addEnchantFor(ItemStack itemStack, HashMap<Enchantment, Integer> temp, Enchantment obj) {
-
-		if (obj != null && obj.canApplyAtEnchantingTable(itemStack)) {
-			temp.put(obj, EnchantmentHelper.getEnchantmentLevel(obj, itemStack));
-		}
-	}
-
-	/**
-	 * Will read the enchantments on the items and ones the can be added to the
-	 * items
-	 */
-	private void readItems() {
-
-		Slot slot = inventorySlots.get(0);
-		ItemStack itemStack = slot.getStack();
-
-		final HashMap<Enchantment, Integer> temp = new LinkedHashMap<Enchantment, Integer>();
-//		final HashMap<Integer, Integer> temp2 = new LinkedHashMap<Integer, Integer>();
-
-		if (itemStack != null) {
-			if (EnchantHelper.isItemEnchantable(itemStack)) {
-				addEnchantsFor(itemStack, temp);
-			}
-
-			if (enchantments != temp) {
-				enchantments = temp;
-			}
-		} else {
-			enchantments = temp;
-		}
-	}
-
-	public boolean canPurchase(EntityPlayer player, int cost) {
-
-		if (player.capabilities.isCreativeMode) {
-			return true;
-		}
-
-		if (player.experienceLevel < cost) {
-			player.sendMessage(new TextComponentString("Not enough levels. Required " + cost));
-			return false;
-		}
-		return true;
-	}
-
-	public boolean enchant (EntityPlayer player,
-					HashMap<Enchantment, Integer> map,
-					int cost) throws Exception {
-
-        final ItemStack itemstack = inventorySlots.get(0).getStack();
-        final HashMap<Enchantment, Integer> temp = new HashMap<Enchantment, Integer>();
-        int serverCost = 0;
-
-        if (itemstack == null)
-            return false;
-
-        for (final Enchantment enchantment : map.keySet()) {
-            final Integer level = map.get(enchantment);
-            final Integer startingLevel = enchantments.get(enchantment);
-            if (level > startingLevel)
-                serverCost += enchantmentCost(enchantment, level, startingLevel);
-            else if (level < startingLevel)
-                serverCost += disenchantmentCost(enchantment, level, startingLevel);
+      if (index < containerSlots)
+      {
+        if (!this.mergeItemStack(itemstack1, containerSlots,
+            inventorySlots.size(), true))
+        {
+          return ItemStack.EMPTY;
         }
+      } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
+      {
+        return ItemStack.EMPTY;
+      }
 
-        //FIXME
-//        if (cost != serverCost) {
-//            throw new Exception("Cost is different on client and server " + cost + " vs " + serverCost);
-//        }
+      if (itemstack1.getCount() == 0)
+      {
+        slot.putStack(ItemStack.EMPTY);
+      }
+      // else
+      // {
+      // slot.onSlotChanged();
+      // }
 
-//        for (final Enchantment enchantment : enchantments.keySet()) {
-//            final Integer level = enchantments.get(enchantment);
-//
-//            if (level != 0) {
-//                if (!map.containsKey(enchantment)) {
-//                    map.put(enchantment, level);
-//                }
-//            }
-//        }
-//
-//        for (final Enchantment enchantment : map.keySet()) {
-//            final Integer level = map.get(enchantment);
-//
-//            if (level == 0)
-//                temp.put(enchantment, level);
-//
-//        }
-//        for (Enchantment object : temp.keySet()) {
-//            map.remove(object);
-//        }
+      if (itemstack1.getCount() == itemstack.getCount())
+      {
+        return ItemStack.EMPTY;
+      }
 
-        if (canPurchase(player, serverCost)) {
-        	 final List<EnchantmentData> enchantmentDataList = new ArrayList<>();
+      slot.onTake(player, itemstack1);
+    }
 
-             for (final Enchantment enchantment : map.keySet())
-                 enchantmentDataList.add(new EnchantmentData(enchantment, map.get(enchantment)));
+    return itemstack;
+  }
 
-             if (!player.capabilities.isCreativeMode)
-                 if (serverCost < 0)
-                     player.addExperience(-serverCost);
-                 else
-                     player.addExperienceLevel(-EnchantHelper.getLevelsFromExperience(serverCost));
+  private void addEnchantsFor(ItemStack itemStack,
+      HashMap<Enchantment, Integer> temp)
+  {
 
-//             this.tableInventory.setInventorySlotContents(0, this.applyChanges(enchantmentDataList, itemstack, player, clientCost))
-             
-//            ItemStack itemStack = EnchantHelper.setEnchantments(map, itemstack, levels);
-//            final Slot slot = inventorySlots.get(0);
+    for (int i : EnchantHelper.ALL_ENCHANTMENTS)
+    {
+      final Enchantment obj = Enchantment.getEnchantmentByID(i);
+      addEnchantFor(itemStack, temp, obj);
+    }
+  }
 
-//            slot.putStack(ItemStack.EMPTY);
-//            slot.putStack(itemStack);
+  private void addEnchantFor(ItemStack itemStack,
+      HashMap<Enchantment, Integer> temp, Enchantment obj)
+  {
+    if (obj != null && obj.canApplyAtEnchantingTable(itemStack))
+    {
+      temp.put(obj, EnchantmentHelper.getEnchantmentLevel(obj, itemStack));
+    }
+  }
+
+  /**
+   * Will read the enchantments on the items and ones the can be added to the
+   * items
+   */
+  private void readItems()
+  {
+
+    Slot slot = inventorySlots.get(0);
+    ItemStack itemStack = slot.getStack();
+
+    final HashMap<Enchantment, Integer> temp = new LinkedHashMap<Enchantment, Integer>();
+    // final HashMap<Integer, Integer> temp2 = new LinkedHashMap<Integer,
+    // Integer>();
+
+    if (itemStack != null)
+    {
+      if (EnchantHelper.isItemEnchantable(itemStack))
+      {
+        addEnchantsFor(itemStack, temp);
+      }
+
+      if (enchantments != temp)
+      {
+        enchantments = temp;
+      }
+    } else
+    {
+      enchantments = temp;
+    }
+  }
+
+  public boolean canPurchase(EntityPlayer player, int cost)
+  {
+
+    if (player.capabilities.isCreativeMode)
+    {
+      return true;
+    }
+
+    if (player.experienceLevel < cost)
+    {
+      player.sendMessage(
+          new TextComponentString("Not enough levels. Required " + cost));
+      return false;
+    }
+    return true;
+  }
+
+  public boolean enchant(EntityPlayer player, HashMap<Enchantment, Integer> map,
+      int cost) throws Exception
+  {
+
+    final ItemStack itemstack = inventorySlots.get(0).getStack();
+    final HashMap<Enchantment, Integer> temp = new HashMap<Enchantment, Integer>();
+    int serverCost = 0;
+
+    if (itemstack == null)
+      return false;
+
+    for (final Enchantment enchantment : map.keySet())
+    {
+      final Integer level = map.get(enchantment);
+      final Integer startingLevel = enchantments.get(enchantment);
+      if (level > startingLevel)
+        serverCost += enchantmentCost(enchantment, level, startingLevel);
+      else if (level < startingLevel)
+        serverCost += disenchantmentCost(enchantment, level, startingLevel);
+    }
+
+    if (cost != serverCost)
+    {
+      throw new Exception("Cost is different on client and server " + cost
+          + " vs " + serverCost);
+    }
+
+    for (final Enchantment enchantment : enchantments.keySet())
+    {
+      final Integer level = enchantments.get(enchantment);
+
+      if (level != 0)
+      {
+        if (!map.containsKey(enchantment))
+        {
+          map.put(enchantment, level);
         }
+      }
+    }
 
-        readItems();
+    for (final Enchantment enchantment : map.keySet())
+    {
+      final Integer level = map.get(enchantment);
 
-        enchanter.enchantCurrent(map);
+      if (level == 0)
+        temp.put(enchantment, level);
 
-        enchanter.markDirty();
+    }
+    for (Enchantment object : temp.keySet())
+    {
+      map.remove(object);
+    }
 
-        onCraftMatrixChanged(last_inventory);
+    if (canPurchase(player, serverCost))
+    {
+      final List<EnchantmentData> enchantmentDataList = new ArrayList<>();
 
-        enchanter.sendUpdate();
+      for (final Enchantment enchantment : map.keySet())
+        enchantmentDataList
+            .add(new EnchantmentData(enchantment, map.get(enchantment)));
 
-        //enchanter.onLoad();
-        return true;
-}
+      if (!player.capabilities.isCreativeMode)
+        if (serverCost < 0)
+          player.addExperience(-serverCost);
+        else
+          player.addExperienceLevel(
+              -EnchantHelper.getLevelsFromExperience(serverCost));
+    }
 
-	public int enchantmentCost(Enchantment enchantment, int enchantmentLevel, Integer level) {
+    enchanter.enchantCurrent(map);
+    readItems();
+    enchanter.markDirty();
+    // enchanter.sendUpdate();
+    return true;
+  }
 
-		final double costFactor = 1.0;
-		final ItemStack itemStack = inventorySlots.get(0).getStack();
-		if (itemStack == null)
-			return 0;
+  public int enchantmentCost(Enchantment enchantment, int enchantmentLevel,
+      Integer level)
+  {
 
-		final int maxLevel = enchantment.getMaxLevel();
+    final double costFactor = 1.0;
+    final ItemStack itemStack = inventorySlots.get(0).getStack();
+    if (itemStack == null)
+      return 0;
 
-		if (enchantmentLevel > maxLevel) {
-			return 0;
-		}
+    final int maxLevel = enchantment.getMaxLevel();
 
-		final int averageCost = (enchantment.getMinEnchantability(enchantmentLevel)
-				+ enchantment.getMaxEnchantability(enchantmentLevel)) / 2;
-		int enchantability = itemStack.getItem().getItemEnchantability();
+    if (enchantmentLevel > maxLevel)
+    {
+      return 0;
+    }
 
-		if (enchantability < 1)
-			enchantability = 1;
+    final int averageCost = (enchantment.getMinEnchantability(enchantmentLevel)
+        + enchantment.getMaxEnchantability(enchantmentLevel)) / 2;
+    int enchantability = itemStack.getItem().getItemEnchantability();
 
-		int adjustedCost = (int) (averageCost * (enchantmentLevel - level + maxLevel)
-				/ ((double) maxLevel * enchantability));
+    if (enchantability < 1)
+      enchantability = 1;
 
-		adjustedCost *= (costFactor / 3D);
-		if (enchantability > 1) {
-			adjustedCost *= Math.log(enchantability) / 2;
-		} else {
-			adjustedCost /= 10;
-		}
+    int adjustedCost = (int) (averageCost
+        * (enchantmentLevel - level + maxLevel)
+        / ((double) maxLevel * enchantability));
 
-		return Math.max(1, adjustedCost);
-	}
+    adjustedCost *= (costFactor / 3D);
+    if (enchantability > 1)
+    {
+      adjustedCost *= Math.log(enchantability) / 2;
+    } else
+    {
+      adjustedCost /= 10;
+    }
 
-	public int disenchantmentCost(Enchantment enchantment, int enchantmentLevel, Integer level) {
+    return Math.max(1, adjustedCost);
+  }
 
-		final ItemStack itemStack = inventorySlots.get(0).getStack();
-		final double costFactor = 1.0;
+  public int disenchantmentCost(Enchantment enchantment, int enchantmentLevel,
+      Integer level)
+  {
 
-		if (itemStack == null)
-			return 0;
+    final ItemStack itemStack = inventorySlots.get(0).getStack();
+    final double costFactor = 1.0;
 
-		final int maxLevel = enchantment.getMaxLevel();
+    if (itemStack == null)
+      return 0;
 
-		if (enchantmentLevel > maxLevel)
-			return 0;
+    final int maxLevel = enchantment.getMaxLevel();
 
-		final int averageCost = (enchantment.getMinEnchantability(level) + enchantment.getMaxEnchantability(level)) / 2;
-		int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
+    if (enchantmentLevel > maxLevel)
+      return 0;
 
-		if (enchantability <= 1)
-			enchantability = 10;
+    final int averageCost = (enchantment.getMinEnchantability(level)
+        + enchantment.getMaxEnchantability(level)) / 2;
+    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
 
-		int adjustedCost = (int) (averageCost * (enchantmentLevel - level - maxLevel)
-				/ ((double) maxLevel * enchantability));
+    if (enchantability <= 1)
+      enchantability = 10;
 
-//		int temp = (int) (adjustedCost * (60 / (bookCases() + 1)));
-//		temp /= 20;
-//		if (temp > adjustedCost) {
-//			adjustedCost = temp;
-//		}
+    int adjustedCost = (int) (averageCost
+        * (enchantmentLevel - level - maxLevel)
+        / ((double) maxLevel * enchantability));
 
-		adjustedCost *= (costFactor / 4D);
+    // int temp = (int) (adjustedCost * (60 / (bookCases() + 1)));
+    // temp /= 20;
+    // if (temp > adjustedCost) {
+    // adjustedCost = temp;
+    // }
 
-		if (enchantability > 1)
-			adjustedCost *= Math.log(enchantability) / 2;
-		else
-			adjustedCost /= 10;
+    adjustedCost *= (costFactor / 4D);
 
-		final int enchantmentCost = enchantmentCost(enchantment, level - 1, enchantmentLevel);
+    if (enchantability > 1)
+      adjustedCost *= Math.log(enchantability) / 2;
+    else
+      adjustedCost /= 10;
 
-		return Math.min(adjustedCost, -enchantmentCost);
-	}
+    final int enchantmentCost = enchantmentCost(enchantment, level - 1,
+        enchantmentLevel);
 
-	public int repairCostMax() {
+    return Math.min(adjustedCost, -enchantmentCost);
+  }
 
-		final double repairFactor = 1.5;
-		final ItemStack itemStack = inventorySlots.get(0).getStack();
-		if (itemStack == null)
-			return 0;
+  public int repairCostMax()
+  {
 
-		if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
-			return 0;
+    final double repairFactor = 1.5;
+    final ItemStack itemStack = inventorySlots.get(0).getStack();
+    if (itemStack == null)
+      return 0;
 
-		int cost = 0;
+    if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
+      return 0;
 
-		final Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(itemStack);
+    int cost = 0;
 
-		for (final Enchantment enchantment : enchantments.keySet()) {
-			final Integer enchantmentLevel = enchantments.get(enchantment);
+    final Map<Enchantment, Integer> enchantments = EnchantmentHelper
+        .getEnchantments(itemStack);
 
-			cost += enchantmentCost(enchantment, enchantmentLevel, 0);
-		}
+    for (final Enchantment enchantment : enchantments.keySet())
+    {
+      final Integer enchantmentLevel = enchantments.get(enchantment);
 
-		final int maxDamage = itemStack.getMaxDamage();
-		final int displayDamage = itemStack.getItemDamage();
-		int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
+      cost += enchantmentCost(enchantment, enchantmentLevel, 0);
+    }
 
-		if (enchantability <= 1) {
-			enchantability = 10;
-		}
+    final int maxDamage = itemStack.getMaxDamage();
+    final int displayDamage = itemStack.getItemDamage();
+    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
 
-		final double percentDamage = 1 - (maxDamage - displayDamage) / (double) maxDamage;
+    if (enchantability <= 1)
+    {
+      enchantability = 10;
+    }
 
-		double totalCost = (percentDamage * cost) / enchantability;
+    final double percentDamage = 1
+        - (maxDamage - displayDamage) / (double) maxDamage;
 
-		totalCost *= 2 * repairFactor;
+    double totalCost = (percentDamage * cost) / enchantability;
 
-		return (int) Math.max(1, totalCost);
-	}
+    totalCost *= 2 * repairFactor;
 
-	/* Client Synchronization */
+    return (int) Math.max(1, totalCost);
+  }
 
-	// This is where you check if any values have changed and if so send an update to any clients accessing this container
-	// The container itemstacks are tested in Container.detectAndSendChanges, so we don't need to do that
-	// We iterate through all of the TileEntity Fields to find any which have changed, and send them.
-	// You don't have to use fields if you don't wish to; just manually match the ID in sendProgressBarUpdate with the value in
-	//   updateProgressBar()
-	// The progress bar values are restricted to shorts.  If you have a larger value (eg int), it's not a good idea to try and split it
-	//   up into two shorts because the progress bar values are sent independently, and unless you add synchronisation logic at the
-	//   receiving side, your int value will be wrong until the second short arrives.  Use a custom packet instead.
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
+  /* Client Synchronization */
 
-//		boolean allFieldsHaveChanged = false;
-//		boolean fieldHasChanged [] = new boolean[tileInventoryFurnace.getFieldCount()];
-//		if (cachedFields == null) {
-//			cachedFields = new int[tileInventoryFurnace.getFieldCount()];
-//			allFieldsHaveChanged = true;
-//		}
-//		for (int i = 0; i < cachedFields.length; ++i) {
-//			if (allFieldsHaveChanged || cachedFields[i] != tileInventoryFurnace.getField(i)) {
-//				cachedFields[i] = tileInventoryFurnace.getField(i);
-//				fieldHasChanged[i] = true;
-//			}
-//		}
-//
-//		// go through the list of listeners (players using this container) and update them if necessary
-//		for (IContainerListener listener : this.listeners) {
-//			for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount(); ++fieldID) {
-//				if (fieldHasChanged[fieldID]) {
-//					// Note that although sendProgressBarUpdate takes 2 ints on a server these are truncated to shorts
-//					listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
-//				}
-//			}
-//		}
-	}
+  // This is where you check if any values have changed and if so send an update
+  // to any clients accessing this container
+  // The container itemstacks are tested in Container.detectAndSendChanges, so
+  // we don't need to do that
+  // We iterate through all of the TileEntity Fields to find any which have
+  // changed, and send them.
+  // You don't have to use fields if you don't wish to; just manually match the
+  // ID in sendProgressBarUpdate with the value in
+  // updateProgressBar()
+  // The progress bar values are restricted to shorts. If you have a larger
+  // value (eg int), it's not a good idea to try and split it
+  // up into two shorts because the progress bar values are sent independently,
+  // and unless you add synchronisation logic at the
+  // receiving side, your int value will be wrong until the second short
+  // arrives. Use a custom packet instead.
+  @Override
+  public void detectAndSendChanges()
+  {
+    super.detectAndSendChanges();
+
+    // boolean allFieldsHaveChanged = false;
+    // boolean fieldHasChanged [] = new
+    // boolean[tileInventoryFurnace.getFieldCount()];
+    // if (cachedFields == null) {
+    // cachedFields = new int[tileInventoryFurnace.getFieldCount()];
+    // allFieldsHaveChanged = true;
+    // }
+    // for (int i = 0; i < cachedFields.length; ++i) {
+    // if (allFieldsHaveChanged || cachedFields[i] !=
+    // tileInventoryFurnace.getField(i)) {
+    // cachedFields[i] = tileInventoryFurnace.getField(i);
+    // fieldHasChanged[i] = true;
+    // }
+    // }
+    //
+    // // go through the list of listeners (players using this container) and
+    // update them if necessary
+    // for (IContainerListener listener : this.listeners) {
+    // for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount();
+    // ++fieldID) {
+    // if (fieldHasChanged[fieldID]) {
+    // // Note that although sendProgressBarUpdate takes 2 ints on a server
+    // these are truncated to shorts
+    // listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
+    // }
+    // }
+    // }
+  }
 
 }

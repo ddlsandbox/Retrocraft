@@ -1,8 +1,9 @@
 package com.retrocraft.machine.multifurnace;
 
+import com.retrocraft.common.ContainerBase;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * you add the slots holding items. It is also used to send server side data such as progress bars to the client
  * for use in guis
  */
-public class ContainerMultifurnace extends Container {
+public class ContainerMultifurnace extends ContainerBase {
 
 	// Stores the tile entity instance for later use
 	private TileMultifurnace tileInventoryFurnace;
@@ -26,68 +27,44 @@ public class ContainerMultifurnace extends Container {
 	// These store cache values, used by the server to only update the client side tile entity when values have changed
 	private int [] cachedFields;
 
-	// must assign a slot index to each of the slots used by the GUI.
-	// For this container, we can see the furnace fuel, input, and output slots as well as the player inventory slots and the hotbar.
-	// Each time we add a Slot to the container using addSlotToContainer(), it automatically increases the slotIndex, which means
-	//  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
-	//  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
-	//  36 - 39 = fuel slots (tileEntity 0 - 3)
-	//  40 - 44 = input slots (tileEntity 4 - 8)
-	//  45 - 49 = output slots (tileEntity 9 - 13)
-
-	private final int HOTBAR_SLOT_COUNT = 9;
-	private final int PLAYER_INVENTORY_ROW_COUNT = 3;
-	private final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-	private final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-	private final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-
 	public final int FUEL_SLOTS_COUNT = 4;
 	public final int INPUT_SLOTS_COUNT = 5;
 	public final int OUTPUT_SLOTS_COUNT = 5;
 	public final int FURNACE_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
-
-	// slot index is the unique index for all slots in this container i.e. 0 - 35 for invPlayer then 36 - 49 for tileInventoryFurnace
-	private final int VANILLA_FIRST_SLOT_INDEX = 0;
-	private final int FIRST_FUEL_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-	private final int FIRST_INPUT_SLOT_INDEX = FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT;
-	private final int FIRST_OUTPUT_SLOT_INDEX = FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT;
-
+	
 	// slot number is the slot number within each component; i.e. invPlayer slots 0 - 35, and tileInventoryFurnace slots 0 - 14
 	private final int FIRST_FUEL_SLOT_NUMBER = 0;
 	private final int FIRST_INPUT_SLOT_NUMBER = FIRST_FUEL_SLOT_NUMBER + FUEL_SLOTS_COUNT;
 	private final int FIRST_OUTPUT_SLOT_NUMBER = FIRST_INPUT_SLOT_NUMBER + INPUT_SLOTS_COUNT;
 
+	private int fuelFirstSlotIndex;
+  private int inputFirstSlotIndex;
+  private int outputFirstSlotIndex;
+  
 	public ContainerMultifurnace(InventoryPlayer invPlayer, TileMultifurnace tileInventoryFurnace) {
+	  super(true, false);
+	  
+	  guiInventoryPosX = 8;
+    guiInventoryPosY = 125;
+	  guiHotbarPosX = 8;
+	  guiHotbarPosY = 183;
+	  
 		this.tileInventoryFurnace = tileInventoryFurnace;
 
-		final int SLOT_X_SPACING = 18;
-		final int SLOT_Y_SPACING = 18;
-		final int HOTBAR_XPOS = 8;
-		final int HOTBAR_YPOS = 183;
-		// Add the players hotbar to the gui - the [xpos, ypos] location of each item
-		for (int x = 0; x < HOTBAR_SLOT_COUNT; x++) {
-			int slotNumber = x;
-			addSlotToContainer(new Slot(invPlayer, slotNumber, HOTBAR_XPOS + SLOT_X_SPACING * x, HOTBAR_YPOS));
-		}
-
-		final int PLAYER_INVENTORY_XPOS = 8;
-		final int PLAYER_INVENTORY_YPOS = 125;
-		// Add the rest of the players inventory to the gui
-		for (int y = 0; y < PLAYER_INVENTORY_ROW_COUNT; y++) {
-			for (int x = 0; x < PLAYER_INVENTORY_COLUMN_COUNT; x++) {
-				int slotNumber = HOTBAR_SLOT_COUNT + y * PLAYER_INVENTORY_COLUMN_COUNT + x;
-				int xpos = PLAYER_INVENTORY_XPOS + x * SLOT_X_SPACING;
-				int ypos = PLAYER_INVENTORY_YPOS + y * SLOT_Y_SPACING;
-				addSlotToContainer(new Slot(invPlayer, slotNumber,  xpos, ypos));
-			}
-		}
-
+		fuelFirstSlotIndex = customFirstSlotIndex;
+		inputFirstSlotIndex = fuelFirstSlotIndex + FUEL_SLOTS_COUNT;
+		outputFirstSlotIndex = inputFirstSlotIndex + INPUT_SLOTS_COUNT;
+		
+		System.out.println("[RETROCRAFT] First Slot index = " + fuelFirstSlotIndex + " " + inputFirstSlotIndex + " " + outputFirstSlotIndex);
+		
+		addVanillaSlots(invPlayer);
+		
 		final int FUEL_SLOTS_XPOS = 53;
 		final int FUEL_SLOTS_YPOS = 96;
 		// Add the tile fuel slots
 		for (int x = 0; x < FUEL_SLOTS_COUNT; x++) {
 			int slotNumber = x + FIRST_FUEL_SLOT_NUMBER;
-			addSlotToContainer(new SlotFuel(tileInventoryFurnace, slotNumber, FUEL_SLOTS_XPOS + SLOT_X_SPACING * x, FUEL_SLOTS_YPOS));
+			addSlotToContainer(new SlotFuel(tileInventoryFurnace, slotNumber, FUEL_SLOTS_XPOS + guiSlotSpacingX * x, FUEL_SLOTS_YPOS));
 		}
 
 		final int INPUT_SLOTS_XPOS = 26;
@@ -95,7 +72,7 @@ public class ContainerMultifurnace extends Container {
 		// Add the tile input slots
 		for (int y = 0; y < INPUT_SLOTS_COUNT; y++) {
 			int slotNumber = y + FIRST_INPUT_SLOT_NUMBER;
-			addSlotToContainer(new SlotSmeltableInput(tileInventoryFurnace, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS+ SLOT_Y_SPACING * y));
+			addSlotToContainer(new SlotSmeltableInput(tileInventoryFurnace, slotNumber, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS+ guiSlotSpacingY * y));
 		}
 
 		final int OUTPUT_SLOTS_XPOS = 134;
@@ -103,7 +80,7 @@ public class ContainerMultifurnace extends Container {
 		// Add the tile output slots
 		for (int y = 0; y < OUTPUT_SLOTS_COUNT; y++) {
 			int slotNumber = y + FIRST_OUTPUT_SLOT_NUMBER;
-			addSlotToContainer(new SlotOutput(tileInventoryFurnace, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS + SLOT_Y_SPACING * y));
+			addSlotToContainer(new SlotOutput(tileInventoryFurnace, slotNumber, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS + guiSlotSpacingY * y));
 		}
 	}
 
@@ -130,25 +107,25 @@ public class ContainerMultifurnace extends Container {
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
 		// Check if the slot clicked is one of the vanilla container slots
-		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+		if (isVanillaSlot(sourceSlotIndex)) {
 			// This is a vanilla container slot so merge the stack into one of the furnace slots
 			// If the stack is smeltable try to merge merge the stack into the input slots
 			if (!TileMultifurnace.getSmeltingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
-				if (!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
+				if (!mergeItemStack(sourceStack, inputFirstSlotIndex, inputFirstSlotIndex + INPUT_SLOTS_COUNT, false)){
 					return ItemStack.EMPTY;  //EMPTY_ITEM;
 				}
 			}	else if (TileMultifurnace.getItemBurnTime(sourceStack) > 0) {
-				if (!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, true)) {
+				if (!mergeItemStack(sourceStack, fuelFirstSlotIndex, fuelFirstSlotIndex + FUEL_SLOTS_COUNT, true)) {
 					// Setting the boolean to true places the stack in the bottom slot first
 					return ItemStack.EMPTY;  //EMPTY_ITEM;
 				}
 			}	else {
 				return ItemStack.EMPTY;  //EMPTY_ITEM;
 			}
-		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT) {
+		} else if (sourceSlotIndex >= fuelFirstSlotIndex && sourceSlotIndex < fuelFirstSlotIndex + FURNACE_SLOTS_COUNT) {
 			// This is a furnace slot so merge the stack into the players inventory: try the hotbar first and then the main inventory
 			//   because the main inventory slots are immediately after the hotbar slots, we can just merge with a single call
-			if (!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+			if (!mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false)) {
 				return ItemStack.EMPTY;  //EMPTY_ITEM;
 			}
 		} else {

@@ -1,14 +1,12 @@
 package com.retrocraft.machine.enchanter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -109,7 +107,8 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
 	}
 
-	@Nullable
+	@SuppressWarnings("unchecked")
+  @Nullable
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T) inventory
@@ -121,7 +120,6 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 		super.writeToNBT(compound);
 
 		NBTTagList dataForAllSlots = new NBTTagList();
-		NBTTagList dataForSlot = new NBTTagList();
 		NBTTagCompound dataForThisSlot = new NBTTagCompound();
 		dataForThisSlot.setByte("Slot", (byte) 0);
 		inventory.getStackInSlot(0).writeToNBT(dataForThisSlot);
@@ -135,13 +133,10 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		final byte NBT_TYPE_COMPOUND = 10; // See NBTBase.createNewByType() for
-											// a listing
+		final byte NBT_TYPE_COMPOUND = 10; // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = compound.getTagList("Items", NBT_TYPE_COMPOUND);
 		inventory.setStackInSlot(0, ItemStack.EMPTY); // set slot to empty
-														// EMPTY_ITEM
 		NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(0);
-		byte slotNumber = dataForOneSlot.getByte("Slot");
 		inventory.setStackInSlot(0, new ItemStack(dataForOneSlot));
 	}
 
@@ -152,6 +147,13 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 		return MAXIMUM_DISTANCE_IN_BLOCKS * MAXIMUM_DISTANCE_IN_BLOCKS;
 	}
 
+	@Override
+	public void onLoad() {
+		// TODO Auto-generated method stub
+		super.onLoad();
+		System.out.println("[RETROCRAFT] TILE ON LOAD");
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public AxisAlignedBB getRenderBoundingBox() {
@@ -174,15 +176,9 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 
 	public void enchantCurrent(HashMap<Enchantment, Integer> map) {
 		world.playerEntities.get(0).sendMessage(new TextComponentString("Enchanted at tile! " + map.size()));
-		final List<EnchantmentData> enchantmentDataList = new ArrayList<>();
 
-		final ItemStack itemStack = inventory.getStackInSlot(0);
-		for (final Enchantment enchantment : map.keySet()) {
-			world.playerEntities.get(0)
-					.sendMessage(new TextComponentString("Add enchant at level " + map.get(enchantment)));
-			itemStack.addEnchantment(enchantment, map.get(enchantment));
-		}
-		// EnchantHelper.setEnchantments(enchantmentDataList, itemStack);
+		ItemStack itemStack = inventory.getStackInSlot(0);
+		EnchantmentHelper.setEnchantments(map, itemStack);
 
 		markDirty();
 	}
