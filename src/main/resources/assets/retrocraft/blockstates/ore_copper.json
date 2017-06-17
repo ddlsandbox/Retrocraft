@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "retrocraft:ore_copper"
+            "all": "retrocraft:blocks/ore_copper"
         }
     },
     "variants": {

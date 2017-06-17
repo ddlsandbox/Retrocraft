@@ -33,3 +33,38 @@ tile.multifurnace.name=Multifurnace
 tile.block_enchanter.name=The Enchanter
 tile.block_repairer.name=Repairer
 tile.pedestal_manolium.name=Manolium Pedestal
+
+
+# Waystones
+tile.retrocraft:waystone.name=Waystone
+
+item.retrocraft:warp_scroll.name=Warp Scroll
+item.retrocraft:return_scroll.name=Return Scroll
+item.retrocraft:warp_stone.name=Warp Stone
+
+itemGroup.waystones=Waystones
+
+retrocraft:noDimensionWarp=You cannot warp between worlds.
+retrocraft:waystoneBroken=The bound waystone has been moved or destroyed.
+retrocraft:scrollNotBound=You have not activated any waystones yet.
+retrocraft:stoneNotCharged=The Warp Stone is not fully charged yet.
+retrocraft:activatedWaystone=Activated Waystone: %s
+retrocraft:nameOccupied=The name %s is already in use.
+retrocraft:notTheOwner=Waystones can only be renamed by whoever placed them.
+retrocraft:creativeRequired=You have to be in creative mode to edit a global waystone.
+
+gui.retrocraft:warpStone.selectDestination=Select your destination:
+gui.retrocraft:warpStone.nextPage=Next
+gui.retrocraft:warpStone.previousPage=Previous
+gui.retrocraft:confirmReturn=Do you really want to warp back to your latest waystone?
+gui.retrocraft:confirmReturn.boundTo=Bound to: %s
+gui.retrocraft:confirmReturn.noWaystoneActive=No waystone active.
+gui.retrocraft:editWaystone.enterName=Enter waystone name:
+gui.retrocraft:editWaystone.isGlobal=is Global
+
+tooltip.retrocraft:cooldownLeft=Cooldown: %d seconds
+tooltip.retrocraft:boundTo=Bound to: %s
+tooltip.retrocraft:none=None
+tooltip.retrocraft:returnToWaystone=Return to Waystone
+tooltip.retrocraft:openWaystoneMenu=Open Waystone Menu
+tooltip.retrocraft:levelRequirement=Level Requirement: %d

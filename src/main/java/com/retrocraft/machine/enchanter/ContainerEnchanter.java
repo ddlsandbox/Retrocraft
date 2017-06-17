@@ -25,32 +25,31 @@ import net.minecraftforge.items.SlotItemHandler;
 public class ContainerEnchanter extends ContainerBase
 {
 
-  private static final int MAINSLOT_X  = 36;
-  private static final int MAINSLOT_Y  = 17;
-
+  private static final int MAINSLOT_X = 36;
+  private static final int MAINSLOT_Y = 17;
 
   private Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
   private final TileEntityEnchanter enchanter;
 
   public ContainerEnchanter(InventoryPlayer playerInv,
-      final TileEntityEnchanter enchanter)
+                            final TileEntityEnchanter enchanter)
   {
     super(true, true);
-    
-    guiHotbarPosX = 43;
-    guiHotbarPosY = 149;
+
+    guiHotbarPosX    = 43;
+    guiHotbarPosY    = 149;
     guiInventoryPosX = 43;
     guiInventoryPosY = 91;
     guiEquipmentPosX = 7;
     guiEquipmentPosY = 24;
-    
+
     this.enchanter = enchanter;
 
     IItemHandler inventory = enchanter.getCapability(
         CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
 
     addVanillaSlots(playerInv);
-    
+
     addSlotToContainer( /* custom slot */
         new SlotItemHandler(inventory, 0, MAINSLOT_X, MAINSLOT_Y)
         {
@@ -121,17 +120,17 @@ public class ContainerEnchanter extends ContainerBase
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
 
-//      int containerSlots = inventorySlots.size()
-//          - player.inventory.mainInventory.size();
+      // int containerSlots = inventorySlots.size()
+      // - player.inventory.mainInventory.size();
 
       if (isVanillaSlot(sourceSlotIndex))
       {
-        if (!this.mergeItemStack(itemstack1, customFirstSlotIndex, customFirstSlotIndex+1, false))
+        if (!this.mergeItemStack(itemstack1, customFirstSlotIndex,
+            customFirstSlotIndex + 1, false))
         {
           return ItemStack.EMPTY;
         }
-      }
-      else
+      } else
       {
         if (!this.mergeItemStack(itemstack1, vanillaFirstSlotIndex,
             vanillaFirstSlotIndex + vanillaSlotCount, true))
@@ -226,7 +225,8 @@ public class ContainerEnchanter extends ContainerBase
       int cost) throws Exception
   {
 
-    final ItemStack itemstack = inventorySlots.get(customFirstSlotIndex).getStack();
+    final ItemStack itemstack = inventorySlots.get(customFirstSlotIndex)
+        .getStack();
     final HashMap<Enchantment, Integer> temp = new HashMap<Enchantment, Integer>();
     int serverCost = 0;
 
@@ -303,7 +303,8 @@ public class ContainerEnchanter extends ContainerBase
   {
 
     final double costFactor = 1.0;
-    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex).getStack();
+    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
+        .getStack();
     if (itemStack == null)
       return 0;
 
@@ -341,7 +342,8 @@ public class ContainerEnchanter extends ContainerBase
       Integer level)
   {
 
-    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex).getStack();
+    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
+        .getStack();
     final double costFactor = 1.0;
 
     if (itemStack == null)
@@ -381,8 +383,6 @@ public class ContainerEnchanter extends ContainerBase
 
     return Math.min(adjustedCost, -enchantmentCost);
   }
-
-  
 
   /* Client Synchronization */
 

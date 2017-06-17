@@ -1,5 +1,6 @@
 package com.retrocraft.recipe;
 
+import com.retrocraft.RetroCraft;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.item.ModItems;
 
@@ -41,5 +42,13 @@ public class RetrocraftRecipes {
 				new ItemStack(ModItems.manolaziumSword), "I", "I", "S", 
 				'I', ModItems.ingotManolazium, 
 				'S', Items.STICK);
+		
+		if(!RetroCraft.getConfig().creativeModeOnly) {
+      GameRegistry.addShapedRecipe(
+          new ItemStack(ModBlocks.blockWaystone), " S ", "SWS", "OOO", 
+          'S', Blocks.STONEBRICK, 
+          'W', Items.ENDER_EYE, 
+          'O', Blocks.OBSIDIAN);
+		}
 	}
 }
