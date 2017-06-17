@@ -46,27 +46,27 @@ public class RetroCraft
 {
 
   public static final Item.ToolMaterial manoliumToolMaterial   = EnumHelper
-      .addToolMaterial("MANOLIUM", 3,                                      /*
-                                                                            * harvest
-                                                                            * level
-                                                                            * diamond
-                                                                            * =3
-                                                                            */
-          500,                                                             /* durability */
-          8f,                                                              /* efficiency */
-          4f,                                                              /* damage */
-          20);                                                             /* enchantability */
+      .addToolMaterial("MANOLIUM", 3,                                         /*
+                                                                               * harvest
+                                                                               * level
+                                                                               * diamond
+                                                                               * =3
+                                                                               */
+          500,                                                                /* durability */
+          8f,                                                                 /* efficiency */
+          4f,                                                                 /* damage */
+          20);                                                                /* enchantability */
   public static final Item.ToolMaterial manolaziumToolMaterial = EnumHelper
-      .addToolMaterial("MANOLIUM", 5,                                      /*
-                                                                            * harvest
-                                                                            * level
-                                                                            * diamond
-                                                                            * =3
-                                                                            */
-          1500,                                                            /* durability */
-          10f,                                                             /* efficiency */
-          8f,                                                              /* damage */
-          30);                                                             /* enchantability */
+      .addToolMaterial("MANOLIUM", 5,                                         /*
+                                                                               * harvest
+                                                                               * level
+                                                                               * diamond
+                                                                               * =3
+                                                                               */
+          1500,                                                               /* durability */
+          10f,                                                                /* efficiency */
+          8f,                                                                 /* damage */
+          30);                                                                /* enchantability */
 
   @SidedProxy(serverSide = "com.retrocraft.server.CommonProxy", clientSide = "com.retrocraft.client.ClientProxy")
   public static CommonProxy                 proxy;
@@ -79,7 +79,7 @@ public class RetroCraft
   public static SimpleNetworkWrapper network;
 
   public static Configuration configuration;
-  private RetroCraftConfig config;
+  private RetroCraftConfig    config;
 
   @Mod.Instance(modId)
   public static RetroCraft instance;
@@ -94,36 +94,38 @@ public class RetroCraft
     configuration = new Configuration(event.getSuggestedConfigurationFile());
     config = new RetroCraftConfig();
     config.reloadLocal(configuration);
-    if(configuration.hasChanged()) {
+    if (configuration.hasChanged())
+    {
       configuration.save();
     }
 
     GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
 
     network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
-    network.registerMessage(new PacketUpdatePedestal.Handler(),
-        PacketUpdatePedestal.class, 0, Side.CLIENT);
-    network.registerMessage(new PacketRequestUpdatePedestal.Handler(),
-        PacketRequestUpdatePedestal.class, 1, Side.SERVER);
-    network.registerMessage(new PacketUpdateEnchanter.Handler(),
-        PacketUpdateEnchanter.class, 3, Side.CLIENT);
-    network.registerMessage(new PacketRequestUpdateEnchanter.Handler(),
-        PacketRequestUpdateEnchanter.class, 4, Side.SERVER);
+    
+    network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 
+        1, Side.CLIENT);
+    network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 
+        2, Side.SERVER);
+    network.registerMessage(new PacketUpdateEnchanter.Handler(), PacketUpdateEnchanter.class, 
+        3, Side.CLIENT);
+    network.registerMessage(new PacketRequestUpdateEnchanter.Handler(),PacketRequestUpdateEnchanter.class, 
+        4, Side.SERVER);
     network.registerMessage(new PacketRepairer.Handler(), PacketRepairer.class,
         5, Side.SERVER);
-    network.registerMessage(new PacketEnchant.Handler(), PacketEnchant.class, 6,
-        Side.SERVER);
+    network.registerMessage(new PacketEnchant.Handler(), PacketEnchant.class, 
+        6, Side.SERVER);
 
-    network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 7,
-        Side.CLIENT);
-    network.registerMessage(MessageWaystones.Handler.class,
-        MessageWaystones.class, 8, Side.CLIENT);
-    network.registerMessage(MessageEditWaystone.Handler.class,
-        MessageEditWaystone.class, 10, Side.SERVER);
-    network.registerMessage(MessageTeleportToWaystone.Handler.class,
-        MessageTeleportToWaystone.class, 11, Side.SERVER);
-    network.registerMessage(MessageTeleportEffect.Handler.class,
-        MessageTeleportEffect.class, 12, Side.CLIENT);
+    network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 
+        7, Side.CLIENT);
+    network.registerMessage(new MessageWaystones.Handler(), MessageWaystones.class, 
+        8, Side.CLIENT);
+    network.registerMessage(new MessageEditWaystone.Handler(), MessageEditWaystone.class, 
+        10, Side.SERVER);
+    network.registerMessage(new MessageTeleportToWaystone.Handler(), MessageTeleportToWaystone.class, 
+        11, Side.SERVER);
+    network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
+        12, Side.CLIENT);
 
     proxy.registerRenderers();
 
