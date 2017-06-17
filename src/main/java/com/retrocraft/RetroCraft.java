@@ -12,6 +12,7 @@ package com.retrocraft;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.entity.ModEntities;
 import com.retrocraft.entity.waystone.MessageEditWaystone;
+import com.retrocraft.entity.waystone.MessageSortWaystone;
 import com.retrocraft.entity.waystone.MessageTeleportEffect;
 import com.retrocraft.entity.waystone.MessageTeleportToWaystone;
 import com.retrocraft.entity.waystone.MessageWaystones;
@@ -126,6 +127,8 @@ public class RetroCraft
         11, Side.SERVER);
     network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
         12, Side.CLIENT);
+    network.registerMessage(new MessageSortWaystone.Handler(), MessageSortWaystone.class, 
+        13, Side.SERVER);
 
     proxy.registerRenderers();
 

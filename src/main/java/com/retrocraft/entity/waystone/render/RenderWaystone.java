@@ -31,8 +31,7 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileWaystone>
     IBlockState state = (tileEntity != null && tileEntity.hasWorld())
         ? tileEntity.getWorld().getBlockState(tileEntity.getPos()) : null;
     if (state != null && state.getBlock() != ModBlocks.blockWaystone)
-    { // I don't know. But it seems for some reason the renderer gets called for
-      // minecraft:air in certain cases.
+    {
       return;
     }
 
