@@ -47,6 +47,7 @@ public class ClientProxy extends CommonProxy
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void registerRenderers()
   {
     ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,

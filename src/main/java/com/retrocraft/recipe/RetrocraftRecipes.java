@@ -9,10 +9,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class RetrocraftRecipes {
-	public static void init() {
-		GameRegistry.addSmelting(ModBlocks.oreCopper, new ItemStack(ModItems.ingotCopper), 0.7f);
-		GameRegistry.addSmelting(ModBlocks.oreManolite, new ItemStack(ModItems.ingotManolium), 0.7f);
+public class RetrocraftRecipes 
+{
+	public static void init() 
+	{
+		GameRegistry.addSmelting(ModBlocks.oreCopper, 
+		                         new ItemStack(ModItems.ingotCopper), 0.7f);
+		GameRegistry.addSmelting(ModBlocks.oreManolite, 
+		                         new ItemStack(ModItems.ingotManolium), 0.7f);
 
 		GameRegistry.addShapelessRecipe(
 				new ItemStack(ModItems.ingotManolazium), 
@@ -42,6 +46,11 @@ public class RetrocraftRecipes {
 				new ItemStack(ModItems.manolaziumSword), "I", "I", "S", 
 				'I', ModItems.ingotManolazium, 
 				'S', Items.STICK);
+		
+		GameRegistry.addShapedRecipe(
+        new ItemStack(ModItems.woodenBucket), "W W", "WSW", 
+        'W', Blocks.PLANKS, 
+        'S', Blocks.WOODEN_SLAB);
 		
 		if(!RetroCraft.getConfig().creativeModeOnly) {
       GameRegistry.addShapedRecipe(

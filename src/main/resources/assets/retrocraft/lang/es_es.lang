@@ -3,6 +3,8 @@ item.ingot_copper.name=Lingote de Cobre
 item.ingot_manolium.name=Lingote de Manolium
 item.ingot_manolazium.name=Lingote de Manolacium
 
+item.wooden_bucket.name=Cubo Mierder de Madera
+
 # Blocks
 tile.ore_copper.name=Mena de Cobre
 tile.ore_manolite.name=Mena de Manolita

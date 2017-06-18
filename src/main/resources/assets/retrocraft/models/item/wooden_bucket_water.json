@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "retrocraft:items/wooden_bucket_water"
+    }
+}

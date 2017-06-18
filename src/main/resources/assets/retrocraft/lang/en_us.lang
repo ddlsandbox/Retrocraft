@@ -22,13 +22,17 @@ item.streamaxe_manolium.name=Manolium Stream Axe
 
 item.excavator_manolium.name=Manolium Excavator
 
-item.etool_manolium.name=Manolium MegaTool
+item.etool_manolium.name=Manolium MegaToolvim 
 
 item.sword_manolium.name=Manolium Sword
 item.sword_manolazium.name=Manolazium Great Sword
 
+item.wooden_bucket.name=Wooden Bucket
+item.wooden_bucket_water.name=Wooden Bucket of Water
+item.wooden_bucket_milk.name=Wooden Bucket of Milk
+
 # Entities
-tile.block_enchantorium.name=The Enchantorium
+tile.block_enchantorium.name=The Enchantoriumn
 tile.multifurnace.name=Multifurnace
 tile.block_enchanter.name=The Enchanter
 tile.block_repairer.name=Repairer

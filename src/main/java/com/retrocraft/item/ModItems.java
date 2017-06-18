@@ -7,8 +7,10 @@ import com.retrocraft.item.tool.ToolHammer;
 import com.retrocraft.item.tool.ToolStreamAxe;
 import com.retrocraft.item.weapon.ItemSword;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
@@ -33,6 +35,10 @@ public class ModItems {
 	public static ToolStreamAxe manoliumStreamAxe;
 	public static ItemSword manolaziumSword;
 	
+	public static WoodenBucket woodenBucket;
+	public static WoodenBucket woodenWaterBucket;
+	public static ItemWoodenMilkBucket woodenMilkBucket;
+	
 	public static void init() {
 		ingotCopper = register(new ItemOre("ingot_copper", "ingotCopper").setCreativeTab(RetroCraft.creativeTab));
 		ingotManolium = register(new ItemOre("ingot_manolium", "ingotManolium").setCreativeTab(RetroCraft.creativeTab));
@@ -51,6 +57,9 @@ public class ModItems {
 		manoliumStreamAxe = register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab));
 		manoliumETool = register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 		manolaziumSword = register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
+		
+		woodenBucket = register(new WoodenBucket("wooden_bucket").setCreativeTab(RetroCraft.creativeTab));
+		woodenMilkBucket = register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
 	}
 	
 	private static <T extends Item> T register(T item) {
