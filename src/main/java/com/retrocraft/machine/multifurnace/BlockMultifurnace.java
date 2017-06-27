@@ -58,6 +58,7 @@ public class BlockMultifurnace extends BlockTileEntity<TileMultifurnace>
 		super.setCreativeTab(tab);
 		return this;
 	}
+	
 	@Override
 	public Class<TileMultifurnace> getTileEntityClass() {
 		return TileMultifurnace.class;

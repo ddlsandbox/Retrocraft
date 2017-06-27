@@ -35,8 +35,8 @@ public class ModItems {
 	public static ToolStreamAxe manoliumStreamAxe;
 	public static ItemSword manolaziumSword;
 	
-	public static WoodenBucket woodenBucket;
-	public static WoodenBucket woodenWaterBucket;
+	public static ItemWoodenBucket woodenBucket;
+	public static ItemWoodenBucket woodenWaterBucket;
 	public static ItemWoodenMilkBucket woodenMilkBucket;
 	
 	public static void init() {
@@ -58,7 +58,7 @@ public class ModItems {
 		manoliumETool = register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 		manolaziumSword = register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
 		
-		woodenBucket = register(new WoodenBucket("wooden_bucket").setCreativeTab(RetroCraft.creativeTab));
+		woodenBucket = register(new ItemWoodenBucket("wooden_bucket").setCreativeTab(RetroCraft.creativeTab));
 		woodenMilkBucket = register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
 	}
 	

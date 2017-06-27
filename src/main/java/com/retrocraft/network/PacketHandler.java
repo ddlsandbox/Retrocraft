@@ -1,12 +1,18 @@
 package com.retrocraft.network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.retrocraft.RetroCraft;
+import com.retrocraft.tile.TileEntityBase;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -18,7 +24,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketHandler
 {
   private static int ID = 0;
-
+  public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<IDataHandler>();
+  public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void handleData(NBTTagCompound compound, MessageContext context) {
+      World world = Minecraft.getMinecraft().world;
+      if (world != null) {
+        TileEntity tile = world.getTileEntity(
+            new BlockPos(compound.getInteger("X"), compound.getInteger("Y"), compound.getInteger("Z")));
+        if (tile instanceof TileEntityBase) {
+          ((TileEntityBase) tile).readSyncableNBT(compound.getCompoundTag("Data"),
+              TileEntityBase.NBTType.SYNC);
+        }
+      }
+    }
+  };
+  
   public static int nextID()
   {
     return ID++;
@@ -44,7 +66,7 @@ public class PacketHandler
 
   public static void init(FMLInitializationEvent event)
   {
-
+    DATA_HANDLERS.add(TILE_ENTITY_HANDLER);
   }
 
   public static IThreadListener getThreadListener(MessageContext ctx)

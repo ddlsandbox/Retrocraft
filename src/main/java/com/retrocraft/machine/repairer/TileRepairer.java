@@ -44,9 +44,7 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		clear();
 	}
 
-	// This method is called every tick to update the tile entity, i.e.
-	// - see if the fuel has run out, and if so turn the furnace "off" and slowly uncook the current item (if any)
-	// - see if any of the items have finished smelting
+	// This method is called every tick to update the tile entity
 	// It runs both on the server and the client.
 	@Override
 	public void update() {
@@ -61,36 +59,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 			world.checkLightFor(EnumSkyBlock.BLOCK, pos);
 		}
 	}
-
-
-//public void repair (EntityPlayer player, int cost) throws Exception {
-//        
-//        final ItemStack itemStack = tableInventory.getStackInSlot(0);
-//        
-//        if (itemStack == null)
-//            return;
-//            
-//        boolean flag = !itemStack.hasTagCompound() || !itemStack.getTagCompound().hasKey("charge");
-//        
-//        if ((!itemStack.isItemEnchanted() || cost == 0) && flag)
-//            return;
-//            
-//        if (canPurchase(player, cost)) {
-//            int maxCost = repairCostMax();
-//            double percAmnt = cost / (double) maxCost;
-//            
-//            int remain = itemStack.getItemDamageForDisplay();
-//            double newDamage = remain - remain * percAmnt;
-//            newDamage = (newDamage <= 0) ? 0 : newDamage;
-//            
-//            itemStack.setItemDamage((int) newDamage);
-//            if (!player.capabilities.isCreativeMode)
-//                player.addExperienceLevel(-cost);
-//                
-//        }
-//        
-//        onCraftMatrixChanged(tableInventory);
-//}
 
 	/**
 	 * checks that there is an item to be smelted in one of the input slots and that there is room for the result in the output slots
@@ -222,7 +190,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 				dataForAllSlots.appendTag(dataForThisSlot);
 			}
 		}
-		// the array of hashmaps is then inserted into the parent hashmap for the container
 		parentNBTTagCompound.setTag("Items", dataForAllSlots);
 		return parentNBTTagCompound;
 	}
@@ -262,9 +229,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
     handleUpdateTag(updateTagDescribingTileEntityState);
   }
 
-  /* Creates a tag containing the TileEntity information, used by vanilla to transmit from server to client
-     Warning - although our getUpdatePacket() uses this method, vanilla also calls it directly, so don't remove it.
-   */
   @Override
   public NBTTagCompound getUpdateTag()
   {
@@ -273,9 +237,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
     return nbtTagCompound;
   }
 
-  /* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client
-   Warning - although our onDataPacket() uses this method, vanilla also calls it directly, so don't remove it.
- */
   @Override
   public void handleUpdateTag(NBTTagCompound tag)
   {
@@ -307,41 +268,14 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
 	}
 
-//	// Fields are used to send non-inventory information from the server to interested clients
-//	// The container code caches the fields and sends the client any fields which have changed.
-//	// The field ID is limited to byte, and the field value is limited to short. (if you use more than this, they get cast down
-//	//   in the network packets)
-//	// If you need more than this, or shorts are too small, use a custom packet in your container instead.
-//
-//	private static final byte COOK_FIELD_ID = 0;
-//	private static final byte FIRST_BURN_TIME_REMAINING_FIELD_ID = 1;
-//	private static final byte FIRST_BURN_TIME_INITIAL_FIELD_ID = FIRST_BURN_TIME_REMAINING_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
-//	private static final byte NUMBER_OF_FIELDS = FIRST_BURN_TIME_INITIAL_FIELD_ID + (byte)FUEL_SLOTS_COUNT;
-//
 	@Override
 	public int getField(int id) {
-//		if (id == COOK_FIELD_ID) return cookTime;
-//		if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + FUEL_SLOTS_COUNT) {
-//			return burnTimeRemaining[id - FIRST_BURN_TIME_REMAINING_FIELD_ID];
-//		}
-//		if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
-//			return burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID];
-//		}
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value)
 	{
-//		if (id == COOK_FIELD_ID) {
-//			cookTime = (short)value;
-//		} else if (id >= FIRST_BURN_TIME_REMAINING_FIELD_ID && id < FIRST_BURN_TIME_REMAINING_FIELD_ID + FUEL_SLOTS_COUNT) {
-//			burnTimeRemaining[id - FIRST_BURN_TIME_REMAINING_FIELD_ID] = value;
-//		} else if (id >= FIRST_BURN_TIME_INITIAL_FIELD_ID && id < FIRST_BURN_TIME_INITIAL_FIELD_ID + FUEL_SLOTS_COUNT) {
-//			burnTimeInitialValue[id - FIRST_BURN_TIME_INITIAL_FIELD_ID] = value;
-//		} else {
-//			System.err.println("[RETROCRAFT] Error: Invalid field ID in TileInventorySmelting.setField:" + id);
-//		}
 	}
 
 	@Override

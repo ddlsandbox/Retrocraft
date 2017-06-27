@@ -29,10 +29,39 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy
 {
 
+  @Override
+  public void preInit(FMLPreInitializationEvent event){
+  }
+
+  @Override
+  public void init(FMLInitializationEvent event){
+      new ClientEvents();
+
+      ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
+          new RenderWaystone());
+      ForgeHooksClient.registerTESRItemStack(
+          Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
+      ModelLoader.setCustomModelResourceLocation(
+          Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
+          new ModelResourceLocation("retrocraft:waystone", "inventory"));
+
+      ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class,
+          new TESRPedestal());
+      ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class,
+          new TESREnchanter());
+  }
+
+  @Override
+  public void postInit(FMLPostInitializationEvent event){
+  }
+  
   public void registerItemRenderer(Item item, int meta, String id)
   {
     ModelLoader.setCustomModelResourceLocation(item, meta,
@@ -44,24 +73,6 @@ public class ClientProxy extends CommonProxy
   {
     // return I18n.format(unlocalized, args);
     return I18n.translateToLocalFormatted(unlocalized, args);
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public void registerRenderers()
-  {
-    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
-        new RenderWaystone());
-    ForgeHooksClient.registerTESRItemStack(
-        Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
-    ModelLoader.setCustomModelResourceLocation(
-        Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
-        new ModelResourceLocation("retrocraft:waystone", "inventory"));
-
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class,
-        new TESRPedestal());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class,
-        new TESREnchanter());
   }
 
   @Override

@@ -6,6 +6,9 @@ import com.retrocraft.entity.waystone.gui.GuiEditWaystone;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
+import com.retrocraft.machine.generator.ContainerSteamGenerator;
+import com.retrocraft.machine.generator.GuiSteamGenerator;
+import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.multifurnace.ContainerMultifurnace;
 import com.retrocraft.machine.multifurnace.GuiMultifurnace;
 import com.retrocraft.machine.multifurnace.TileMultifurnace;
@@ -26,10 +29,11 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
  */
 public class ModGuiHandler implements IGuiHandler
 {
-  public static final int ENCHANTER    = 0;
-  public static final int REPAIRER     = 1;
-  public static final int MULTIFURNACE = 2;
-  public static final int WAYSTONE     = 3;
+  public static final int ENCHANTER      = 0;
+  public static final int REPAIRER       = 1;
+  public static final int MULTIFURNACE   = 2;
+  public static final int STEAMGENERATOR = 3;
+  public static final int WAYSTONE       = 4;
 
   @Override
   public Container getServerGuiElement(int ID, EntityPlayer player, World world,
@@ -50,6 +54,9 @@ public class ModGuiHandler implements IGuiHandler
     case REPAIRER:
       return new ContainerRepairer(player.inventory,
           (TileRepairer) world.getTileEntity(new BlockPos(x, y, z)));
+    case STEAMGENERATOR:
+      return new ContainerSteamGenerator(player.inventory,
+          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)));
     case WAYSTONE:
       return new ContainerEditWaystoneNameDummy();
     default:
@@ -74,6 +81,11 @@ public class ModGuiHandler implements IGuiHandler
           (TileRepairer) world.getTileEntity(new BlockPos(x, y, z)),
           new ContainerRepairer(player.inventory,
               (TileRepairer) world.getTileEntity(new BlockPos(x, y, z))));
+    case STEAMGENERATOR:
+      return new GuiSteamGenerator(player.inventory,
+          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)),
+          new ContainerSteamGenerator(player.inventory,
+              (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z))));
     case WAYSTONE:
       return new GuiEditWaystone(
           (TileWaystone) world.getTileEntity(new BlockPos(x, y, z)));

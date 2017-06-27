@@ -19,9 +19,11 @@ import com.retrocraft.entity.waystone.MessageWaystones;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.network.PacketConfig;
 import com.retrocraft.network.PacketEnchant;
+import com.retrocraft.network.PacketHandler;
 import com.retrocraft.network.PacketRepairer;
 import com.retrocraft.network.PacketRequestUpdateEnchanter;
 import com.retrocraft.network.PacketRequestUpdatePedestal;
+import com.retrocraft.network.PacketServerToClient;
 import com.retrocraft.network.PacketUpdateEnchanter;
 import com.retrocraft.network.PacketUpdatePedestal;
 import com.retrocraft.recipe.RetrocraftRecipes;
@@ -104,33 +106,36 @@ public class RetroCraft
 
     network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
     
+    int messageId = 1;
     network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 
-        1, Side.CLIENT);
+        messageId++, Side.CLIENT);
     network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 
-        2, Side.SERVER);
+        messageId++, Side.SERVER);
     network.registerMessage(new PacketUpdateEnchanter.Handler(), PacketUpdateEnchanter.class, 
-        3, Side.CLIENT);
+        messageId++, Side.CLIENT);
     network.registerMessage(new PacketRequestUpdateEnchanter.Handler(),PacketRequestUpdateEnchanter.class, 
-        4, Side.SERVER);
+        messageId++, Side.SERVER);
     network.registerMessage(new PacketRepairer.Handler(), PacketRepairer.class,
-        5, Side.SERVER);
+        messageId++, Side.SERVER);
     network.registerMessage(new PacketEnchant.Handler(), PacketEnchant.class, 
-        6, Side.SERVER);
-
+        messageId++, Side.SERVER);
+    network.registerMessage(new PacketServerToClient.Handler(), PacketServerToClient.class, 
+        messageId++, Side.CLIENT);
+    
     network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 
-        7, Side.CLIENT);
+        messageId++, Side.CLIENT);
     network.registerMessage(new MessageWaystones.Handler(), MessageWaystones.class, 
-        8, Side.CLIENT);
+        messageId++, Side.CLIENT);
     network.registerMessage(new MessageEditWaystone.Handler(), MessageEditWaystone.class, 
-        10, Side.SERVER);
+        messageId++, Side.SERVER);
     network.registerMessage(new MessageTeleportToWaystone.Handler(), MessageTeleportToWaystone.class, 
-        11, Side.SERVER);
+        messageId++, Side.SERVER);
     network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
-        12, Side.CLIENT);
+        messageId++, Side.CLIENT);
     network.registerMessage(new MessageSortWaystone.Handler(), MessageSortWaystone.class, 
-        13, Side.SERVER);
+        messageId++, Side.SERVER);
 
-    proxy.registerRenderers();
+    proxy.preInit(event);
 
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
   }
@@ -138,13 +143,16 @@ public class RetroCraft
   @Mod.EventHandler
   public void init(FMLInitializationEvent event)
   {
+    PacketHandler.init(event);
     RetrocraftRecipes.init();
+    
+    proxy.init(event);
   }
 
   @Mod.EventHandler
   public void postInit(FMLPostInitializationEvent event)
   {
-
+    proxy.postInit(event);
   }
 
   public static RetroCraftConfig getConfig()

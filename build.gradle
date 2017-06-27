@@ -17,6 +17,29 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+ext.configFile = file "build.properties"
+configFile.withReader {
+  // Load config.  It shall from now be referenced as simply config or project.config
+  def prop = new Properties()
+  prop.load(it)
+  project.ext.config = new ConfigSlurper().parse prop
+}
+
+repositories {
+	maven {
+		name = "Covers Maven"
+		url = "http://maven.covers1624.net"
+	}
+	maven {
+		name = "JEI Maven"
+		url = "http://dvs1.progwml6.com/files/maven"
+	}
+}
+
+dependencies {
+  compile "cofh:CoFHCore:${config.mc_version}-${config.cofhcore_version}:deobf"
+}
+
 minecraft {
     version = "1.11.2-13.20.0.2228"
     runDir = "minecraft"
@@ -56,4 +79,5 @@ processResources {
     from (sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }

@@ -1,0 +1,32 @@
+{
+	"forge_marker": 1,
+   "defaults": {
+      "model": "retrocraft:block_steamgenerator",
+      "uvlock": true
+   },
+   "variants": {
+      "normal": [{}],
+		"facing": {
+			"down": {
+				"x": 90
+			},
+			"up": {
+				"x": 270
+			},
+			"north": { },
+			"south": {
+				"y": 180
+			},
+			"east": {
+				"y": 90
+			},
+			"west": {
+				"y": 270
+			}
+   },
+	   "inventory": {
+		   "model": "retrocraft:block_steamgenerator",
+   		"transform": "forge:default-block"
+	  	}
+   }
+}

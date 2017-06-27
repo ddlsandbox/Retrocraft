@@ -1,11 +1,7 @@
 package com.retrocraft.machine.repairer;
 
-import java.util.Map;
-
 import com.retrocraft.common.ContainerBase;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;

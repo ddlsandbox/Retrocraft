@@ -29,14 +29,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class WoodenBucket extends ItemFluidContainer
+public class ItemWoodenBucket extends ItemFluidContainer
     implements ItemModelProvider
 {
 
   private static final int AMOUNT = 1000;
   private String           name;
 
-  public WoodenBucket(String name)
+  public ItemWoodenBucket(String name)
   {
     super(AMOUNT);
 
@@ -64,7 +64,7 @@ public class WoodenBucket extends ItemFluidContainer
   }
 
   @Override
-  public WoodenBucket setCreativeTab(CreativeTabs tab)
+  public ItemWoodenBucket setCreativeTab(CreativeTabs tab)
   {
     super.setCreativeTab(tab);
     return this;
