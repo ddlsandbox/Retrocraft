@@ -83,7 +83,7 @@ public class TileSteamGenerator extends TileInventoryBase
     
     this.currentEnergyProduce = (int) (60 * EFFICIENCY);
     this.outputSides = EnumFacing.values();
-    this.outputSides = new EnumFacing[] { EnumFacing.NORTH };
+    this.inputSides = new EnumFacing[] { EnumFacing.NORTH };
 
     clear();
   }
