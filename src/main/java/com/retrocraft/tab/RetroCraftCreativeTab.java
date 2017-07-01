@@ -14,7 +14,7 @@ public class RetroCraftCreativeTab extends CreativeTabs {
 
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(ModItems.ingotCopper);
+		return new ItemStack(ModItems.ironHammer);
 	}
 
 }

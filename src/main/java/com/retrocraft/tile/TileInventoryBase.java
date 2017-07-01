@@ -122,6 +122,11 @@ public abstract class TileInventoryBase extends TileEntityBase implements IInven
   {
     return itemStacks[slotIndex];
   }
+  
+  public void setStackInSlot(int slotIndex, ItemStack item)
+  {
+    itemStacks[slotIndex] = item;
+  }
 
   @Override
   public boolean isEmpty()

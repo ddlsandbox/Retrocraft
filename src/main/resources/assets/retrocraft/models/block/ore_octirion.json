@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "retrocraft:blocks/ore_copper"
+        "all": "retrocraft:blocks/ore_octirion"
     }
 }

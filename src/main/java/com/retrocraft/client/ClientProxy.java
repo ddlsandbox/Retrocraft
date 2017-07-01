@@ -36,22 +36,25 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ClientProxy extends CommonProxy
 {
 
+  @SuppressWarnings("deprecation")
   @Override
-  public void preInit(FMLPreInitializationEvent event){
+  public void preInit(FMLPreInitializationEvent event)
+  {
+    super.preInit(event);
+
+    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
+        new RenderWaystone());
+    ForgeHooksClient.registerTESRItemStack(
+        Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
+    ModelLoader.setCustomModelResourceLocation(
+        Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
+        new ModelResourceLocation("retrocraft:waystone", "inventory"));
   }
 
   @Override
   public void init(FMLInitializationEvent event){
       new ClientEvents();
-
-      ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
-          new RenderWaystone());
-      ForgeHooksClient.registerTESRItemStack(
-          Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
-      ModelLoader.setCustomModelResourceLocation(
-          Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
-          new ModelResourceLocation("retrocraft:waystone", "inventory"));
-
+      
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class,
           new TESRPedestal());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class,

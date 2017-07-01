@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -136,17 +137,14 @@ public class TileSteamGenerator extends TileInventoryBase
     if (burnTimeRemaining == 0)
     {
       if (!itemStack.isEmpty() && getItemBurnTime(itemStack) > 0 && tank.getFluidAmount() >= waterUsed)
-      { // isEmpty()
-        // If the stack in this slot is not null and is fuel, set
-        // burnTimeRemaining & burnTimeInitialValue to the
-        // item's burn time and decrease the stack size
+      {
         tank.drainInternal(waterUsed, true);
         burnTimeRemaining = burnTimeInitialValue = getItemBurnTime(itemStack);
         itemStack.shrink(1);
         inventoryChanged = true;
 
         if (itemStack.getCount() == 0)
-        { // getStackSize()
+        {
           itemStack = ItemStack.EMPTY;
         }
       }
@@ -160,9 +158,6 @@ public class TileSteamGenerator extends TileInventoryBase
 
   public static short getItemBurnTime(ItemStack stack)
   {
-//    if (stack.getItem() == Items.COAL)
-//      return 100;
-//    return 0;
     int burntime = TileEntityFurnace.getItemBurnTime(stack); // just use the
                                                              // vanilla values
     return (short) MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
@@ -234,7 +229,8 @@ public class TileSteamGenerator extends TileInventoryBase
   @Override
   public boolean hasCapability(Capability<?> capability, EnumFacing facing)
   {
-    if (capability == CapabilityEnergy.ENERGY)
+    if (capability == CapabilityEnergy.ENERGY
+        || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
       return true;
 
     return super.hasCapability(capability, facing);

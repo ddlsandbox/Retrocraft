@@ -34,7 +34,7 @@ public final class StackUtil
 
   public static ItemStack getNull()
   {
-    return null;
+    return ItemStack.EMPTY;
   }
 
   public static int getStackSize(ItemStack stack)

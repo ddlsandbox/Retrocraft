@@ -1,0 +1,27 @@
+{
+   "forge_marker": 1,
+    "defaults": {
+         "model": "retrocraft:ore_manolite",
+         "uvlock": true
+    },
+    "variants": {
+        "normal": [{}],
+        "facing": {
+         "west": {
+           "y": -90
+         },
+         "east": {
+           "y": 90
+         },
+         "north": {
+         },
+         "south": {
+           "y": 180
+         }
+       },
+       "inventory": {
+         "model": "retrocraft:ore_manolite",
+        	"transform": "forge:default-block"
+	    }
+    }
+}

@@ -23,7 +23,7 @@
 			"west": {
 				"y": 270
 			}
-   },
+      },
 	   "inventory": {
 		   "model": "retrocraft:block_steamgenerator",
    		"transform": "forge:default-block"

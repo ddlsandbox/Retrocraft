@@ -3,12 +3,15 @@ itemGroup.retrocraft=RetroCraft
 
 # Items.materials
 
-item.ingot_copper.name=Copper Ingot
+tile.ore_octirion.name=Octirion Ore
+tile.ore_manolite.name=Manolite Ore
+
+tile.dust_octirion.name=Octirion Dust
+tile.dust_manolite.name=Manolite Dust
+tile.dust_manolazium.name=Manolazium Dust
+
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
-
-tile.ore_copper.name=Copper Ore
-tile.ore_manolite.name=Manolite Ore
 
 # Items.weapons
 item.hammer_stone.name=Stone Hammer
@@ -37,7 +40,8 @@ tile.multifurnace.name=Multifurnace
 tile.block_enchanter.name=The Enchanter
 tile.block_repairer.name=Repairer
 tile.pedestal_manolium.name=Manolium Pedestal
-
+tile.block_steamgenerator.name=Steam Generator
+tile.block_oregrinder.name=Ore Grinder
 
 # Waystones
 tile.retrocraft:waystone.name=Waystone

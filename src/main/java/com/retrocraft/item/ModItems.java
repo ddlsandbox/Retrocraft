@@ -15,8 +15,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
-	/* ingotts */
-	public static ItemOre ingotCopper;
+  /* dust */
+  public static ItemOre dustManolite;
+  public static ItemOre dustManolazium;
+  public static ItemOre gemOctirion;
+  
+	/* ingot */
 	public static ItemOre ingotManolium;
 	public static ItemOre ingotManolazium;
 	
@@ -38,9 +42,12 @@ public class ModItems {
 	public static ItemWoodenBucket woodenBucket;
 	public static ItemWoodenBucket woodenWaterBucket;
 	public static ItemWoodenMilkBucket woodenMilkBucket;
-	
+		
 	public static void init() {
-		ingotCopper = register(new ItemOre("ingot_copper", "ingotCopper").setCreativeTab(RetroCraft.creativeTab));
+	  dustManolite = register(new ItemOre("dust_manolite", "dustManolite").setCreativeTab(RetroCraft.creativeTab));
+	  dustManolazium = register(new ItemOre("dust_manolazium", "dustManolazium").setCreativeTab(RetroCraft.creativeTab));
+	  gemOctirion = register(new ItemOre("gem_octirion", "gemOctirion").setCreativeTab(RetroCraft.creativeTab));
+	  
 		ingotManolium = register(new ItemOre("ingot_manolium", "ingotManolium").setCreativeTab(RetroCraft.creativeTab));
 		ingotManolazium = register(new ItemOre("ingot_manolazium", "ingotManolazium").setCreativeTab(RetroCraft.creativeTab));
 		

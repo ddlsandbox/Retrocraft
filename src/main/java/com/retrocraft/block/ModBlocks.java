@@ -9,6 +9,7 @@ import com.retrocraft.item.ItemOreDict;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
 import com.retrocraft.machine.generator.TileSteamGenerator;
+import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.multifurnace.BlockMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
 
@@ -18,19 +19,20 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 
-	public static BlockOre oreCopper;
 	public static BlockOre oreManolite;
+	public static BlockOre oreOctirion;
 	public static BlockPedestal pedestalManolium;
 
 	public static BlockMultifurnace blockMultifurnace;
 	public static BlockEnchanter blockEnchanter;
 	public static BlockRepairer blockRepairer;
 	public static BlockSteamGenerator blockGenerator;
+	public static BlockOreGrinder blockOreGrinder;
 
 	public static BlockWaystone blockWaystone;
 	
 	public static void init() {
-		oreCopper = register(new BlockOre("ore_copper", "oreCopper").setCreativeTab(RetroCraft.creativeTab));
+	  oreOctirion = register(new BlockOre("ore_octirion", "oreOctirion").setCreativeTab(RetroCraft.creativeTab));
 		oreManolite = register(new BlockOre("ore_manolite", "oreManolite").setCreativeTab(RetroCraft.creativeTab));
 		pedestalManolium = register(new BlockPedestal("pedestal_manolium").setCreativeTab(RetroCraft.creativeTab));
 
@@ -38,6 +40,7 @@ public class ModBlocks {
 		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
 		blockRepairer = register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
 		blockGenerator = register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
+		blockOreGrinder = register(new BlockOreGrinder("block_oregrinder").setCreativeTab(RetroCraft.creativeTab));
 		
 		blockWaystone = new BlockWaystone();
     GameRegistry.register(blockWaystone);
