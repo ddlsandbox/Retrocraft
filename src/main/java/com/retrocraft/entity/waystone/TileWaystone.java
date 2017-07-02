@@ -99,10 +99,10 @@ public class TileWaystone extends TileEntity
   @Override
   public AxisAlignedBB getRenderBoundingBox()
   {
-//    return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1,
-//        pos.getY() + 2, pos.getZ() + 1);
-    return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 2,
-        pos.getY() + 1, pos.getZ() + 2);
+    return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1,
+        pos.getY() + 1, pos.getZ() + 1);
+//    return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 2,
+//        pos.getY() + 1, pos.getZ() + 2);
   }
 
   public void setOwner(EntityPlayer owner)

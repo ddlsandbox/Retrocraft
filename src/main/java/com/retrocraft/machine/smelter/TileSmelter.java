@@ -1,14 +1,14 @@
 package com.retrocraft.machine.smelter;
 
-import com.retrocraft.RetroCraft;
+import com.retrocraft.RCConfig;
 import com.retrocraft.machine.IEnergyDisplay;
+import com.retrocraft.recipe.SmelterRecipeRegistry;
 import com.retrocraft.tile.CustomEnergyStorage;
 import com.retrocraft.tile.TileInventoryBase;
+import com.retrocraft.util.StackUtil;
 
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,25 +20,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileSmelter extends TileInventoryBase
     implements IEnergyStorage, ITickable, IEnergyDisplay
 {
-  private static final int CAPACITY   = 30000;
+  private static final int CAPACITY   = RCConfig.oreSmelterCapacity;
   private static final int THROUGHPUT = 1000;
 
-  public static final int ENERGY_USE = 50;
+  private static final int ENERGY_USE = RCConfig.oreSmelterEnergyUsed;
+  private static final int BURN_TIME  = RCConfig.oreSmelterBurnTime;
 
-  private static final int CRUSH_TIME = 100;
-  
-  private static final int FIELD_CRUSH_TIME_REMAINING = 0;
-  private static final int FIELD_COUNT                = 1;
+  private static final int FIELD_BURN_TIME_REMAINING = 0;
+  private static final int FIELD_COUNT               = 1;
 
-  public static final int INPUT_SLOT_NUMBER = 0;
+  public static final int INPUT_SLOT_NUMBER  = 0;
   public static final int OUTPUT_SLOT_NUMBER = 1;
 
-  public int        crushTimeRemaining;
-  private boolean   cachedBurningState = false;
-  
-  private boolean lastCrushed;
+  public int burnTimeRemaining;
+
   private int lastEnergy;
-  private int lastCrushTime;
+  private int lastBurnTime;
 
   protected CustomEnergyStorage storage;
   protected EnumFacing[]        inputSides;
@@ -48,12 +45,13 @@ public class TileSmelter extends TileInventoryBase
     super("tile.oregrinder.name", 2);
 
     this.storage = new CustomEnergyStorage(CAPACITY, THROUGHPUT, THROUGHPUT);
-    
-    this.inputSides = new EnumFacing[] { EnumFacing.NORTH };
+
+    this.inputSides = new EnumFacing[]
+    { EnumFacing.NORTH };
 
     clear();
   }
-  
+
   @SideOnly(Side.CLIENT)
   public int getEnergyScaled(int i)
   {
@@ -62,40 +60,100 @@ public class TileSmelter extends TileInventoryBase
   }
 
   @SideOnly(Side.CLIENT)
-  public int getCrushTimeScaled(int i)
+  public int getBurnTimeScaled(int i)
   {
-    return this.crushTimeRemaining * i / CRUSH_TIME;
+    return this.burnTimeRemaining * i / BURN_TIME;
+  }
+  
+  public boolean canSmelt(int theInput, int theOutput)
+  {
+    if (StackUtil.isValid(getStackInSlot(theInput)))
+    {
+      ItemStack outputOne = SmelterRecipeRegistry
+          .getOutput(getStackInSlot(theInput));
+
+      if (StackUtil.isValid(outputOne))
+      {
+        return (!StackUtil.isValid(getStackInSlot(theOutput))
+            || (getStackInSlot(theOutput).isItemEqual(outputOne)
+                && StackUtil.getStackSize(
+                    getStackInSlot(theOutput)) <= getStackInSlot(theOutput)
+                        .getMaxStackSize() - StackUtil.getStackSize(outputOne)));
+      }
+    }
+    return false;
   }
 
+  public void finishSmelting(int theInput, int theOutput)
+  {
+    ItemStack outputOne = SmelterRecipeRegistry
+        .getOutput(getStackInSlot(theInput));
+    if (StackUtil.isValid(outputOne))
+    {
+      if (!StackUtil.isValid(getStackInSlot(theOutput)))
+      {
+        setStackInSlot(theOutput, outputOne.copy());
+      } else if (getStackInSlot(theOutput).getItem() == outputOne.getItem())
+      {
+        setStackInSlot(theOutput, StackUtil.addStackSize(
+            getStackInSlot(theOutput), StackUtil.getStackSize(outputOne)));
+      }
+    }
 
+    setStackInSlot(theInput,
+        StackUtil.addStackSize(getStackInSlot(theInput), -1));
+  }
   
   @Override
   public void updateEntity()
   {
     super.updateEntity();
-    ItemStack itemStack = getStackInSlot(INPUT_SLOT_NUMBER);
+
+    boolean canSmelt = this.canSmelt(INPUT_SLOT_NUMBER, OUTPUT_SLOT_NUMBER);
 
     boolean shouldPlaySound = false;
 
+    if (canSmelt)
+    {
+      if (this.storage.getEnergyStored() >= ENERGY_USE)
+      {
+        if (this.burnTimeRemaining % 20 == 0)
+        {
+          shouldPlaySound = true;
+        }
+        this.burnTimeRemaining--;
+        if (this.burnTimeRemaining <= 0)
+        {
+          this.finishSmelting(INPUT_SLOT_NUMBER, OUTPUT_SLOT_NUMBER);
+          this.burnTimeRemaining = BURN_TIME;
+        }
+        this.storage.extractEnergyInternal(ENERGY_USE, false);
+      }
+    } 
+    else
+    {
+      this.burnTimeRemaining = BURN_TIME;
+    }
 
     if (!this.world.isRemote)
     {
       if ((this.storage.getEnergyStored() != this.lastEnergy
-          || this.lastCrushTime != this.crushTimeRemaining)
+          || this.lastBurnTime != this.burnTimeRemaining)
           && sendUpdateWithInterval())
       {
         this.markDirty();
         this.lastEnergy = this.storage.getEnergyStored();
-        this.lastCrushTime = this.crushTimeRemaining;
+        this.lastBurnTime = this.burnTimeRemaining;
       }
     }
 
     if (shouldPlaySound)
     {
-      RetroCraft.proxy.playSound(SoundEvents.WEATHER_RAIN, pos, 0.5f);
-//      this.world.playSound(null, this.getPos().getX(), this.getPos().getY(),
-//          this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS,
-//          0.025F, 1.0F);
+//      RetroCraft.proxy.playSound(SoundEvents.WEATHER_RAIN, pos, 0.5f);
+      
+      // this.world.playSound(null, this.getPos().getX(), this.getPos().getY(),
+      // this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS,
+      // 0.025F, 1.0F);
     }
   }
 
@@ -108,17 +166,17 @@ public class TileSmelter extends TileInventoryBase
     return super.hasCapability(capability, facing);
   }
 
-  static public boolean isItemValidForFuelSlot(ItemStack itemStack)
+  static public boolean isItemValidForInputSlot(ItemStack itemStack)
   {
-    return TileEntityFurnace.getItemBurnTime(itemStack) > 0;
+    return SmelterRecipeRegistry.existRecipeForInput(itemStack);
   }
-  
+
   @Override
   public void writeSyncableNBT(NBTTagCompound compound, NBTType type)
   {
     if (type != NBTType.SAVE_BLOCK)
     {
-      compound.setInteger("CrushTime", this.crushTimeRemaining);
+      compound.setInteger("BurnTime", this.burnTimeRemaining);
     }
     this.storage.writeToNBT(compound);
     super.writeSyncableNBT(compound, type);
@@ -129,7 +187,7 @@ public class TileSmelter extends TileInventoryBase
   {
     if (type != NBTType.SAVE_BLOCK)
     {
-      this.crushTimeRemaining = compound.getInteger("CrushTime");
+      this.burnTimeRemaining = compound.getInteger("BurnTime");
     }
     this.storage.readFromNBT(compound);
     super.readSyncableNBT(compound, type);
@@ -145,7 +203,7 @@ public class TileSmelter extends TileInventoryBase
   public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
   {
     if (slotIndex == INPUT_SLOT_NUMBER)
-      return TileSmelter.isItemValidForFuelSlot(itemStack);
+      return SmelterRecipeRegistry.existRecipeForInput(itemStack);
     return false;
   }
 
@@ -160,8 +218,8 @@ public class TileSmelter extends TileInventoryBase
   {
     switch (fieldId)
     {
-    case FIELD_CRUSH_TIME_REMAINING:
-      return crushTimeRemaining;
+    case FIELD_BURN_TIME_REMAINING:
+      return burnTimeRemaining;
     }
     return 0;
   }
@@ -171,8 +229,8 @@ public class TileSmelter extends TileInventoryBase
   {
     switch (fieldId)
     {
-    case FIELD_CRUSH_TIME_REMAINING:
-      crushTimeRemaining = value;
+    case FIELD_BURN_TIME_REMAINING:
+      burnTimeRemaining = value;
       break;
     }
   }

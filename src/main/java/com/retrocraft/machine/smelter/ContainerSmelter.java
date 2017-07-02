@@ -1,4 +1,4 @@
-package com.retrocraft.machine.generator;
+package com.retrocraft.machine.smelter;
 
 import com.retrocraft.common.ContainerBase;
 import com.retrocraft.machine.repairer.TileRepairer;
@@ -12,29 +12,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerSteamGenerator  extends ContainerBase
+public class ContainerSmelter extends ContainerBase
 {
 
   // Stores the tile entity instance for later use
-  private TileSteamGenerator tileGenerator;
+  private TileSmelter tileSmelter;
 
-  public static final int INPUT_SLOTS_COUNT = 1;
+  public static final int INPUT_SLOTS_COUNT  = 1;
+  public static final int OUTPUT_SLOTS_COUNT = 1;
 
-  public ContainerSteamGenerator(InventoryPlayer invPlayer, TileSteamGenerator tileGenerator)
+  public ContainerSmelter(InventoryPlayer invPlayer, TileSmelter tileSmelter)
   {
     super(true, false);
-    this.tileGenerator = tileGenerator;
+    this.tileSmelter = tileSmelter;
     this.guiInventoryPosX = 8;
     this.guiInventoryPosY = 97;
-    this.guiHotbarPosX    = 8;
-    this.guiHotbarPosY    = 155;
+    this.guiHotbarPosX = 8;
+    this.guiHotbarPosY = 155;
 
     addVanillaSlots(invPlayer);
 
     final int INPUT_SLOTS_XPOS = 80;
-    final int INPUT_SLOTS_YPOS = 43;
-    addSlotToContainer(new SlotFuel(tileGenerator,
-        TileSteamGenerator.INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
+    final int INPUT_SLOTS_YPOS = 14;
+    addSlotToContainer(new SlotInput(tileSmelter, TileSmelter.INPUT_SLOT_NUMBER,
+        INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
+
+    final int OUTPUT_SLOTS_XPOS = 80;
+    final int OUTPUT_SLOTS_YPOS = 58;
+    addSlotToContainer(new SlotOutput(tileSmelter,
+        TileSmelter.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
   // Checks each tick to make sure the player is still able to access the
@@ -42,7 +48,7 @@ public class ContainerSteamGenerator  extends ContainerBase
   @Override
   public boolean canInteractWith(EntityPlayer player)
   {
-    return tileGenerator.isUsableByPlayer(player);
+    return tileSmelter.isUsableByPlayer(player);
   }
 
   @Override
@@ -58,7 +64,7 @@ public class ContainerSteamGenerator  extends ContainerBase
     // Check if the slot clicked is one of the vanilla container slots
     if (isVanillaSlot(sourceSlotIndex))
     {
-      if (TileSteamGenerator.isItemValidForFuelSlot(sourceStack))
+      if (TileSmelter.isItemValidForInputSlot(sourceStack))
       { // isEmptyItem
         if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
             customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
@@ -71,7 +77,7 @@ public class ContainerSteamGenerator  extends ContainerBase
       {
         return ItemStack.EMPTY; // EMPTY_ITEM;
       }
-    } else if (sourceSlotIndex == customFirstSlotIndex)
+    } else if (sourceSlotIndex >= customFirstSlotIndex)
     {
       if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex,
           vanillaFirstSlotIndex + vanillaSlotCount, false))
@@ -104,8 +110,7 @@ public class ContainerSteamGenerator  extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileGenerator.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
-        .isEmpty())
+    if (!tileSmelter.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER).isEmpty())
       for (IContainerListener listener : this.listeners)
       {
         // System.out.println("[RETROCRAFT] Container: Notify listeners!");
@@ -116,14 +121,14 @@ public class ContainerSteamGenerator  extends ContainerBase
   @Override
   public void updateProgressBar(int id, int data)
   {
-    tileGenerator.setField(id, data);
+    tileSmelter.setField(id, data);
   }
 
   // SlotSmeltableInput is a slot for input items
-  public class SlotFuel extends Slot
+  public class SlotInput extends Slot
   {
-    public SlotFuel(IInventory inventoryIn, int index, int xPosition,
-        int yPosition)
+    public SlotInput(IInventory inventoryIn, int index, int xPosition,
+                     int yPosition)
     {
       super(inventoryIn, index, xPosition, yPosition);
     }
@@ -133,7 +138,24 @@ public class ContainerSteamGenerator  extends ContainerBase
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-      return TileSteamGenerator.isItemValidForFuelSlot(stack);
+      return TileSmelter.isItemValidForInputSlot(stack);
+    }
+  }
+
+  public class SlotOutput extends Slot
+  {
+    public SlotOutput(IInventory inventoryIn, int index, int xPosition,
+                      int yPosition)
+    {
+      super(inventoryIn, index, xPosition, yPosition);
+    }
+
+    // if this function returns false, the player won't be able to insert the
+    // given item into this slot
+    @Override
+    public boolean isItemValid(ItemStack stack)
+    {
+      return false;
     }
   }
 }

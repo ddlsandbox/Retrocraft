@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -222,6 +223,17 @@ public class TileSteamGenerator extends TileInventoryBase
         this.lastBurnTime = this.burnTimeRemaining;
         this.lastEnergyProduce = this.currentEnergyProduce;
         this.lastMaxBurnTime = this.burnTimeInitialValue;
+      }
+    }
+    else
+    {
+      if (burnTimeRemaining > 0 && burnTimeRemaining != lastBurnTime)
+      {
+        lastBurnTime = burnTimeRemaining;
+        world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
+              pos.getX() + 0.5,
+              pos.getY() + 1, //  + (world.rand.nextDouble()) * 2
+              pos.getZ() + 0.5, 0, .05, 0);
       }
     }
   }

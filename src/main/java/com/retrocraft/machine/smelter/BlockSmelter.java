@@ -1,5 +1,7 @@
 package com.retrocraft.machine.smelter;
 
+import com.retrocraft.ModGuiHandler;
+import com.retrocraft.RetroCraft;
 import com.retrocraft.block.BlockTileEntity;
 
 import net.minecraft.block.BlockHorizontal;
@@ -112,8 +114,8 @@ public class BlockSmelter extends BlockTileEntity<TileSmelter>
     if (worldIn.isRemote)
       return true;
 
-//    playerIn.openGui(RetroCraft.instance, ModGuiHandler.OREGRINDER, worldIn,
-//        pos.getX(), pos.getY(), pos.getZ());
+    playerIn.openGui(RetroCraft.instance, ModGuiHandler.ORESMELTER, worldIn,
+        pos.getX(), pos.getY(), pos.getZ());
     return true;
   }
 }

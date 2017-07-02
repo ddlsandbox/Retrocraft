@@ -10,17 +10,47 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public final class GrinderRecipeRegistry
+public final class SmelterRecipeRegistry
 {
-
-  private static final int OUTPUT_COUNT = 2;
-  private static final Hashtable<Item, ItemStack> RECIPES = new Hashtable<Item, ItemStack>();
-
+  public static class RecipeKey
+  {
+    private Item item;
+    private int damage;
+    
+    public RecipeKey(Item item, int damage)
+    {
+      this.item = item;
+      this.damage = damage;
+    }
+    
+    public RecipeKey(ItemStack itemStack)
+    {
+      this.item = itemStack.getItem();
+      this.damage = itemStack.getItemDamage();
+    }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+      RecipeKey key = (RecipeKey) obj;
+      return this.item == key.item && this.damage == key.damage;
+    }
+    
+    @Override
+    public String toString()
+    {
+      return item.getRegistryName().toString() + damage;
+    }
+  }
+  
+  private static final int OUTPUT_COUNT = 1;
+  private static final Hashtable<RecipeKey, ItemStack> RECIPES = new Hashtable<RecipeKey, ItemStack>();
+  
   public static void addRecipe(ItemStack input, ItemStack output)
   {
-    RECIPES.put(input.getItem(), output);
+    RECIPES.put(new RecipeKey(input), output);
     System.out.println(
-        "[RETROCRAFT] Added grinder recipe for " + input.getDisplayName() + " --> " + output.getDisplayName());
+        "[RETROCRAFT] Added smelter recipe for " + input.getDisplayName() + " --> " + output.getDisplayName());
   }
 
   public static boolean addRecipe(List<ItemStack> inputs,
@@ -49,12 +79,20 @@ public final class GrinderRecipeRegistry
 
   public static ItemStack getOutput(ItemStack input)
   {
-    return RECIPES.get(input.getItem());
+    RecipeKey key = new RecipeKey(input);
+    for (final RecipeKey item : RECIPES.keySet())
+      if (item.equals(key))
+        return RECIPES.get(item);
+    return null;
   }
 
   public static boolean existRecipeForInput(ItemStack input)
   {
-    return RECIPES.containsKey(input.getItem());
+    RecipeKey key = new RecipeKey(input);
+    for (final RecipeKey item : RECIPES.keySet())
+      if (item.equals(key))
+        return true;
+    return false;//RECIPES.containsKey();
   }
 
   public static void registerSearchCase(SearchCase theCase)

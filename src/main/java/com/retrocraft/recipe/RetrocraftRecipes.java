@@ -65,6 +65,7 @@ public class RetrocraftRecipes
 		}
 		
 		/* Crusher */
+		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreOctirion", false), OreDictionary.getOres("gemOctirion", false));
 		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreNickel", false), OreDictionary.getOres("dustNickel", false));
     GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreIron", false), OreDictionary.getOres("dustIron", false));
     GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreGold", false), OreDictionary.getOres("dustGold", false));
@@ -75,12 +76,43 @@ public class RetrocraftRecipes
     GrinderRecipeRegistry.addRecipe(new ItemStack(Blocks.GRAVEL), new ItemStack(Items.FLINT));
     GrinderRecipeRegistry.addRecipe(new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER, 4));
     
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("oreNether", 6));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("orePoor", 4, "nugget"));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("denseore", 8));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("gem", 1));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("ingot", 1));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("ore", 2));
-    GrinderRecipeRegistry.SEARCH_CASES.add(new GrinderRecipeRegistry.SearchCase("ore", 2, "gem")); //If no dust is found for certain ores, make gems directly
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("denseore",  8, "dust"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("gem",       1, "dust"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("ingot",     1, "dust"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("oreNether", 6, "dust"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("orePoor",   4, "nugget"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("ore",       2, "dust"));
+    GrinderRecipeRegistry.registerSearchCase(new SearchCase("ore",       2, "gem"));
+    
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustManolite", false), OreDictionary.getOres("ingotManolium", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustManolazium", false), OreDictionary.getOres("ingotManolazium", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustGold", false), OreDictionary.getOres("ingotGold", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustIron", false), OreDictionary.getOres("ingotIron", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustDiamond", false), OreDictionary.getOres("gemDiamond", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustEmerald", false), OreDictionary.getOres("gemEmerald", false));
+    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustLapis", false), OreDictionary.getOres("gemLapis", false));
+    
+    SmelterRecipeRegistry.registerSearchCase(new SearchCase("dust", 1, "ingot"));
+    SmelterRecipeRegistry.registerSearchCase(new SearchCase("dust", 1, "gem"));
 	}
+	
+  public static class SearchCase
+  {
+
+    final String inputPrefix;
+    final int    resultAmount;
+    final String resultPrefix;
+
+    public SearchCase(String inputPrefix, int resultAmount)
+    {
+      this(inputPrefix, resultAmount, "dust");
+    }
+
+    public SearchCase(String inputPrefix, int resultAmount, String resultPrefix)
+    {
+      this.inputPrefix = inputPrefix;
+      this.resultAmount = resultAmount;
+      this.resultPrefix = resultPrefix;
+    }
+  }
 }

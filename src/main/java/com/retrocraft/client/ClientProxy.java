@@ -42,13 +42,13 @@ public class ClientProxy extends CommonProxy
   {
     super.preInit(event);
 
-    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
-        new RenderWaystone());
-    ForgeHooksClient.registerTESRItemStack(
-        Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
-    ModelLoader.setCustomModelResourceLocation(
-        Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
-        new ModelResourceLocation("retrocraft:waystone", "inventory"));
+//    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
+//        new RenderWaystone());
+//    ForgeHooksClient.registerTESRItemStack(
+//        Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
+//    ModelLoader.setCustomModelResourceLocation(
+//        Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
+//        new ModelResourceLocation("retrocraft:waystone", "inventory"));
   }
 
   @Override

@@ -3,15 +3,16 @@ package com.retrocraft.block;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.waystone.BlockWaystone;
-import com.retrocraft.entity.waystone.TileWaystone;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ItemOreDict;
+import com.retrocraft.machine.crafter.BlockAdvancedForge;
+import com.retrocraft.machine.crafter.BlockElectricForge;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
-import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.multifurnace.BlockMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
+import com.retrocraft.machine.smelter.BlockSmelter;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -28,28 +29,37 @@ public class ModBlocks {
 	public static BlockRepairer blockRepairer;
 	public static BlockSteamGenerator blockGenerator;
 	public static BlockOreGrinder blockOreGrinder;
+	public static BlockSmelter blockOreSmelter;
+	public static BlockElectricForge blockElectricForge;
+	public static BlockAdvancedForge blockAdvancedForge;
 
 	public static BlockWaystone blockWaystone;
 	
 	public static void init() {
 	  oreOctirion = register(new BlockOre("ore_octirion", "oreOctirion").setCreativeTab(RetroCraft.creativeTab));
 		oreManolite = register(new BlockOre("ore_manolite", "oreManolite").setCreativeTab(RetroCraft.creativeTab));
-		pedestalManolium = register(new BlockPedestal("pedestal_manolium").setCreativeTab(RetroCraft.creativeTab));
+		pedestalManolium = register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
 
 		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
 		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
 		blockRepairer = register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
 		blockGenerator = register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
 		blockOreGrinder = register(new BlockOreGrinder("block_oregrinder").setCreativeTab(RetroCraft.creativeTab));
+		blockOreSmelter = register(new BlockSmelter("block_oresmelter").setCreativeTab(RetroCraft.creativeTab));
+		blockElectricForge = register(new BlockElectricForge("block_electricforge").setCreativeTab(RetroCraft.creativeTab));
+		blockAdvancedForge = register(new BlockAdvancedForge("block_advancedforge").setCreativeTab(RetroCraft.creativeTab));
 		
-		blockWaystone = new BlockWaystone();
-    GameRegistry.register(blockWaystone);
-    GameRegistry.register(new ItemBlock(blockWaystone).setRegistryName(blockWaystone.getRegistryName()));
-    GameRegistry.registerTileEntity(TileWaystone.class, "block_waystone");
+		blockWaystone = register(new BlockWaystone("block_waystone").setCreativeTab(RetroCraft.creativeTab));
+//		new BlockWaystone();
+//    GameRegistry.register(blockWaystone);
+//    GameRegistry.register(new ItemBlock(blockWaystone).setRegistryName(blockWaystone.getRegistryName()));
+//    GameRegistry.registerTileEntity(TileWaystone.class, "block_waystone");
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {
-		GameRegistry.register(block);
+		
+	  GameRegistry.register(block);
+		
 		if (itemBlock != null) {
 			GameRegistry.register(itemBlock);
 		}

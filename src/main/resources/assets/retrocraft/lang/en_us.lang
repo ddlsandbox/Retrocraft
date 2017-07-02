@@ -6,9 +6,9 @@ itemGroup.retrocraft=RetroCraft
 tile.ore_octirion.name=Octirion Ore
 tile.ore_manolite.name=Manolite Ore
 
-tile.dust_octirion.name=Octirion Dust
-tile.dust_manolite.name=Manolite Dust
-tile.dust_manolazium.name=Manolazium Dust
+item.dust_octirion.name=Octirion Dust
+item.dust_manolite.name=Manolite Dust
+item.dust_manolazium.name=Manolazium Dust
 
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
@@ -42,6 +42,9 @@ tile.block_repairer.name=Repairer
 tile.pedestal_manolium.name=Manolium Pedestal
 tile.block_steamgenerator.name=Steam Generator
 tile.block_oregrinder.name=Ore Grinder
+tile.block_oresmelter.name=Ore Smelter
+tile.block_electricforge.name=Electric Forge
+tile.block_advancedforge.name=Advanced Forge
 
 # Waystones
 tile.retrocraft:waystone.name=Waystone

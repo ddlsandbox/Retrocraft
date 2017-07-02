@@ -1,7 +1,7 @@
 {
    "forge_marker": 1,
     "defaults": {
-         "model": "retrocraft:block_oregrinder",
+         "model": "retrocraft:block_oresmelter",
          "uvlock": true
     },
     "variants": {
@@ -20,7 +20,7 @@
          }
        },
        "inventory": {
-         "model": "retrocraft:block_oregrinder",
+         "model": "retrocraft:block_oresmelter",
         	"transform": "forge:default-block"
 	    }
     }

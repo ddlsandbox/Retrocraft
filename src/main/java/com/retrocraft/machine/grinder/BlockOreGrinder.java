@@ -114,8 +114,8 @@ public class BlockOreGrinder extends BlockTileEntity<TileOreGrinder>
     if (worldIn.isRemote)
       return true;
 
-//    playerIn.openGui(RetroCraft.instance, ModGuiHandler.OREGRINDER, worldIn,
-//        pos.getX(), pos.getY(), pos.getZ());
+    playerIn.openGui(RetroCraft.instance, ModGuiHandler.OREGRINDER, worldIn,
+        pos.getX(), pos.getY(), pos.getZ());
     return true;
   }
 }
