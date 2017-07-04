@@ -1,13 +1,12 @@
 "Multifurnace"
+
   - Combination of regular furnace and hoppers that contains 3 inventories for
     items, fuel and output.
   - Custom textures
 
-"Hammers/Excavators"
-  + Tools for 3x3 mining/digging
-  + Stream axes
 
 "Armor"
+
   - Helmet: Night vision
   - Chestplate: Thorns
   - Leggins:
@@ -15,6 +14,7 @@
            Flying
 
 "Weapons"
+
   - Sword: Fire
            Flying?
   - Warhammer: Hitback
@@ -22,19 +22,38 @@
 "Waypoint/Teleporters"
 
 Fix "Enchanter"
-  + Basic enchanter
-  - Multistructure for reducing level requirements
+
+  - Multistructure for reducing enchanting level requirements
 
 Split "Enchanter" + "Repairer"
 
 Decoration:
+
   - Big ropes
   - Illumination
 
 Energy:
+
   - Thaum:    The basic unit of magical strength; it is the amount of magic 
               needed to create one small white pigeon or three normal-sized 
               billiard balls
+
+Fixes/Improvements
+
+    - Split thorughput in energy transfers instead of iteratively filling
+      containers
+    - Bucket interaction in steam generator
+
+-------------------------------------------------------------------------------
+DONE
+-------------------------------------------------------------------------------
+
+"Hammers/Excavators"
+  + Tools for 3x3 mining/digging
+  + Stream axes
+
+Fix "Enchanter"
+  + Basic enchanter
 
 Materials:
   + Octirion: A strange, iridescent metal that is highly valued. It radiates 

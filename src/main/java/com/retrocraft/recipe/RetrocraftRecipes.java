@@ -69,8 +69,9 @@ public class RetrocraftRecipes
 
 		if(!RetroCraft.getConfig().creativeModeOnly) {
       GameRegistry.addShapedRecipe(
-          new ItemStack(ModBlocks.blockWaystone), " S ", "SWS", "OOO",
+          new ItemStack(ModBlocks.blockWaystone), "SSS", "CWC", "OOO",
           'S', Blocks.STONEBRICK,
+					'C', ModItems.magicalCore,
           'W', Items.ENDER_EYE,
           'O', Blocks.OBSIDIAN);
 		}
