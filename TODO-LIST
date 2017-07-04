@@ -4,13 +4,25 @@
   - Custom textures
 
 "Hammers/Excavators"
-  - Tools for 3x3 mining/digging
-  - Stream axes
+  + Tools for 3x3 mining/digging
+  + Stream axes
+
+"Armor"
+  - Helmet: Night vision
+  - Chestplate: Thorns
+  - Leggins:
+  - Boots: Speed + jump boost
+           Flying
+
+"Weapons"
+  - Sword: Fire
+           Flying?
+  - Warhammer: Hitback
 
 "Waypoint/Teleporters"
 
 Fix "Enchanter"
-  - Basic enchanter
+  + Basic enchanter
   - Multistructure for reducing level requirements
 
 Split "Enchanter" + "Repairer"
@@ -25,6 +37,6 @@ Energy:
               billiard balls
 
 Materials:
-  - Octirion: A strange, iridescent metal that is highly valued. It radiates 
+  + Octirion: A strange, iridescent metal that is highly valued. It radiates 
               dangerous amounts of raw enchantment and is so unstable it can 
               only exist in a universe saturated with raw magic
