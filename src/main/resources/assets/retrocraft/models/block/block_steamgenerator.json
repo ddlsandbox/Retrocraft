@@ -2,7 +2,8 @@
    "parent": "block/orientable",
 	"textures": {
 		"base": "retrocraft:blocks/steam_generator_side",
-		"pipe": "blocks/iron_block",
+		"pipe": "retrocraft:blocks/steam_generator_side",
+		"pipetop": "blocks/obsidian",
       "front": "retrocraft:blocks/steam_generator_front",
 		"particle": "blocks/iron_block"
 	},
@@ -43,23 +44,23 @@
 			"to": [10, 16, 10],
 			"faces": {
 				"up": {
-					"uv": [0, 0, 16, 16],
-					"texture": "#pipe"
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipetop"
 				},
 				"north": {
-					"uv": [0, 0, 16, 16],
+					"uv": [6, 6, 10, 10],
 					"texture": "#pipe"
 				},
 				"south": {
-					"uv": [0, 0, 16, 16],
+					"uv": [6, 6, 10, 10],
 					"texture": "#pipe"
 				},
 				"west": {
-					"uv": [0, 0, 16, 16],
+					"uv": [6, 6, 10, 10],
 					"texture": "#pipe"
 				},
 				"east": {
-					"uv": [0, 0, 16, 16],
+					"uv": [6, 6, 10, 10],
 					"texture": "#pipe"
 				}
 			}

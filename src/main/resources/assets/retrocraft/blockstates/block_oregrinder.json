@@ -5,8 +5,8 @@
          "uvlock": true
     },
     "variants": {
-        "normal": [{}],
-        "facing": {
+      "normal": [{}],
+      "facing": {
          "west": {
            "y": -90
          },
@@ -18,10 +18,10 @@
          "south": {
            "y": 180
          }
-       },
-       "inventory": {
+      },
+      "inventory": {
          "model": "retrocraft:block_oregrinder",
         	"transform": "forge:default-block"
-	    }
     }
+  }
 }

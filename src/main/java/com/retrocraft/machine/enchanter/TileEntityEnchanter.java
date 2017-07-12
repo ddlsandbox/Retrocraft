@@ -151,7 +151,6 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 	public void onLoad() {
 		// TODO Auto-generated method stub
 		super.onLoad();
-		System.out.println("[RETROCRAFT] TILE ON LOAD");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -175,8 +174,6 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 	}
 
 	public void enchantCurrent(HashMap<Enchantment, Integer> map) {
-		world.playerEntities.get(0).sendMessage(new TextComponentString("Enchanted at tile! " + map.size()));
-
 		ItemStack itemStack = inventory.getStackInSlot(0);
 		EnchantmentHelper.setEnchantments(map, itemStack);
 

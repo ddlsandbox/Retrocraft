@@ -2,22 +2,27 @@ package com.retrocraft.machine.enchanter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.lwjgl.input.Mouse;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.network.PacketEnchant;
+import com.retrocraft.util.StackUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 
@@ -49,11 +54,12 @@ public class GuiEnchanter extends GuiContainer
       RetroCraft.modId, "textures/gui/enchanter.png");
   private ContainerEnchanter            container;
 
-  private double  sliderIndex     = 0;
-  private boolean clicked         = false;
-  private boolean sliding         = false;
-  private double  enchantingPages = 0;
-  private int     totalCost       = 0;
+  private double            sliderIndex     = 0;
+  private boolean           clicked         = false;
+  private boolean           sliding         = false;
+  private double            enchantingPages = 0;
+  private int               totalCost       = 0;
+  private GuiEnchanterLabel last;
 
   public GuiEnchanter(Container containerEnchanter, InventoryPlayer playerInv)
   {
@@ -86,23 +92,15 @@ public class GuiEnchanter extends GuiContainer
       if (item.enchantmentLevel != newLevel && !item.locked)
       {
         enchants.put(item.enchantment, item.enchantmentLevel);
-        playerInv.player.sendMessage(new TextComponentString(
-            "Apply enchantment " + item.enchantment.getName()));
       }
     }
-    playerInv.player.sendMessage(
-        new TextComponentString("Apply " + enchants.size() + " enchantments"));
-    System.out
-        .println("[RETROCRAFT] Apply " + enchants.size() + " enchantments");
 
     if (enchants.size() > 0)
     {
-      playerInv.player.sendMessage(new TextComponentString("Enchanting..."));
       try
       {
         // if (container.enchant(playerInv.player, enchants, totalCost))
         RetroCraft.network.sendToServer(new PacketEnchant(enchants, totalCost));
-        playerInv.player.sendMessage(new TextComponentString("Enchanted!"));
       } catch (Exception e)
       {
         playerInv.player.sendMessage(new TextComponentString(e.getMessage()));
@@ -143,9 +141,8 @@ public class GuiEnchanter extends GuiContainer
 
     for (final GuiEnchanterLabel item : enchantmentArray)
     {
-      item.show(
-             item.yPos >= guiTop + ENCHANTLIST_Z_MIN
-          && item.yPos  < guiTop + ENCHANTLIST_Z_MAX);
+      item.show(item.yPos >= guiTop + ENCHANTLIST_Z_MIN
+          && item.yPos < guiTop + ENCHANTLIST_Z_MAX);
       item.draw(fontRendererObj);
     }
 
@@ -199,6 +196,7 @@ public class GuiEnchanter extends GuiContainer
       if (item.dragging && getItemFromPos(mouseX, mouseY) != item)
       {
         item.dragging = false;
+        this.last = item;
       }
     }
 
@@ -209,6 +207,7 @@ public class GuiEnchanter extends GuiContainer
         if (getItemFromPos(mouseX, mouseY) == item)
         {
           item.dragging = false;
+          this.last = item;
         }
       }
       sliding = false;
@@ -227,6 +226,98 @@ public class GuiEnchanter extends GuiContainer
   }
 
   @Override
+  public void drawScreen(int mouseX, int mouseY, float partialTicks)
+  {
+
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    this.updateEnchantmentLabels();
+
+    final int maxWidth = this.guiLeft - 20;
+    final List<List<String>> information = new ArrayList<>();
+    final ItemStack stack = this.container.getItem();
+
+    information.add(this.fontRendererObj.listFormattedStringToWidth(
+        String.format("%s: %s", I18n.format("tooltip.enchanter.playerlevel"),
+            this.playerInv.player.experienceLevel),
+        maxWidth));
+
+    if (StackUtil.isValid(stack))
+      if (this.hasLevelChanged())
+      {
+
+//        final boolean exp = this.totalCost <= 1
+//            && this.totalCost >= -1;
+        final boolean negExp = this.totalCost < 0;
+//        final int finalCost = exp ? this.totalCost
+//            : negExp
+//                ? -this.totalCost
+//                : this.totalCost;
+        final int finalCost = negExp
+                ? -this.totalCost
+                : this.totalCost;
+
+        information.add(this.fontRendererObj.listFormattedStringToWidth(
+            String.format("%s: %s",
+//                exp ? I18n.format("tooltip.enchanter.experienceGained") :
+                    I18n.format("tooltip.enchanter.levelneed"),
+                finalCost),
+            maxWidth));
+      }
+//    information.add(this.fontRendererObj.listFormattedStringToWidth(
+//        String.format("%s: %s", I18n.format("tooltip.eplus.maxlevel"),
+//            this.container.getEnchantingPower()),
+//        maxWidth));
+
+    if (!StackUtil.isValid(this.container.getItem()))
+      information.add(this.fontRendererObj.listFormattedStringToWidth(
+          I18n.format("tooltip.enchanter.additem"), maxWidth));
+
+    for (final List<String> display : information)
+    {
+
+      int height = information.indexOf(display) == 0
+          ? this.guiTop + this.fontRendererObj.FONT_HEIGHT + 8
+          : this.guiTop + (this.fontRendererObj.FONT_HEIGHT + 8)
+              * (information.indexOf(display) + 1);
+
+      if (information.indexOf(display) > 0)
+        for (int i = information.indexOf(display) - 1; i >= 0; i--)
+          height += (this.fontRendererObj.FONT_HEIGHT + 3)
+              * (information.get(i).size() - 1);
+
+      this.drawHoveringText(display, this.guiLeft - 20 - maxWidth, height,
+          this.fontRendererObj);
+    }
+
+    final GuiEnchanterLabel label = this.getSelectedLabel(mouseX, mouseY);
+
+    if (isShiftKeyDown() && label != null && label.enchantment != null)
+    {
+
+      final String enchName = ChatFormatting.BOLD + label.getTranslatedName();
+      String description = I18n.format("enchantment."
+          + label.enchantment.getRegistryName().getResourceDomain() + "."
+          + label.enchantment.getRegistryName().getResourcePath() + ".desc");
+
+      if (description.startsWith("enchantment."))
+        description = ChatFormatting.RED + I18n.format("tooltip.eplus.nodesc")
+            + " " + description;
+
+      else
+        description = ChatFormatting.LIGHT_PURPLE + description;
+
+      final List<String> display = new ArrayList<>();
+
+      display.add(enchName);
+      display.addAll(
+          this.fontRendererObj.listFormattedStringToWidth(description, 215));
+      display.add(ChatFormatting.BLUE + "" + ChatFormatting.ITALIC
+          + RetroCraft.modId);
+      this.drawHoveringText(display, mouseX, mouseY, this.fontRendererObj);
+    }
+  }
+
+  @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
   {
     String name = RetroCraft.proxy
@@ -238,10 +329,34 @@ public class GuiEnchanter extends GuiContainer
         0x404040);
   }
 
+  
+  /**
+   * Gets the GuiEnchantmentLabel that the mouse is currently hovering over.
+   * 
+   * @param mouseX The X position of the mouse.
+   * @param mouseY The Y position of the mouse.
+   * @return GuiEnchantmentLabel The current label being hovered over.
+   */
+  private GuiEnchanterLabel getSelectedLabel (int mouseX, int mouseY) {
+      
+      if (mouseX < this.guiLeft + guiOffset + 35 || mouseX > this.guiLeft + this.xSize - 32)
+          return null;
+      
+      for (final GuiEnchanterLabel label : this.enchantmentArray) {
+          
+          if (!label.show)
+              continue;
+          
+          if (mouseY >= label.yPos && mouseY <= label.yPos + label.HEIGHT)
+              return label;
+      }
+      
+      return null;
+  }
+  
   @Override
   public void updateScreen()
   {
-
     super.updateScreen();
 
     // final Map<Integer, Integer> enchantments =
@@ -260,6 +375,115 @@ public class GuiEnchanter extends GuiContainer
     totalCost = 0;
 
     handleChangedEnchantments(enchantments);
+    this.updateEnchantmentLabels(enchantments);
+  }
+
+  /**
+   * Checks if the level of any of the enchantments has changed.
+   * 
+   * @return boolean Whether or not a level of an enchantment has changed.
+   */
+  protected boolean hasLevelChanged()
+  {
+
+    for (final GuiEnchanterLabel label : this.enchantmentArray)
+      if (label.enchantmentLevel != label.initialLevel)
+        return true;
+
+    return false;
+  }
+
+  /**
+   * Updates a specific GuiEnchantmentLabel to show correct position and level.
+   * This will also update the cost.
+   * 
+   * @param level
+   *          The correct level for the label to display.
+   * @param label
+   *          The label to update.
+   */
+  private void updateEnchantmentLabel(int level, GuiEnchanterLabel label)
+  {
+
+    label.yPos = label.startingYPos - (int) (18 * 4 * this.sliderIndex);
+
+    if (!label.locked && label.enchantmentLevel > level)
+    {
+
+      int cost = this.totalCost + this.container
+          .enchantmentCost(label.enchantment, label.enchantmentLevel, level);
+
+      if (!this.container.canPurchase(this.playerInv.player, cost))
+
+        while (label.enchantmentLevel > 0)
+        {
+
+          label.dragging = false;
+          label.enchantmentLevel--;
+          cost = this.totalCost + this.container.enchantmentCost(
+              label.enchantment, label.enchantmentLevel, level);
+
+          if (this.container.canPurchase(this.playerInv.player, cost))
+            break;
+        }
+
+      this.totalCost = cost;
+    }
+
+    else if (label.enchantmentLevel < level && !label.locked)
+      this.totalCost += this.container.getRebate(label.enchantment,
+          label.enchantmentLevel, level);
+  }
+
+  /**
+   * Updates through all enchantment labels to update their status. For example,
+   * locking or unlocking the slider label.
+   */
+  private void updateEnchantmentLabels()
+  {
+
+    int labelIndex = 0;
+
+    for (final GuiEnchanterLabel label : this.enchantmentArray)
+      label.locked = false;
+
+    for (final GuiEnchanterLabel mainLabel : this.enchantmentArray)
+
+      if (mainLabel.enchantmentLevel != 0)
+      {
+
+        labelIndex++;
+
+        for (final GuiEnchanterLabel otherLabel : this.enchantmentArray)
+          if (mainLabel != otherLabel
+              && !EnchantHelper.isEnchantmentsCompatible(mainLabel.enchantment,
+                  otherLabel.enchantment))
+            otherLabel.locked = true;
+      }
+
+    // else if (!this.playerInv.player.capabilities.isCreativeMode)
+    // {
+    // && ConfigurationHandler.maxEnchantmentAmount > 0
+    // && labelIndex >= ConfigurationHandler.maxEnchantmentAmount)
+    // mainLabel.locked = true;
+    // }
+  }
+
+  private void updateEnchantmentLabels(Map<Enchantment, Integer> enchantments)
+  {
+
+    if (!this.enchantmentArray.isEmpty() && this.hasLevelChanged())
+    {
+
+      for (final GuiEnchanterLabel label : this.enchantmentArray)
+        if (label != this.last)
+          this.updateEnchantmentLabel(enchantments.get(label.enchantment),
+              label);
+
+      if (this.last != null)
+        this.updateEnchantmentLabel(enchantments.get(this.last.enchantment),
+            this.last);
+    }
   }
 
   protected boolean levelChanged()
@@ -267,7 +491,7 @@ public class GuiEnchanter extends GuiContainer
 
     for (final GuiEnchanterLabel item : enchantmentArray)
     {
-      if (item.enchantmentLevel != item.currentLevel)
+      if (item.enchantmentLevel != item.enchantmentLevel)
       {
         return true;
       }
@@ -285,15 +509,15 @@ public class GuiEnchanter extends GuiContainer
         handleChangedEnchantment(enchantments, item);
       }
     }
-//    else if (!levelChanged())
-//    {
-//      totalCost += container.repairCostMax();
-//
-//      for (final GuiEnchanterLabel item : enchantmentArray)
-//      {
-//        item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
-//      }
-//    }
+    // else if (!levelChanged())
+    // {
+    // totalCost += container.repairCostMax();
+    //
+    // for (final GuiEnchanterLabel item : enchantmentArray)
+    // {
+    // item.yPos = item.startingYPos - (int) (18 * 4 * sliderIndex);
+    // }
+    // }
   }
 
   private void handleChangedEnchantment(Map<Enchantment, Integer> enchantments,
@@ -416,7 +640,7 @@ public class GuiEnchanter extends GuiContainer
     int yPos = y;
     for (Enchantment obj : map.keySet())
     {
-      temp.add(new GuiEnchanterLabel(obj, map.get(obj), x, yPos));
+      temp.add(new GuiEnchanterLabel(container, obj, map.get(obj), x, yPos));
       i++;
       yPos = y + i * 18;
     }

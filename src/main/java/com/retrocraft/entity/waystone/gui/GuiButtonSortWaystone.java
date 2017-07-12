@@ -1,6 +1,6 @@
 package com.retrocraft.entity.waystone.gui;
 
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -26,7 +26,7 @@ public class GuiButtonSortWaystone extends GuiButtonExt
     this.sortDir = sortDir;
   }
 
-  public WaystoneEntry getWaystone()
+  public TeleportEntry getWaystone()
   {
     return parentButton.getWaystone();
   }

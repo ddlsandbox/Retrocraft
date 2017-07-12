@@ -3,29 +3,59 @@ itemGroup.retrocraft=RetroCraft
 
 # Items.materials
 
-tile.ore_octirion.name=Octirion Ore
+tile.ore_octirion.name=Octiron Ore
 tile.ore_manolite.name=Manolite Ore
 
-item.dust_octirion.name=Octirion Dust
+item.gem_octirion.name=Octiron Gem
+item.dust_octirion.name=Octiron Dust
 item.dust_manolite.name=Manolite Dust
 item.dust_manolazium.name=Manolazium Dust
 
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
 
+tile.block_manolium.name=Block of Manolium
+tile.block_manolazium.name=Block of Manolazium
+tile.block_octirion.name=Block of Octiron
+
+tile.block_machinechasis.name=Machine chasis
+item.magical_core.name=Magical Core
+item.mechanical_core.name=Mechanical Core
+
 # Items.weapons
 item.hammer_stone.name=Stone Hammer
 item.hammer_iron.name=Iron Hammer
-item.hammer_gold.name=Gold Hammer
+item.hammer_gold.name=Golden Hammer
 item.hammer_diamond.name=Diamond Hammer
-item.hammer_emerald.name=Emerald Hammer
 item.hammer_manolium.name=Manolium Hammer
+item.hammer_manolazium.name=Manolazium Hammer
 
+item.streamaxe_stone.name=Stone Stream Axe
+item.streamaxe_iron.name=Iron Stream Axe
+item.streamaxe_gold.name=Golden Stream Axe
+item.streamaxe_diamond.name=Diamond Stream Axe
 item.streamaxe_manolium.name=Manolium Stream Axe
+item.streamaxe_manolazium.name=Manolazium Stream Axe
 
+item.excavator_stone.name=Stone Excavator
+item.excavator_iron.name=Iron Excavator
+item.excavator_gold.name=Golden Excavator
+item.excavator_diamond.name=Diamond Excavator
 item.excavator_manolium.name=Manolium Excavator
+item.excavator_manolazium.name=Manolazium Excavator
 
-item.etool_manolium.name=Manolium MegaToolvim 
+item.etool_manolium.name=Manolium MegaTool
+item.etool_manolazium.name=Manolazium MegaTool
+
+# Armor
+item.head_manolium.name=Manolium Helmet
+item.chest_manolium.name=Manolium Chestplate
+item.legs_manolium.name=Manolium Leggins
+item.feet_manolium.name=Manolium Boots
+item.head_manolazium.name=Manolazium Helmet
+item.chest_manolazium.name=Manolazium Chestplate
+item.legs_manolazium.name=Manolazium Leggins
+item.feet_manolazium.name=Manolazium Boots
 
 item.sword_manolium.name=Manolium Sword
 item.sword_manolazium.name=Manolazium Great Sword
@@ -35,47 +65,36 @@ item.wooden_bucket_water.name=Wooden Bucket of Water
 item.wooden_bucket_milk.name=Wooden Bucket of Milk
 
 # Entities
-tile.block_enchantorium.name=The Enchantoriumn
 tile.multifurnace.name=Multifurnace
+
 tile.block_enchanter.name=The Enchanter
+tooltip.enchanter.playerlevel=Player Level
+tooltip.enchanter.experienceGained=EXP gained
+tooltip.enchanter.levelneed=Enchanting cost
+tooltip.enchanter.additem=Place an item in the table
+
 tile.block_repairer.name=Repairer
-tile.pedestal_manolium.name=Manolium Pedestal
+tile.block_pedestal.name=Pedestal
 tile.block_steamgenerator.name=Steam Generator
 tile.block_oregrinder.name=Ore Grinder
 tile.block_oresmelter.name=Ore Smelter
 tile.block_electricforge.name=Electric Forge
 tile.block_advancedforge.name=Advanced Forge
 
+tile.lightpillar.name=Light Pillar
+
 # Waystones
-tile.retrocraft:waystone.name=Waystone
-
-item.retrocraft:warp_scroll.name=Warp Scroll
-item.retrocraft:return_scroll.name=Return Scroll
-item.retrocraft:warp_stone.name=Warp Stone
-
-itemGroup.waystones=Waystones
+tile.block_waystone.name=Teleport Pipe
 
 retrocraft:noDimensionWarp=You cannot warp between worlds.
-retrocraft:waystoneBroken=The bound waystone has been moved or destroyed.
-retrocraft:scrollNotBound=You have not activated any waystones yet.
-retrocraft:stoneNotCharged=The Warp Stone is not fully charged yet.
-retrocraft:activatedWaystone=Activated Waystone: %s
+retrocraft:waystoneBroken=The bound pipe has been moved or destroyed.
+retrocraft:scrollNotBound=You have not activated any pipe yet.
+retrocraft:activatedWaystone=Activated Pipe: %s
 retrocraft:nameOccupied=The name %s is already in use.
-retrocraft:notTheOwner=Waystones can only be renamed by whoever placed them.
-retrocraft:creativeRequired=You have to be in creative mode to edit a global waystone.
-
+retrocraft:notTheOwner=Pipes can only be renamed by whoever placed them.
+retrocraft:creativeRequired=You have to be in creative mode to edit a global pipe.
 gui.retrocraft:warpStone.selectDestination=Select your destination:
 gui.retrocraft:warpStone.nextPage=Next
 gui.retrocraft:warpStone.previousPage=Previous
-gui.retrocraft:confirmReturn=Do you really want to warp back to your latest waystone?
-gui.retrocraft:confirmReturn.boundTo=Bound to: %s
-gui.retrocraft:confirmReturn.noWaystoneActive=No waystone active.
-gui.retrocraft:editWaystone.enterName=Enter waystone name:
+gui.retrocraft:editWaystone.enterName=Enter pipe name:
 gui.retrocraft:editWaystone.isGlobal=is Global
-
-tooltip.retrocraft:cooldownLeft=Cooldown: %d seconds
-tooltip.retrocraft:boundTo=Bound to: %s
-tooltip.retrocraft:none=None
-tooltip.retrocraft:returnToWaystone=Return to Waystone
-tooltip.retrocraft:openWaystoneMenu=Open Waystone Menu
-tooltip.retrocraft:levelRequirement=Level Requirement: %d

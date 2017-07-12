@@ -1,6 +1,6 @@
 package com.retrocraft;
 
-import com.retrocraft.entity.waystone.TileWaystone;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.waystone.gui.ContainerEditWaystoneNameDummy;
 import com.retrocraft.entity.waystone.gui.GuiEditWaystone;
 import com.retrocraft.machine.crafter.ContainerAdvancedForge;
@@ -126,7 +126,7 @@ public class ModGuiHandler implements IGuiHandler
       return new GuiAdvancedForge(player);
     case WAYSTONE:
       return new GuiEditWaystone(
-          (TileWaystone) world.getTileEntity(new BlockPos(x, y, z)));
+          (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     default:
       return null;
     }

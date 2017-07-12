@@ -67,7 +67,7 @@ public class BlockOreGrinder extends BlockTileEntity<TileOreGrinder>
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state,
       EntityLivingBase player, ItemStack stack)
   {
-    world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING,
+    world.setBlockState(pos, state.withProperty(FACING,
         player.getHorizontalFacing().getOpposite()), 2);
 
     super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -76,34 +76,34 @@ public class BlockOreGrinder extends BlockTileEntity<TileOreGrinder>
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    return this.getDefaultState().withProperty(BlockHorizontal.FACING,
+    return this.getDefaultState().withProperty(FACING,
         EnumFacing.getHorizontal(meta));
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+    return state.getValue(FACING).getHorizontalIndex();
   }
 
   @Override
   protected BlockStateContainer createBlockState()
   {
-    return new BlockStateContainer(this, BlockHorizontal.FACING);
+    return new BlockStateContainer(this, FACING);
   }
 
   @Override
   public IBlockState withRotation(IBlockState state, Rotation rot)
   {
-    return state.withProperty(BlockHorizontal.FACING,
-        rot.rotate(state.getValue(BlockHorizontal.FACING)));
+    return state.withProperty(FACING,
+        rot.rotate(state.getValue(FACING)));
   }
 
   @Override
   public IBlockState withMirror(IBlockState state, Mirror mirror)
   {
     return this.withRotation(state,
-        mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+        mirror.toRotation(state.getValue(FACING)));
   }
 
   @Override

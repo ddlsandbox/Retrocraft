@@ -6,7 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.retrocraft.RetroCraft;
+import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.common.ContainerBase;
+import com.retrocraft.util.StackUtil;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -36,8 +39,8 @@ public class ContainerEnchanter extends ContainerBase
   {
     super(true, true);
 
-    guiHotbarPosX    = 43;
-    guiHotbarPosY    = 149;
+    guiHotbarPosX = 43;
+    guiHotbarPosY = 149;
     guiInventoryPosX = 43;
     guiInventoryPosY = 91;
     guiEquipmentPosX = 7;
@@ -91,9 +94,8 @@ public class ContainerEnchanter extends ContainerBase
   @Override
   public void onContainerClosed(EntityPlayer p_onContainerClosed_1_)
   {
-    // TODO Auto-generated method stub
+    // TODO Drop item?
     super.onContainerClosed(p_onContainerClosed_1_);
-    System.out.println("[RETROCRAFT] CONTAINER CLOSED");
   }
 
   // This is where you specify what happens when a player shift clicks a slot in
@@ -153,6 +155,45 @@ public class ContainerEnchanter extends ContainerBase
     }
 
     return itemstack;
+  }
+
+  public ItemStack getItem()
+  {
+    return inventorySlots.get(customFirstSlotIndex).getStack();
+  }
+
+  /**
+   * Calculates the amount of experience to give the player for disenchanting
+   * their item.
+   *
+   * @param enchantment:
+   *          The enchantment being removed.
+   * @param enchantmentLevel:
+   *          The new amount of levels for the enchantment effect.
+   * @param existingLevel:
+   *          The amount of levels for the enchantment effect before updating.
+   * @return int: The amount of experience points to give the player.
+   */
+  public int getRebate(Enchantment enchantment, int enchantmentLevel,
+      Integer existingLevel)
+  {
+
+    final ItemStack stack = inventorySlots.get(customFirstSlotIndex).getStack();
+
+    if (!StackUtil.isValid(stack)
+        && enchantmentLevel > enchantment.getMaxLevel())
+      return 0;
+
+    final int oldCost = (int) ((enchantment.getMaxEnchantability(existingLevel)
+        - stack.getItem().getItemEnchantability(stack)) / 2
+        * RetroCraft.getConfig().enchantmentCostFactor);
+    final int newCost = (int) ((enchantment.getMaxEnchantability(
+        enchantmentLevel) - stack.getItem().getItemEnchantability(stack)) / 2
+        * RetroCraft.getConfig().enchantmentCostFactor);
+    final int returnAmount = (oldCost - newCost) / 2;
+    return -returnAmount;
+//        -EnchantHelper
+//        .getExperienceFromLevel(returnAmount > 0 ? returnAmount : 0);
   }
 
   private void addEnchantsFor(ItemStack itemStack,
@@ -280,15 +321,15 @@ public class ContainerEnchanter extends ContainerBase
       final List<EnchantmentData> enchantmentDataList = new ArrayList<>();
 
       for (final Enchantment enchantment : map.keySet())
+      {
         enchantmentDataList
             .add(new EnchantmentData(enchantment, map.get(enchantment)));
+      }
 
       if (!player.capabilities.isCreativeMode)
-        if (serverCost < 0)
-          player.addExperience(-serverCost);
-        else
-          player.addExperienceLevel(
-              -EnchantHelper.getLevelsFromExperience(serverCost));
+      {
+        player.addExperience(-serverCost);
+      }
     }
 
     enchanter.enchantCurrent(map);
@@ -302,7 +343,6 @@ public class ContainerEnchanter extends ContainerBase
       Integer level)
   {
 
-    final double costFactor = 1.0;
     final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
         .getStack();
     if (itemStack == null)
@@ -315,73 +355,59 @@ public class ContainerEnchanter extends ContainerBase
       return 0;
     }
 
-    final int averageCost = (enchantment.getMinEnchantability(enchantmentLevel)
-        + enchantment.getMaxEnchantability(enchantmentLevel)) / 2;
-    int enchantability = itemStack.getItem().getItemEnchantability();
-
-    if (enchantability < 1)
-      enchantability = 1;
-
-    int adjustedCost = (int) (averageCost
-        * (enchantmentLevel - level + maxLevel)
-        / ((double) maxLevel * enchantability));
-
-    adjustedCost *= (costFactor / 3D);
-    if (enchantability > 1)
-    {
-      adjustedCost *= Math.log(enchantability) / 2;
-    } else
-    {
-      adjustedCost /= 10;
-    }
-
-    return Math.max(1, adjustedCost);
+    return EnchantHelper.calculateEnchantmentCost(enchantment,
+        enchantmentLevel + level);
+    // return EnchantHelper.getExperienceFromLevel(
+    // EnchantHelper.calculateEnchantmentCost(enchantment, enchantmentLevel +
+    // level));
   }
 
   public int disenchantmentCost(Enchantment enchantment, int enchantmentLevel,
       Integer level)
   {
 
-    final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
-        .getStack();
-    final double costFactor = 1.0;
-
-    if (itemStack == null)
-      return 0;
-
-    final int maxLevel = enchantment.getMaxLevel();
-
-    if (enchantmentLevel > maxLevel)
-      return 0;
-
-    final int averageCost = (enchantment.getMinEnchantability(level)
-        + enchantment.getMaxEnchantability(level)) / 2;
-    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
-
-    if (enchantability <= 1)
-      enchantability = 10;
-
-    int adjustedCost = (int) (averageCost
-        * (enchantmentLevel - level - maxLevel)
-        / ((double) maxLevel * enchantability));
-
-    // int temp = (int) (adjustedCost * (60 / (bookCases() + 1)));
-    // temp /= 20;
-    // if (temp > adjustedCost) {
-    // adjustedCost = temp;
-    // }
-
-    adjustedCost *= (costFactor / 4D);
-
-    if (enchantability > 1)
-      adjustedCost *= Math.log(enchantability) / 2;
-    else
-      adjustedCost /= 10;
-
-    final int enchantmentCost = enchantmentCost(enchantment, level - 1,
-        enchantmentLevel);
-
-    return Math.min(adjustedCost, -enchantmentCost);
+    return -enchantmentCost(enchantment, level, enchantmentLevel) + 1;
+    // final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
+    // .getStack();
+    // final double costFactor = 1.0;
+    //
+    // if (itemStack == null)
+    // return 0;
+    //
+    // final int maxLevel = enchantment.getMaxLevel();
+    //
+    // if (enchantmentLevel > maxLevel)
+    // return 0;
+    //
+    // final int averageCost = (enchantment.getMinEnchantability(level)
+    // + enchantment.getMaxEnchantability(level)) / 2;
+    // int enchantability =
+    // itemStack.getItem().getItemEnchantability(itemStack);
+    //
+    // if (enchantability <= 1)
+    // enchantability = 10;
+    //
+    // int adjustedCost = (int) (averageCost
+    // * (enchantmentLevel - level - maxLevel)
+    // / ((double) maxLevel * enchantability));
+    //
+    // // int temp = (int) (adjustedCost * (60 / (bookCases() + 1)));
+    // // temp /= 20;
+    // // if (temp > adjustedCost) {
+    // // adjustedCost = temp;
+    // // }
+    //
+    // adjustedCost *= (costFactor / 4D);
+    //
+    // if (enchantability > 1)
+    // adjustedCost *= Math.log(enchantability) / 2;
+    // else
+    // adjustedCost /= 10;
+    //
+    // final int enchantmentCost = enchantmentCost(enchantment, level - 1,
+    // enchantmentLevel);
+    //
+    // return Math.min(adjustedCost, -enchantmentCost);
   }
 
   /* Client Synchronization */

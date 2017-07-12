@@ -1,12 +1,12 @@
 {
    "forge_marker": 1,
-    "defaults": {
+   "defaults": {
          "model": "retrocraft:block_oresmelter",
          "uvlock": true
-    },
-    "variants": {
-        "normal": [{}],
-        "facing": {
+   },
+   "variants": {
+      "normal": [{}],
+      "facing": {
          "west": {
            "y": -90
          },
@@ -18,10 +18,10 @@
          "south": {
            "y": 180
          }
-       },
-       "inventory": {
+      },
+   "inventory": {
          "model": "retrocraft:block_oresmelter",
         	"transform": "forge:default-block"
-	    }
-    }
+	   }
+   }
 }

@@ -2,7 +2,7 @@ package com.retrocraft.entity.waystone.gui;
 
 import com.google.common.collect.Lists;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -21,18 +21,17 @@ public class GuiButtonWaystoneEntry extends GuiButton
   private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(
       "textures/gui/container/enchanting_table.png");
 
-  private final WaystoneEntry waystone;
+  private final TeleportEntry waystone;
   private final int           xpLevelCost;
 
-  public GuiButtonWaystoneEntry(int id, int x, int y, WaystoneEntry waystone)
+  public GuiButtonWaystoneEntry(int id, int x, int y, TeleportEntry waystone)
   {
     super(id, x, y, (waystone.isGlobal() ? TextFormatting.YELLOW : "")
         + waystone.getName());
     this.waystone = waystone;
     EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity();
-    boolean enableXPCost = RetroCraft.getConfig().warpStoneXpCost;
-    this.xpLevelCost = (enableXPCost
-        && RetroCraft.getConfig().blocksPerXPLevel > 0)
+    boolean enableXPCost = RetroCraft.getConfig().blocksPerXPLevel > 0;
+    this.xpLevelCost = (enableXPCost)
             ? MathHelper.clamp(
                 (int) Math.sqrt(player.getDistanceSqToCenter(waystone.getPos()))
                     / RetroCraft.getConfig().blocksPerXPLevel,
@@ -45,7 +44,7 @@ public class GuiButtonWaystoneEntry extends GuiButton
     }
   }
 
-  public WaystoneEntry getWaystone()
+  public TeleportEntry getWaystone()
   {
     return waystone;
   }

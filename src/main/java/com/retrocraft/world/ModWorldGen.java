@@ -2,7 +2,7 @@ package com.retrocraft.world;
 
 import java.util.Random;
 
-import com.retrocraft.RCConfig;
+import com.retrocraft.RetroCraft;
 import com.retrocraft.block.ModBlocks;
 
 import net.minecraft.block.state.IBlockState;
@@ -48,20 +48,20 @@ public class ModWorldGen implements IWorldGenerator {
 				random,
 				chunkX * 16,
 				chunkZ * 16,
-				RCConfig.oreManoliumMinY,
-				RCConfig.oreManoliumMaxY,
-				RCConfig.oreManoliumVeinSize + random.nextInt(RCConfig.oreManoliumVeinVar),
-				RCConfig.oreManoliumTries);
+				RetroCraft.getConfig().oreManoliumMinY,
+				RetroCraft.getConfig().oreManoliumMaxY,
+				RetroCraft.getConfig().oreManoliumVeinSize + random.nextInt(RetroCraft.getConfig().oreManoliumVeinVar),
+				RetroCraft.getConfig().oreManoliumTries);
 
 		generateOre(ModBlocks.oreOctirion.getDefaultState(),
 				world,
 				random,
 				chunkX * 16,
 				chunkZ * 16,
-				RCConfig.oreOctirionMinY,
-				RCConfig.oreOctirionMaxY,
-				RCConfig.oreOctirionVeinSize + random.nextInt(RCConfig.oreOctirionVeinVar),
-				RCConfig.oreOctirionTries);
+				RetroCraft.getConfig().oreOctirionMinY,
+				RetroCraft.getConfig().oreOctirionMaxY,
+				RetroCraft.getConfig().oreOctirionVeinSize + random.nextInt(RetroCraft.getConfig().oreOctirionVeinVar),
+				RetroCraft.getConfig().oreOctirionTries);
 	}
 
 	private void generateOre(IBlockState ore,

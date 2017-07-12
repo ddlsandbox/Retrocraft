@@ -1,6 +1,6 @@
 package com.retrocraft.machine.grinder;
 
-import com.retrocraft.RCConfig;
+import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.recipe.GrinderRecipeRegistry;
@@ -22,11 +22,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileOreGrinder extends TileInventoryBase
     implements IEnergyStorage, ITickable, IEnergyDisplay
 {
-  private static final int CAPACITY   = RCConfig.oreGrinderCapacity;
+  private static final int CAPACITY   = RetroCraftGlobals.oreGrinderCapacity;
   private static final int THROUGHPUT = 1000;
 
-  private static final int ENERGY_USE = RCConfig.oreGrinderEnergyUsed;
-  private static final int CRUSH_TIME = RCConfig.oreGrinderCrushTime;
+  private static final int ENERGY_USE = RetroCraftGlobals.oreGrinderEnergyUsed;
+  private static final int CRUSH_TIME = RetroCraftGlobals.oreGrinderCrushTime;
   
   private static final int FIELD_CRUSH_TIME_REMAINING = 0;
   private static final int FIELD_COUNT                = 1;

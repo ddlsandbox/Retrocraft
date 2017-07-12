@@ -3,8 +3,8 @@ package com.retrocraft.entity.waystone.gui;
 import java.io.IOException;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.waystone.MessageEditWaystone;
-import com.retrocraft.entity.waystone.TileWaystone;
+import com.retrocraft.entity.teleportpipe.MessageEditTeleportPipe;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
@@ -19,12 +19,12 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 public class GuiEditWaystone extends GuiContainer
 {
 
-  private final TileWaystone tileWaystone;
+  private final TileTeleportPipe tileWaystone;
   private GuiTextField       textField;
   private GuiButton          btnDone;
   private GuiCheckBox        chkGlobal;
 
-  public GuiEditWaystone(TileWaystone tileWaystone)
+  public GuiEditWaystone(TileTeleportPipe tileWaystone)
   {
     super(new ContainerEditWaystoneNameDummy());
     this.tileWaystone = tileWaystone;
@@ -74,7 +74,7 @@ public class GuiEditWaystone extends GuiContainer
   {
     if (button == btnDone)
     {
-      RetroCraft.network.sendToServer(new MessageEditWaystone(
+      RetroCraft.network.sendToServer(new MessageEditTeleportPipe(
           tileWaystone.getPos(), textField.getText(), chkGlobal.isChecked()));
       FMLClientHandler.instance().getClientPlayerEntity().closeScreen();
     }

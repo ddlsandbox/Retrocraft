@@ -8,9 +8,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.waystone.MessageSortWaystone;
-import com.retrocraft.entity.waystone.MessageTeleportToWaystone;
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.MessageSortTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,15 +21,15 @@ import net.minecraft.util.text.TextFormatting;
 public class GuiWaystoneList extends GuiScreen
 {
 
-  private final WaystoneEntry[] entries;
+  private final TeleportEntry[] entries;
   private final EnumHand        hand;
-  private final WaystoneEntry   fromWaystone;
+  private final TeleportEntry   fromWaystone;
   private GuiButton             btnPrevPage;
   private GuiButton             btnNextPage;
   private int                   pageOffset;
 
-  public GuiWaystoneList(WaystoneEntry[] entries, EnumHand hand,
-                         @Nullable WaystoneEntry fromWaystone)
+  public GuiWaystoneList(TeleportEntry[] entries, EnumHand hand,
+                         @Nullable TeleportEntry fromWaystone)
   {
     this.entries = entries;
     this.hand = hand;
@@ -116,12 +116,12 @@ public class GuiWaystoneList extends GuiScreen
       updateList();
     } else if (button instanceof GuiButtonWaystoneEntry)
     {
-      RetroCraft.network.sendToServer(new MessageTeleportToWaystone(
+      RetroCraft.network.sendToServer(new MessageTeleportToPipe(
           ((GuiButtonWaystoneEntry) button).getWaystone(), hand, fromWaystone));
       mc.displayGuiScreen(null);
     } else if (button instanceof GuiButtonSortWaystone)
     {
-      WaystoneEntry waystoneEntry = ((GuiButtonSortWaystone) button)
+      TeleportEntry waystoneEntry = ((GuiButtonSortWaystone) button)
           .getWaystone();
       int index = ArrayUtils.indexOf(entries, waystoneEntry);
       int sortDir = ((GuiButtonSortWaystone) button).getSortDir();
@@ -130,11 +130,11 @@ public class GuiWaystoneList extends GuiScreen
       {
         return;
       }
-      WaystoneEntry swap = entries[index];
+      TeleportEntry swap = entries[index];
       entries[index] = entries[otherIndex];
       entries[otherIndex] = swap;
       RetroCraft.network
-          .sendToServer(new MessageSortWaystone(index, otherIndex));
+          .sendToServer(new MessageSortTeleportPipe(index, otherIndex));
       updateList();
     }
   }

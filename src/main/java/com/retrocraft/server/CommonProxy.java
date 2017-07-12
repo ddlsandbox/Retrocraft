@@ -2,7 +2,7 @@ package com.retrocraft.server;
 
 import javax.annotation.Nullable;
 
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
@@ -48,7 +48,7 @@ public class CommonProxy
   }
 
   public void openWaystoneSelection(EnumHand hand,
-      @Nullable WaystoneEntry fromWaystone)
+      @Nullable TeleportEntry fromWaystone)
   {
 
   }

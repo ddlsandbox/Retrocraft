@@ -1,0 +1,4 @@
+0.2:
+  - fix: teleport pipes do not require player exp in creative mode
+  - add: configure wheter pipes require exp or not
+  - fix: manolazium helmet night vision up to 12 seconds to avoid glittering

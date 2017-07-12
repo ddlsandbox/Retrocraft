@@ -1,20 +1,100 @@
-# Items
-item.ingot_copper.name=Lingote de Cobre
-item.ingot_manolium.name=Lingote de Manolium
-item.ingot_manolazium.name=Lingote de Manolacium
-
-item.wooden_bucket.name=Cubo Mierder de Madera
-
-# Blocks
-tile.ore_copper.name=Mena de Cobre
-tile.ore_manolite.name=Mena de Manolita
-tile.block_enchantorium.name=El Encantorium
-
-# Test
-tile.pedestal_manolium.name=Pedestal de Manolium
-item.sword_manolium.name=Espada de Manolium
-item.sword_manolazium.name=Espadón de Manolazium
-
 # Mod title
 itemGroup.retrocraft=RetroCraft
 
+# Items.materials
+
+tile.ore_octirion.name=Mena de Octiron
+tile.ore_manolite.name=Mena de Manolita
+
+item.gem_octirion.name=Gema de Octiron
+item.dust_octirion.name=Polvo de Octiron
+item.dust_manolite.name=Polvo de Manolita
+item.dust_manolazium.name=Polvo de Manolazium
+
+item.ingot_manolium.name=Lingote de Manolium
+item.ingot_manolazium.name=Lingote de Manolazium
+
+tile.block_manolium.name=Bloque de Manolium
+tile.block_manolazium.name=Bloque de Manolazium
+tile.block_octirion.name=Bloque de Octiron
+
+tile.block_machinechasis.name=Chásis de máquina
+item.magical_core.name=Núcleo Mágico
+item.mechanical_core.name=Núcleo Mecánico
+
+# Items.weapons
+item.hammer_stone.name=Martillo de Piedra
+item.hammer_iron.name=Martillo de Hierro
+item.hammer_gold.name=Martillo de Oro
+item.hammer_diamond.name=Martillo de Diamante
+item.hammer_manolium.name=Martillo de Manolium
+item.hammer_manolazium.name=Martillo de Manolazium
+
+item.streamaxe_stone.name=Hacha Tocha de Piedra
+item.streamaxe_iron.name=Hacha Tocha de Hierro
+item.streamaxe_gold.name=Hacha Tocha de Oro
+item.streamaxe_diamond.name=Hacha Tocha de Diamante
+item.streamaxe_manolium.name=Hacha Tocha de Manolium
+item.streamaxe_manolazium.name=Hacha Tocha de Manolazium
+
+item.excavator_stone.name=Excavadora de Piedra
+item.excavator_iron.name=Excavadora de Hierro
+item.excavator_gold.name=Excavadora de Oro
+item.excavator_diamond.name=Excavadora de Diamante
+item.excavator_manolium.name=Excavadora de Manolium
+item.excavator_manolazium.name=Excavadora de Manolazium
+
+item.etool_manolium.name=Tochoherramienta de Manolium
+item.etool_manolazium.name=Tochoherramienta de Manolazium
+
+# Armor
+item.head_manolium.name=Casco de Manolium
+item.chest_manolium.name=Pechera de Manolium
+item.legs_manolium.name=Mallas de Manolium
+item.feet_manolium.name=Botas de Manolium
+item.head_manolazium.name=Casco de Manolazium
+item.chest_manolazium.name=Pechera de Manolazium
+item.legs_manolazium.name=Mallas de Manolazium
+item.feet_manolazium.name=Botas de Manolazium
+
+item.sword_manolium.name=Espada de Manolium
+item.sword_manolazium.name=Espadón de Manolazium
+
+item.wooden_bucket.name=Cubo de Madera
+item.wooden_bucket_water.name=Cubo de Agua de Madera
+item.wooden_bucket_milk.name=Cubo de Leche de Madera
+
+# Entities
+tile.multifurnace.name=Multihorno
+
+tile.block_enchanter.name=Encanter
+tooltip.enchanter.playerlevel=Nivel actual
+tooltip.enchanter.experienceGained=EXP ganada
+tooltip.enchanter.levelneed=Coste de encantar
+tooltip.enchanter.additem=Coloca un item en la mesa
+
+tile.block_repairer.name=Reparador
+tile.block_pedestal.name=Pedestal
+tile.block_steamgenerator.name=Generador de Vapor
+tile.block_oregrinder.name=Machacamenas
+tile.block_oresmelter.name=Fundición
+tile.block_electricforge.name=Forja Eléctrica
+tile.block_advancedforge.name=Forja Avanzada
+
+tile.lightpillar.name=Pilar de luz
+
+# Waystones
+tile.block_waystone.name=Tubería de Teletransporte
+
+retrocraft:noDimensionWarp=No te puedes transportar entre dimensiones.
+retrocraft:waystoneBroken=La otra tubería ha desaparecido.
+retrocraft:scrollNotBound=Aún no has activado ninguna tubería.
+retrocraft:activatedWaystone=Tubería activada: %s
+retrocraft:nameOccupied=La tubería %s ya existe.
+retrocraft:notTheOwner=Las tuberías sólo las puede renombrar su dueño.
+retrocraft:creativeRequired=Debes estar en modo creativo para editar una tubería global.
+gui.retrocraft:warpStone.selectDestination=Elige destino:
+gui.retrocraft:warpStone.nextPage=Siguiente
+gui.retrocraft:warpStone.previousPage=Anterior
+gui.retrocraft:editWaystone.enterName=Introduce el nombre de la tubería:
+gui.retrocraft:editWaystone.isGlobal=es Global

@@ -7,9 +7,9 @@ import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.TESRPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
-import com.retrocraft.entity.waystone.PlayerWaystoneData;
-import com.retrocraft.entity.waystone.TileWaystone;
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.waystone.gui.GuiWaystoneList;
 import com.retrocraft.entity.waystone.render.RenderWaystone;
 import com.retrocraft.machine.enchanter.TESREnchanter;
@@ -112,9 +112,9 @@ public class ClientProxy extends CommonProxy
 
   @Override
   public void openWaystoneSelection(EnumHand hand,
-      @Nullable WaystoneEntry fromWaystone)
+      @Nullable TeleportEntry fromWaystone)
   {
-    WaystoneEntry[] waystones = PlayerWaystoneData
+    TeleportEntry[] waystones = PlayerTeleportData
         .fromPlayer(FMLClientHandler.instance().getClientPlayerEntity())
         .getWaystones();
     Minecraft.getMinecraft()

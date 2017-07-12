@@ -11,12 +11,13 @@ package com.retrocraft;
 
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.entity.ModEntities;
-import com.retrocraft.entity.waystone.MessageEditWaystone;
-import com.retrocraft.entity.waystone.MessageSortWaystone;
-import com.retrocraft.entity.waystone.MessageTeleportEffect;
-import com.retrocraft.entity.waystone.MessageTeleportToWaystone;
-import com.retrocraft.entity.waystone.MessageWaystones;
+import com.retrocraft.entity.teleportpipe.MessageEditTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageSortTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageTeleportEffect;
+import com.retrocraft.entity.teleportpipe.MessageTeleportPipes;
+import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
 import com.retrocraft.item.ModItems;
+import com.retrocraft.item.armor.ArmorMaterials;
 import com.retrocraft.network.PacketConfig;
 import com.retrocraft.network.PacketEnchant;
 import com.retrocraft.network.PacketHandler;
@@ -49,7 +50,7 @@ public class RetroCraft
 {
 
   public static final Item.ToolMaterial manoliumToolMaterial   = EnumHelper
-      .addToolMaterial("MANOLIUM", 3,                                         /*
+      .addToolMaterial("MANOLIUM", 2,                                         /*
                                                                                * harvest
                                                                                * level
                                                                                * diamond
@@ -59,8 +60,9 @@ public class RetroCraft
           8f,                                                                 /* efficiency */
           4f,                                                                 /* damage */
           20);                                                                /* enchantability */
+  
   public static final Item.ToolMaterial manolaziumToolMaterial = EnumHelper
-      .addToolMaterial("MANOLIUM", 5,                                         /*
+      .addToolMaterial("MANOLAZIUM", 3,                                         /*
                                                                                * harvest
                                                                                * level
                                                                                * diamond
@@ -77,7 +79,7 @@ public class RetroCraft
 
   public static final String modId   = "retrocraft";
   public static final String name    = "RetroCraft Mod";
-  public static final String version = "0.1.0";
+  public static final String version = "0.2.0";
 
   public static SimpleNetworkWrapper network;
 
@@ -90,6 +92,8 @@ public class RetroCraft
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
+    ArmorMaterials.init();
+    
     ModBlocks.init();
     ModItems.init();
     ModEntities.init();
@@ -124,15 +128,15 @@ public class RetroCraft
     
     network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 
         messageId++, Side.CLIENT);
-    network.registerMessage(new MessageWaystones.Handler(), MessageWaystones.class, 
+    network.registerMessage(new MessageTeleportPipes.Handler(), MessageTeleportPipes.class, 
         messageId++, Side.CLIENT);
-    network.registerMessage(new MessageEditWaystone.Handler(), MessageEditWaystone.class, 
+    network.registerMessage(new MessageEditTeleportPipe.Handler(), MessageEditTeleportPipe.class, 
         messageId++, Side.SERVER);
-    network.registerMessage(new MessageTeleportToWaystone.Handler(), MessageTeleportToWaystone.class, 
+    network.registerMessage(new MessageTeleportToPipe.Handler(), MessageTeleportToPipe.class, 
         messageId++, Side.SERVER);
     network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
         messageId++, Side.CLIENT);
-    network.registerMessage(new MessageSortWaystone.Handler(), MessageSortWaystone.class, 
+    network.registerMessage(new MessageSortTeleportPipe.Handler(), MessageSortTeleportPipe.class, 
         messageId++, Side.SERVER);
 
     proxy.preInit(event);

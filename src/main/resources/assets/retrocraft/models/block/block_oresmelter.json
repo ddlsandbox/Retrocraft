@@ -2,7 +2,7 @@
    "parent": "block/orientable",
 	"textures": {
 		"base": "retrocraft:blocks/steam_generator_side",
-		"front": "retrocraft:blocks/steam_generator_front",
+		"front": "retrocraft:blocks/ore_smelter_front",
 		"particle": "blocks/iron_block"
 	},
 	"elements": [

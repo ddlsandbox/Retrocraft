@@ -4,9 +4,9 @@ import com.retrocraft.RetroCraft;
 import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.client.ClientWaystones;
-import com.retrocraft.entity.waystone.BlockWaystone;
-import com.retrocraft.entity.waystone.TileWaystone;
-import com.retrocraft.entity.waystone.WaystoneManager;
+import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
+import com.retrocraft.entity.teleportpipe.TeleportManager;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderWaystone extends TileEntitySpecialRenderer<TileWaystone>
+public class RenderWaystone extends TileEntitySpecialRenderer<TileTeleportPipe>
 {
 
   private static final ResourceLocation texture       = new ResourceLocation(
@@ -25,7 +25,7 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileWaystone>
   private final ModelWaystone model = new ModelWaystone();
 
   @Override
-  public void renderTileEntityAt(TileWaystone tileEntity, double x, double y,
+  public void renderTileEntityAt(TileTeleportPipe tileEntity, double x, double y,
       double z, float partialTicks, int destroyStage)
   {
     IBlockState state = (tileEntity != null && tileEntity.hasWorld())
@@ -38,7 +38,7 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileWaystone>
     bindTexture(texture);
 
     float angle = state != null
-        ? WaystoneManager.getRotationYaw(state.getValue(BlockWaystone.FACING))
+        ? TeleportManager.getRotationYaw(state.getValue(BlockTeleportPipe.FACING))
         : 0f;
     GlStateManager.pushMatrix();
     // GlStateManager.enableLighting();
@@ -53,16 +53,9 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileWaystone>
     {
       bindTexture(textureActive);
       GlStateManager.scale(1.05f, 1.05f, 1.05f);
-      if (!RetroCraftConfig.disableTextGlow)
-      {
-        // GlStateManager.disableLighting();
-        Minecraft.getMinecraft().entityRenderer.disableLightmap();
-      }
+      Minecraft.getMinecraft().entityRenderer.disableLightmap();
       model.renderPillar();
-      if (!RetroCraftConfig.disableTextGlow)
-      {
-        Minecraft.getMinecraft().entityRenderer.enableLightmap();
-      }
+      Minecraft.getMinecraft().entityRenderer.enableLightmap();
     }
     GlStateManager.popMatrix();
   }

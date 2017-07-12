@@ -1,0 +1,14 @@
+{
+    "variants": {
+        "facing=up": { "model": "retrocraft:lightpillar" },
+        "facing=down": { "model": "retrocraft:lightpillar", "x": 180 },
+        "facing=east": { "model": "retrocraft:lightpillar_wall" },
+        "facing=south": { "model": "retrocraft:lightpillar_wall", "y": 90 },
+        "facing=west": { "model": "retrocraft:lightpillar_wall", "y": 180 },
+        "facing=north": { "model": "retrocraft:lightpillar_wall", "y": 270 },
+		"inventory": {
+			"model": "retrocraft:lightpillar",
+			"transform": "forge:default-block"
+		}
+    }
+}

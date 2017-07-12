@@ -5,32 +5,32 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
-import com.retrocraft.entity.waystone.WaystoneEntry;
+import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
 public class ClientWaystones
 {
 
-  private static final Map<String, WaystoneEntry> knownWaystones = Maps
+  private static final Map<String, TeleportEntry> knownWaystones = Maps
       .newHashMap();
 
-  public static void setKnownWaystones(WaystoneEntry[] entries)
+  public static void setKnownWaystones(TeleportEntry[] entries)
   {
     knownWaystones.clear();
-    for (WaystoneEntry entry : entries)
+    for (TeleportEntry entry : entries)
     {
       knownWaystones.put(entry.getName(), entry);
     }
   }
 
   @Nullable
-  public static WaystoneEntry getKnownWaystone(String name)
+  public static TeleportEntry getKnownWaystone(String name)
   {
     return knownWaystones.get(name);
   }
 
-  public static WaystoneEntry[] getKnownWaystones()
+  public static TeleportEntry[] getKnownWaystones()
   {
     return knownWaystones.values()
-        .toArray(new WaystoneEntry[knownWaystones.size()]);
+        .toArray(new TeleportEntry[knownWaystones.size()]);
   }
 }

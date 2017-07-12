@@ -1,5 +1,6 @@
 package com.retrocraft.machine.generator;
 
+import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.api.energy.IEnergyProvider;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.tile.CustomEnergyStorage;
@@ -85,7 +86,7 @@ public class TileSteamGenerator extends TileInventoryBase
     
     this.currentEnergyProduce = (int) (60 * EFFICIENCY);
     this.outputSides = EnumFacing.values();
-    this.inputSides = new EnumFacing[] { EnumFacing.NORTH };
+    this.inputSides = EnumFacing.HORIZONTALS;
 
     clear();
   }
@@ -230,10 +231,13 @@ public class TileSteamGenerator extends TileInventoryBase
       if (burnTimeRemaining > 0 && burnTimeRemaining != lastBurnTime)
       {
         lastBurnTime = burnTimeRemaining;
-        world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
-              pos.getX() + 0.5,
-              pos.getY() + 1, //  + (world.rand.nextDouble()) * 2
-              pos.getZ() + 0.5, 0, .05, 0);
+        if (!RetroCraftConfig.disableParticles)
+        {
+          world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
+                pos.getX() + 0.5,
+                pos.getY() + 1, //  + (world.rand.nextDouble()) * 2
+                pos.getZ() + 0.5, 0, .05, 0);
+        }
       }
     }
   }

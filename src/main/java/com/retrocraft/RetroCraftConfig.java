@@ -3,56 +3,130 @@ package com.retrocraft;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.common.config.Configuration;
 
-public class RetroCraftConfig {
+public class RetroCraftConfig
+{
 
   public static boolean disableParticles;
-  public static boolean disableTextGlow;
-
-  public int blocksPerXPLevel;
-  public boolean warpStoneXpCost;
-
+  public static float soundVolume = 0.5f;
+  
+  public float enchantmentCostFactor = 1.5f;
+  public boolean allowDisenchanting;
+  
+  public int     blocksPerXPLevel;
   public boolean restrictRenameToOwner;
   public boolean creativeModeOnly;
-  public boolean setSpawnPoint;
 
-  public boolean globalInterDimension;
+  public int oreManoliumMinY;
+  public int oreManoliumMaxY;
+  public int oreManoliumVeinSize;
+  public int oreManoliumVeinVar;
+  public int oreManoliumTries;
 
-  public static float soundVolume = 0.5f;
+  public int oreOctirionMinY;
+  public int oreOctirionMaxY;
+  public int oreOctirionVeinSize;
+  public int oreOctirionVeinVar;
+  public int oreOctirionTries;
+  
+  public void reloadLocal(Configuration config)
+  {
+    /* general */
+    
+    disableParticles = config.getBoolean("Disable Particles", "client", false,
+        "If true, entities will not emit particles.");
+    soundVolume = config.getFloat("Sound Volume", "client", 0.5f, 0f, 1f,
+        "The volume of the sounds played.");
+    
+    /* enchanting */
+    
+    enchantmentCostFactor = config.getFloat("Enchantment cost factor", "enchant_and_repair", 1.5f, 0f,
+        10.0f,
+        "Factor applied to enchanter experience costs.");
+    allowDisenchanting = config.getBoolean("Allow disenchanting", "enchant_and_repair", true,
+        "If true, items can be disenchanted.");
+    
+    /* teleporting */
+    
+    blocksPerXPLevel = config.getInt("Blocks per XP Level", "teleport", 500, 0,
+        2000,
+        "The amount of blocks per xp level requirement for teleporting. Set to 0 to disable xp requirement.");
+    restrictRenameToOwner = config.getBoolean("Restrict Rename to Owner",
+        "teleport", false,
+        "If true, only the owner of a teleport pipe can rename it.");
+    creativeModeOnly = config.getBoolean("Creative Mode Only", "teleport", false,
+        "If true, waystones can only be placed in creative mode.");
 
-  public static int worldGenChance = 0;
+    
+    
+    /* world generation */
 
-  public void reloadLocal(Configuration config) {
-    disableTextGlow = config.getBoolean("Disable Text Glow", "client", false, "If true, the text overlay on waystones will no longer always render at full brightness.");
-    disableParticles = config.getBoolean("Disable Particles", "client", false, "If true, activated waystones will not emit particles.");
+    oreManoliumMinY = config.getInt("min_y", "manolium", 16, 0, 256,
+        "Lowest Y level the ore is generated.");
+    oreManoliumMaxY = config.getInt("max_y", "manolium", 50, 0, 256,
+        "Highest Y level the ore is generated.");
+    oreManoliumVeinSize = config.getInt("vein_size", "manolium", 2, 1, 100,
+        "Vein size.");
+    oreManoliumVeinVar = config.getInt("vein_size", "manolium", 2, 1, 100,
+        "Vein variance.");
+    oreManoliumTries = config.getInt("max_frequency", "manolium", 15, 1, 100,
+        "Maximum ore frequency.");
+    
 
-    blocksPerXPLevel = config.getInt("Blocks per XP Level", "general", 500, 0, 2000, "The amount of blocks per xp level requirement (for inventory button & waystone-to-waystone teleport). Set to 0 to disable xp requirement.");
-    warpStoneXpCost = config.getBoolean("Warp Stone Costs XP", "general", false, "Set to true if you want the warp stone to cost experience when used as well.");
-
-    setSpawnPoint = config.getBoolean("Set Spawnpoint on Activation", "general", false, "If true, the player's spawnpoint will be set to the last activated waystone.");
-
-    restrictRenameToOwner = config.getBoolean("Restrict Rename to Owner", "general", false, "If true, only the owner of a waystone can rename it.");
-    creativeModeOnly = config.getBoolean("Creative Mode Only", "general", false, "If true, waystones can only be placed in creative mode.");
-
-    globalInterDimension = config.getBoolean("Interdimensional Teleport on Global Waystones", "general", true, "If true, waystones marked as global work inter-dimensionally.");
- 
-    soundVolume = config.getFloat("Sound Volume", "client", 0.5f, 0f, 1f, "The volume of the sound played when teleporting.");
-
-    worldGenChance = config.getInt("World Gen Chance", "general", 0, 0, 10000, "The chance for a waystone to spawn in world gen, per 10000 blocks. Set to 0 to disable");
+    oreOctirionMinY = config.getInt("min_y", "octirion", 1, 0, 256,
+        "Lowest Y level the ore is generated.");
+    oreOctirionMaxY = config.getInt("max_y", "octirion", 14, 0, 256,
+        "Highest Y level the ore is generated.");
+    oreOctirionVeinSize = config.getInt("vein_size", "octirion", 2, 1, 100,
+        "Vein size.");
+    oreOctirionVeinVar = config.getInt("vein_size", "octirion", 2, 1, 100,
+        "Vein variance.");
+    oreOctirionTries = config.getInt("max_frequency", "octirion", 10, 1, 100,
+        "Maximum ore frequency.");
   }
 
-  public static RetroCraftConfig read(ByteBuf buf) {
+  public static RetroCraftConfig read(ByteBuf buf)
+  {
     RetroCraftConfig config = new RetroCraftConfig();
+    
+    config.enchantmentCostFactor = buf.readFloat();
+    
     config.creativeModeOnly = buf.readBoolean();
-    config.setSpawnPoint = buf.readBoolean();
     config.restrictRenameToOwner = buf.readBoolean();
     config.blocksPerXPLevel = buf.readInt();
+    
+    config.oreManoliumMinY = buf.readInt();
+    config.oreManoliumMaxY = buf.readInt();
+    config.oreManoliumVeinSize = buf.readInt();
+    config.oreManoliumVeinVar = buf.readInt();
+    config.oreManoliumTries = buf.readInt();
+    
+    config.oreOctirionMinY = buf.readInt();
+    config.oreOctirionMaxY = buf.readInt();
+    config.oreOctirionVeinSize = buf.readInt();
+    config.oreOctirionVeinVar = buf.readInt();
+    config.oreOctirionTries = buf.readInt();
+    
     return config;
   }
 
-  public void write(ByteBuf buf) {
+  public void write(ByteBuf buf)
+  {
+    buf.writeFloat(enchantmentCostFactor);
+    
     buf.writeBoolean(creativeModeOnly);
-    buf.writeBoolean(setSpawnPoint);
     buf.writeBoolean(restrictRenameToOwner);
     buf.writeInt(blocksPerXPLevel);
+    
+    buf.writeInt(oreManoliumMinY);
+    buf.writeInt(oreManoliumMaxY);
+    buf.writeInt(oreManoliumVeinSize);
+    buf.writeInt(oreManoliumVeinVar);
+    buf.writeInt(oreManoliumTries);
+    
+    buf.writeInt(oreOctirionMinY);
+    buf.writeInt(oreOctirionMaxY);
+    buf.writeInt(oreOctirionVeinSize);
+    buf.writeInt(oreOctirionVeinVar);
+    buf.writeInt(oreOctirionTries);
   }
 }

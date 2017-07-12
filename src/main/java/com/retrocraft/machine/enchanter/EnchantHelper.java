@@ -3,7 +3,10 @@ package com.retrocraft.machine.enchanter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.retrocraft.RetroCraft;
+
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -163,5 +166,20 @@ public class EnchantHelper
       itemStack.getTagCompound().removeTag("ench");
 
     return itemStack;
+  }
+
+  public static int calculateEnchantmentCost(Enchantment enchantment, int level)
+  {
+
+    int cost = (int) Math.floor(Math.max(1F,
+        1F + 2F * level * ((float) level / enchantment.getMaxLevel())
+            + (10 - enchantment.getRarity().getWeight()) * 0.2F));
+    cost = cost + (int) (cost * RetroCraft.getConfig().enchantmentCostFactor);
+    cost = cost + (enchantment.getRarity() == Rarity.COMMON ? 1
+        : enchantment.getRarity() == Rarity.UNCOMMON ? 5
+            : enchantment.getRarity() == Rarity.RARE ? 10 : 20);
+    
+    System.out.println("[RETROCRAFT] Cost for level " + level + " = " + cost);
+    return cost;
   }
 }

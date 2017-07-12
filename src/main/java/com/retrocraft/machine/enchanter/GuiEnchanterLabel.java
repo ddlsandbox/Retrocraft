@@ -1,5 +1,7 @@
 package com.retrocraft.machine.enchanter;
 
+import com.retrocraft.RetroCraft;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.enchantment.Enchantment;
@@ -7,28 +9,30 @@ import net.minecraft.enchantment.Enchantment;
 public class GuiEnchanterLabel extends Gui
 {
 
+  private final ContainerEnchanter container;
   public final Enchantment enchantment;
-  public int enchantmentLevel;
-  public final int currentLevel;
+  public int               enchantmentLevel;
+  public final int         initialLevel;
 
-  public int startingXPos;
-  public int startingYPos;
-  public int xPos;
-  public int yPos;
+  public int              startingXPos;
+  public int              startingYPos;
+  public int              xPos;
+  public int              yPos;
   public static final int HEIGHT = 18;
-  public static final int WIDTH = 143;
+  public static final int WIDTH  = 143;
 
-  private int sliderX;
+  private int    sliderX;
   public boolean dragging = false;
 
-  public boolean show = true;
+  public boolean show   = true;
   public boolean locked = false;
 
-  public GuiEnchanterLabel(Enchantment enchantment, int level, int x, int y)
+  public GuiEnchanterLabel(ContainerEnchanter container, Enchantment enchantment, int level, int x, int y)
   {
+    this.container = container;
     this.enchantment = enchantment;
     this.enchantmentLevel = level;
-    this.currentLevel = level;
+    this.initialLevel = level;
     this.xPos = startingXPos = x;
     this.yPos = startingYPos = y;
 
@@ -83,6 +87,43 @@ public class GuiEnchanterLabel extends Gui
     show = b;
   }
 
+  /**
+   * Updates the state of the slider. This is used to handle changing the
+   * current level of the enchantment being represented.
+   * 
+   * @param xPos
+   *          The xPos of the slider.
+   * @param prevX
+   *          The previous slider position.
+   */
+  public void updateSlider(int xPos, int prevX)
+  {
+
+    if (this.locked)
+      return;
+    this.sliderX = prevX + xPos;
+
+    if (this.sliderX <= prevX)
+      this.sliderX = prevX;
+
+    if (this.sliderX >= prevX + WIDTH + 20)
+      this.sliderX = prevX + WIDTH + 20;
+
+    final float index = xPos / (float) (WIDTH + 10);
+    final int tempLevel = (int) Math
+        .floor(this.initialLevel > this.enchantment.getMaxLevel()
+            ? this.initialLevel * index
+            : this.enchantment.getMaxLevel() * index);
+
+    if (tempLevel >= this.initialLevel
+        || RetroCraft.getConfig().allowDisenchanting
+            && !this.container.getItem().isItemDamaged())
+      this.enchantmentLevel = tempLevel;
+
+    if (this.enchantmentLevel <= 0)
+      this.enchantmentLevel = 0;
+  }
+
   public void scroll(int xPos, int start)
   {
 
@@ -105,10 +146,10 @@ public class GuiEnchanterLabel extends Gui
 
     float index = xPos / (float) WIDTH;
     final int tempLevel = (int) Math
-        .floor(currentLevel > enchantment.getMaxLevel() ? currentLevel * index
+        .floor(initialLevel > enchantment.getMaxLevel() ? initialLevel * index
             : enchantment.getMaxLevel() * index);
 
-    if (tempLevel >= currentLevel)
+    if (tempLevel >= initialLevel)
     {
       enchantmentLevel = tempLevel;
     }

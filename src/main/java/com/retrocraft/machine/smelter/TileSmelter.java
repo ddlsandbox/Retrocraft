@@ -1,6 +1,6 @@
 package com.retrocraft.machine.smelter;
 
-import com.retrocraft.RCConfig;
+import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.recipe.SmelterRecipeRegistry;
 import com.retrocraft.tile.CustomEnergyStorage;
@@ -20,11 +20,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileSmelter extends TileInventoryBase
     implements IEnergyStorage, ITickable, IEnergyDisplay
 {
-  private static final int CAPACITY   = RCConfig.oreSmelterCapacity;
+  private static final int CAPACITY   = RetroCraftGlobals.oreSmelterCapacity;
   private static final int THROUGHPUT = 1000;
 
-  private static final int ENERGY_USE = RCConfig.oreSmelterEnergyUsed;
-  private static final int BURN_TIME  = RCConfig.oreSmelterBurnTime;
+  private static final int ENERGY_USE = RetroCraftGlobals.oreSmelterEnergyUsed;
+  private static final int BURN_TIME  = RetroCraftGlobals.oreSmelterBurnTime;
 
   private static final int FIELD_BURN_TIME_REMAINING = 0;
   private static final int FIELD_COUNT               = 1;

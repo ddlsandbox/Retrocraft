@@ -52,7 +52,7 @@ minecraft {
     mappings = "snapshot_20161220"
 }
 
-version =  "0.1"
+version =  "0.2.0"
 group = "com.retrocraft"
 archivesBaseName = "RetroCraft"
 
