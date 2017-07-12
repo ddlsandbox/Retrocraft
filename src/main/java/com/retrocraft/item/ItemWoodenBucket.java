@@ -1,45 +1,42 @@
 package com.retrocraft.item;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.retrocraft.FluidHandler;
 import com.retrocraft.RetroCraft;
+import com.retrocraft.recipe.RetrocraftRecipes;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.ItemFluidContainer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ItemWoodenBucket extends ItemFluidContainer
-    implements ItemModelProvider
+public class ItemWoodenBucket extends Item implements ItemModelProvider
 {
 
-  private static final int AMOUNT = 1000;
-  private String           name;
+  private String      name;
+  private final Block isFull;
 
-  public ItemWoodenBucket(String name)
+  public ItemWoodenBucket(String name, Block containedBlock)
   {
-    super(AMOUNT);
-
     this.setCreativeTab(CreativeTabs.MISC);
     this.setHasSubtypes(true);
     this.setMaxStackSize(1);
@@ -47,20 +44,10 @@ public class ItemWoodenBucket extends ItemFluidContainer
     this.setUnlocalizedName(name);
     this.name = name;
 
+    this.maxStackSize = 1;
+    this.isFull = containedBlock;
+
     MinecraftForge.EVENT_BUS.register(this);
-  }
-
-  @Override
-  public void registerItemModel(Item item)
-  {
-    RetroCraft.proxy.registerItemRenderer(this, 0, name);
-
-    /* register subitems */
-    for (int i = 0; i < FluidHandler.NAMES.length; i++)
-    {
-      RetroCraft.proxy.registerItemRenderer(this, i + 1,
-          name + "_" + FluidHandler.NAMES[i]);
-    }
   }
 
   @Override
@@ -68,6 +55,12 @@ public class ItemWoodenBucket extends ItemFluidContainer
   {
     super.setCreativeTab(tab);
     return this;
+  }
+
+  @Override
+  public void registerItemModel(Item item)
+  {
+    RetroCraft.proxy.registerItemRenderer(this, 0, name);
   }
 
   @Override
@@ -85,156 +78,159 @@ public class ItemWoodenBucket extends ItemFluidContainer
   }
 
   @Override
-  public void getSubItems(Item itemIn, CreativeTabs tab,
-      NonNullList<ItemStack> subItems)
-  {
-    for (int i = 0; i <= FluidHandler.NAMES.length; i++)
-    {
-      subItems.add(new ItemStack(ModItems.woodenBucket, 1, i));
-    }
-  }
-
-  @SubscribeEvent
-  public void onPlayerInteract(PlayerInteractEvent event)
-  {
-    if (event.getWorld().isRemote)
-      return;
-
-    EnumHand hand = null;
-    if (event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND) != null
-        && event.getEntityPlayer().getHeldItem(EnumHand.MAIN_HAND)
-            .getItem() == ModItems.woodenBucket)
-    {
-      hand = EnumHand.MAIN_HAND;
-    } else if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND) != null
-        && event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND)
-            .getItem() == ModItems.woodenBucket)
-    {
-      hand = EnumHand.OFF_HAND;
-    }
-    if (hand == null)
-      return;
-
-    TileEntity te = event.getWorld().getTileEntity(event.getPos());
-    if (te != null && te instanceof IFluidHandler)
-    {
-      if (event.getEntityPlayer().getHeldItem(hand)
-          .getItemDamage() == 0) /* Empty */
-      {
-        IFluidHandler tank = (IFluidHandler) te;
-        FluidStack stack = tank.drain(AMOUNT, false);
-        if (stack != null && stack.amount == AMOUNT)
-        {
-          for (int i = 0; i < FluidHandler.FLUIDS.length; i++)
-          {
-            if (stack.getFluid() == FluidHandler.FLUIDS[i])
-            {
-              ItemStack item = event.getEntityPlayer().getHeldItem(hand);
-              item.setItemDamage(i + 1);
-              tank.drain(AMOUNT, true);
-              event.getEntityPlayer().setHeldItem(hand, item);
-              if (event.isCancelable())
-              {
-                event.setCanceled(true);
-              }
-              return;
-            }
-          }
-        }
-      } else /* Filled */
-      {
-        IFluidHandler tank = (IFluidHandler) te;
-        FluidStack fluid = new FluidStack(FluidHandler.FLUIDS[event
-            .getEntityPlayer().getHeldItem(hand).getItemDamage() - 1], AMOUNT);
-        if (tank.fill(fluid, false) == AMOUNT)
-        {
-          ItemStack item = event.getEntityPlayer().getHeldItem(hand);
-          if (FluidHandler.DESTROY_BUCKET[item.getItemDamage() - 1])
-          {
-            item.setCount(0); /* set stackSize to 0 */
-          } else
-          {
-            item.setItemDamage(0);
-          }
-          tank.fill(fluid, true);
-          event.getEntityPlayer().setHeldItem(hand, item);
-          if (event.isCancelable())
-          {
-            event.setCanceled(true);
-          }
-        }
-      }
-    }
-  }
-
-  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn,
       EntityPlayer playerIn, EnumHand hand)
   {
-    ItemStack stack = playerIn.getHeldItem(hand);
-    if (!worldIn.isRemote && stack != null)
+    boolean flag = this.isFull == Blocks.AIR;
+
+    ItemStack itemStackIn = playerIn.getHeldItem(hand);
+    if (!worldIn.isRemote && itemStackIn != null)
     {
-      RayTraceResult rtr = this.rayTrace(worldIn, playerIn,
-          stack.getItemDamage() == 0);
+      RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, flag);
 
-      if (rtr != null && rtr.typeOfHit == RayTraceResult.Type.BLOCK)
+      if (raytraceresult != null
+          && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
       {
-        BlockPos pos = rtr.getBlockPos();
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof IFluidHandler)
-        {
-          /* gets handled by the SubscribeEvent */
-          return ActionResult.newResult(EnumActionResult.FAIL, stack);
-        }
+        BlockPos blockpos = raytraceresult.getBlockPos();
 
-        if (stack.getItemDamage() == 0) /* Empty */
+        if (!worldIn.isBlockModifiable(playerIn, blockpos))
         {
-          Block block = worldIn.getBlockState(pos).getBlock();
-          for (int i = 0; i < FluidHandler.BLOCKS.length; i++)
-          {
-            if (block.equals(FluidHandler.BLOCKS[i]))
-            {
-              stack.setItemDamage(i + 1);
-              worldIn.setBlockToAir(pos);
-              break;
-            }
-          }
-        } else /* Filled */
+          return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+        } else if (flag)
         {
-          Block block = FluidHandler.BLOCKS[stack.getItemDamage() - 1];
-          pos = pos.offset(rtr.sideHit);
-          if (block.isReplaceable(worldIn, pos))
+          if (!playerIn.canPlayerEdit(blockpos.offset(raytraceresult.sideHit),
+              raytraceresult.sideHit, itemStackIn))
           {
-            if (block == Blocks.WATER)
-            {
-              block = Blocks.FLOWING_WATER;
-            } else if (block == Blocks.LAVA)
-            {
-              block = Blocks.FLOWING_LAVA;
-            }
-            worldIn.setBlockState(pos, block.getDefaultState(), 3);
+            return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+          } else
+          {
+            IBlockState iblockstate = worldIn.getBlockState(blockpos);
+            Material material = iblockstate.getMaterial();
 
-            if (FluidHandler.DESTROY_BUCKET[stack.getItemDamage() - 1])
+            if (material == Material.WATER
+                && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
+                    .intValue() == 0)
             {
-              stack.setCount(0);// func_190918_g(stack.func_190916_E()); /* set
-                                // stackSize to 0 */
+              worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
+              playerIn.addStat(StatList.getObjectUseStats(this));
+              RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_FILL, playerIn.getPosition(), 1.0F);
+              return ActionResult.newResult(EnumActionResult.SUCCESS,
+                  this.fillBucket(itemStackIn, playerIn, ModItems.woodenWaterBucket));
+            } else if (material == Material.LAVA
+                && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
+                    .intValue() == 0)
+            {
+              RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, playerIn.getPosition(), 1.0F);
+              playerIn.addStat(StatList.getObjectUseStats(this));
+              return ActionResult.newResult(EnumActionResult.SUCCESS, 
+                  ItemStack.EMPTY);
             } else
             {
-              stack.setItemDamage(0);
+              return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
             }
-            // }
+          }
+        } else
+        {
+          boolean flag1 = worldIn.getBlockState(blockpos).getBlock()
+              .isReplaceable(worldIn, blockpos);
+          BlockPos blockpos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP
+              ? blockpos : blockpos.offset(raytraceresult.sideHit);
+
+          if (!playerIn.canPlayerEdit(blockpos1, raytraceresult.sideHit,
+              itemStackIn))
+          {
+            return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+          } else if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos1))
+          {
+            playerIn.addStat(StatList.getObjectUseStats(this));
+            return !playerIn.capabilities.isCreativeMode
+                ? ActionResult.newResult(EnumActionResult.SUCCESS,
+                    new ItemStack(ModItems.woodenBucket))
+                : ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
+          } else
+          {
+            return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
           }
         }
-        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
     }
-    return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+    return ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack,
-      @Nullable NBTTagCompound nbt)
+  private ItemStack fillBucket(ItemStack emptyBuckets, EntityPlayer player,
+      Item fullBucket)
   {
-    return new FluidHandler(stack, AMOUNT);
+    int stackSize = emptyBuckets.getCount();
+    if (player.capabilities.isCreativeMode)
+    {
+      return emptyBuckets;
+    } else
+    {
+      emptyBuckets.setCount(stackSize - 1);
+      if (emptyBuckets.getCount() <= 0)
+      {
+        return new ItemStack(fullBucket);
+      } else
+      {
+        if (!player.inventory
+            .addItemStackToInventory(new ItemStack(fullBucket)))
+        {
+          player.dropItem(new ItemStack(fullBucket), false);
+        }
+
+        return emptyBuckets;
+      }
+    }
+  }
+
+  public boolean tryPlaceContainedLiquid(@Nullable EntityPlayer worldIn,
+      World pos, BlockPos posIn)
+  {
+    if (this.isFull == Blocks.AIR)
+    {
+      return false;
+    } else
+    {
+      IBlockState iblockstate = pos.getBlockState(posIn);
+      Material material = iblockstate.getMaterial();
+      boolean flag = !material.isSolid();
+      boolean flag1 = iblockstate.getBlock().isReplaceable(pos, posIn);
+
+      if (!pos.isAirBlock(posIn) && !flag && !flag1)
+      {
+        return false;
+      } else
+      {
+        if (pos.provider.doesWaterVaporize()
+            && this.isFull == Blocks.FLOWING_WATER)
+        {
+          int l = posIn.getX();
+          int i = posIn.getY();
+          int j = posIn.getZ();
+          RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, posIn, 1f);
+
+          for (int k = 0; k < 8; ++k)
+          {
+            pos.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
+                (double) l + Math.random(), (double) i + Math.random(),
+                (double) j + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
+          }
+        } else
+        {
+          if (!pos.isRemote && (flag || flag1) && !material.isLiquid())
+          {
+            pos.destroyBlock(posIn, true);
+          }
+
+          SoundEvent soundevent = this.isFull == Blocks.FLOWING_LAVA
+              ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA
+              : SoundEvents.ITEM_BUCKET_EMPTY;
+          RetroCraft.proxy.playSound(soundevent, posIn, 1.0f);
+          pos.setBlockState(posIn, this.isFull.getDefaultState(), 11);
+        }
+
+        return true;
+      }
+    }
   }
 }

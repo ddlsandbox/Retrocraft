@@ -9,8 +9,10 @@ import com.retrocraft.item.tool.ToolHammer;
 import com.retrocraft.item.tool.ToolStreamAxe;
 import com.retrocraft.item.weapon.ItemSword;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -122,7 +124,10 @@ public class ModItems {
 		
 		manolaziumSword = register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
 
-		woodenBucket = register(new ItemWoodenBucket("wooden_bucket").setCreativeTab(RetroCraft.creativeTab));
+		woodenBucket = register(new ItemWoodenBucket("wooden_bucket", Blocks.AIR).setCreativeTab(RetroCraft.creativeTab));
+    woodenWaterBucket = register(new ItemWoodenBucket("wooden_bucket_water", Blocks.FLOWING_WATER).setCreativeTab(RetroCraft.creativeTab));
+    
+		//woodenBucket = register(new ItemWoodenBucket("wooden_bucket").setCreativeTab(RetroCraft.creativeTab));
 		woodenMilkBucket = register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
 	}
 
