@@ -79,7 +79,7 @@ public class RetroCraft
 
   public static final String modId   = "retrocraft";
   public static final String name    = "RetroCraft Mod";
-  public static final String version = "0.2.0";
+  public static final String version = "0.2.1";
 
   public static SimpleNetworkWrapper network;
 
@@ -92,12 +92,6 @@ public class RetroCraft
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
-    ArmorMaterials.init();
-    
-    ModBlocks.init();
-    ModItems.init();
-    ModEntities.init();
-
     configuration = new Configuration(event.getSuggestedConfigurationFile());
     config = new RetroCraftConfig();
     config.reloadLocal(configuration);
@@ -105,8 +99,14 @@ public class RetroCraft
     {
       configuration.save();
     }
+    
+    ArmorMaterials.init();
+    
+    ModBlocks.init();
+    ModItems.init();
+    ModEntities.init();
 
-    GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
+    GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
 
     network = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
     

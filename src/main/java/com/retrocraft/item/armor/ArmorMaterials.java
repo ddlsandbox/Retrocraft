@@ -21,6 +21,8 @@ public final class ArmorMaterials
 
   public static void init()
   {
+    System.out.println("[RETROCRAFT] Config: " + RetroCraft.getConfig().grinderXpPerItem + " " + RetroCraft.getConfig().smelterXpFactor);
+    
 //    armorMaterialEmerald = addArmorMaterial("armorMaterialEmerald",
 //        RetroCraft.modId + ":armor_emerald", 50, new int[]
 //        { 5, 8, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC);

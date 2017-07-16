@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import com.retrocraft.FluidHandler;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.recipe.RetrocraftRecipes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -22,8 +21,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -121,6 +118,9 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
                     .intValue() == 0)
             {
               RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, playerIn.getPosition(), 1.0F);
+              worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
+                  (double) blockpos.getX() + Math.random(), (double) blockpos.getY() + Math.random(),
+                  (double) blockpos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
               playerIn.addStat(StatList.getObjectUseStats(this));
               return ActionResult.newResult(EnumActionResult.SUCCESS, 
                   ItemStack.EMPTY);
@@ -222,10 +222,7 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
             pos.destroyBlock(posIn, true);
           }
 
-          SoundEvent soundevent = this.isFull == Blocks.FLOWING_LAVA
-              ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA
-              : SoundEvents.ITEM_BUCKET_EMPTY;
-          RetroCraft.proxy.playSound(soundevent, posIn, 1.0f);
+          RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_EMPTY, posIn, 1.0f);
           pos.setBlockState(posIn, this.isFull.getDefaultState(), 11);
         }
 

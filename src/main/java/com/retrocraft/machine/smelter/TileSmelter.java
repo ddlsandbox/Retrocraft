@@ -33,7 +33,6 @@ public class TileSmelter extends TileInventoryBase
   public static final int OUTPUT_SLOT_NUMBER = 1;
 
   public int burnTimeRemaining;
-
   private int lastEnergy;
   private int lastBurnTime;
 

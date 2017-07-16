@@ -17,7 +17,7 @@ public class RetrocraftRecipes
 		GameRegistry.addSmelting(ModItems.dustManolite,
 		                         new ItemStack(ModItems.ingotManolium), 0.7f);
 		GameRegistry.addSmelting(ModItems.dustManolazium,
-                             new ItemStack(ModItems.ingotManolazium), 0.7f);
+                             new ItemStack(ModItems.ingotManolazium), 2.0f);
 
 		GameRegistry.addSmelting(ModBlocks.oreManolite,
 		                         new ItemStack(ModItems.ingotManolium), 0.7f);

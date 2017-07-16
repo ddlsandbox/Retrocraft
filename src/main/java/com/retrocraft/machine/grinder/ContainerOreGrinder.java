@@ -147,7 +147,8 @@ public class ContainerOreGrinder  extends ContainerBase
   }
   
   public class SlotOutput extends Slot {
-    public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+    
+    public SlotOutput(EntityPlayer player, IInventory inventoryIn, int index, int xPosition, int yPosition) {
       super(inventoryIn, index, xPosition, yPosition);
     }
 

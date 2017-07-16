@@ -175,16 +175,19 @@ public class TileSteamGenerator extends TileInventoryBase
         - tank.getFluidAmount() >= Fluid.BUCKET_VOLUME);
     if (hasSpace)
     {
-      BlockPos pos = this.pos.offset(EnumFacing.NORTH);
-      if (this.world.isBlockLoaded(pos))
+      for (EnumFacing facing : inputSides)
       {
-        Block entity = this.world.getBlockState(pos).getBlock();
-        
-        if (entity != null && entity.equals(Blocks.WATER))
+        BlockPos pos = this.pos.offset(facing);
+        if (this.world.isBlockLoaded(pos))
         {
-          this.world.setBlockToAir(pos);
-          this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME), true);
-          this.markDirty();
+          Block entity = this.world.getBlockState(pos).getBlock();
+          
+          if (entity != null && entity.equals(Blocks.WATER))
+          {
+            this.world.setBlockToAir(pos);
+            this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME), true);
+            this.markDirty();
+          }
         }
       }
     }
