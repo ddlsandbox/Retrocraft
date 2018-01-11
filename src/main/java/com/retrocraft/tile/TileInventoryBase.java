@@ -7,11 +7,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
-public abstract class TileInventoryBase extends TileEntityBase implements IInventory
+public abstract class TileInventoryBase extends TileEntityBase
+    implements IInventory
 {
 
-  private String      name;
+  private String        name;
   protected ItemStack[] itemStacks;
 
   public TileInventoryBase(String name, int slotCount)
@@ -27,8 +30,10 @@ public abstract class TileInventoryBase extends TileEntityBase implements IInven
     super.writeToNBT(parentNBTTagCompound);
 
     NBTTagList dataForAllSlots = new NBTTagList();
-    for (int i = 0; i < this.itemStacks.length; ++i) {
-      if (!this.itemStacks[i].isEmpty()) {  //isEmpty()
+    for (int i = 0; i < this.itemStacks.length; ++i)
+    {
+      if (!this.itemStacks[i].isEmpty())
+      { // isEmpty()
         NBTTagCompound dataForThisSlot = new NBTTagCompound();
         dataForThisSlot.setByte("Slot", (byte) i);
         this.itemStacks[i].writeToNBT(dataForThisSlot);
@@ -39,24 +44,30 @@ public abstract class TileInventoryBase extends TileEntityBase implements IInven
 
     return parentNBTTagCompound;
   }
-  
+
   @Override
   public void readFromNBT(NBTTagCompound nbtTagCompound)
   {
-    super.readFromNBT(nbtTagCompound); // The super call is required to save and load the tiles location
-    final byte NBT_TYPE_COMPOUND = 10; // See NBTBase.createNewByType() for a listing
-    NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);
+    super.readFromNBT(nbtTagCompound); // The super call is required to save and
+                                       // load the tiles location
+    final byte NBT_TYPE_COMPOUND = 10; // See NBTBase.createNewByType() for a
+                                       // listing
+    NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items",
+        NBT_TYPE_COMPOUND);
 
-    Arrays.fill(itemStacks, ItemStack.EMPTY);           // set all slots to empty EMPTY_ITEM
-    for (int i = 0; i < dataForAllSlots.tagCount(); ++i) {
+    Arrays.fill(itemStacks, ItemStack.EMPTY); // set all slots to empty
+                                              // EMPTY_ITEM
+    for (int i = 0; i < dataForAllSlots.tagCount(); ++i)
+    {
       NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
       byte slotNumber = dataForOneSlot.getByte("Slot");
-      if (slotNumber >= 0 && slotNumber < this.itemStacks.length) {
+      if (slotNumber >= 0 && slotNumber < this.itemStacks.length)
+      {
         this.itemStacks[slotNumber] = new ItemStack(dataForOneSlot);
       }
     }
   }
-  
+
   /* IInventory */
   @Override
   public String getName()
@@ -122,7 +133,7 @@ public abstract class TileInventoryBase extends TileEntityBase implements IInven
   {
     return itemStacks[slotIndex];
   }
-  
+
   public void setStackInSlot(int slotIndex, ItemStack item)
   {
     itemStacks[slotIndex] = item;
@@ -173,5 +184,4 @@ public abstract class TileInventoryBase extends TileEntityBase implements IInven
     }
     markDirty();
   }
-
 }

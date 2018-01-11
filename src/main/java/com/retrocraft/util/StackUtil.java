@@ -26,6 +26,12 @@ public final class StackUtil
     }
   }
 
+  public static boolean isNotNull(ItemStack stack)
+  {
+    return stack != null && !ItemStack.areItemStacksEqual(stack, getNull())
+        && stack.getItem() != null;
+  }
+  
   public static boolean isValid(ItemStack stack)
   {
     return stack != null && !ItemStack.areItemStacksEqual(stack, getNull())
@@ -79,5 +85,12 @@ public final class StackUtil
       boolean containerOnEmpty)
   {
     return setStackSize(stack, getStackSize(stack) + size, containerOnEmpty);
+  }
+  
+  public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2,
+      boolean checkWildcard)
+  {
+    return isNotNull(stack1) && isNotNull(stack2)
+        && (stack1.isItemEqual(stack2));
   }
 }

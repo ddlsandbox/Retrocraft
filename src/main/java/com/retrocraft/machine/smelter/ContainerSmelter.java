@@ -1,13 +1,13 @@
 package com.retrocraft.machine.smelter;
 
 import com.retrocraft.common.ContainerBase;
-import com.retrocraft.machine.repairer.TileRepairer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,6 +17,7 @@ public class ContainerSmelter extends ContainerBase
 
   // Stores the tile entity instance for later use
   private TileSmelter tileSmelter;
+  private int burnTimeRemaining;
 
   public static final int INPUT_SLOTS_COUNT  = 1;
   public static final int OUTPUT_SLOTS_COUNT = 1;
@@ -39,7 +40,7 @@ public class ContainerSmelter extends ContainerBase
 
     final int OUTPUT_SLOTS_XPOS = 80;
     final int OUTPUT_SLOTS_YPOS = 58;
-    addSlotToContainer(new SlotOutput(tileSmelter,
+    addSlotToContainer(new SlotFurnaceOutput(invPlayer.player, tileSmelter,
         TileSmelter.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
@@ -58,6 +59,7 @@ public class ContainerSmelter extends ContainerBase
 
     if (sourceSlot == null || !sourceSlot.getHasStack())
       return ItemStack.EMPTY; // EMPTY_ITEM
+    
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
@@ -72,6 +74,7 @@ public class ContainerSmelter extends ContainerBase
         {
           return ItemStack.EMPTY;
         }
+        sourceSlot.onSlotChange(copyOfSourceStack, sourceStack);
         //
       } else
       {
@@ -107,14 +110,33 @@ public class ContainerSmelter extends ContainerBase
   /* Client Synchronization */
 
   @Override
+  public void addListener(IContainerListener listener)
+  {
+      super.addListener(listener);
+      listener.sendAllWindowProperties(this, this.tileSmelter);
+  }
+
+  
+  @Override
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileSmelter.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER).isEmpty())
-      for (IContainerListener listener : this.listeners)
+    // if
+    // (!tileSmelter.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER).isEmpty())
+
+    for (IContainerListener listener : this.listeners)
+    {
+//      IContainerListener icontainerlistener = (IContainerListener) this.listeners
+//          .get(i);
+
+      if (this.burnTimeRemaining != this.tileSmelter.getField(0))
       {
-        // System.out.println("[RETROCRAFT] Container: Notify listeners!");
+        listener.sendProgressBarUpdate(this, 0,
+            this.tileSmelter.getField(0));
       }
+    }
+
+    this.burnTimeRemaining = this.tileSmelter.getField(0);
   }
 
   @SideOnly(Side.CLIENT)
@@ -139,23 +161,6 @@ public class ContainerSmelter extends ContainerBase
     public boolean isItemValid(ItemStack stack)
     {
       return TileSmelter.isItemValidForInputSlot(stack);
-    }
-  }
-
-  public class SlotOutput extends Slot
-  {
-    public SlotOutput(IInventory inventoryIn, int index, int xPosition,
-                      int yPosition)
-    {
-      super(inventoryIn, index, xPosition, yPosition);
-    }
-
-    // if this function returns false, the player won't be able to insert the
-    // given item into this slot
-    @Override
-    public boolean isItemValid(ItemStack stack)
-    {
-      return false;
     }
   }
 }

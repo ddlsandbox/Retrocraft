@@ -5,7 +5,6 @@ import net.minecraftforge.common.config.Configuration;
 
 public class RetroCraftConfig
 {
-
   public static boolean disableParticles;
   public static float soundVolume = 0.5f;
   
@@ -16,17 +15,26 @@ public class RetroCraftConfig
   public boolean restrictRenameToOwner;
   public boolean creativeModeOnly;
 
+  /* machines */
+  
+  public int grinderXpPerItem;
+  public float smelterXpFactor;
+  
   public int oreManoliumMinY;
   public int oreManoliumMaxY;
   public int oreManoliumVeinSize;
   public int oreManoliumVeinVar;
   public int oreManoliumTries;
+  public boolean oreManoliumInNether;
+  public boolean oreManoliumInEnd;
 
   public int oreOctirionMinY;
   public int oreOctirionMaxY;
   public int oreOctirionVeinSize;
   public int oreOctirionVeinVar;
   public int oreOctirionTries;
+  public boolean oreOctirionInNether;
+  public boolean oreOctirionInEnd;
   
   public void reloadLocal(Configuration config)
   {
@@ -56,32 +64,46 @@ public class RetroCraftConfig
     creativeModeOnly = config.getBoolean("Creative Mode Only", "teleport", false,
         "If true, waystones can only be placed in creative mode.");
 
+
+    /* machines */
     
+    grinderXpPerItem = config.getInt("Grind XP", "machines", 10, 0, 100,
+        "XP dropped per grinded item");
+    smelterXpFactor = config.getFloat("Smelter XP factor", "machines", 2.0f, 0f, 100f,
+        "XP multiplier for smelting (compared to furnace)");
     
     /* world generation */
 
-    oreManoliumMinY = config.getInt("min_y", "manolium", 16, 0, 256,
+    oreManoliumMinY = config.getInt("min_y", "manolium", 10, 0, 256,
         "Lowest Y level the ore is generated.");
     oreManoliumMaxY = config.getInt("max_y", "manolium", 50, 0, 256,
         "Highest Y level the ore is generated.");
-    oreManoliumVeinSize = config.getInt("vein_size", "manolium", 2, 1, 100,
+    oreManoliumVeinSize = config.getInt("vein_size", "manolium", 4, 1, 100,
         "Vein size.");
-    oreManoliumVeinVar = config.getInt("vein_size", "manolium", 2, 1, 100,
+    oreManoliumVeinVar = config.getInt("vein_var", "manolium", 2, 0, 100,
         "Vein variance.");
-    oreManoliumTries = config.getInt("max_frequency", "manolium", 15, 1, 100,
+    oreManoliumTries = config.getInt("max_frequency", "manolium", 10, 1, 100,
         "Maximum ore frequency.");
+    oreManoliumInNether = config.getBoolean("in_nether", "manolium", false,
+        "Generate in nether.");
+    oreManoliumInEnd = config.getBoolean("in_end", "manolium", false,
+        "Generate in end.");
     
 
-    oreOctirionMinY = config.getInt("min_y", "octirion", 1, 0, 256,
+    oreOctirionMinY = config.getInt("min_y", "octirion", 0, 0, 256,
         "Lowest Y level the ore is generated.");
     oreOctirionMaxY = config.getInt("max_y", "octirion", 14, 0, 256,
         "Highest Y level the ore is generated.");
-    oreOctirionVeinSize = config.getInt("vein_size", "octirion", 2, 1, 100,
+    oreOctirionVeinSize = config.getInt("vein_size", "octirion", 3, 1, 100,
         "Vein size.");
-    oreOctirionVeinVar = config.getInt("vein_size", "octirion", 2, 1, 100,
+    oreOctirionVeinVar = config.getInt("vein_var", "octirion", 2, 0, 100,
         "Vein variance.");
-    oreOctirionTries = config.getInt("max_frequency", "octirion", 10, 1, 100,
+    oreOctirionTries = config.getInt("max_frequency", "octirion", 3, 1, 100,
         "Maximum ore frequency.");
+    oreOctirionInNether = config.getBoolean("in_nether", "octirion", true,
+        "Generate in nether.");
+    oreOctirionInEnd = config.getBoolean("in_end", "octirion", true,
+        "Generate in end.");
   }
 
   public static RetroCraftConfig read(ByteBuf buf)
