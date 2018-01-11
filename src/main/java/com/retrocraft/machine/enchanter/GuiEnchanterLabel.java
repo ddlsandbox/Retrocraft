@@ -39,7 +39,7 @@ public class GuiEnchanterLabel extends Gui
     this.sliderX = xPos + 1;
   }
 
-  public void draw(FontRenderer fontRendererObj)
+  public void draw(FontRenderer fontRenderer)
   {
 
     if (!show)
@@ -55,7 +55,7 @@ public class GuiEnchanterLabel extends Gui
             : xPos + 1 + WIDTH - 6;
 
     drawRect(indexX, yPos + 1, indexX + 5, yPos - 1 + HEIGHT, 0xff000000);
-    fontRendererObj.drawString(getTranslatedName(), xPos + 5, yPos + HEIGHT / 4,
+    fontRenderer.drawString(getTranslatedName(), xPos + 5, yPos + HEIGHT / 4,
         0x55aaff00);
     if (locked)
       drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x44aaffff);

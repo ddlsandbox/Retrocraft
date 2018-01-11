@@ -61,9 +61,9 @@ public class GuiSteamGenerator extends GuiContainer
     final String name = RetroCraft.proxy
         .localize(ModBlocks.blockGenerator.getUnlocalizedName() + ".name");
     final int LABEL_XPOS = (xSize) / 2
-        - fontRendererObj.getStringWidth(name) / 2;
+        - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;
-    fontRendererObj.drawString(name, LABEL_XPOS, LABEL_YPOS,
+    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS,
         Color.cyan.getRGB());
   }
 

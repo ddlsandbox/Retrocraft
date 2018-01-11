@@ -74,9 +74,9 @@ public class GuiRepairer extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
 		final String name = RetroCraft.proxy.localize(ModBlocks.blockRepairer.getUnlocalizedName() + ".name");
-		final int LABEL_XPOS = 26 + (xSize-26) / 2 - fontRendererObj.getStringWidth(name) / 2;
+		final int LABEL_XPOS = 26 + (xSize-26) / 2 - fontRenderer.getStringWidth(name) / 2;
 		final int LABEL_YPOS = 5;
-		fontRendererObj.drawString(name, 
+		fontRenderer.drawString(name, 
 								   LABEL_XPOS, LABEL_YPOS, 
 								   Color.darkGray.getRGB());
 
@@ -84,7 +84,7 @@ public class GuiRepairer extends GuiContainer {
 
 		// If hoveringText is not empty draw the hovering text
 		if (!hoveringText.isEmpty()){
-			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
+			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
 		}
 	}
 }

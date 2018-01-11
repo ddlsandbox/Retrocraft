@@ -79,7 +79,7 @@ public class MessageEditTeleportPipe implements IMessage
         @Override
         public void run()
         {
-          EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
+          EntityPlayer entityPlayer = ctx.getServerHandler().player;
           if (RetroCraft.getConfig().creativeModeOnly
               && !entityPlayer.capabilities.isCreativeMode)
           {
@@ -92,7 +92,7 @@ public class MessageEditTeleportPipe implements IMessage
             return;
           }
           GlobalTeleportPipe globalWaystones = GlobalTeleportPipe
-              .get(ctx.getServerHandler().playerEntity.world);
+              .get(ctx.getServerHandler().player.world);
           TileEntity tileEntity = world.getTileEntity(pos);
           if (tileEntity instanceof TileTeleportPipe)
           {
@@ -100,22 +100,22 @@ public class MessageEditTeleportPipe implements IMessage
             if (globalWaystones
                 .getGlobalWaystone(tileWaystone.getWaystoneName()) != null
                 && !ctx
-                    .getServerHandler().playerEntity.capabilities.isCreativeMode)
+                    .getServerHandler().player.capabilities.isCreativeMode)
             {
               return;
             }
             if (RetroCraft.getConfig().restrictRenameToOwner
-                && !tileWaystone.isOwner(ctx.getServerHandler().playerEntity))
+                && !tileWaystone.isOwner(ctx.getServerHandler().player))
             {
-              ctx.getServerHandler().playerEntity.sendMessage(
+              ctx.getServerHandler().player.sendMessage(
                   new TextComponentTranslation("retrocraft:notTheOwner"));
               return;
             }
             if (globalWaystones.getGlobalWaystone(message.getName()) != null
                 && !ctx
-                    .getServerHandler().playerEntity.capabilities.isCreativeMode)
+                    .getServerHandler().player.capabilities.isCreativeMode)
             {
-              ctx.getServerHandler().playerEntity.sendMessage(
+              ctx.getServerHandler().player.sendMessage(
                   new TextComponentTranslation("retrocraft:nameOccupied",
                       message.getName()));
               return;
@@ -128,7 +128,7 @@ public class MessageEditTeleportPipe implements IMessage
             TeleportEntry newWaystone = new TeleportEntry(tileWaystone);
 
             if (message.isGlobal() && ctx
-                .getServerHandler().playerEntity.capabilities.isCreativeMode)
+                .getServerHandler().player.capabilities.isCreativeMode)
             {
               tileWaystone.setGlobal(true);
               newWaystone.setGlobal(true);

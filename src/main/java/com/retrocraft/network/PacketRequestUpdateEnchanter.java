@@ -43,9 +43,9 @@ public class PacketRequestUpdateEnchanter implements IMessage {
 	public static class Handler implements IMessageHandler<PacketRequestUpdateEnchanter, PacketUpdateEnchanter> {
 		@Override
 		public PacketUpdateEnchanter onMessage(PacketRequestUpdateEnchanter message, MessageContext ctx) {
-			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.dimension);
+			World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
 			TileEntityEnchanter te = (TileEntityEnchanter)world.getTileEntity(message.pos);
-			EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 			serverPlayer.openContainer.detectAndSendChanges();
 			
 			 try {

@@ -147,12 +147,12 @@ public class GuiWaystoneList extends GuiScreen
     GL11.glColor4f(1f, 1f, 1f, 1f);
     drawRect(width / 2 - 50, height / 2 - 50, width / 2 + 50, height / 2 + 50,
         0xFFFFFF);
-    drawCenteredString(fontRendererObj,
+    drawCenteredString(fontRenderer,
         I18n.format("gui.retrocraft:warpStone.selectDestination"), width / 2,
         height / 2 - 85, 0xFFFFFF);
     if (entries.length == 0)
     {
-      drawCenteredString(fontRendererObj,
+      drawCenteredString(fontRenderer,
           TextFormatting.RED + I18n.format("retrocraft:scrollNotBound"),
           width / 2, height / 2 - 20, 0xFFFFFF);
     }

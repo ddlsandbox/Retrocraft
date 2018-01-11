@@ -72,7 +72,7 @@ public class PacketHandler
   public static IThreadListener getThreadListener(MessageContext ctx)
   {
     return ctx.side == Side.SERVER
-        ? (WorldServer) ctx.getServerHandler().playerEntity.world
+        ? (WorldServer) ctx.getServerHandler().player.world
         : getClientThreadListener();
   }
 

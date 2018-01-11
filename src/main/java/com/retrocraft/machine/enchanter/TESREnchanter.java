@@ -13,7 +13,7 @@ public class TESREnchanter extends TileEntitySpecialRenderer<TileEntityEnchanter
     private final ModelBook modelBook = new ModelBook();
     
     @Override
-    public void renderTileEntityAt (TileEntityEnchanter te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(TileEntityEnchanter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GlStateManager.pushMatrix();
         GlStateManager.translate((float) x + 0.5F, (float) y + 0.75F, (float) z + 0.5F);
         final float f = te.tickCount + partialTicks;

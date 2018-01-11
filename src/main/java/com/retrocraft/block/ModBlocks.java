@@ -1,116 +1,87 @@
 package com.retrocraft.block;
 
-import com.retrocraft.RetroCraft;
-import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
-import com.retrocraft.item.ItemModelProvider;
-import com.retrocraft.item.ItemOreDict;
-import com.retrocraft.machine.crafter.BlockAdvancedForge;
-import com.retrocraft.machine.crafter.BlockElectricForge;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
-import com.retrocraft.machine.multifurnace.BlockMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
+	@GameRegistry.ObjectHolder("retrocraft:ore_manolite")
 	public static BlockOre oreManolite;
+	@GameRegistry.ObjectHolder("retrocraft:ore_octirion")
 	public static BlockOre oreOctirion;
 	
+	@GameRegistry.ObjectHolder("retrocraft:block_manolium")
 	public static BlockBase blockManolium;
+	@GameRegistry.ObjectHolder("retrocraft:block_manolazium")
 	public static BlockBase blockManolazium;
+	@GameRegistry.ObjectHolder("retrocraft:block_octirion")
 	public static BlockBase blockOctirion;
 	
-	public static BlockPedestal pedestalManolium;
-
+//	public static BlockPedestal pedestalManolium;
+//
+	@GameRegistry.ObjectHolder("retrocraft:block_machinechasis")
 	public static BlockBase blockMachineChasis;
+//	
+//	public static BlockMultifurnace blockMultifurnace;
 	
-	public static BlockMultifurnace blockMultifurnace;
+	@GameRegistry.ObjectHolder("retrocraft:block_enchanter")
 	public static BlockEnchanter blockEnchanter;
+	
+	@GameRegistry.ObjectHolder("retrocraft:block_repairer")
 	public static BlockRepairer blockRepairer;
+	
+	@GameRegistry.ObjectHolder("retrocraft:block_generator")
 	public static BlockSteamGenerator blockGenerator;
-	public static BlockOreGrinder blockOreGrinder;
-	public static BlockSmelter blockOreSmelter;
-	public static BlockElectricForge blockElectricForge;
-	public static BlockAdvancedForge blockAdvancedForge;
 
+	@GameRegistry.ObjectHolder("retrocraft:block_oregrinder")
+	public static BlockOreGrinder blockOreGrinder;
+	
+	@GameRegistry.ObjectHolder("retrocraft:block_oresmelter")
+	public static BlockSmelter blockOreSmelter;
+	
+//	public static BlockElectricForge blockElectricForge;
+//	public static BlockAdvancedForge blockAdvancedForge;
+
+	@GameRegistry.ObjectHolder("retrocraft:block_waystone")
 	public static BlockTeleportPipe blockWaystone;
 	
+	@GameRegistry.ObjectHolder("retrocraft:lightpillar")
 	public static BlockTorch blockLightPillar;
+	
+	@SideOnly(Side.CLIENT)
+    public static void initModels() {
+        blockWaystone.initModel();
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(oreManolite), 0, new ModelResourceLocation(oreManolite.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(oreOctirion), 0, new ModelResourceLocation(oreOctirion.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManolium), 0, new ModelResourceLocation(blockManolium.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManolazium), 0, new ModelResourceLocation(blockManolazium.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOctirion), 0, new ModelResourceLocation(blockOctirion.getRegistryName(), "inventory"));
+        
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockMachineChasis), 0, new ModelResourceLocation(blockMachineChasis.getRegistryName(), "inventory"));
+        
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockLightPillar), 0, new ModelResourceLocation(blockLightPillar.getRegistryName(), "inventory"));
+    }
 	
 	public static void init() {
 
-	  oreOctirion = new BlockOre("ore_octirion", "oreOctirion").setCreativeTab(RetroCraft.creativeTab);
-	  oreOctirion.setLightLevel(0.9f);
-	  register(oreOctirion);
-	  
-		oreManolite = register(new BlockOre("ore_manolite", "oreManolite").setCreativeTab(RetroCraft.creativeTab));
-		
-		blockManolium = register(new BlockBase(Material.IRON, "block_manolium").setCreativeTab(RetroCraft.creativeTab));
-		blockManolazium = register(new BlockBase(Material.IRON, "block_manolazium").setCreativeTab(RetroCraft.creativeTab));
-		blockOctirion = register(new BlockBase(Material.IRON, "block_octirion").setCreativeTab(RetroCraft.creativeTab));
-		
-		pedestalManolium = register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
-
-		blockMachineChasis = register(new BlockBase(Material.IRON, "block_machinechasis").setCreativeTab(RetroCraft.creativeTab));
-		
-		blockEnchanter = register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
-		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
-		blockRepairer = register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
-		blockGenerator = register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
-		blockOreGrinder = register(new BlockOreGrinder("block_oregrinder").setCreativeTab(RetroCraft.creativeTab));
-		blockOreSmelter = register(new BlockSmelter("block_oresmelter").setCreativeTab(RetroCraft.creativeTab));
-
-		blockLightPillar = register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
-		
-//		blockElectricForge = register(new BlockElectricForge("block_electricforge").setCreativeTab(RetroCraft.creativeTab));
-//		blockAdvancedForge = register(new BlockAdvancedForge("block_advancedforge").setCreativeTab(RetroCraft.creativeTab));
-		
-		blockWaystone = register(new BlockTeleportPipe("block_waystone").setCreativeTab(RetroCraft.creativeTab));
-//		new BlockWaystone();
-//    GameRegistry.register(blockWaystone);
-//    GameRegistry.register(new ItemBlock(blockWaystone).setRegistryName(blockWaystone.getRegistryName()));
-//    GameRegistry.registerTileEntity(TileWaystone.class, "block_waystone");
-	}
-
-	private static <T extends Block> T register(T block, ItemBlock itemBlock) {
-		
-	  GameRegistry.register(block);
-		
-		if (itemBlock != null) {
-			GameRegistry.register(itemBlock);
-		}
-
-		if (block instanceof ItemModelProvider) {
-			((ItemModelProvider) block).registerItemModel(itemBlock);
-		}
-
-		if (block instanceof ItemOreDict) {
-			((ItemOreDict)block).initOreDict();
-		}
-
-		if (itemBlock instanceof ItemOreDict) {
-			((ItemOreDict)itemBlock).initOreDict();
-		}
-
-		if (block instanceof BlockTileEntity) {
-			GameRegistry.registerTileEntity(((BlockTileEntity<?>)block).getTileEntityClass(),
-					block.getRegistryName().toString());
-		}
-
-		return block;
-	}
-
-	private static <T extends Block> T register(T block) {
-		ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(block.getRegistryName());
-		return register(block, itemBlock);
+//		pedestalManolium = register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
+//
+//		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
+//		//		
+//
+//		blockLightPillar = register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
+//		
+//		blockWaystone = register(new BlockTeleportPipe("block_waystone").setCreativeTab(RetroCraft.creativeTab));
 	}
 }

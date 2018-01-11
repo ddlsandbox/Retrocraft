@@ -1,7 +1,5 @@
 package com.retrocraft.util;
 
-import net.minecraft.util.math.Vec3d;
-
 public class UsefulFunctions
 {
   /** linearly interpolate for y between [x1, y1] to [x2, y2] using x
@@ -27,11 +25,4 @@ public class UsefulFunctions
     double xFraction = (x - x1) / (x2 - x1);
     return y1 + xFraction * (y2 - y1);
   }
-
-  public static Vec3d scalarMultiply(Vec3d source, double multiplier)
-  {
-    return new Vec3d(source.xCoord * multiplier, source.yCoord * multiplier, source.zCoord * multiplier);
-  }
-
-
 }

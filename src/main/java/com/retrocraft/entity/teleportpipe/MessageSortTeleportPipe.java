@@ -63,7 +63,7 @@ public class MessageSortTeleportPipe implements IMessage
         public void run()
         {
           PlayerTeleportData waystoneData = PlayerTeleportData
-              .fromPlayer(ctx.getServerHandler().playerEntity);
+              .fromPlayer(ctx.getServerHandler().player);
           TeleportEntry[] entries = waystoneData.getWaystones();
           int index = message.getIndex();
           int otherIndex = message.getOtherIndex();
@@ -75,9 +75,9 @@ public class MessageSortTeleportPipe implements IMessage
           TeleportEntry swap = entries[index];
           entries[index] = entries[otherIndex];
           entries[otherIndex] = swap;
-          waystoneData.store(ctx.getServerHandler().playerEntity);
+          waystoneData.store(ctx.getServerHandler().player);
           TeleportManager
-              .sendPlayerWaystones(ctx.getServerHandler().playerEntity);
+              .sendPlayerWaystones(ctx.getServerHandler().player);
         }
       });
       return null;

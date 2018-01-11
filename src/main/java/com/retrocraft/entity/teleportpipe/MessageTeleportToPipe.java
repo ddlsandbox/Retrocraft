@@ -78,7 +78,7 @@ public class MessageTeleportToPipe implements IMessage
         @Override
         public void run()
         {
-          EntityPlayer player = ctx.getServerHandler().playerEntity;
+          EntityPlayer player = ctx.getServerHandler().player;
           int dist = (int) Math.sqrt(
               player.getDistanceSqToCenter(message.getWaystone().getPos()));
           int xpLevelCost = 0;
@@ -100,13 +100,13 @@ public class MessageTeleportToPipe implements IMessage
           }
 
           if (TeleportManager.teleportToWaystone(
-              ctx.getServerHandler().playerEntity, message.getWaystone()))
+              ctx.getServerHandler().player, message.getWaystone()))
           {
             player.addExperienceLevel(-xpLevelCost);
           }
 
           TeleportManager
-              .sendPlayerWaystones(ctx.getServerHandler().playerEntity);
+              .sendPlayerWaystones(ctx.getServerHandler().player);
         }
       });
       return null;

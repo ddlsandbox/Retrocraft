@@ -65,7 +65,7 @@ public class PacketEnchant implements IMessage {
 		@Override
 		public IMessage onMessage(PacketEnchant message, MessageContext ctx) {
 			// This is the player the packet was sent to the server from
-			EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
             if (serverPlayer.openContainer instanceof ContainerEnchanter) {
 

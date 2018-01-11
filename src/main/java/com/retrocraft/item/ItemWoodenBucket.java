@@ -112,7 +112,7 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
               playerIn.addStat(StatList.getObjectUseStats(this));
               RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_FILL, playerIn.getPosition(), 1.0F);
               return ActionResult.newResult(EnumActionResult.SUCCESS,
-                  this.fillBucket(itemStackIn, playerIn, ModItems.woodenWaterBucket));
+                  this.fillBucket(itemStackIn, playerIn, ModItems.woodenBucket)); /*TODO: Change into waterBucket */
             } else if (material == Material.LAVA
                 && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
                     .intValue() == 0)

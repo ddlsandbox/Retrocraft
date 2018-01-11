@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "retrocraft:gem_octirion",
+    "count": 9
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "B"
+  ],
+  "key": {
+    "B": {
+      "item": "retrocraft:block_octirion"
+    }
+  }
+}
+

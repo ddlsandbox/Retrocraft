@@ -36,7 +36,7 @@ public class PacketRepairer implements IMessage {
 		@Override
 		public IMessage onMessage(PacketRepairer message, MessageContext ctx) {
 
-			EntityPlayerMP serverPlayer = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
 			int amount = message.toSend;
 

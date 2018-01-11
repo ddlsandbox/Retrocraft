@@ -35,7 +35,7 @@ public class EnchantHelper
       Enchantment ench2)
   {
 
-    return ench1.func_191560_c(ench2);
+    return ench1.isCompatibleWith(ench2);
   }
 
   public static boolean isNewItemEnchantable(Item item)
@@ -154,7 +154,7 @@ public class EnchantHelper
 
       final NBTTagCompound nbttagcompound = new NBTTagCompound();
       nbttagcompound.setShort("id",
-          (short) Enchantment.getEnchantmentID(data.enchantmentobj));
+          (short) Enchantment.getEnchantmentID(data.enchantment));
       nbttagcompound.setInteger("lvl", data.enchantmentLevel);
       nbttaglist.appendTag(nbttagcompound);
     }

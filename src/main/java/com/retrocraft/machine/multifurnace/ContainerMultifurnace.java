@@ -176,7 +176,8 @@ public class ContainerMultifurnace extends ContainerBase {
 			for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount(); ++fieldID) {
 				if (fieldHasChanged[fieldID]) {
 					// Note that although sendProgressBarUpdate takes 2 ints on a server these are truncated to shorts
-          listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
+					//TODO
+//          listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
 				}
 			}
 		}

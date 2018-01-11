@@ -131,8 +131,9 @@ public class ContainerSmelter extends ContainerBase
 
       if (this.burnTimeRemaining != this.tileSmelter.getField(0))
       {
-        listener.sendProgressBarUpdate(this, 0,
-            this.tileSmelter.getField(0));
+    	  //TODO
+//        listener.sendProgressBarUpdate(this, 0,
+//            this.tileSmelter.getField(0));
       }
     }
 

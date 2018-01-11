@@ -21,200 +21,175 @@ public class RetrocraftRecipes
 
 		GameRegistry.addSmelting(ModBlocks.oreManolite,
 		                         new ItemStack(ModItems.ingotManolium), 0.7f);
-
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModBlocks.blockManolium), "III", "III", "III",
-        'I', ModItems.ingotManolium);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModBlocks.blockManolazium), "III", "III", "III",
-        'I', ModItems.ingotManolazium);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModBlocks.blockOctirion), "III", "III", "III",
-        'I', ModItems.gemOctirion);
 		
-		GameRegistry.addShapelessRecipe(
-        new ItemStack(ModItems.ingotManolium, 9),
-        new Object[] { ModBlocks.blockManolium });
-		GameRegistry.addShapelessRecipe(
-        new ItemStack(ModItems.ingotManolazium, 9),
-        new Object[] { ModBlocks.blockManolazium });
-		GameRegistry.addShapelessRecipe(
-        new ItemStack(ModItems.gemOctirion, 9),
-        new Object[] { ModBlocks.blockOctirion });
-		
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModBlocks.blockMachineChasis), "ISI", "SSS", "ISI",
-        'I', ModItems.ingotManolium,
-        'S', Blocks.STONE);
-		
-		GameRegistry.addShapelessRecipe(
-				new ItemStack(ModItems.dustManolazium),
-				new Object[] { ModItems.dustManolite, Items.DIAMOND, Items.REDSTONE, ModItems.gemOctirion });
-		
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.stoneHammer), "III", " S ", " S ",
-        'I', Blocks.STONE,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.ironHammer), "III", " S ", " S ",
-        'I', Blocks.IRON_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.goldHammer), "III", " S ", " S ",
-        'I', Blocks.GOLD_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.diamondHammer), "III", " S ", " S ",
-        'I', Blocks.DIAMOND_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumHammer), "III", "ISI", " S ",
-        'I', ModItems.ingotManolium,
-        'S', Items.STICK);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumHammer), "III", "ISI", " S ",
-        'I', ModItems.ingotManolazium,
-        'S', Items.STICK);
-		
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.stoneExcavator), "I", "S", "S",
-        'I', Blocks.STONE,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.ironExcavator), "I", "S", "S",
-        'I', Blocks.IRON_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.goldExcavator), "I", "S", "S",
-        'I', Blocks.GOLD_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.diamondExcavator), "I", "S", "S",
-        'I', Blocks.DIAMOND_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumExcavator), " II", " SI", "S  ",
-        'I', ModItems.ingotManolium,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumExcavator), " II", " SI", "S  ",
-        'I', ModItems.ingotManolazium,
-        'S', Items.STICK);
-		
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.stoneStreamAxe), "II", "IS", " S",
-        'I', Blocks.STONE,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.ironStreamAxe), "II", "IS", " S",
-        'I', Blocks.IRON_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.goldStreamAxe), "II", "IS", " S",
-        'I', Blocks.GOLD_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.diamondStreamAxe), "II", "IS", " S",
-        'I', Blocks.DIAMOND_BLOCK,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumStreamAxe), "III", "IIS", "  S",
-        'I', ModItems.ingotManolium,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumStreamAxe), "III", "IIS", "  S",
-        'I', ModItems.ingotManolazium,
-        'S', Items.STICK);
-		
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumETool), "ABC", " S ", " S ",
-        'A', ModItems.manoliumExcavator,
-        'B', ModItems.manoliumHammer,
-        'C', ModItems.manoliumStreamAxe,
-        'S', Items.STICK);
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumETool), "ABC", " S ", " S ",
-        'A', ModItems.manolaziumExcavator,
-        'B', ModItems.manolaziumHammer,
-        'C', ModItems.manolaziumStreamAxe,
-        'S', Items.STICK);
-		
-		GameRegistry.addShapedRecipe(
-				new ItemStack(ModItems.manoliumSword), "I", "I", "S",
-				'I', ModItems.ingotManolium,
-				'S', Items.STICK);
-		
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumHead), "III", "I I",
-        'I', ModItems.ingotManolium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumChest), "I I", "III", "III",
-        'I', ModItems.ingotManolium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumLegs), "III", "I I", "I I",
-        'I', ModItems.ingotManolium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manoliumFeet), "I I", "I I",
-        'I', ModItems.ingotManolium);
-    
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumHead), "IMI", "M M",
-        'M', ModItems.magicalCore,
-        'I', ModItems.ingotManolazium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumChest), "I I", "MMM", "III",
-        'M', ModItems.magicalCore,
-        'I', ModItems.ingotManolazium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumLegs), "MIM", "I I", "I I",
-        'M', ModItems.magicalCore,
-        'I', ModItems.ingotManolazium);
-    GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.manolaziumFeet), "M M", "I I",
-        'M', ModItems.magicalCore,
-        'I', ModItems.ingotManolazium);
-    
-		GameRegistry.addShapedRecipe(
-				new ItemStack(ModItems.mechanicalCore), "MMM", "MDM", "MMM",
-				'M', ModItems.ingotManolium,
-				'D', Items.DIAMOND);
-
-		GameRegistry.addShapedRecipe(
-				new ItemStack(ModItems.magicalCore), "OOO", "ODO", "OOO",
-				'O', ModItems.gemOctirion,
-				'E', Items.EMERALD);
-
-		GameRegistry.addShapedRecipe(
-				new ItemStack(ModBlocks.pedestalManolium), "OOO", " M ", " S ",
-				'O', ModItems.ingotManolium,
-				'M', ModItems.mechanicalCore,
-				'S', Blocks.STONEBRICK);
-
-		GameRegistry.addShapedRecipe(
-				new ItemStack(ModItems.manolaziumSword), "I", "I", "S",
-				'I', ModItems.ingotManolazium,
-				'S', Items.STICK);
-
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModItems.woodenBucket), "W W", "WSW",
-        'W', Blocks.PLANKS,
-        'S', Blocks.WOODEN_SLAB);
-
-		GameRegistry.addShapedRecipe(
-        new ItemStack(ModBlocks.blockRepairer), "OAO", " M ", " C ",
-        'O', ModItems.gemOctirion,
-        'A', Blocks.ANVIL,
-        'M', ModBlocks.blockMachineChasis,
-        'C', ModItems.magicalCore);
-		
-		if(!RetroCraft.getConfig().creativeModeOnly) {
-      GameRegistry.addShapedRecipe(
-          new ItemStack(ModBlocks.blockWaystone), "SSS", "WCW", "OOO",
-          'S', Blocks.STONEBRICK,
-					'C', ModItems.magicalCore,
-          'W', Items.ENDER_PEARL,
-          'O', Blocks.OBSIDIAN);
-		}
+//		GameRegistry.addShapelessRecipe(
+//				new ItemStack(ModItems.dustManolazium),
+//				new Object[] { ModItems.dustManolite, Items.DIAMOND, Items.REDSTONE, ModItems.gemOctirion });
+//		
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.stoneHammer), "III", " S ", " S ",
+//        'I', Blocks.STONE,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.ironHammer), "III", " S ", " S ",
+//        'I', Blocks.IRON_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.goldHammer), "III", " S ", " S ",
+//        'I', Blocks.GOLD_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.diamondHammer), "III", " S ", " S ",
+//        'I', Blocks.DIAMOND_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumHammer), "III", "ISI", " S ",
+//        'I', ModItems.ingotManolium,
+//        'S', Items.STICK);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumHammer), "III", "ISI", " S ",
+//        'I', ModItems.ingotManolazium,
+//        'S', Items.STICK);
+//		
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.stoneExcavator), "I", "S", "S",
+//        'I', Blocks.STONE,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.ironExcavator), "I", "S", "S",
+//        'I', Blocks.IRON_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.goldExcavator), "I", "S", "S",
+//        'I', Blocks.GOLD_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.diamondExcavator), "I", "S", "S",
+//        'I', Blocks.DIAMOND_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumExcavator), " II", " SI", "S  ",
+//        'I', ModItems.ingotManolium,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumExcavator), " II", " SI", "S  ",
+//        'I', ModItems.ingotManolazium,
+//        'S', Items.STICK);
+//		
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.stoneStreamAxe), "II", "IS", " S",
+//        'I', Blocks.STONE,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.ironStreamAxe), "II", "IS", " S",
+//        'I', Blocks.IRON_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.goldStreamAxe), "II", "IS", " S",
+//        'I', Blocks.GOLD_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.diamondStreamAxe), "II", "IS", " S",
+//        'I', Blocks.DIAMOND_BLOCK,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumStreamAxe), "III", "IIS", "  S",
+//        'I', ModItems.ingotManolium,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumStreamAxe), "III", "IIS", "  S",
+//        'I', ModItems.ingotManolazium,
+//        'S', Items.STICK);
+//		
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumETool), "ABC", " S ", " S ",
+//        'A', ModItems.manoliumExcavator,
+//        'B', ModItems.manoliumHammer,
+//        'C', ModItems.manoliumStreamAxe,
+//        'S', Items.STICK);
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumETool), "ABC", " S ", " S ",
+//        'A', ModItems.manolaziumExcavator,
+//        'B', ModItems.manolaziumHammer,
+//        'C', ModItems.manolaziumStreamAxe,
+//        'S', Items.STICK);
+//		
+//		GameRegistry.addShapedRecipe(
+//				new ItemStack(ModItems.manoliumSword), "I", "I", "S",
+//				'I', ModItems.ingotManolium,
+//				'S', Items.STICK);
+//		
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumHead), "III", "I I",
+//        'I', ModItems.ingotManolium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumChest), "I I", "III", "III",
+//        'I', ModItems.ingotManolium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumLegs), "III", "I I", "I I",
+//        'I', ModItems.ingotManolium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manoliumFeet), "I I", "I I",
+//        'I', ModItems.ingotManolium);
+//    
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumHead), "IMI", "M M",
+//        'M', ModItems.magicalCore,
+//        'I', ModItems.ingotManolazium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumChest), "I I", "MMM", "III",
+//        'M', ModItems.magicalCore,
+//        'I', ModItems.ingotManolazium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumLegs), "MIM", "I I", "I I",
+//        'M', ModItems.magicalCore,
+//        'I', ModItems.ingotManolazium);
+//    GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.manolaziumFeet), "M M", "I I",
+//        'M', ModItems.magicalCore,
+//        'I', ModItems.ingotManolazium);
+//    
+//		GameRegistry.addShapedRecipe(
+//				new ItemStack(ModItems.mechanicalCore), "MMM", "MDM", "MMM",
+//				'M', ModItems.ingotManolium,
+//				'D', Items.DIAMOND);
+//
+//		GameRegistry.addShapedRecipe(
+//				new ItemStack(ModItems.magicalCore), "OOO", "ODO", "OOO",
+//				'O', ModItems.gemOctirion,
+//				'E', Items.EMERALD);
+//
+//		GameRegistry.addShapedRecipe(
+//				new ItemStack(ModBlocks.pedestalManolium), "OOO", " M ", " S ",
+//				'O', ModItems.ingotManolium,
+//				'M', ModItems.mechanicalCore,
+//				'S', Blocks.STONEBRICK);
+//
+//		GameRegistry.addShapedRecipe(
+//				new ItemStack(ModItems.manolaziumSword), "I", "I", "S",
+//				'I', ModItems.ingotManolazium,
+//				'S', Items.STICK);
+//
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModItems.woodenBucket), "W W", "WSW",
+//        'W', Blocks.PLANKS,
+//        'S', Blocks.WOODEN_SLAB);
+//
+//		GameRegistry.addShapedRecipe(
+//        new ItemStack(ModBlocks.blockRepairer), "OAO", " M ", " C ",
+//        'O', ModItems.gemOctirion,
+//        'A', Blocks.ANVIL,
+//        'M', ModBlocks.blockMachineChasis,
+//        'C', ModItems.magicalCore);
+//		
+//		if(!RetroCraft.getConfig().creativeModeOnly) {
+//      GameRegistry.addShapedRecipe(
+//          new ItemStack(ModBlocks.blockWaystone), "SSS", "WCW", "OOO",
+//          'S', Blocks.STONEBRICK,
+//					'C', ModItems.magicalCore,
+//          'W', Items.ENDER_PEARL,
+//          'O', Blocks.OBSIDIAN);
+//		}
 
 		/* Crusher */
 		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreOctirion", false), OreDictionary.getOres("gemOctirion", false));

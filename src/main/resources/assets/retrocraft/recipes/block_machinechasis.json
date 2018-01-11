@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "retrocraft:block_machinechasis",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ISI",
+    "SSS",
+    "ISI"
+  ],
+  "key": {
+    "I": {
+      "item": "retrocraft:ingot_manolium"
+    },
+    "S": {
+      "item": "minecraft:stonebrick"
+    }
+  }
+}

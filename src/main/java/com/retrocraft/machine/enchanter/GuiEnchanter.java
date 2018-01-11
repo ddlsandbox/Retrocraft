@@ -143,7 +143,7 @@ public class GuiEnchanter extends GuiContainer
     {
       item.show(item.yPos >= guiTop + ENCHANTLIST_Z_MIN
           && item.yPos < guiTop + ENCHANTLIST_Z_MAX);
-      item.draw(fontRendererObj);
+      item.draw(fontRenderer);
     }
 
     final int adjustedMouseX = mouseX - guiLeft;
@@ -236,7 +236,7 @@ public class GuiEnchanter extends GuiContainer
     final List<List<String>> information = new ArrayList<>();
     final ItemStack stack = this.container.getItem();
 
-    information.add(this.fontRendererObj.listFormattedStringToWidth(
+    information.add(this.fontRenderer.listFormattedStringToWidth(
         String.format("%s: %s", I18n.format("tooltip.enchanter.playerlevel"),
             this.playerInv.player.experienceLevel),
         maxWidth));
@@ -256,37 +256,37 @@ public class GuiEnchanter extends GuiContainer
                 ? -this.totalCost
                 : this.totalCost;
 
-        information.add(this.fontRendererObj.listFormattedStringToWidth(
+        information.add(this.fontRenderer.listFormattedStringToWidth(
             String.format("%s: %s",
 //                exp ? I18n.format("tooltip.enchanter.experienceGained") :
                     I18n.format("tooltip.enchanter.levelneed"),
                 finalCost),
             maxWidth));
       }
-//    information.add(this.fontRendererObj.listFormattedStringToWidth(
+//    information.add(this.fontRenderer.listFormattedStringToWidth(
 //        String.format("%s: %s", I18n.format("tooltip.eplus.maxlevel"),
 //            this.container.getEnchantingPower()),
 //        maxWidth));
 
     if (!StackUtil.isValid(this.container.getItem()))
-      information.add(this.fontRendererObj.listFormattedStringToWidth(
+      information.add(this.fontRenderer.listFormattedStringToWidth(
           I18n.format("tooltip.enchanter.additem"), maxWidth));
 
     for (final List<String> display : information)
     {
 
       int height = information.indexOf(display) == 0
-          ? this.guiTop + this.fontRendererObj.FONT_HEIGHT + 8
-          : this.guiTop + (this.fontRendererObj.FONT_HEIGHT + 8)
+          ? this.guiTop + this.fontRenderer.FONT_HEIGHT + 8
+          : this.guiTop + (this.fontRenderer.FONT_HEIGHT + 8)
               * (information.indexOf(display) + 1);
 
       if (information.indexOf(display) > 0)
         for (int i = information.indexOf(display) - 1; i >= 0; i--)
-          height += (this.fontRendererObj.FONT_HEIGHT + 3)
+          height += (this.fontRenderer.FONT_HEIGHT + 3)
               * (information.get(i).size() - 1);
 
       this.drawHoveringText(display, this.guiLeft - 20 - maxWidth, height,
-          this.fontRendererObj);
+          this.fontRenderer);
     }
 
     final GuiEnchanterLabel label = this.getSelectedLabel(mouseX, mouseY);
@@ -310,10 +310,10 @@ public class GuiEnchanter extends GuiContainer
 
       display.add(enchName);
       display.addAll(
-          this.fontRendererObj.listFormattedStringToWidth(description, 215));
+          this.fontRenderer.listFormattedStringToWidth(description, 215));
       display.add(ChatFormatting.BLUE + "" + ChatFormatting.ITALIC
           + RetroCraft.modId);
-      this.drawHoveringText(display, mouseX, mouseY, this.fontRendererObj);
+      this.drawHoveringText(display, mouseX, mouseY, this.fontRenderer);
     }
   }
 
@@ -322,7 +322,7 @@ public class GuiEnchanter extends GuiContainer
   {
     String name = RetroCraft.proxy
         .localize(ModBlocks.blockEnchanter.getUnlocalizedName() + ".name");
-    FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+    FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     fontRenderer.drawString(name,
         xSize / 2 - fontRenderer.getStringWidth(name) / 2, /* x */
         2, /* z */

@@ -84,7 +84,7 @@ public class GuiMultifurnace extends GuiContainer {
 
 		final int LABEL_XPOS = 5;
 		final int LABEL_YPOS = 5;
-		fontRendererObj.drawString(tileEntity.getDisplayName().getUnformattedText(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
+		fontRenderer.drawString(tileEntity.getDisplayName().getUnformattedText(), LABEL_XPOS, LABEL_YPOS, Color.darkGray.getRGB());
 
 		List<String> hoveringText = new ArrayList<String>();
 
@@ -104,7 +104,7 @@ public class GuiMultifurnace extends GuiContainer {
 		}
 		// If hoveringText is not empty draw the hovering text
 		if (!hoveringText.isEmpty()){
-			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
+			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
 		}
 //		// You must re bind the texture and reset the colour if you still need to use it after drawing a string
 //		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);

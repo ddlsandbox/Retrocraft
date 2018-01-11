@@ -39,7 +39,7 @@ public class GuiEditWaystone extends GuiContainer
     {
       oldText = textField.getText();
     }
-    textField = new GuiTextField(2, fontRendererObj, width / 2 - 100,
+    textField = new GuiTextField(2, fontRenderer, width / 2 - 100,
         height / 2 - 20, 200, 20);
     textField.setMaxStringLength(128);
     textField.setText(oldText);
@@ -115,7 +115,7 @@ public class GuiEditWaystone extends GuiContainer
     drawWorldBackground(0);
     super.drawScreen(mouseX, mouseY, partialTicks);
 
-    fontRendererObj.drawString(
+    fontRenderer.drawString(
         I18n.format("gui.retrocraft:editWaystone.enterName"), width / 2 - 100,
         height / 2 - 35, 0xFFFFFF);
     textField.drawTextBox();

@@ -11,7 +11,10 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal> {
 
 	private static final double DISTANCE_FOR_LEVITATE = 4.0;
@@ -19,9 +22,7 @@ public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal> 
 	private static final double LEVITATE_HEIGHT_OFFSET = 0.5;
 	
 	@Override
-	public void renderTileEntityAt(TileEntityPedestal te, double x, double y, double z, float partialTicks,
-			int destroyStage) {
-		
+	public void render(TileEntityPedestal te, double x, double y, double z, float partialTicks, int destroyStage, float alpha){
 		ItemStack stack = te.inventory.getStackInSlot(0);
 		if (!stack.isEmpty()) {
 			GlStateManager.enableRescaleNormal();

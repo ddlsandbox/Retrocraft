@@ -78,7 +78,7 @@ public class GuiEnergyDisplay extends Gui
 
     if (this.drawTextNextTo)
     {
-      this.drawString(mc.fontRendererObj, this.getOverlayText(), barX + 25,
+      this.drawString(mc.fontRenderer, this.getOverlayText(), barX + 25,
           barY + 78, 
           16777215); // decimal white color
     }
@@ -103,7 +103,7 @@ public class GuiEnergyDisplay extends Gui
       List<String> text = new ArrayList<String>();
       text.add(this.getOverlayText());
       GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth,
-          mc.displayHeight, -1, mc.fontRendererObj);
+          mc.displayHeight, -1, mc.fontRenderer);
     }
   }
 

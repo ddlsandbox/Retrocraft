@@ -25,8 +25,8 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileTeleportPipe>
   private final ModelWaystone model = new ModelWaystone();
 
   @Override
-  public void renderTileEntityAt(TileTeleportPipe tileEntity, double x, double y,
-      double z, float partialTicks, int destroyStage)
+  public void render(TileTeleportPipe tileEntity, double x, double y,
+      double z, float partialTicks, int destroyStage, float alpha)
   {
     IBlockState state = (tileEntity != null && tileEntity.hasWorld())
         ? tileEntity.getWorld().getBlockState(tileEntity.getPos()) : null;

@@ -40,7 +40,7 @@ public class ClientEvents
           Minecraft minecraft = Minecraft.getMinecraft();
           EntityPlayer player = minecraft.player;
           RayTraceResult posHit = minecraft.objectMouseOver;
-          FontRenderer font = minecraft.fontRendererObj;
+          FontRenderer font = minecraft.fontRenderer;
           ItemStack stack = player.getHeldItemMainhand();
 
 //          if(StackUtil.isValid(stack)){

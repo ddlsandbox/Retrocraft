@@ -8,10 +8,11 @@ import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.TESRPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
 import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.waystone.gui.GuiWaystoneList;
 import com.retrocraft.entity.waystone.render.RenderWaystone;
+import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.enchanter.TESREnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
 import com.retrocraft.server.CommonProxy;
@@ -25,23 +26,28 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber
 public class ClientProxy extends CommonProxy
 {
 
-  @SuppressWarnings("deprecation")
   @Override
   public void preInit(FMLPreInitializationEvent event)
   {
     super.preInit(event);
-
+    MinecraftForge.EVENT_BUS.register(this);
+    
+    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderWaystone());
 //    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
 //        new RenderWaystone());
 //    ForgeHooksClient.registerTESRItemStack(
@@ -120,4 +126,11 @@ public class ClientProxy extends CommonProxy
     Minecraft.getMinecraft()
         .displayGuiScreen(new GuiWaystoneList(waystones, hand, fromWaystone));
   }
+  
+  @SubscribeEvent
+  public static void registerModels(ModelRegistryEvent event) {
+      ModBlocks.initModels();
+      ModItems.initModels();
+  }
+
 }

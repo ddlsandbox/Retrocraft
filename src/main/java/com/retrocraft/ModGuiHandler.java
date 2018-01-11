@@ -3,10 +3,6 @@ package com.retrocraft;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.waystone.gui.ContainerEditWaystoneNameDummy;
 import com.retrocraft.entity.waystone.gui.GuiEditWaystone;
-import com.retrocraft.machine.crafter.ContainerAdvancedForge;
-import com.retrocraft.machine.crafter.ContainerElectricForge;
-import com.retrocraft.machine.crafter.GuiAdvancedForge;
-import com.retrocraft.machine.crafter.GuiElectricForge;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -77,10 +73,10 @@ public class ModGuiHandler implements IGuiHandler
     case ORESMELTER:
       return new ContainerSmelter(player.inventory,
           (TileSmelter) world.getTileEntity(new BlockPos(x, y, z)));
-    case ELECTRIC_FORGE:
-      return new ContainerElectricForge(player);
-    case ADVANCED_FORGE:
-      return new ContainerAdvancedForge(player);
+//    case ELECTRIC_FORGE:
+//      return new ContainerElectricForge(player);
+//    case ADVANCED_FORGE:
+//      return new ContainerAdvancedForge(player);
     case WAYSTONE:
       return new ContainerEditWaystoneNameDummy();
     default:
@@ -120,10 +116,10 @@ public class ModGuiHandler implements IGuiHandler
           (TileSmelter) world.getTileEntity(new BlockPos(x, y, z)),
           new ContainerSmelter(player.inventory,
               (TileSmelter) world.getTileEntity(new BlockPos(x, y, z))));
-    case ELECTRIC_FORGE:
-      return new GuiElectricForge(player);
-    case ADVANCED_FORGE:
-      return new GuiAdvancedForge(player);
+//    case ELECTRIC_FORGE:
+//      return new GuiElectricForge(player);
+//    case ADVANCED_FORGE:
+//      return new GuiAdvancedForge(player);
     case WAYSTONE:
       return new GuiEditWaystone(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
