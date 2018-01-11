@@ -102,7 +102,7 @@ public class MessageTeleportToPipe implements IMessage
           if (TeleportManager.teleportToWaystone(
               ctx.getServerHandler().playerEntity, message.getWaystone()))
           {
-            player.removeExperienceLevel(xpLevelCost);
+            player.addExperienceLevel(-xpLevelCost);
           }
 
           TeleportManager

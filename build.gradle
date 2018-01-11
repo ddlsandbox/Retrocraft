@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -37,11 +37,10 @@ repositories {
 }
 
 dependencies {
-  compile "cofh:CoFHCore:${config.mc_version}-${config.cofhcore_version}:deobf"
 }
 
 minecraft {
-    version = "1.11.2-13.20.0.2228"
+    version = "1.12.2-14.23.1.2555"
     runDir = "minecraft"
     
     // the mappings can be changed at any time, and must be in the following format.
