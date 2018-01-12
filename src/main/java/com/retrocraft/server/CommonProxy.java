@@ -13,14 +13,20 @@ import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.item.ItemOre;
 import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
-import com.retrocraft.item.SimpleTexturedItem;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
+import com.retrocraft.item.tool.ToolStreamAxe;
+import com.retrocraft.item.tool.ToolHammer;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
+import com.retrocraft.machine.enchanter.TileEntityEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
+import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
+import com.retrocraft.machine.grinder.TileOreGrinder;
 import com.retrocraft.machine.repairer.BlockRepairer;
+import com.retrocraft.machine.repairer.TileRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
+import com.retrocraft.machine.smelter.TileSmelter;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -73,10 +79,15 @@ public class CommonProxy
 		GameRegistry.registerTileEntity(TileTeleportPipe.class, RetroCraft.modId + "_block_waystone");
 		
 		event.getRegistry().register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileSteamGenerator.class, RetroCraft.modId + "_block_steamgenerator");
 		event.getRegistry().register(new BlockOreGrinder("block_oregrinder").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileOreGrinder.class, RetroCraft.modId + "_block_oregrinder");
 		event.getRegistry().register(new BlockSmelter("block_oresmelter").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileSmelter.class, RetroCraft.modId + "_block_oresmelter");
 		event.getRegistry().register(new BlockEnchanter("block_enchanter").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileEntityEnchanter.class, RetroCraft.modId + "_block_enchanter");
 		event.getRegistry().register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileRepairer.class, RetroCraft.modId + "_block_repairer");
     }
     
   @SubscribeEvent
@@ -100,11 +111,16 @@ public class CommonProxy
 	  event.getRegistry().register(new ToolExcavator(RetroCraft.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolExcavator(RetroCraft.manolaziumToolMaterial, "excavator_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  
+	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.IRON, "streamaxe_iron").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_diamond").setCreativeTab(RetroCraft.creativeTab));
+//	  event.getRegistry().register(new ToolStreamAxe(RetroCraft.manoliumToolMaterial, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab));
+
+	  event.getRegistry().register(new ToolHammer(ToolMaterial.IRON, "hammer_iron").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolHammer(ToolMaterial.DIAMOND, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab));
+//	  event.getRegistry().register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
+
 	  event.getRegistry().register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolEverything(RetroCraft.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab));
-	  
-//				.setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new SimpleTexturedItem().setCreativeTab(RetroCraft.creativeTab));
 	  
 	  /* blocks */
 	  event.getRegistry().register(new ItemBlock(ModBlocks.oreOctirion).setRegistryName(ModBlocks.oreOctirion.getRegistryName()));
@@ -114,12 +130,13 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirion).setRegistryName(ModBlocks.blockOctirion.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockMachineChasis).setRegistryName(ModBlocks.blockMachineChasis.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockWaystone).setRegistryName(ModBlocks.blockWaystone.getRegistryName()));
+
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockWaystone).setRegistryName(ModBlocks.blockWaystone.getRegistryName()));
 //	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockEnchanter).setRegistryName(ModBlocks.blockEnchanter.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockRepairer).setRegistryName(ModBlocks.blockRepairer.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockEnchanter).setRegistryName(ModBlocks.blockEnchanter.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockRepairer).setRegistryName(ModBlocks.blockRepairer.getRegistryName()));
 	  
   }
   

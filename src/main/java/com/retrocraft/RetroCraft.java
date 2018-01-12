@@ -18,7 +18,6 @@ import com.retrocraft.entity.teleportpipe.MessageTeleportPipes;
 import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
 import com.retrocraft.item.ItemWoodenMilkBucket;
 import com.retrocraft.item.ModItems;
-import com.retrocraft.item.SimpleTexturedItem;
 import com.retrocraft.item.armor.ArmorMaterials;
 import com.retrocraft.network.PacketConfig;
 import com.retrocraft.network.PacketEnchant;

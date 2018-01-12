@@ -2,6 +2,8 @@ package com.retrocraft.item;
 
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
+import com.retrocraft.item.tool.ToolStreamAxe;
+import com.retrocraft.item.tool.ToolHammer;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -35,13 +37,13 @@ public class ModItems {
 //	public static ItemSword manoliumSword;
 //
 //	/* hammer */
-//	public static ToolHammer stoneHammer;
-//	public static ToolHammer ironHammer;
-//	public static ToolHammer goldHammer;
-//	public static ToolHammer diamondHammer;
-//	public static ToolHammer manoliumHammer;
-//	public static ToolHammer manolaziumHammer;
-//
+	  @GameRegistry.ObjectHolder("retrocraft:hammer_iron")
+  	public static ToolHammer ironHammer;
+  	@GameRegistry.ObjectHolder("retrocraft:hammer_diamond")
+  	public static ToolHammer diamondHammer;
+//	  @GameRegistry.ObjectHolder("retrocraft:hammer_manolium")
+//  	public static ToolHammer manoliumHammer;
+
 	@GameRegistry.ObjectHolder("retrocraft:excavator_stone")
 	public static ToolExcavator stoneExcavator;
 	@GameRegistry.ObjectHolder("retrocraft:excavator_iron")
@@ -54,14 +56,14 @@ public class ModItems {
 	public static ToolExcavator manoliumExcavator;
 	@GameRegistry.ObjectHolder("retrocraft:excavator_manolazium")
 	public static ToolExcavator manolaziumExcavator;
-//
-//	public static ToolStreamAxe stoneStreamAxe;
-//	public static ToolStreamAxe ironStreamAxe;
-//	public static ToolStreamAxe goldStreamAxe;
-//	public static ToolStreamAxe diamondStreamAxe;
+
+	@GameRegistry.ObjectHolder("retrocraft:streamaxe_iron")
+	public static ToolStreamAxe ironStreamAxe;
+	@GameRegistry.ObjectHolder("retrocraft:streamaxe_diamond")
+	public static ToolStreamAxe diamondStreamAxe;
+//	@GameRegistry.ObjectHolder("retrocraft:streamaxe_manolium")
 //	public static ToolStreamAxe manoliumStreamAxe;
-//	public static ToolStreamAxe manolaziumStreamAxe;
-//
+
 	@GameRegistry.ObjectHolder("retrocraft:etool_manolium")
 	public static ToolEverything manoliumETool;
 	@GameRegistry.ObjectHolder("retrocraft:etool_manolazium")
@@ -83,9 +85,6 @@ public class ModItems {
 //	public static ItemManoliumArmor manolaziumLegs;
 //	public static ItemManoliumArmor manoliumFeet;
 //	public static ItemManoliumArmor manolaziumFeet;
-
-	@GameRegistry.ObjectHolder("retrocraft:simpletextureditem")
-    public static final Item simpleTexturedItem = Items.AIR;
 	
 	public static void init() {
 //		manoliumHead = register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "head_manolium", 0,
@@ -178,7 +177,6 @@ public class ModItems {
 		
 		ModelLoader.setCustomModelResourceLocation(woodenBucket, 0, new ModelResourceLocation(woodenBucket.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(woodenMilkBucket, 0, new ModelResourceLocation(woodenMilkBucket.getRegistryName(), "inventory"));
-		ModelLoader.setCustomModelResourceLocation(simpleTexturedItem, 0, new ModelResourceLocation(simpleTexturedItem.getRegistryName(), "inventory"));
 		
 		ModelLoader.setCustomModelResourceLocation(stoneExcavator, 0, new ModelResourceLocation(stoneExcavator.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(ironExcavator, 0, new ModelResourceLocation(ironExcavator.getRegistryName(), "inventory"));
@@ -187,6 +185,14 @@ public class ModItems {
 		ModelLoader.setCustomModelResourceLocation(manoliumExcavator, 0, new ModelResourceLocation(manoliumExcavator.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(manolaziumExcavator, 0, new ModelResourceLocation(manolaziumExcavator.getRegistryName(), "inventory"));
 		
+		ModelLoader.setCustomModelResourceLocation(ironStreamAxe, 0, new ModelResourceLocation(ironStreamAxe.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(diamondStreamAxe, 0, new ModelResourceLocation(diamondStreamAxe.getRegistryName(), "inventory"));
+//		ModelLoader.setCustomModelResourceLocation(manoliumStreamAxe, 0, new ModelResourceLocation(manoliumStreamAxe.getRegistryName(), "inventory"));
+
+		ModelLoader.setCustomModelResourceLocation(ironHammer, 0, new ModelResourceLocation(ironHammer.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(diamondHammer, 0, new ModelResourceLocation(diamondHammer.getRegistryName(), "inventory"));
+//		ModelLoader.setCustomModelResourceLocation(manoliumHammer, 0, new ModelResourceLocation(manoliumHammer.getRegistryName(), "inventory"));
+
 		ModelLoader.setCustomModelResourceLocation(manoliumETool, 0, new ModelResourceLocation(manoliumETool.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(manolaziumETool, 0, new ModelResourceLocation(manolaziumETool.getRegistryName(), "inventory"));
     }
