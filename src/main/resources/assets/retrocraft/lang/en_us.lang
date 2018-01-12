@@ -19,6 +19,7 @@ tile.block_manolazium.name=Block of Manolazium
 tile.block_octirion.name=Block of Octiron
 
 tile.block_machinechasis.name=Machine chasis
+tile.block_octirionchasis.name=Octirion chasis
 item.magical_core.name=Magical Core
 item.mechanical_core.name=Mechanical Core
 
@@ -59,6 +60,7 @@ item.feet_manolazium.name=Manolazium Boots
 
 item.sword_manolium.name=Manolium Sword
 item.sword_manolazium.name=Manolazium Great Sword
+item.sword_octirion.name=Octirion Great Sword
 
 item.wooden_bucket.name=Wooden Bucket
 item.wooden_bucket_water.name=Wooden Bucket of Water

@@ -32,6 +32,8 @@ public class ModBlocks {
 //
 	@GameRegistry.ObjectHolder("retrocraft:block_machinechasis")
 	public static BlockBase blockMachineChasis;
+	@GameRegistry.ObjectHolder("retrocraft:block_octirionchasis")
+	public static BlockBase blockOctirionChasis;
 //	
 //	public static BlockMultifurnace blockMultifurnace;
 	
@@ -75,6 +77,7 @@ public class ModBlocks {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOctirion), 0, new ModelResourceLocation(blockOctirion.getRegistryName(), "inventory"));
         
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockMachineChasis), 0, new ModelResourceLocation(blockMachineChasis.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOctirionChasis), 0, new ModelResourceLocation(blockOctirionChasis.getRegistryName(), "inventory"));
         
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockLightPillar), 0, new ModelResourceLocation(blockLightPillar.getRegistryName(), "inventory"));
     }

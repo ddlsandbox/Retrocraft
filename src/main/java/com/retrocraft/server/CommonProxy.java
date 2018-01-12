@@ -13,10 +13,13 @@ import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.item.ItemOre;
 import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
+import com.retrocraft.item.armor.ArmorMaterials;
+import com.retrocraft.item.armor.ItemManoliumArmor;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
-import com.retrocraft.item.tool.ToolStreamAxe;
 import com.retrocraft.item.tool.ToolHammer;
+import com.retrocraft.item.tool.ToolStreamAxe;
+import com.retrocraft.item.weapon.ItemSword;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
@@ -31,6 +34,7 @@ import com.retrocraft.machine.smelter.TileSmelter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemBlock;
@@ -72,6 +76,7 @@ public class CommonProxy
 		event.getRegistry().register(new BlockBase(Material.IRON, "block_manolazium").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new BlockBase(Material.IRON, "block_octirion").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new BlockBase(Material.IRON, "block_machinechasis").setCreativeTab(RetroCraft.creativeTab));
+		event.getRegistry().register(new BlockBase(Material.IRON, "block_octirionchasis").setCreativeTab(RetroCraft.creativeTab));
 		
 		event.getRegistry().register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
 		
@@ -104,24 +109,63 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemWoodenBucket("wooden_bucket", Blocks.AIR).setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
 	  
-	  event.getRegistry().register(new ToolExcavator(ToolMaterial.STONE, "excavator_stone").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolExcavator(ToolMaterial.IRON, "excavator_iron").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolExcavator(ToolMaterial.GOLD, "excavator_gold").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolExcavator(ToolMaterial.DIAMOND, "excavator_diamond").setCreativeTab(RetroCraft.creativeTab));
+	  if (RetroCraft.getConfig().supportBasicMaterials)
+	  {
+		  event.getRegistry().register(new ToolExcavator(ToolMaterial.STONE, "excavator_stone").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolExcavator(ToolMaterial.IRON, "excavator_iron").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolExcavator(ToolMaterial.GOLD, "excavator_gold").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolExcavator(ToolMaterial.DIAMOND, "excavator_diamond").setCreativeTab(RetroCraft.creativeTab));
+	  }
 	  event.getRegistry().register(new ToolExcavator(RetroCraft.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolExcavator(RetroCraft.manolaziumToolMaterial, "excavator_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  
-	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.IRON, "streamaxe_iron").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_diamond").setCreativeTab(RetroCraft.creativeTab));
-//	  event.getRegistry().register(new ToolStreamAxe(RetroCraft.manoliumToolMaterial, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  if (RetroCraft.getConfig().supportBasicMaterials)
+	  {
+		  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.STONE, "streamaxe_stone").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.IRON, "streamaxe_iron").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.GOLD, "streamaxe_gold").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_diamond").setCreativeTab(RetroCraft.creativeTab));
+	  }
+	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab));
 
-	  event.getRegistry().register(new ToolHammer(ToolMaterial.IRON, "hammer_iron").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolHammer(ToolMaterial.DIAMOND, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab));
-//	  event.getRegistry().register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  if (RetroCraft.getConfig().supportBasicMaterials)
+	  {
+		  event.getRegistry().register(new ToolHammer(ToolMaterial.STONE, "hammer_stone").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolHammer(ToolMaterial.IRON, "hammer_iron").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolHammer(ToolMaterial.GOLD, "hammer_gold").setCreativeTab(RetroCraft.creativeTab));
+		  event.getRegistry().register(new ToolHammer(ToolMaterial.DIAMOND, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab));
+	  }
+	  event.getRegistry().register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
 
 	  event.getRegistry().register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolEverything(RetroCraft.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  
+	  /* armor */
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "head_manolium", 0,
+				EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "head_manolazium", 0,
+				EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab));
+
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "chest_manolium", 0,
+				EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "chest_manolazium", 0,
+				EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab));
+
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "legs_manolium", 0,
+				EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "legs_manolazium", 0,
+				EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab));
+
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "feet_manolium", 0,
+				EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "feet_manolazium", 0,
+				EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab));
+	  
+	  /* weapons */
+	  event.getRegistry().register(new ItemSword(RetroCraft.manoliumToolMaterial, "sword_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemSword(RetroCraft.octirionToolMaterial, "sword_octirion").setCreativeTab(RetroCraft.creativeTab));
+
 	  /* blocks */
 	  event.getRegistry().register(new ItemBlock(ModBlocks.oreOctirion).setRegistryName(ModBlocks.oreOctirion.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.oreManolite).setRegistryName(ModBlocks.oreManolite.getRegistryName()));
@@ -129,6 +173,7 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockManolazium).setRegistryName(ModBlocks.blockManolazium.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirion).setRegistryName(ModBlocks.blockOctirion.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockMachineChasis).setRegistryName(ModBlocks.blockMachineChasis.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirionChasis).setRegistryName(ModBlocks.blockOctirionChasis.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
 
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockWaystone).setRegistryName(ModBlocks.blockWaystone.getRegistryName()));

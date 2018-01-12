@@ -15,6 +15,10 @@ public class RetroCraftConfig
   public boolean restrictRenameToOwner;
   public boolean creativeModeOnly;
 
+  /* special tools */
+  
+  public boolean supportBasicMaterials;
+  
   /* machines */
   
   public int grinderXpPerItem;
@@ -64,7 +68,11 @@ public class RetroCraftConfig
     creativeModeOnly = config.getBoolean("Creative Mode Only", "teleport", false,
         "If true, waystones can only be placed in creative mode.");
 
-
+    /* special tools */
+    
+    supportBasicMaterials = config.getBoolean("Enable basic materials", "special_tools", false,
+            "If true, hammers, excavators and stream axes can be made out of standard materials.");
+    
     /* machines */
     
     grinderXpPerItem = config.getInt("Grind XP", "machines", 10, 0, 100,
@@ -128,6 +136,8 @@ public class RetroCraftConfig
     config.oreOctirionVeinVar = buf.readInt();
     config.oreOctirionTries = buf.readInt();
     
+    config.supportBasicMaterials = buf.readBoolean();
+    
     return config;
   }
 
@@ -150,5 +160,7 @@ public class RetroCraftConfig
     buf.writeInt(oreOctirionVeinSize);
     buf.writeInt(oreOctirionVeinVar);
     buf.writeInt(oreOctirionTries);
+    
+    buf.writeBoolean(supportBasicMaterials);
   }
 }

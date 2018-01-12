@@ -78,6 +78,18 @@ public class RetroCraft
           10f,                                                                /* efficiency */
           8f,                                                                 /* damage */
           30);                                                                /* enchantability */
+  
+  public static final Item.ToolMaterial octirionToolMaterial = EnumHelper
+	      .addToolMaterial("OCTIRION", 4,                                         /*
+	                                                                               * harvest
+	                                                                               * level
+	                                                                               * diamond
+	                                                                               * =3
+	                                                                               */
+	          2000,                                                               /* durability */
+	          15f,                                                                /* efficiency */
+	          12f,                                                                 /* damage */
+	          30);                                                                /* enchantability */
 
   @SidedProxy(serverSide = "com.retrocraft.server.CommonProxy", clientSide = "com.retrocraft.client.ClientProxy")
   public static CommonProxy                 proxy;
