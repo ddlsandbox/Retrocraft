@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -133,8 +134,7 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		final byte NBT_TYPE_COMPOUND = 10; // See NBTBase.createNewByType() for a listing
-		NBTTagList dataForAllSlots = compound.getTagList("Items", NBT_TYPE_COMPOUND);
+		NBTTagList dataForAllSlots = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
 		inventory.setStackInSlot(0, ItemStack.EMPTY); // set slot to empty
 		NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(0);
 		inventory.setStackInSlot(0, new ItemStack(dataForOneSlot));

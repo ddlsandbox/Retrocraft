@@ -3,6 +3,9 @@ package com.retrocraft;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.waystone.gui.ContainerEditWaystoneNameDummy;
 import com.retrocraft.entity.waystone.gui.GuiEditWaystone;
+import com.retrocraft.item.backpack.ContainerBackpack;
+import com.retrocraft.item.backpack.CustomInventory;
+import com.retrocraft.item.backpack.GuiBackpack;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -24,6 +27,8 @@ import com.retrocraft.machine.smelter.TileSmelter;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -44,6 +49,7 @@ public class ModGuiHandler implements IGuiHandler
   public static final int ELECTRIC_FORGE = 6;
   public static final int ADVANCED_FORGE = 7;
   public static final int WAYSTONE       = 8;
+  public static final int BACKPACK       = 9;
 
   @Override
   public Container getServerGuiElement(int ID, EntityPlayer player, World world,
@@ -79,10 +85,15 @@ public class ModGuiHandler implements IGuiHandler
 //      return new ContainerAdvancedForge(player);
     case WAYSTONE:
       return new ContainerEditWaystoneNameDummy();
+    case BACKPACK:
+      EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+      ItemStack stack = player.getHeldItem(hand); //ToDo: Helper method (not necessarily held item)
+      return new ContainerBackpack(stack, player.inventory, hand);
     default:
       return null;
     }
   }
+  
 
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world,
@@ -123,6 +134,10 @@ public class ModGuiHandler implements IGuiHandler
     case WAYSTONE:
       return new GuiEditWaystone(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
+    case BACKPACK:
+      EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+      ItemStack stack = player.getHeldItem(hand); //ToDo: Helper method (not necessarily held item)
+      return new GuiBackpack(new ContainerBackpack(stack, player.inventory, hand));
     default:
       return null;
     }

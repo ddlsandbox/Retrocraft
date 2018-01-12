@@ -2,6 +2,7 @@ package com.retrocraft.item;
 
 import com.retrocraft.RetroCraft;
 import com.retrocraft.item.armor.ItemManoliumArmor;
+import com.retrocraft.item.backpack.ItemBackpack;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
 import com.retrocraft.item.tool.ToolHammer;
@@ -103,6 +104,9 @@ public class ModItems {
 	@GameRegistry.ObjectHolder("retrocraft:sword_octirion")
 	public static ItemSword octirionSword;
 
+	@GameRegistry.ObjectHolder("retrocraft:backpack")
+	public static ItemBackpack backpack;
+	 
 	@GameRegistry.ObjectHolder("retrocraft:wooden_bucket")
 	public static ItemWoodenBucket woodenBucket;
 //	public static ItemWoodenBucket woodenWaterBucket;
@@ -136,6 +140,7 @@ public class ModItems {
 		
 		ModelLoader.setCustomModelResourceLocation(woodenBucket, 0, new ModelResourceLocation(woodenBucket.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(woodenMilkBucket, 0, new ModelResourceLocation(woodenMilkBucket.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(backpack, 0, new ModelResourceLocation(backpack.getRegistryName(), "inventory"));
 		
 		if (RetroCraft.getConfig().supportBasicMaterials)
 		{

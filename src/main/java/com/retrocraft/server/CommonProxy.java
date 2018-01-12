@@ -7,6 +7,7 @@ import com.retrocraft.block.BlockBase;
 import com.retrocraft.block.BlockOre;
 import com.retrocraft.block.BlockTorch;
 import com.retrocraft.block.ModBlocks;
+import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
@@ -15,6 +16,7 @@ import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
 import com.retrocraft.item.armor.ArmorMaterials;
 import com.retrocraft.item.armor.ItemManoliumArmor;
+import com.retrocraft.item.backpack.ItemBackpack;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
 import com.retrocraft.item.tool.ToolHammer;
@@ -78,6 +80,7 @@ public class CommonProxy
 		event.getRegistry().register(new BlockBase(Material.IRON, "block_machinechasis").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new BlockBase(Material.IRON, "block_octirionchasis").setCreativeTab(RetroCraft.creativeTab));
 		
+		event.getRegistry().register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
 		
 		event.getRegistry().register(new BlockTeleportPipe("block_waystone").setCreativeTab(RetroCraft.creativeTab));
@@ -108,6 +111,7 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemOre("magical_core", "magicalCore").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemWoodenBucket("wooden_bucket", Blocks.AIR).setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemBackpack("backpack").setCreativeTab(RetroCraft.creativeTab));
 	  
 	  if (RetroCraft.getConfig().supportBasicMaterials)
 	  {
@@ -174,10 +178,12 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirion).setRegistryName(ModBlocks.blockOctirion.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockMachineChasis).setRegistryName(ModBlocks.blockMachineChasis.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirionChasis).setRegistryName(ModBlocks.blockOctirionChasis.getRegistryName()));
+	  
+	  event.getRegistry().register(new ItemBlock(ModBlocks.pedestalManolium).setRegistryName(ModBlocks.pedestalManolium.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
 
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockWaystone).setRegistryName(ModBlocks.blockWaystone.getRegistryName()));
-//	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockEnchanter).setRegistryName(ModBlocks.blockEnchanter.getRegistryName()));

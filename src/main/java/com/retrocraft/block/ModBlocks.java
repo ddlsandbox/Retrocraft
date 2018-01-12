@@ -1,5 +1,6 @@
 package com.retrocraft.block;
 
+import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
@@ -28,8 +29,9 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:block_octirion")
 	public static BlockBase blockOctirion;
 	
-//	public static BlockPedestal pedestalManolium;
-//
+	@GameRegistry.ObjectHolder("retrocraft:block_pedestal")
+	public static BlockPedestal pedestalManolium;
+
 	@GameRegistry.ObjectHolder("retrocraft:block_machinechasis")
 	public static BlockBase blockMachineChasis;
 	@GameRegistry.ObjectHolder("retrocraft:block_octirionchasis")
@@ -43,7 +45,7 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:block_repairer")
 	public static BlockRepairer blockRepairer;
 	
-	@GameRegistry.ObjectHolder("retrocraft:block_generator")
+	@GameRegistry.ObjectHolder("retrocraft:block_steamgenerator")
 	public static BlockSteamGenerator blockGenerator;
 
 	@GameRegistry.ObjectHolder("retrocraft:block_oregrinder")
@@ -66,9 +68,10 @@ public class ModBlocks {
         blockWaystone.initModel();
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreGrinder), 0, new ModelResourceLocation(blockOreGrinder.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreSmelter), 0, new ModelResourceLocation(blockOreSmelter.getRegistryName(), "inventory"));
-//        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockEnchanter), 0, new ModelResourceLocation(blockEnchanter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockRepairer), 0, new ModelResourceLocation(blockRepairer.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(pedestalManolium), 0, new ModelResourceLocation(pedestalManolium.getRegistryName(), "inventory"));
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(oreManolite), 0, new ModelResourceLocation(oreManolite.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(oreOctirion), 0, new ModelResourceLocation(oreOctirion.getRegistryName(), "inventory"));
@@ -83,8 +86,6 @@ public class ModBlocks {
     }
 	
 	public static void init() {
-
-//		pedestalManolium = register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
 //
 //		blockMultifurnace = register(new BlockMultifurnace("multifurnace").setCreativeTab(RetroCraft.creativeTab));
 //		//		
