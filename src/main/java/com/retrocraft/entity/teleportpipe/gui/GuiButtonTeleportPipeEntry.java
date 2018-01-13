@@ -1,4 +1,4 @@
-package com.retrocraft.entity.waystone.gui;
+package com.retrocraft.entity.teleportpipe.gui;
 
 import com.google.common.collect.Lists;
 import com.retrocraft.RetroCraft;
@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
-public class GuiButtonWaystoneEntry extends GuiButton
+public class GuiButtonTeleportPipeEntry extends GuiButton
 {
 
   private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(
@@ -24,7 +24,7 @@ public class GuiButtonWaystoneEntry extends GuiButton
   private final TeleportEntry waystone;
   private final int           xpLevelCost;
 
-  public GuiButtonWaystoneEntry(int id, int x, int y, TeleportEntry waystone)
+  public GuiButtonTeleportPipeEntry(int id, int x, int y, TeleportEntry waystone)
   {
     super(id, x, y, (waystone.isGlobal() ? TextFormatting.YELLOW : "")
         + waystone.getName());

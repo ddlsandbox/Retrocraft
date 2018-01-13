@@ -1,4 +1,4 @@
-package com.retrocraft.entity.waystone.render;
+package com.retrocraft.entity.teleportpipe.render;
 
 import com.retrocraft.RetroCraft;
 import com.retrocraft.RetroCraftConfig;

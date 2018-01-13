@@ -1,8 +1,8 @@
 package com.retrocraft;
 
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
-import com.retrocraft.entity.waystone.gui.ContainerEditWaystoneNameDummy;
-import com.retrocraft.entity.waystone.gui.GuiEditWaystone;
+import com.retrocraft.entity.teleportpipe.gui.ContainerEditTeleportNameDummy;
+import com.retrocraft.entity.teleportpipe.gui.GuiEditTeleportPipe;
 import com.retrocraft.item.backpack.ContainerBackpack;
 import com.retrocraft.item.backpack.CustomInventory;
 import com.retrocraft.item.backpack.GuiBackpack;
@@ -84,7 +84,7 @@ public class ModGuiHandler implements IGuiHandler
 //    case ADVANCED_FORGE:
 //      return new ContainerAdvancedForge(player);
     case WAYSTONE:
-      return new ContainerEditWaystoneNameDummy();
+      return new ContainerEditTeleportNameDummy();
     case BACKPACK:
       EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
       ItemStack stack = player.getHeldItem(hand); //ToDo: Helper method (not necessarily held item)
@@ -132,7 +132,7 @@ public class ModGuiHandler implements IGuiHandler
 //    case ADVANCED_FORGE:
 //      return new GuiAdvancedForge(player);
     case WAYSTONE:
-      return new GuiEditWaystone(
+      return new GuiEditTeleportPipe(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     case BACKPACK:
       EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;

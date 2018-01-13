@@ -7,6 +7,8 @@ import com.retrocraft.network.PacketRequestUpdatePedestal;
 import com.retrocraft.network.PacketUpdatePedestal;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -56,25 +58,32 @@ public class TileEntityPedestal extends TileEntity {
 					new NetworkRegistry.TargetPoint(world.provider.getDimension(), 
 						pos.getX(), pos.getY(), pos.getZ(), 64));
 			}
+			TileEntityPedestal.this.markDirty();
 		}
 	};
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	  super.writeToNBT(compound);
 		compound.setTag("inventory", inventory.serializeNBT());
 		compound.setLong("lastChangeTime", lastChangeTime);
 		compound.setInteger("mode", mode.ordinal());
-		return super.writeToNBT(compound);
+		return compound;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+	  super.readFromNBT(compound);
+	  inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		lastChangeTime = compound.getLong("lastChangeTime");
 		mode = PedestalMode.values()[compound.getInteger("mode")];
-		super.readFromNBT(compound);
 	}
 	
+  @Override
+  public NBTTagCompound getUpdateTag() {
+      return writeToNBT(new NBTTagCompound());
+  }
+  
 	@Override
 	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
@@ -83,7 +92,10 @@ public class TileEntityPedestal extends TileEntity {
 	@Nullable
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T)inventory : super.getCapability(capability, facing);
+	  if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+  }
+  return super.getCapability(capability, facing);
 	}
 	
 	@Override

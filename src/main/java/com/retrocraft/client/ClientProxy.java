@@ -10,8 +10,8 @@ import com.retrocraft.block.pedestal.TileEntityPedestal;
 import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
-import com.retrocraft.entity.waystone.gui.GuiWaystoneList;
-import com.retrocraft.entity.waystone.render.RenderWaystone;
+import com.retrocraft.entity.teleportpipe.gui.GuiTeleportPipeList;
+import com.retrocraft.entity.teleportpipe.render.RenderWaystone;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.enchanter.TESREnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -124,7 +124,7 @@ public class ClientProxy extends CommonProxy
         .fromPlayer(FMLClientHandler.instance().getClientPlayerEntity())
         .getWaystones();
     Minecraft.getMinecraft()
-        .displayGuiScreen(new GuiWaystoneList(waystones, hand, fromWaystone));
+        .displayGuiScreen(new GuiTeleportPipeList(waystones, hand, fromWaystone));
   }
   
   @SubscribeEvent

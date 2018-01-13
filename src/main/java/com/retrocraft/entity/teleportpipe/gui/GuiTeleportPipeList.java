@@ -1,4 +1,4 @@
-package com.retrocraft.entity.waystone.gui;
+package com.retrocraft.entity.teleportpipe.gui;
 
 import java.util.Iterator;
 
@@ -18,7 +18,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 
-public class GuiWaystoneList extends GuiScreen
+public class GuiTeleportPipeList extends GuiScreen
 {
 
   private final TeleportEntry[] entries;
@@ -28,7 +28,7 @@ public class GuiWaystoneList extends GuiScreen
   private GuiButton             btnNextPage;
   private int                   pageOffset;
 
-  public GuiWaystoneList(TeleportEntry[] entries, EnumHand hand,
+  public GuiTeleportPipeList(TeleportEntry[] entries, EnumHand hand,
                          @Nullable TeleportEntry fromWaystone)
   {
     this.entries = entries;
@@ -61,8 +61,8 @@ public class GuiWaystoneList extends GuiScreen
     while (it.hasNext())
     {
       GuiButton button = it.next();
-      if (button instanceof GuiButtonWaystoneEntry
-          || button instanceof GuiButtonSortWaystone)
+      if (button instanceof GuiButtonTeleportPipeEntry
+          || button instanceof GuiButtonSortTeleportPipe)
       {
         it.remove();
       }
@@ -75,12 +75,12 @@ public class GuiWaystoneList extends GuiScreen
       int entryIndex = pageOffset * buttonsPerPage + i;
       if (entryIndex >= 0 && entryIndex < entries.length)
       {
-        GuiButtonWaystoneEntry btnWaystone = new GuiButtonWaystoneEntry(id,
+        GuiButtonTeleportPipeEntry btnWaystone = new GuiButtonTeleportPipeEntry(id,
             width / 2 - 100, height / 2 - 60 + y, entries[entryIndex]);
         buttonList.add(btnWaystone);
         id++;
 
-        GuiButtonSortWaystone sortUp = new GuiButtonSortWaystone(id,
+        GuiButtonSortTeleportPipe sortUp = new GuiButtonSortTeleportPipe(id,
             width / 2 + 108, height / 2 - 60 + y + 2, btnWaystone, -1);
         if (entryIndex == 0)
         {
@@ -89,7 +89,7 @@ public class GuiWaystoneList extends GuiScreen
         buttonList.add(sortUp);
         id++;
 
-        GuiButtonSortWaystone sortDown = new GuiButtonSortWaystone(id,
+        GuiButtonSortTeleportPipe sortDown = new GuiButtonSortTeleportPipe(id,
             width / 2 + 108, height / 2 - 60 + y + 11, btnWaystone, 1);
         if (entryIndex == entries.length - 1)
         {
@@ -114,17 +114,17 @@ public class GuiWaystoneList extends GuiScreen
     {
       pageOffset--;
       updateList();
-    } else if (button instanceof GuiButtonWaystoneEntry)
+    } else if (button instanceof GuiButtonTeleportPipeEntry)
     {
       RetroCraft.network.sendToServer(new MessageTeleportToPipe(
-          ((GuiButtonWaystoneEntry) button).getWaystone(), hand, fromWaystone));
+          ((GuiButtonTeleportPipeEntry) button).getWaystone(), hand, fromWaystone));
       mc.displayGuiScreen(null);
-    } else if (button instanceof GuiButtonSortWaystone)
+    } else if (button instanceof GuiButtonSortTeleportPipe)
     {
-      TeleportEntry waystoneEntry = ((GuiButtonSortWaystone) button)
+      TeleportEntry waystoneEntry = ((GuiButtonSortTeleportPipe) button)
           .getWaystone();
       int index = ArrayUtils.indexOf(entries, waystoneEntry);
-      int sortDir = ((GuiButtonSortWaystone) button).getSortDir();
+      int sortDir = ((GuiButtonSortTeleportPipe) button).getSortDir();
       int otherIndex = index + sortDir;
       if (index == -1 || otherIndex < 0 || otherIndex >= entries.length)
       {

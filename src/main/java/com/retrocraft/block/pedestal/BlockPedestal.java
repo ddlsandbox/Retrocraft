@@ -54,19 +54,13 @@ public class BlockPedestal extends BlockTileEntity<TileEntityPedestal> {
 				} else {
 					player.setHeldItem(hand, itemHandler.insertItem(0, player.getHeldItem(hand), false));
 				}
-				tile.markDirty();
 			} else {
 				tile.switchMode();
 				player.sendMessage(new TextComponentString("CHANGED MODE TO " + tile.getMode()));
-				tile.markDirty();
-//				ItemStack stack = itemHandler.getStackInSlot(0);
-//				if (!stack.isEmpty()) {
-//					String localized = RetroCraft.proxy.localize(stack.getUnlocalizedName() + ".name");
-					//player.addChatMessage(new TextComponentString(stack.getCount() + "x " + localized));
-//				} 
-//				else {
-//					player.addChatMessage(new TextComponentString("Empty"));
-//				}
+			}
+			tile.markDirty();
+			if (world != null) {
+        world.notifyBlockUpdate(tile.getPos(), state, state, 3);
 			}
 		}
 		return true;

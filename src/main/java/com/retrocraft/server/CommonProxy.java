@@ -2,6 +2,7 @@ package com.retrocraft.server;
 
 import javax.annotation.Nullable;
 
+import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.BlockBase;
 import com.retrocraft.block.BlockOre;
@@ -9,6 +10,11 @@ import com.retrocraft.block.BlockTorch;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageEditTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageSortTeleportPipe;
+import com.retrocraft.entity.teleportpipe.MessageTeleportEffect;
+import com.retrocraft.entity.teleportpipe.MessageTeleportPipes;
+import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.item.ItemOre;
@@ -32,6 +38,14 @@ import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.repairer.TileRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
 import com.retrocraft.machine.smelter.TileSmelter;
+import com.retrocraft.network.PacketConfig;
+import com.retrocraft.network.PacketEnchant;
+import com.retrocraft.network.PacketRepairer;
+import com.retrocraft.network.PacketRequestUpdateEnchanter;
+import com.retrocraft.network.PacketRequestUpdatePedestal;
+import com.retrocraft.network.PacketServerToClient;
+import com.retrocraft.network.PacketUpdateEnchanter;
+import com.retrocraft.network.PacketUpdatePedestal;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -50,12 +64,44 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber
 public class CommonProxy
 {
-  public void preInit(FMLPreInitializationEvent event){
+  public void preInit(FMLPreInitializationEvent event)
+  {
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    
+    int messageId = 1;
+    RetroCraft.network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new PacketUpdateEnchanter.Handler(), PacketUpdateEnchanter.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new PacketRequestUpdateEnchanter.Handler(),PacketRequestUpdateEnchanter.class, 
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new PacketRepairer.Handler(), PacketRepairer.class,
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new PacketEnchant.Handler(), PacketEnchant.class, 
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new PacketServerToClient.Handler(), PacketServerToClient.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new MessageTeleportPipes.Handler(), MessageTeleportPipes.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new MessageEditTeleportPipe.Handler(), MessageEditTeleportPipe.class, 
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new MessageTeleportToPipe.Handler(), MessageTeleportToPipe.class, 
+        messageId++, Side.SERVER);
+    RetroCraft.network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
+        messageId++, Side.CLIENT);
+    RetroCraft.network.registerMessage(new MessageSortTeleportPipe.Handler(), MessageSortTeleportPipe.class, 
+        messageId++, Side.SERVER);
   }
 
   public void init(FMLInitializationEvent event){

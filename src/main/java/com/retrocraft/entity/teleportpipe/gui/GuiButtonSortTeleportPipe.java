@@ -1,4 +1,4 @@
-package com.retrocraft.entity.waystone.gui;
+package com.retrocraft.entity.teleportpipe.gui;
 
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 
@@ -8,16 +8,16 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
-public class GuiButtonSortWaystone extends GuiButtonExt
+public class GuiButtonSortTeleportPipe extends GuiButtonExt
 {
 
   private static final ResourceLocation SERVER_SELECTION_BUTTONS = new ResourceLocation(
       "textures/gui/server_selection.png");
-  private final GuiButtonWaystoneEntry  parentButton;
+  private final GuiButtonTeleportPipeEntry  parentButton;
   private final int                     sortDir;
 
-  public GuiButtonSortWaystone(int id, int x, int y,
-                               GuiButtonWaystoneEntry parentButton, int sortDir)
+  public GuiButtonSortTeleportPipe(int id, int x, int y,
+                               GuiButtonTeleportPipeEntry parentButton, int sortDir)
   {
     super(id, x, y, "");
     this.width = 11;

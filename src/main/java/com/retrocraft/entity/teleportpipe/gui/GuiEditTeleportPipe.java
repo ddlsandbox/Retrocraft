@@ -1,4 +1,4 @@
-package com.retrocraft.entity.waystone.gui;
+package com.retrocraft.entity.teleportpipe.gui;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class GuiEditWaystone extends GuiContainer
+public class GuiEditTeleportPipe extends GuiContainer
 {
 
   private final TileTeleportPipe tileWaystone;
@@ -24,9 +24,9 @@ public class GuiEditWaystone extends GuiContainer
   private GuiButton          btnDone;
   private GuiCheckBox        chkGlobal;
 
-  public GuiEditWaystone(TileTeleportPipe tileWaystone)
+  public GuiEditTeleportPipe(TileTeleportPipe tileWaystone)
   {
-    super(new ContainerEditWaystoneNameDummy());
+    super(new ContainerEditTeleportNameDummy());
     this.tileWaystone = tileWaystone;
   }
 
