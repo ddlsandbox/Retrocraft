@@ -66,7 +66,7 @@ public class RetroCraftConfig
         "teleport", false,
         "If true, only the owner of a teleport pipe can rename it.");
     creativeModeOnly = config.getBoolean("Creative Mode Only", "teleport", false,
-        "If true, waystones can only be placed in creative mode.");
+        "If true, teleportPipes can only be placed in creative mode.");
 
     /* special tools */
     

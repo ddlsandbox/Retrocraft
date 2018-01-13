@@ -1,12 +1,11 @@
 package com.retrocraft.entity.teleportpipe.render;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.ModBlocks;
-import com.retrocraft.client.ClientWaystones;
+import com.retrocraft.client.ClientTeleportPipes;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.TeleportManager;
+import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -14,15 +13,15 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderWaystone extends TileEntitySpecialRenderer<TileTeleportPipe>
+public class RenderTeleportPipe extends TileEntitySpecialRenderer<TileTeleportPipe>
 {
 
   private static final ResourceLocation texture       = new ResourceLocation(
-      RetroCraft.modId, "textures/entity/waystone.png");
+      RetroCraft.modId, "textures/entity/teleportPipe.png");
   private static final ResourceLocation textureActive = new ResourceLocation(
-      RetroCraft.modId, "textures/entity/waystone_active.png");
+      RetroCraft.modId, "textures/entity/teleportPipe_active.png");
 
-  private final ModelWaystone model = new ModelWaystone();
+  private final ModelTeleportPipe model = new ModelTeleportPipe();
 
   @Override
   public void render(TileTeleportPipe tileEntity, double x, double y,
@@ -30,7 +29,7 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileTeleportPipe>
   {
     IBlockState state = (tileEntity != null && tileEntity.hasWorld())
         ? tileEntity.getWorld().getBlockState(tileEntity.getPos()) : null;
-    if (state != null && state.getBlock() != ModBlocks.blockWaystone)
+    if (state != null && state.getBlock() != ModBlocks.blockTeleportPipe)
     {
       return;
     }
@@ -48,8 +47,8 @@ public class RenderWaystone extends TileEntitySpecialRenderer<TileTeleportPipe>
     GlStateManager.rotate(-180f, 1f, 0f, 0f);
     GlStateManager.scale(0.5f, 0.5f, 0.5f);
     model.renderAll();
-    if (tileEntity != null && tileEntity.hasWorld() && (ClientWaystones
-        .getKnownWaystone(tileEntity.getWaystoneName()) != null))
+    if (tileEntity != null && tileEntity.hasWorld() && (ClientTeleportPipes
+        .getKnownTeleportPipe(tileEntity.getTeleportPipeName()) != null))
     {
       bindTexture(textureActive);
       GlStateManager.scale(1.05f, 1.05f, 1.05f);

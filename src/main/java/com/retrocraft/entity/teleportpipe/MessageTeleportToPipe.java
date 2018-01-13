@@ -2,9 +2,7 @@ package com.retrocraft.entity.teleportpipe;
 
 import javax.annotation.Nullable;
 
-import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.network.PacketHandler;
 
 import io.netty.buffer.ByteBuf;
@@ -18,46 +16,46 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class MessageTeleportToPipe implements IMessage
 {
 
-  private TeleportEntry waystone;
+  private TeleportEntry teleportPipe;
   private EnumHand      hand;
-  private TeleportEntry fromWaystone;
+  private TeleportEntry fromTeleportPipe;
 
   public MessageTeleportToPipe()
   {
   }
 
-  public MessageTeleportToPipe(TeleportEntry waystone, EnumHand hand,
-                                   @Nullable TeleportEntry fromWaystone)
+  public MessageTeleportToPipe(TeleportEntry teleportPipe, EnumHand hand,
+                                   @Nullable TeleportEntry fromTeleportPipe)
   {
-    this.waystone = waystone;
+    this.teleportPipe = teleportPipe;
     this.hand = hand;
-    this.fromWaystone = fromWaystone;
+    this.fromTeleportPipe = fromTeleportPipe;
   }
 
   @Override
   public void fromBytes(ByteBuf buf)
   {
-    waystone = TeleportEntry.read(buf);
+    teleportPipe = TeleportEntry.read(buf);
     hand = EnumHand.MAIN_HAND;
-    fromWaystone = TeleportEntry.read(buf);
+    fromTeleportPipe = TeleportEntry.read(buf);
   }
 
   @Override
   public void toBytes(ByteBuf buf)
   {
-    waystone.write(buf);
-    fromWaystone.write(buf);
+    teleportPipe.write(buf);
+    fromTeleportPipe.write(buf);
   }
 
-  public TeleportEntry getWaystone()
+  public TeleportEntry getTeleportPipe()
   {
-    return waystone;
+    return teleportPipe;
   }
 
   @Nullable
-  public TeleportEntry getFromWaystone()
+  public TeleportEntry getFromTeleportPipe()
   {
-    return fromWaystone;
+    return fromTeleportPipe;
   }
 
   public EnumHand getHand()
@@ -80,7 +78,7 @@ public class MessageTeleportToPipe implements IMessage
         {
           EntityPlayer player = ctx.getServerHandler().player;
           int dist = (int) Math.sqrt(
-              player.getDistanceSqToCenter(message.getWaystone().getPos()));
+              player.getDistanceSqToCenter(message.getTeleportPipe().getPos()));
           int xpLevelCost = 0;
           if (!player.capabilities.isCreativeMode)
             xpLevelCost = RetroCraft.getConfig().blocksPerXPLevel > 0
@@ -92,21 +90,21 @@ public class MessageTeleportToPipe implements IMessage
           {
             return;
           }
-          TeleportEntry fromWaystone = message.getFromWaystone();
-          if (fromWaystone == null
-              || TeleportManager.getWaystoneInWorld(fromWaystone) == null)
+          TeleportEntry fromTeleportPipe = message.getFromTeleportPipe();
+          if (fromTeleportPipe == null
+              || TeleportManager.getTeleportPipeInWorld(fromTeleportPipe) == null)
           {
             return;
           }
 
-          if (TeleportManager.teleportToWaystone(
-              ctx.getServerHandler().player, message.getWaystone()))
+          if (TeleportManager.teleportToTeleportPipe(
+              ctx.getServerHandler().player, message.getTeleportPipe()))
           {
             player.addExperienceLevel(-xpLevelCost);
           }
 
           TeleportManager
-              .sendPlayerWaystones(ctx.getServerHandler().player);
+              .sendPlayerTeleportPipes(ctx.getServerHandler().player);
         }
       });
       return null;

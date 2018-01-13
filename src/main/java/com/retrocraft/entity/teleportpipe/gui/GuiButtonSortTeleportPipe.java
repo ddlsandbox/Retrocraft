@@ -26,9 +26,9 @@ public class GuiButtonSortTeleportPipe extends GuiButtonExt
     this.sortDir = sortDir;
   }
 
-  public TeleportEntry getWaystone()
+  public TeleportEntry getTeleportPipe()
   {
-    return parentButton.getWaystone();
+    return parentButton.getTeleportPipe();
   }
 
   public int getSortDir()

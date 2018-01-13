@@ -10,37 +10,37 @@ import net.minecraftforge.common.util.Constants;
 public class PlayerTeleportHelper
 {
 
-  public static final String WAYSTONES           = "Waystones";
-  public static final String WAYSTONE_LIST       = "WaystoneList";
+  public static final String TELEPORTS           = "TeleportPipes";
+  public static final String TELEPORT_LIST       = "TeleportPipeList";
   public static final String LAST_FREE_WARP      = "LastFreeWarp";
   public static final String LAST_WARP_STONE_USE = "LastWarpStoneUse";
 
-  public static NBTTagCompound getWaystonesTag(EntityPlayer player)
+  public static NBTTagCompound getTeleportPipesTag(EntityPlayer player)
   {
     return player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG)
-        .getCompoundTag(WAYSTONES);
+        .getCompoundTag(TELEPORTS);
   }
 
-  public static NBTTagCompound getOrCreateWaystonesTag(EntityPlayer player)
+  public static NBTTagCompound getOrCreateTeleportPipesTag(EntityPlayer player)
   {
     NBTTagCompound persistedTag = player.getEntityData()
         .getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-    NBTTagCompound waystonesTag = persistedTag.getCompoundTag(WAYSTONES);
-    persistedTag.setTag(WAYSTONES, waystonesTag);
+    NBTTagCompound teleportPipesTag = persistedTag.getCompoundTag(TELEPORTS);
+    persistedTag.setTag(TELEPORTS, teleportPipesTag);
     player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, persistedTag);
-    return waystonesTag;
+    return teleportPipesTag;
   }
 
   public static void store(EntityPlayer player, TeleportEntry[] entries,
       long lastFreeWarp, long lastWarpStoneUse)
   {
-    NBTTagCompound tagCompound = getOrCreateWaystonesTag(player);
+    NBTTagCompound tagCompound = getOrCreateTeleportPipesTag(player);
     NBTTagList tagList = new NBTTagList();
     for (TeleportEntry entry : entries)
     {
       tagList.appendTag(entry.writeToNBT());
     }
-    tagCompound.setTag(WAYSTONE_LIST, tagList);
+    tagCompound.setTag(TELEPORT_LIST, tagList);
     tagCompound.setLong(LAST_FREE_WARP, lastFreeWarp);
     tagCompound.setLong(LAST_WARP_STONE_USE, lastWarpStoneUse);
   }
@@ -52,30 +52,30 @@ public class PlayerTeleportHelper
 
   public static void setLastFreeWarp(EntityPlayer player, long lastFreeWarp)
   {
-    getOrCreateWaystonesTag(player).setLong(LAST_FREE_WARP, lastFreeWarp);
+    getOrCreateTeleportPipesTag(player).setLong(LAST_FREE_WARP, lastFreeWarp);
   }
 
   public static long getLastFreeWarp(EntityPlayer player)
   {
-    return getWaystonesTag(player).getLong(LAST_FREE_WARP);
+    return getTeleportPipesTag(player).getLong(LAST_FREE_WARP);
   }
 
   public static void setLastWarpStoneUse(EntityPlayer player,
       long lastWarpStone)
   {
-    getOrCreateWaystonesTag(player).setLong(LAST_WARP_STONE_USE, lastWarpStone);
+    getOrCreateTeleportPipesTag(player).setLong(LAST_WARP_STONE_USE, lastWarpStone);
   }
 
   public static long getLastWarpStoneUse(EntityPlayer player)
   {
-    return getWaystonesTag(player).getLong(LAST_WARP_STONE_USE);
+    return getTeleportPipesTag(player).getLong(LAST_WARP_STONE_USE);
   }
 
   @Nullable
-  public static TeleportEntry getLastWaystone(EntityPlayer player)
+  public static TeleportEntry getLastTeleportPipe(EntityPlayer player)
   {
-    NBTTagCompound tagCompound = PlayerTeleportHelper.getWaystonesTag(player);
-    NBTTagList tagList = tagCompound.getTagList(WAYSTONE_LIST,
+    NBTTagCompound tagCompound = PlayerTeleportHelper.getTeleportPipesTag(player);
+    NBTTagList tagList = tagCompound.getTagList(TELEPORT_LIST,
         Constants.NBT.TAG_COMPOUND);
     if (tagList.tagCount() > 0)
     {

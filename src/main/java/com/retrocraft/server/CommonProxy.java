@@ -129,8 +129,8 @@ public class CommonProxy
 		event.getRegistry().register(new BlockPedestal("block_pedestal").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
 		
-		event.getRegistry().register(new BlockTeleportPipe("block_waystone").setCreativeTab(RetroCraft.creativeTab));
-		GameRegistry.registerTileEntity(TileTeleportPipe.class, RetroCraft.modId + "_block_waystone");
+		event.getRegistry().register(new BlockTeleportPipe("block_teleportPipe").setCreativeTab(RetroCraft.creativeTab));
+		GameRegistry.registerTileEntity(TileTeleportPipe.class, RetroCraft.modId + "_block_teleportPipe");
 		
 		event.getRegistry().register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
 		GameRegistry.registerTileEntity(TileSteamGenerator.class, RetroCraft.modId + "_block_steamgenerator");
@@ -228,7 +228,7 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.pedestalManolium).setRegistryName(ModBlocks.pedestalManolium.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
 
-	  event.getRegistry().register(new ItemBlock(ModBlocks.blockWaystone).setRegistryName(ModBlocks.blockWaystone.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockTeleportPipe).setRegistryName(ModBlocks.blockTeleportPipe.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
@@ -255,8 +255,8 @@ public class CommonProxy
 
   }
 
-  public void openWaystoneSelection(EnumHand hand,
-      @Nullable TeleportEntry fromWaystone)
+  public void openTeleportPipeSelection(EnumHand hand,
+      @Nullable TeleportEntry fromTeleportPipe)
   {
 
   }

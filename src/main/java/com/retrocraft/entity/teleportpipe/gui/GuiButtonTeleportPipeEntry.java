@@ -21,19 +21,19 @@ public class GuiButtonTeleportPipeEntry extends GuiButton
   private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(
       "textures/gui/container/enchanting_table.png");
 
-  private final TeleportEntry waystone;
+  private final TeleportEntry teleportPipe;
   private final int           xpLevelCost;
 
-  public GuiButtonTeleportPipeEntry(int id, int x, int y, TeleportEntry waystone)
+  public GuiButtonTeleportPipeEntry(int id, int x, int y, TeleportEntry teleportPipe)
   {
-    super(id, x, y, (waystone.isGlobal() ? TextFormatting.YELLOW : "")
-        + waystone.getName());
-    this.waystone = waystone;
+    super(id, x, y, (teleportPipe.isGlobal() ? TextFormatting.YELLOW : "")
+        + teleportPipe.getName());
+    this.teleportPipe = teleportPipe;
     EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity();
     boolean enableXPCost = RetroCraft.getConfig().blocksPerXPLevel > 0;
     this.xpLevelCost = (enableXPCost)
             ? MathHelper.clamp(
-                (int) Math.sqrt(player.getDistanceSqToCenter(waystone.getPos()))
+                (int) Math.sqrt(player.getDistanceSqToCenter(teleportPipe.getPos()))
                     / RetroCraft.getConfig().blocksPerXPLevel,
                 0, 3)
             : 0;
@@ -44,9 +44,9 @@ public class GuiButtonTeleportPipeEntry extends GuiButton
     }
   }
 
-  public TeleportEntry getWaystone()
+  public TeleportEntry getTeleportPipe()
   {
-    return waystone;
+    return teleportPipe;
   }
 
   @Override

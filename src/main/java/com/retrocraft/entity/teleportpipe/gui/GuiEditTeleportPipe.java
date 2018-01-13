@@ -19,22 +19,22 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 public class GuiEditTeleportPipe extends GuiContainer
 {
 
-  private final TileTeleportPipe tileWaystone;
+  private final TileTeleportPipe tileTeleportPipe;
   private GuiTextField       textField;
   private GuiButton          btnDone;
   private GuiCheckBox        chkGlobal;
 
-  public GuiEditTeleportPipe(TileTeleportPipe tileWaystone)
+  public GuiEditTeleportPipe(TileTeleportPipe tileTeleportPipe)
   {
     super(new ContainerEditTeleportNameDummy());
-    this.tileWaystone = tileWaystone;
+    this.tileTeleportPipe = tileTeleportPipe;
   }
 
   @Override
   public void initGui()
   {
     super.initGui();
-    String oldText = tileWaystone.getWaystoneName();
+    String oldText = tileTeleportPipe.getTeleportPipeName();
     if (textField != null)
     {
       oldText = textField.getText();
@@ -49,8 +49,8 @@ public class GuiEditTeleportPipe extends GuiContainer
     buttonList.add(btnDone);
 
     chkGlobal = new GuiCheckBox(1, width / 2 - 100, height / 2 + 15,
-        " " + I18n.format("gui.retrocraft:editWaystone.isGlobal"),
-        tileWaystone.isGlobal());
+        " " + I18n.format("gui.retrocraft:editTeleportPipe.isGlobal"),
+        tileTeleportPipe.isGlobal());
     if (!Minecraft.getMinecraft().player.capabilities.isCreativeMode
         || (FMLCommonHandler.instance().getMinecraftServerInstance() != null
             && FMLCommonHandler.instance().getMinecraftServerInstance()
@@ -75,7 +75,7 @@ public class GuiEditTeleportPipe extends GuiContainer
     if (button == btnDone)
     {
       RetroCraft.network.sendToServer(new MessageEditTeleportPipe(
-          tileWaystone.getPos(), textField.getText(), chkGlobal.isChecked()));
+          tileTeleportPipe.getPos(), textField.getText(), chkGlobal.isChecked()));
       FMLClientHandler.instance().getClientPlayerEntity().closeScreen();
     }
   }
@@ -116,7 +116,7 @@ public class GuiEditTeleportPipe extends GuiContainer
     super.drawScreen(mouseX, mouseY, partialTicks);
 
     fontRenderer.drawString(
-        I18n.format("gui.retrocraft:editWaystone.enterName"), width / 2 - 100,
+        I18n.format("gui.retrocraft:editTeleportPipe.enterName"), width / 2 - 100,
         height / 2 - 35, 0xFFFFFF);
     textField.drawTextBox();
   }

@@ -21,7 +21,7 @@ public class PlayerTeleportData
     this.lastWarpStoneUse = lastWarpStoneUse;
   }
 
-  public TeleportEntry[] getWaystones()
+  public TeleportEntry[] getTeleportPipes()
   {
     return entries;
   }
@@ -43,9 +43,9 @@ public class PlayerTeleportData
 
   public static PlayerTeleportData fromPlayer(EntityPlayer player)
   {
-    NBTTagCompound tagCompound = PlayerTeleportHelper.getWaystonesTag(player);
+    NBTTagCompound tagCompound = PlayerTeleportHelper.getTeleportPipesTag(player);
     NBTTagList tagList = tagCompound.getTagList(
-        PlayerTeleportHelper.WAYSTONE_LIST, Constants.NBT.TAG_COMPOUND);
+        PlayerTeleportHelper.TELEPORT_LIST, Constants.NBT.TAG_COMPOUND);
     TeleportEntry[] entries = new TeleportEntry[tagList.tagCount()];
     for (int i = 0; i < entries.length; i++)
     {

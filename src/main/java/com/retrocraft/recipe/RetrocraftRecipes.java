@@ -184,7 +184,7 @@ public class RetrocraftRecipes
 //		
 //		if(!RetroCraft.getConfig().creativeModeOnly) {
 //      GameRegistry.addShapedRecipe(
-//          new ItemStack(ModBlocks.blockWaystone), "SSS", "WCW", "OOO",
+//          new ItemStack(ModBlocks.blockTeleportPipe), "SSS", "WCW", "OOO",
 //          'S', Blocks.STONEBRICK,
 //					'C', ModItems.magicalCore,
 //          'W', Items.ENDER_PEARL,

@@ -21,10 +21,10 @@ public class GlobalTeleportPipe extends WorldSavedData
 {
 
   private static final String DATA_NAME     = RetroCraft.modId
-      + "_GlobalWaystones";
-  private static final String TAG_LIST_NAME = "GlobalWaystones";
+      + "_GlobalTeleportPipes";
+  private static final String TAG_LIST_NAME = "GlobalTeleportPipes";
 
-  private final Map<String, TeleportEntry> globalWaystones = Maps.newHashMap();
+  private final Map<String, TeleportEntry> globalTeleportPipes = Maps.newHashMap();
 
   public GlobalTeleportPipe()
   {
@@ -36,39 +36,39 @@ public class GlobalTeleportPipe extends WorldSavedData
     super(name);
   }
 
-  public void addGlobalWaystone(TeleportEntry entry)
+  public void addGlobalTeleportPipe(TeleportEntry entry)
   {
-    globalWaystones.put(entry.getName(), entry);
+    globalTeleportPipes.put(entry.getName(), entry);
     markDirty();
 
     for (EntityPlayer player : FMLCommonHandler.instance()
         .getMinecraftServerInstance().getPlayerList().getPlayers())
     {
-      TeleportManager.addPlayerWaystone(player, entry);
+      TeleportManager.addPlayerTeleportPipe(player, entry);
     }
   }
 
-  public void removeGlobalWaystone(TeleportEntry entry)
+  public void removeGlobalTeleportPipe(TeleportEntry entry)
   {
-    globalWaystones.remove(entry.getName());
+    globalTeleportPipes.remove(entry.getName());
     markDirty();
 
     for (EntityPlayer player : FMLCommonHandler.instance()
         .getMinecraftServerInstance().getPlayerList().getPlayers())
     {
-      TeleportManager.removePlayerWaystone(player, entry);
+      TeleportManager.removePlayerTeleportPipe(player, entry);
     }
   }
 
-  public Collection<TeleportEntry> getGlobalWaystones()
+  public Collection<TeleportEntry> getGlobalTeleportPipes()
   {
-    return globalWaystones.values();
+    return globalTeleportPipes.values();
   }
 
   @Nullable
-  public TeleportEntry getGlobalWaystone(String name)
+  public TeleportEntry getGlobalTeleportPipe(String name)
   {
-    return globalWaystones.get(name);
+    return globalTeleportPipes.get(name);
   }
 
   @Override
@@ -79,7 +79,7 @@ public class GlobalTeleportPipe extends WorldSavedData
     for (int i = 0; i < tagList.tagCount(); i++)
     {
       TeleportEntry entry = TeleportEntry.read((NBTTagCompound) tagList.get(i));
-      globalWaystones.put(entry.getName(), entry);
+      globalTeleportPipes.put(entry.getName(), entry);
     }
   }
 
@@ -87,7 +87,7 @@ public class GlobalTeleportPipe extends WorldSavedData
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
   {
     NBTTagList tagList = new NBTTagList();
-    for (TeleportEntry entry : globalWaystones.values())
+    for (TeleportEntry entry : globalTeleportPipes.values())
     {
       tagList.appendTag(entry.writeToNBT());
     }

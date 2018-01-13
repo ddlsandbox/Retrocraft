@@ -2,7 +2,7 @@ package com.retrocraft.entity.teleportpipe;
 
 import javax.annotation.Nullable;
 
-import com.retrocraft.client.ClientWaystones;
+import com.retrocraft.client.ClientTeleportPipes;
 import com.retrocraft.network.PacketHandler;
 
 import io.netty.buffer.ByteBuf;
@@ -81,7 +81,7 @@ public class MessageTeleportPipes implements IMessage
         @Override
         public void run()
         {
-          ClientWaystones.setKnownWaystones(message.getEntries());
+          ClientTeleportPipes.setKnownTeleportPipes(message.getEntries());
           PlayerTeleportHelper.store(
               FMLClientHandler.instance().getClientPlayerEntity(),
               message.getEntries(), message.getLastFreeWarp(),

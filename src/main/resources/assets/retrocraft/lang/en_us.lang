@@ -85,18 +85,18 @@ tile.block_advancedforge.name=Advanced Forge
 
 tile.lightpillar.name=Light Pillar
 
-# Waystones
-tile.block_waystone.name=Teleport Pipe
+# TeleportPipes
+tile.block_teleportPipe.name=Teleport Pipe
 
 retrocraft:noDimensionWarp=You cannot warp between worlds.
-retrocraft:waystoneBroken=The bound pipe has been moved or destroyed.
+retrocraft:teleportPipeBroken=The bound pipe has been moved or destroyed.
 retrocraft:scrollNotBound=You have not activated any pipe yet.
-retrocraft:activatedWaystone=Activated Pipe: %s
+retrocraft:activatedTeleportPipe=Activated Pipe: %s
 retrocraft:nameOccupied=The name %s is already in use.
 retrocraft:notTheOwner=Pipes can only be renamed by whoever placed them.
 retrocraft:creativeRequired=You have to be in creative mode to edit a global pipe.
 gui.retrocraft:warpStone.selectDestination=Select your destination:
 gui.retrocraft:warpStone.nextPage=Next
 gui.retrocraft:warpStone.previousPage=Previous
-gui.retrocraft:editWaystone.enterName=Enter pipe name:
-gui.retrocraft:editWaystone.isGlobal=is Global
+gui.retrocraft:editTeleportPipe.enterName=Enter pipe name:
+gui.retrocraft:editTeleportPipe.isGlobal=is Global

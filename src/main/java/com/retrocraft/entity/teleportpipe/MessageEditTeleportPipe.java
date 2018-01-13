@@ -91,27 +91,27 @@ public class MessageEditTeleportPipe implements IMessage
           {
             return;
           }
-          GlobalTeleportPipe globalWaystones = GlobalTeleportPipe
+          GlobalTeleportPipe globalTeleportPipes = GlobalTeleportPipe
               .get(ctx.getServerHandler().player.world);
           TileEntity tileEntity = world.getTileEntity(pos);
           if (tileEntity instanceof TileTeleportPipe)
           {
-            TileTeleportPipe tileWaystone = (TileTeleportPipe) tileEntity;
-            if (globalWaystones
-                .getGlobalWaystone(tileWaystone.getWaystoneName()) != null
+            TileTeleportPipe tileTeleportPipe = (TileTeleportPipe) tileEntity;
+            if (globalTeleportPipes
+                .getGlobalTeleportPipe(tileTeleportPipe.getTeleportPipeName()) != null
                 && !ctx
                     .getServerHandler().player.capabilities.isCreativeMode)
             {
               return;
             }
             if (RetroCraft.getConfig().restrictRenameToOwner
-                && !tileWaystone.isOwner(ctx.getServerHandler().player))
+                && !tileTeleportPipe.isOwner(ctx.getServerHandler().player))
             {
               ctx.getServerHandler().player.sendMessage(
                   new TextComponentTranslation("retrocraft:notTheOwner"));
               return;
             }
-            if (globalWaystones.getGlobalWaystone(message.getName()) != null
+            if (globalTeleportPipes.getGlobalTeleportPipe(message.getName()) != null
                 && !ctx
                     .getServerHandler().player.capabilities.isCreativeMode)
             {
@@ -120,23 +120,23 @@ public class MessageEditTeleportPipe implements IMessage
                       message.getName()));
               return;
             }
-            TeleportEntry oldWaystone = new TeleportEntry(tileWaystone);
-            globalWaystones.removeGlobalWaystone(oldWaystone);
+            TeleportEntry oldTeleportPipe = new TeleportEntry(tileTeleportPipe);
+            globalTeleportPipes.removeGlobalTeleportPipe(oldTeleportPipe);
 
-            tileWaystone.setWaystoneName(message.getName());
+            tileTeleportPipe.setTeleportPipeName(message.getName());
 
-            TeleportEntry newWaystone = new TeleportEntry(tileWaystone);
+            TeleportEntry newTeleportPipe = new TeleportEntry(tileTeleportPipe);
 
             if (message.isGlobal() && ctx
                 .getServerHandler().player.capabilities.isCreativeMode)
             {
-              tileWaystone.setGlobal(true);
-              newWaystone.setGlobal(true);
-              globalWaystones.addGlobalWaystone(newWaystone);
+              tileTeleportPipe.setGlobal(true);
+              newTeleportPipe.setGlobal(true);
+              globalTeleportPipes.addGlobalTeleportPipe(newTeleportPipe);
               for (Object obj : FMLCommonHandler.instance()
                   .getMinecraftServerInstance().getPlayerList().getPlayers())
               {
-                TeleportManager.sendPlayerWaystones((EntityPlayer) obj);
+                TeleportManager.sendPlayerTeleportPipes((EntityPlayer) obj);
               }
             }
           }

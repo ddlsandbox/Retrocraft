@@ -6,7 +6,7 @@ import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.BlockTileEntity;
-import com.retrocraft.client.ClientWaystones;
+import com.retrocraft.client.ClientTeleportPipes;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -41,7 +41,7 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
   {
     super(Material.ROCK, name);
 
-//    setRegistryName(RetroCraft.modId, "waystone");
+//    setRegistryName(RetroCraft.modId, "teleportPipe");
 //    setUnlocalizedName(getRegistryName().toString());
     setHardness(5f);
     setResistance(2000f);
@@ -105,8 +105,8 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
     {
       return -1f;
     }
-    TileTeleportPipe tileWaystone = (TileTeleportPipe) getTileEntity(world, pos);
-    if (tileWaystone != null && tileWaystone.isGlobal()
+    TileTeleportPipe tileTeleportPipe = (TileTeleportPipe) getTileEntity(world, pos);
+    if (tileTeleportPipe != null && tileTeleportPipe.isGlobal()
         && !player.capabilities.isCreativeMode)
     {
       return -1f;
@@ -144,12 +144,12 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
         && (!RetroCraft.getConfig().creativeModeOnly
             || ((EntityPlayer) placer).capabilities.isCreativeMode))
     {
-      TileTeleportPipe tileWaystone = (TileTeleportPipe) getTileEntity(world, pos);
-      if (tileWaystone != null)
+      TileTeleportPipe tileTeleportPipe = (TileTeleportPipe) getTileEntity(world, pos);
+      if (tileTeleportPipe != null)
       {
-        tileWaystone.setOwner((EntityPlayer) placer);
+        tileTeleportPipe.setOwner((EntityPlayer) placer);
         ((EntityPlayer) placer).openGui(RetroCraft.instance,
-            ModGuiHandler.WAYSTONE, world, pos.getX(), pos.getY(), pos.getZ());
+            ModGuiHandler.TELEPORT, world, pos.getX(), pos.getY(), pos.getZ());
       }
     }
   }
@@ -157,11 +157,11 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
 //  @Override
 //  public void breakBlock(World world, BlockPos pos, IBlockState state)
 //  {
-//    TileWaystone tileWaystone = getTileWaystone(world, pos);
-//    if (tileWaystone != null && tileWaystone.isGlobal())
+//    TileTeleportPipe tileTeleportPipe = getTileTeleportPipe(world, pos);
+//    if (tileTeleportPipe != null && tileTeleportPipe.isGlobal())
 //    {
-//      GlobalWaystones.get(world)
-//          .removeGlobalWaystone(new WaystoneEntry(tileWaystone));
+//      GlobalTeleportPipes.get(world)
+//          .removeGlobalTeleportPipe(new TeleportPipeEntry(tileTeleportPipe));
 //    }
 //    super.breakBlock(world, pos, state);
 //  }
@@ -176,58 +176,58 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
     {
       if (!world.isRemote)
       {
-        TileTeleportPipe tileWaystone = getTileEntity(world, pos);
-        if (tileWaystone == null)
+        TileTeleportPipe tileTeleportPipe = getTileEntity(world, pos);
+        if (tileTeleportPipe == null)
         {
           return true;
         }
         if (RetroCraft.getConfig().restrictRenameToOwner
-            && !tileWaystone.isOwner(player))
+            && !tileTeleportPipe.isOwner(player))
         {
           player.sendStatusMessage(
               new TextComponentTranslation("retrocraft:notTheOwner"), true);
           return true;
         }
-        if (tileWaystone.isGlobal() && !player.capabilities.isCreativeMode)
+        if (tileTeleportPipe.isGlobal() && !player.capabilities.isCreativeMode)
         {
           player.sendStatusMessage(
               new TextComponentTranslation("retrocraft:creativeRequired"),
               true);
           return true;
         }
-        player.openGui(RetroCraft.instance, ModGuiHandler.WAYSTONE, world,
+        player.openGui(RetroCraft.instance, ModGuiHandler.TELEPORT, world,
             pos.getX(), pos.getY(), pos.getZ());
       }
       return true;
     }
-    TileTeleportPipe tileWaystone = getTileEntity(world, pos);
-    if (tileWaystone == null)
+    TileTeleportPipe tileTeleportPipe = getTileEntity(world, pos);
+    if (tileTeleportPipe == null)
     {
       return true;
     }
-    TeleportEntry knownWaystone = world.isRemote
-        ? ClientWaystones.getKnownWaystone(tileWaystone.getWaystoneName())
+    TeleportEntry knownTeleportPipe = world.isRemote
+        ? ClientTeleportPipes.getKnownTeleportPipe(tileTeleportPipe.getTeleportPipeName())
         : null;
-    if (knownWaystone != null)
+    if (knownTeleportPipe != null)
     {
-      RetroCraft.proxy.openWaystoneSelection(EnumHand.MAIN_HAND, knownWaystone);
+      RetroCraft.proxy.openTeleportPipeSelection(EnumHand.MAIN_HAND, knownTeleportPipe);
     } else if (!world.isRemote)
     {
-      TeleportEntry waystone = new TeleportEntry(tileWaystone);
-      if (!TeleportManager.checkAndUpdateWaystone(player, waystone))
+      TeleportEntry teleportPipe = new TeleportEntry(tileTeleportPipe);
+      if (!TeleportManager.checkAndUpdateTeleportPipe(player, teleportPipe))
       {
         TextComponentString nameComponent = new TextComponentString(
-            tileWaystone.getWaystoneName());
+            tileTeleportPipe.getTeleportPipeName());
         nameComponent.getStyle().setColor(TextFormatting.WHITE);
         TextComponentTranslation chatComponent = new TextComponentTranslation(
-            "retrocraft:activatedWaystone", nameComponent);
+            "retrocraft:activatedTeleportPipe", nameComponent);
         chatComponent.getStyle().setColor(TextFormatting.YELLOW);
         player.sendMessage(chatComponent);
       }
 
-      TeleportManager.removePlayerWaystone(player, waystone);
-      TeleportManager.addPlayerWaystone(player, waystone);
-      TeleportManager.sendPlayerWaystones(player);
+      TeleportManager.removePlayerTeleportPipe(player, teleportPipe);
+      TeleportManager.addPlayerTeleportPipe(player, teleportPipe);
+      TeleportManager.sendPlayerTeleportPipes(player);
     } else
     {
       RetroCraft.proxy.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, pos, 1f);
@@ -252,13 +252,13 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
   {
     if (!RetroCraftConfig.disableParticles && rand.nextFloat() < 0.75f)
     {
-      TileTeleportPipe tileWaystone = getTileEntity(world, pos);
-      if (tileWaystone == null)
+      TileTeleportPipe tileTeleportPipe = getTileEntity(world, pos);
+      if (tileTeleportPipe == null)
       {
         return;
       }
-      if (ClientWaystones
-          .getKnownWaystone(tileWaystone.getWaystoneName()) != null)
+      if (ClientTeleportPipes
+          .getKnownTeleportPipe(tileTeleportPipe.getTeleportPipeName()) != null)
       {
         world.spawnParticle(EnumParticleTypes.PORTAL,
             pos.getX() + 0.5 + (rand.nextDouble() - 0.5) * 1.5,

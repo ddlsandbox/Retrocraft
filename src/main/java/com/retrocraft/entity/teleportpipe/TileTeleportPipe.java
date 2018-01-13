@@ -15,12 +15,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/* from Waystones (blay09) */
+/* from TeleportPipes (blay09) */
 
 public class TileTeleportPipe extends TileEntity
 {
 
-  private String  waystoneName = "";
+  private String  teleportPipeName = "";
   private UUID    owner;
   private boolean isGlobal;
 
@@ -28,7 +28,7 @@ public class TileTeleportPipe extends TileEntity
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
   {
     super.writeToNBT(tagCompound);
-    tagCompound.setString("WaystoneName", waystoneName);
+    tagCompound.setString("TeleportPipeName", teleportPipeName);
     if (owner != null)
     {
       tagCompound.setTag("Owner", NBTUtil.createUUIDTag(owner));
@@ -41,7 +41,7 @@ public class TileTeleportPipe extends TileEntity
   public void readFromNBT(NBTTagCompound tagCompound)
   {
     super.readFromNBT(tagCompound);
-    waystoneName = tagCompound.getString("WaystoneName");
+    teleportPipeName = tagCompound.getString("TeleportPipeName");
     if (tagCompound.hasKey("Owner"))
     {
       owner = NBTUtil.getUUIDFromTag(tagCompound.getCompoundTag("Owner"));
@@ -69,9 +69,9 @@ public class TileTeleportPipe extends TileEntity
     return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
   }
 
-  public String getWaystoneName()
+  public String getTeleportPipeName()
   {
-    return waystoneName;
+    return teleportPipeName;
   }
 
   public boolean isOwner(EntityPlayer player)
@@ -80,9 +80,9 @@ public class TileTeleportPipe extends TileEntity
         || player.capabilities.isCreativeMode;
   }
 
-  public void setWaystoneName(String waystoneName)
+  public void setTeleportPipeName(String teleportPipeName)
   {
-    this.waystoneName = waystoneName;
+    this.teleportPipeName = teleportPipeName;
     IBlockState state = world.getBlockState(pos);
     world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), state,
         state, 3);

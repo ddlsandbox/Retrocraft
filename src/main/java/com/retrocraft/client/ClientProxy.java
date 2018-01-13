@@ -11,7 +11,7 @@ import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.gui.GuiTeleportPipeList;
-import com.retrocraft.entity.teleportpipe.render.RenderWaystone;
+import com.retrocraft.entity.teleportpipe.render.RenderTeleportPipe;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.enchanter.TESREnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -47,14 +47,14 @@ public class ClientProxy extends CommonProxy
     super.preInit(event);
     MinecraftForge.EVENT_BUS.register(this);
     
-    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderWaystone());
-//    ClientRegistry.bindTileEntitySpecialRenderer(TileWaystone.class,
-//        new RenderWaystone());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderTeleportPipe());
+//    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class,
+//        new RenderTeleportPipe());
 //    ForgeHooksClient.registerTESRItemStack(
-//        Item.getItemFromBlock(ModBlocks.blockWaystone), 0, TileWaystone.class);
+//        Item.getItemFromBlock(ModBlocks.blockTeleportPipe), 0, TileTeleportPipe.class);
 //    ModelLoader.setCustomModelResourceLocation(
-//        Item.getItemFromBlock(ModBlocks.blockWaystone), 0,
-//        new ModelResourceLocation("retrocraft:waystone", "inventory"));
+//        Item.getItemFromBlock(ModBlocks.blockTeleportPipe), 0,
+//        new ModelResourceLocation("retrocraft:teleportPipe", "inventory"));
   }
 
   @Override
@@ -117,14 +117,14 @@ public class ClientProxy extends CommonProxy
   }
 
   @Override
-  public void openWaystoneSelection(EnumHand hand,
-      @Nullable TeleportEntry fromWaystone)
+  public void openTeleportPipeSelection(EnumHand hand,
+      @Nullable TeleportEntry fromTeleportPipe)
   {
-    TeleportEntry[] waystones = PlayerTeleportData
+    TeleportEntry[] teleportPipes = PlayerTeleportData
         .fromPlayer(FMLClientHandler.instance().getClientPlayerEntity())
-        .getWaystones();
+        .getTeleportPipes();
     Minecraft.getMinecraft()
-        .displayGuiScreen(new GuiTeleportPipeList(waystones, hand, fromWaystone));
+        .displayGuiScreen(new GuiTeleportPipeList(teleportPipes, hand, fromTeleportPipe));
   }
   
   @SubscribeEvent

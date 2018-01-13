@@ -23,17 +23,17 @@ public class GuiTeleportPipeList extends GuiScreen
 
   private final TeleportEntry[] entries;
   private final EnumHand        hand;
-  private final TeleportEntry   fromWaystone;
+  private final TeleportEntry   fromTeleportPipe;
   private GuiButton             btnPrevPage;
   private GuiButton             btnNextPage;
   private int                   pageOffset;
 
   public GuiTeleportPipeList(TeleportEntry[] entries, EnumHand hand,
-                         @Nullable TeleportEntry fromWaystone)
+                         @Nullable TeleportEntry fromTeleportPipe)
   {
     this.entries = entries;
     this.hand = hand;
-    this.fromWaystone = fromWaystone;
+    this.fromTeleportPipe = fromTeleportPipe;
   }
 
   @Override
@@ -75,13 +75,13 @@ public class GuiTeleportPipeList extends GuiScreen
       int entryIndex = pageOffset * buttonsPerPage + i;
       if (entryIndex >= 0 && entryIndex < entries.length)
       {
-        GuiButtonTeleportPipeEntry btnWaystone = new GuiButtonTeleportPipeEntry(id,
+        GuiButtonTeleportPipeEntry btnTeleportPipe = new GuiButtonTeleportPipeEntry(id,
             width / 2 - 100, height / 2 - 60 + y, entries[entryIndex]);
-        buttonList.add(btnWaystone);
+        buttonList.add(btnTeleportPipe);
         id++;
 
         GuiButtonSortTeleportPipe sortUp = new GuiButtonSortTeleportPipe(id,
-            width / 2 + 108, height / 2 - 60 + y + 2, btnWaystone, -1);
+            width / 2 + 108, height / 2 - 60 + y + 2, btnTeleportPipe, -1);
         if (entryIndex == 0)
         {
           sortUp.visible = false;
@@ -90,7 +90,7 @@ public class GuiTeleportPipeList extends GuiScreen
         id++;
 
         GuiButtonSortTeleportPipe sortDown = new GuiButtonSortTeleportPipe(id,
-            width / 2 + 108, height / 2 - 60 + y + 11, btnWaystone, 1);
+            width / 2 + 108, height / 2 - 60 + y + 11, btnTeleportPipe, 1);
         if (entryIndex == entries.length - 1)
         {
           sortDown.visible = false;
@@ -117,13 +117,13 @@ public class GuiTeleportPipeList extends GuiScreen
     } else if (button instanceof GuiButtonTeleportPipeEntry)
     {
       RetroCraft.network.sendToServer(new MessageTeleportToPipe(
-          ((GuiButtonTeleportPipeEntry) button).getWaystone(), hand, fromWaystone));
+          ((GuiButtonTeleportPipeEntry) button).getTeleportPipe(), hand, fromTeleportPipe));
       mc.displayGuiScreen(null);
     } else if (button instanceof GuiButtonSortTeleportPipe)
     {
-      TeleportEntry waystoneEntry = ((GuiButtonSortTeleportPipe) button)
-          .getWaystone();
-      int index = ArrayUtils.indexOf(entries, waystoneEntry);
+      TeleportEntry teleportPipeEntry = ((GuiButtonSortTeleportPipe) button)
+          .getTeleportPipe();
+      int index = ArrayUtils.indexOf(entries, teleportPipeEntry);
       int sortDir = ((GuiButtonSortTeleportPipe) button).getSortDir();
       int otherIndex = index + sortDir;
       if (index == -1 || otherIndex < 0 || otherIndex >= entries.length)

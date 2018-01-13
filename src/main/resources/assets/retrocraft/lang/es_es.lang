@@ -85,18 +85,18 @@ tile.block_advancedforge.name=Forja Avanzada
 
 tile.lightpillar.name=Pilar de luz
 
-# Waystones
-tile.block_waystone.name=Tubería de Teletransporte
+# TeleportPipes
+tile.block_teleportPipe.name=Tubería de Teletransporte
 
 retrocraft:noDimensionWarp=No te puedes transportar entre dimensiones.
-retrocraft:waystoneBroken=La otra tubería ha desaparecido.
+retrocraft:teleportPipeBroken=La otra tubería ha desaparecido.
 retrocraft:scrollNotBound=Aún no has activado ninguna tubería.
-retrocraft:activatedWaystone=Tubería activada: %s
+retrocraft:activatedTeleportPipe=Tubería activada: %s
 retrocraft:nameOccupied=La tubería %s ya existe.
 retrocraft:notTheOwner=Las tuberías sólo las puede renombrar su dueño.
 retrocraft:creativeRequired=Debes estar en modo creativo para editar una tubería global.
 gui.retrocraft:warpStone.selectDestination=Elige destino:
 gui.retrocraft:warpStone.nextPage=Siguiente
 gui.retrocraft:warpStone.previousPage=Anterior
-gui.retrocraft:editWaystone.enterName=Introduce el nombre de la tubería:
-gui.retrocraft:editWaystone.isGlobal=es Global
+gui.retrocraft:editTeleportPipe.enterName=Introduce el nombre de la tubería:
+gui.retrocraft:editTeleportPipe.isGlobal=es Global

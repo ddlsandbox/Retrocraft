@@ -22,12 +22,12 @@ public class TeleportEntry
     this.isGlobal = isGlobal;
   }
 
-  public TeleportEntry(TileTeleportPipe tileWaystone)
+  public TeleportEntry(TileTeleportPipe tileTeleportPipe)
   {
-    this.name = tileWaystone.getWaystoneName();
-    this.dimensionId = tileWaystone.getWorld().provider.getDimension();
-    this.pos = tileWaystone.getPos();
-    this.isGlobal = tileWaystone.isGlobal();
+    this.name = tileTeleportPipe.getTeleportPipeName();
+    this.dimensionId = tileTeleportPipe.getWorld().provider.getDimension();
+    this.pos = tileTeleportPipe.getPos();
+    this.isGlobal = tileTeleportPipe.isGlobal();
   }
 
   public String getName()

@@ -23,38 +23,38 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class TeleportManager
 {
 
-  public static void sendPlayerWaystones(EntityPlayer player)
+  public static void sendPlayerTeleportPipes(EntityPlayer player)
   {
     if (player instanceof EntityPlayerMP)
     {
-      PlayerTeleportData waystoneData = PlayerTeleportData.fromPlayer(player);
+      PlayerTeleportData teleportPipeData = PlayerTeleportData.fromPlayer(player);
       RetroCraft.network.sendTo(new MessageTeleportPipes(
-          waystoneData.getWaystones(), waystoneData.getLastFreeWarp(),
-          waystoneData.getLastWarpStoneUse()), (EntityPlayerMP) player);
+          teleportPipeData.getTeleportPipes(), teleportPipeData.getLastFreeWarp(),
+          teleportPipeData.getLastWarpStoneUse()), (EntityPlayerMP) player);
     }
   }
 
-  public static void addPlayerWaystone(EntityPlayer player,
-      TeleportEntry waystone)
+  public static void addPlayerTeleportPipe(EntityPlayer player,
+      TeleportEntry teleportPipe)
   {
     NBTTagCompound tagCompound = PlayerTeleportHelper
-        .getOrCreateWaystonesTag(player);
+        .getOrCreateTeleportPipesTag(player);
     NBTTagList tagList = tagCompound.getTagList(
-        PlayerTeleportHelper.WAYSTONE_LIST, Constants.NBT.TAG_COMPOUND);
-    tagList.appendTag(waystone.writeToNBT());
-    tagCompound.setTag(PlayerTeleportHelper.WAYSTONE_LIST, tagList);
+        PlayerTeleportHelper.TELEPORT_LIST, Constants.NBT.TAG_COMPOUND);
+    tagList.appendTag(teleportPipe.writeToNBT());
+    tagCompound.setTag(PlayerTeleportHelper.TELEPORT_LIST, tagList);
   }
 
-  public static boolean removePlayerWaystone(EntityPlayer player,
-      TeleportEntry waystone)
+  public static boolean removePlayerTeleportPipe(EntityPlayer player,
+      TeleportEntry teleportPipe)
   {
-    NBTTagCompound tagCompound = PlayerTeleportHelper.getWaystonesTag(player);
+    NBTTagCompound tagCompound = PlayerTeleportHelper.getTeleportPipesTag(player);
     NBTTagList tagList = tagCompound.getTagList(
-        PlayerTeleportHelper.WAYSTONE_LIST, Constants.NBT.TAG_COMPOUND);
+        PlayerTeleportHelper.TELEPORT_LIST, Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < tagList.tagCount(); i++)
     {
       NBTTagCompound entryCompound = tagList.getCompoundTagAt(i);
-      if (TeleportEntry.read(entryCompound).equals(waystone))
+      if (TeleportEntry.read(entryCompound).equals(teleportPipe))
       {
         tagList.removeTag(i);
         return true;
@@ -63,35 +63,35 @@ public class TeleportManager
     return false;
   }
 
-  public static boolean checkAndUpdateWaystone(EntityPlayer player,
-      TeleportEntry waystone)
+  public static boolean checkAndUpdateTeleportPipe(EntityPlayer player,
+      TeleportEntry teleportPipe)
   {
-    NBTTagCompound tagCompound = PlayerTeleportHelper.getWaystonesTag(player);
+    NBTTagCompound tagCompound = PlayerTeleportHelper.getTeleportPipesTag(player);
     NBTTagList tagList = tagCompound.getTagList(
-        PlayerTeleportHelper.WAYSTONE_LIST, Constants.NBT.TAG_COMPOUND);
+        PlayerTeleportHelper.TELEPORT_LIST, Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < tagList.tagCount(); i++)
     {
       NBTTagCompound entryCompound = tagList.getCompoundTagAt(i);
-      if (TeleportEntry.read(entryCompound).equals(waystone))
+      if (TeleportEntry.read(entryCompound).equals(teleportPipe))
       {
-        TileTeleportPipe tileEntity = getWaystoneInWorld(waystone);
+        TileTeleportPipe tileEntity = getTeleportPipeInWorld(teleportPipe);
         if (tileEntity != null)
         {
           if (!entryCompound.getString("Name")
-              .equals(tileEntity.getWaystoneName()))
+              .equals(tileEntity.getTeleportPipeName()))
           {
-            entryCompound.setString("Name", tileEntity.getWaystoneName());
-            sendPlayerWaystones(player);
+            entryCompound.setString("Name", tileEntity.getTeleportPipeName());
+            sendPlayerTeleportPipes(player);
           }
           return true;
         } else
         {
-          if (waystone.isGlobal())
+          if (teleportPipe.isGlobal())
           {
-            GlobalTeleportPipe.get(player.world).removeGlobalWaystone(waystone);
+            GlobalTeleportPipe.get(player.world).removeGlobalTeleportPipe(teleportPipe);
           }
-          removePlayerWaystone(player, waystone);
-          sendPlayerWaystones(player);
+          removePlayerTeleportPipe(player, teleportPipe);
+          sendPlayerTeleportPipes(player);
         }
         return false;
       }
@@ -100,17 +100,17 @@ public class TeleportManager
   }
 
   @Nullable
-  public static TileTeleportPipe getWaystoneInWorld(TeleportEntry waystone)
+  public static TileTeleportPipe getTeleportPipeInWorld(TeleportEntry teleportPipe)
   {
-    World targetWorld = DimensionManager.getWorld(waystone.getDimensionId());
+    World targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
     if (targetWorld == null)
     {
-      DimensionManager.initDimension(waystone.getDimensionId());
-      targetWorld = DimensionManager.getWorld(waystone.getDimensionId());
+      DimensionManager.initDimension(teleportPipe.getDimensionId());
+      targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
     }
     if (targetWorld != null)
     {
-      TileEntity tileEntity = targetWorld.getTileEntity(waystone.getPos());
+      TileEntity tileEntity = targetWorld.getTileEntity(teleportPipe.getPos());
       if (tileEntity instanceof TileTeleportPipe)
       {
         return (TileTeleportPipe) tileEntity;
@@ -119,22 +119,22 @@ public class TeleportManager
     return null;
   }
 
-  public static boolean teleportToWaystone(EntityPlayer player,
-      TeleportEntry waystone)
+  public static boolean teleportToTeleportPipe(EntityPlayer player,
+      TeleportEntry teleportPipe)
   {
-    if (!checkAndUpdateWaystone(player, waystone))
+    if (!checkAndUpdateTeleportPipe(player, teleportPipe))
     {
       TextComponentTranslation chatComponent = new TextComponentTranslation(
-          "retrocraft:waystoneBroken");
+          "retrocraft:teleportPipeBroken");
       chatComponent.getStyle().setColor(TextFormatting.RED);
       player.sendMessage(chatComponent);
       return false;
     }
-    World targetWorld = DimensionManager.getWorld(waystone.getDimensionId());
-    EnumFacing facing = targetWorld.getBlockState(waystone.getPos())
+    World targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
+    EnumFacing facing = targetWorld.getBlockState(teleportPipe.getPos())
         .getValue(BlockTeleportPipe.FACING);
-    BlockPos targetPos = waystone.getPos().offset(facing);
-    boolean dimensionWarp = waystone
+    BlockPos targetPos = teleportPipe.getPos().offset(facing);
+    boolean dimensionWarp = teleportPipe
         .getDimensionId() != player.getEntityWorld().provider.getDimension();
 
     sendTeleportEffect(player.world, new BlockPos(player));
@@ -144,7 +144,7 @@ public class TeleportManager
       if (server != null)
       {
         server.getPlayerList().transferPlayerToDimension(
-            (EntityPlayerMP) player, waystone.getDimensionId(),
+            (EntityPlayerMP) player, teleportPipe.getDimensionId(),
             new TeleporterPipe((WorldServer) player.world));
       }
     }

@@ -48,7 +48,7 @@ public class ModGuiHandler implements IGuiHandler
   public static final int ORESMELTER     = 5;
   public static final int ELECTRIC_FORGE = 6;
   public static final int ADVANCED_FORGE = 7;
-  public static final int WAYSTONE       = 8;
+  public static final int TELEPORT       = 8;
   public static final int BACKPACK       = 9;
 
   @Override
@@ -83,7 +83,7 @@ public class ModGuiHandler implements IGuiHandler
 //      return new ContainerElectricForge(player);
 //    case ADVANCED_FORGE:
 //      return new ContainerAdvancedForge(player);
-    case WAYSTONE:
+    case TELEPORT:
       return new ContainerEditTeleportNameDummy();
     case BACKPACK:
       EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
@@ -131,7 +131,7 @@ public class ModGuiHandler implements IGuiHandler
 //      return new GuiElectricForge(player);
 //    case ADVANCED_FORGE:
 //      return new GuiAdvancedForge(player);
-    case WAYSTONE:
+    case TELEPORT:
       return new GuiEditTeleportPipe(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     case BACKPACK:

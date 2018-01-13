@@ -57,15 +57,15 @@ public class ModBlocks {
 //	public static BlockElectricForge blockElectricForge;
 //	public static BlockAdvancedForge blockAdvancedForge;
 
-	@GameRegistry.ObjectHolder("retrocraft:block_waystone")
-	public static BlockTeleportPipe blockWaystone;
+	@GameRegistry.ObjectHolder("retrocraft:block_teleportPipe")
+	public static BlockTeleportPipe blockTeleportPipe;
 	
 	@GameRegistry.ObjectHolder("retrocraft:lightpillar")
 	public static BlockTorch blockLightPillar;
 	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
-        blockWaystone.initModel();
+        blockTeleportPipe.initModel();
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreGrinder), 0, new ModelResourceLocation(blockOreGrinder.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreSmelter), 0, new ModelResourceLocation(blockOreSmelter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));
@@ -92,6 +92,6 @@ public class ModBlocks {
 //
 //		blockLightPillar = register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
 //		
-//		blockWaystone = register(new BlockTeleportPipe("block_waystone").setCreativeTab(RetroCraft.creativeTab));
+//		blockTeleportPipe = register(new BlockTeleportPipe("block_teleportPipe").setCreativeTab(RetroCraft.creativeTab));
 	}
 }
