@@ -1,7 +1,5 @@
 package com.retrocraft.item.armor;
 
-import java.util.Locale;
-
 import com.retrocraft.RetroCraft;
 
 import net.minecraft.init.SoundEvents;

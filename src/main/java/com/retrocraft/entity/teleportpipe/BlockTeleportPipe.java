@@ -8,11 +8,7 @@ import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.BlockTileEntity;
 import com.retrocraft.client.ClientTeleportPipes;
 
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

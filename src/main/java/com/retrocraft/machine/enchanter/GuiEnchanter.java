@@ -347,7 +347,7 @@ public class GuiEnchanter extends GuiContainer
           if (!label.show)
               continue;
           
-          if (mouseY >= label.yPos && mouseY <= label.yPos + label.HEIGHT)
+          if (mouseY >= label.yPos && mouseY <= label.yPos + GuiEnchanterLabel.HEIGHT)
               return label;
       }
       
@@ -441,9 +441,6 @@ public class GuiEnchanter extends GuiContainer
    */
   private void updateEnchantmentLabels()
   {
-
-    int labelIndex = 0;
-
     for (final GuiEnchanterLabel label : this.enchantmentArray)
       label.locked = false;
 
@@ -451,9 +448,6 @@ public class GuiEnchanter extends GuiContainer
 
       if (mainLabel.enchantmentLevel != 0)
       {
-
-        labelIndex++;
-
         for (final GuiEnchanterLabel otherLabel : this.enchantmentArray)
           if (mainLabel != otherLabel
               && !EnchantHelper.isEnchantmentsCompatible(mainLabel.enchantment,

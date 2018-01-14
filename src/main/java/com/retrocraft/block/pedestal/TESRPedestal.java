@@ -17,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class TESRPedestal extends TileEntitySpecialRenderer<TileEntityPedestal> {
 
-	private static final double DISTANCE_FOR_LEVITATE = 4.0;
 	private static final double LEVITATE_HEIGHT_CENTER = 1.0;
 	private static final double LEVITATE_HEIGHT_OFFSET = 0.5;
 	

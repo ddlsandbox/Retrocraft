@@ -4,7 +4,6 @@ import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.gui.ContainerEditTeleportNameDummy;
 import com.retrocraft.entity.teleportpipe.gui.GuiEditTeleportPipe;
 import com.retrocraft.item.backpack.ContainerBackpack;
-import com.retrocraft.item.backpack.CustomInventory;
 import com.retrocraft.item.backpack.GuiBackpack;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;

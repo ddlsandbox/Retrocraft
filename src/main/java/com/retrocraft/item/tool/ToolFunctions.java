@@ -33,6 +33,7 @@ public abstract class ToolFunctions
     return false;
   }
 
+  @SuppressWarnings("deprecation")
   public static RayTraceResult raytraceFromEntity(World world, Entity player, boolean par3, double range)
   {
     float angel = 0.017453292F;

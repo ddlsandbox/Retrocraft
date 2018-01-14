@@ -76,25 +76,6 @@ public class ClientProxy extends CommonProxy
   @Override
   public void loadModels()
   {
-    // Stopwatch watch = Stopwatch.createStarted();
-    // Logger.info("Binding tools to model renderer started");
-    // for (int i = 0; i < MaterialLoader.Materials.length; i++) {
-    // MinecraftForgeClient.registerItemRenderer(ToolLoader.hammers[i], new
-    // HammerRenderer(Reference.Materials[i]));
-    // log(ToolLoader.hammers[i]);
-    // MinecraftForgeClient.registerItemRenderer(ToolLoader.excavators[i], new
-    // ExcavatorRenderer(Reference.Materials[i]));
-    // log(ToolLoader.excavators[i]);
-    // MinecraftForgeClient.registerItemRenderer(ToolLoader.lumberAxes[i], new
-    // LumberAxeRenderer(Reference.Materials[i]));
-    // log(ToolLoader.lumberAxes[i]);
-    // MinecraftForgeClient.registerItemRenderer(ToolLoader.sickles[i], new
-    // SickleRenderer(Reference.Materials[i]));
-    // log(ToolLoader.sickles[i]);
-    // }
-    // Logger.info("Binding all tools to model renderer finished after " +
-    // watch.elapsed(TimeUnit.MILLISECONDS) + "ms");
-    // }
   }
 
   @Override

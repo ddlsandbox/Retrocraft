@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.common.ContainerBase;
 import com.retrocraft.util.StackUtil;
 
