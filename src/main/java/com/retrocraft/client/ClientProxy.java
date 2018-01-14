@@ -9,9 +9,7 @@ import com.retrocraft.block.pedestal.TESRPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
 import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.gui.GuiTeleportPipeList;
-import com.retrocraft.entity.teleportpipe.render.RenderTeleportPipe;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.enchanter.TESREnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -56,7 +54,6 @@ public class ClientProxy extends CommonProxy
           new TESRPedestal());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class,
           new TESREnchanter());
-      //ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderTeleportPipe());
   }
 
   @Override
