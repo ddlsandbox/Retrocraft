@@ -1,7 +1,7 @@
 {
    "forge_marker": 1,
    "defaults": {
-      "model": "retrocraft:block_teleportPipe",
+      "model": "retrocraft:block_teleportpipe",
       "uvlock": true
    },
    "variants": {
@@ -25,7 +25,7 @@
 			}
       },
 	   "inventory": {
-		   "model": "retrocraft:block_teleportPipe",
+		   "model": "retrocraft:block_teleportpipe",
    		"transform": "forge:default-block"
 	  	}
    }

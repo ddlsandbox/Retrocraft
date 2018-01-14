@@ -42,7 +42,9 @@ public class GuiButtonSortTeleportPipe extends GuiButtonExt
     GlStateManager.color(1f, 1f, 1f, 1f);
     mc.getTextureManager().bindTexture(SERVER_SELECTION_BUTTONS);
     if (this.visible && mouseY >= parentButton.y
-        && mouseY < parentButton.y + parentButton.height)
+        && mouseY < parentButton.y + parentButton.height
+        && mouseX >= parentButton.x
+        && mouseX < parentButton.x + parentButton.width + 25)
     {
       this.hovered = mouseX >= this.x && mouseY >= this.y
           && mouseX < this.x + this.width

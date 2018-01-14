@@ -1,8 +1,8 @@
 {
 	"textures": {
-		"pedestal": "retrocraft:blocks/waypoint_pipe",
-		"top": "retrocraft:blocks/waypoint_top",
-		"base": "retrocraft:blocks/waypoint_base",
+		"pedestal": "blocks/hardened_clay_stained_lime",
+		"top": "retrocraft:blocks/teleport_top",
+		"base": "blocks/hardened_clay_stained_lime",
 		"particle": "blocks/hardened_clay_stained_lime"
 	},
 	"elements": [

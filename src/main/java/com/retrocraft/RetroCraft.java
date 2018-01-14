@@ -92,6 +92,8 @@ public class RetroCraft
 
     GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
 
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    
     proxy.preInit(event);
   }
 

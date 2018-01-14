@@ -57,7 +57,7 @@ public class ModBlocks {
 //	public static BlockElectricForge blockElectricForge;
 //	public static BlockAdvancedForge blockAdvancedForge;
 
-	@GameRegistry.ObjectHolder("retrocraft:block_teleportPipe")
+	@GameRegistry.ObjectHolder("retrocraft:block_teleportpipe")
 	public static BlockTeleportPipe blockTeleportPipe;
 	
 	@GameRegistry.ObjectHolder("retrocraft:lightpillar")
