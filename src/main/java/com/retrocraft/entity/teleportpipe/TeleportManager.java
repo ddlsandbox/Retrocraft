@@ -131,9 +131,9 @@ public class TeleportManager
       return false;
     }
     World targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
-    EnumFacing facing = targetWorld.getBlockState(teleportPipe.getPos())
-        .getValue(BlockTeleportPipe.FACING);
-    BlockPos targetPos = teleportPipe.getPos().offset(facing);
+//    EnumFacing facing = targetWorld.getBlockState(teleportPipe.getPos())
+//        .getValue(BlockTeleportPipe.FACING);
+    BlockPos targetPos = teleportPipe.getPos().offset(EnumFacing.UP);
     boolean dimensionWarp = teleportPipe
         .getDimensionId() != player.getEntityWorld().provider.getDimension();
 
@@ -148,7 +148,7 @@ public class TeleportManager
             new TeleporterPipe((WorldServer) player.world));
       }
     }
-    player.rotationYaw = getRotationYaw(facing);
+//    player.rotationYaw = getRotationYaw(facing);
     player.setPositionAndUpdate(targetPos.getX() + 0.5, targetPos.getY() + 0.5,
         targetPos.getZ() + 0.5);
     sendTeleportEffect(player.world, targetPos);

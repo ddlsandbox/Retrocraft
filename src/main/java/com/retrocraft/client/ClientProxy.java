@@ -46,15 +46,6 @@ public class ClientProxy extends CommonProxy
   {
     super.preInit(event);
     MinecraftForge.EVENT_BUS.register(this);
-    
-    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderTeleportPipe());
-//    ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class,
-//        new RenderTeleportPipe());
-//    ForgeHooksClient.registerTESRItemStack(
-//        Item.getItemFromBlock(ModBlocks.blockTeleportPipe), 0, TileTeleportPipe.class);
-//    ModelLoader.setCustomModelResourceLocation(
-//        Item.getItemFromBlock(ModBlocks.blockTeleportPipe), 0,
-//        new ModelResourceLocation("retrocraft:teleportPipe", "inventory"));
   }
 
   @Override
@@ -65,6 +56,7 @@ public class ClientProxy extends CommonProxy
           new TESRPedestal());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchanter.class,
           new TESREnchanter());
+      //ClientRegistry.bindTileEntitySpecialRenderer(TileTeleportPipe.class, new RenderTeleportPipe());
   }
 
   @Override

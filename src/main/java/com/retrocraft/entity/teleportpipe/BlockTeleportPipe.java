@@ -10,6 +10,7 @@ import com.retrocraft.client.ClientTeleportPipes;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -35,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
 {
 
-  public static final PropertyDirection FACING = BlockHorizontal.FACING;
+  //public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
   public BlockTeleportPipe(String name)
   {
@@ -59,29 +60,29 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
       new ModelResourceLocation(getRegistryName(), "inventory"));
   }
   
-  @Override
-  protected BlockStateContainer createBlockState()
-  {
-    return new BlockStateContainer(this, FACING);
-  }
+//  @Override
+//  protected BlockStateContainer createBlockState()
+//  {
+//    return new BlockStateContainer(this, FACING);
+//  }
 
-  @Override
-  public int getMetaFromState(IBlockState state)
-  {
-    int meta = state.getValue(FACING).getIndex();
-    return meta;
-  }
+//  @Override
+//  public int getMetaFromState(IBlockState state)
+//  {
+//    int meta = state.getValue(FACING).getIndex();
+//    return meta;
+//  }
 
-  @Override
-  public IBlockState getStateFromMeta(int meta)
-  {
-    EnumFacing facing = EnumFacing.getFront(meta & 7);
-    if (facing.getAxis() == EnumFacing.Axis.Y)
-    {
-      facing = EnumFacing.NORTH;
-    }
-    return getDefaultState().withProperty(FACING, facing);
-  }
+//  @Override
+//  public IBlockState getStateFromMeta(int meta)
+//  {
+//    EnumFacing facing = EnumFacing.getFront(meta & 7);
+//    if (facing.getAxis() == EnumFacing.Axis.Y)
+//    {
+//      facing = EnumFacing.NORTH;
+//    }
+//    return getDefaultState().withProperty(FACING, facing);
+//  }
 
   @Override
   public boolean isOpaqueCube(IBlockState state)
@@ -138,7 +139,7 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
       facing = EnumFacing.NORTH;
     }
     
-    world.setBlockState(pos, this.getDefaultState().withProperty(FACING, facing));
+    //world.setBlockState(pos, this.getDefaultState().withProperty(FACING, facing));
     
     if (!world.isRemote && placer instanceof EntityPlayer
         && (!RetroCraft.getConfig().creativeModeOnly

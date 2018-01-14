@@ -36,9 +36,10 @@ public class RenderTeleportPipe extends TileEntitySpecialRenderer<TileTeleportPi
 
     bindTexture(texture);
 
-    float angle = state != null
-        ? TeleportManager.getRotationYaw(state.getValue(BlockTeleportPipe.FACING))
-        : 0f;
+    float angle = 0;
+//      state != null
+//        ? TeleportManager.getRotationYaw(state.getValue(BlockTeleportPipe.FACING))
+//        : 0f;
     GlStateManager.pushMatrix();
     // GlStateManager.enableLighting();
     GlStateManager.color(1f, 1f, 1f, 1f);

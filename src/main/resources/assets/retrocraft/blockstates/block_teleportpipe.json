@@ -1,11 +1,19 @@
 {
    "forge_marker": 1,
    "defaults": {
+      "transform": "forge:default-block",
       "model": "retrocraft:block_teleportpipe",
-      "uvlock": true
+      "uvlock": true,
+      "textures": {
+	    "particle": "minecraft:blocks/stone"
+	  }
    },
    "variants": {
       "normal": [{}],
+      "base": {
+	      "true": {},
+	      "false": {}
+	  },
       "facing": {
          "down": {
 				"x": 90
