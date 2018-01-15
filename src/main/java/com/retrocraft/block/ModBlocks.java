@@ -60,12 +60,17 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:block_teleportpipe")
 	public static BlockTeleportPipe blockTeleportPipe;
 	
+	@GameRegistry.ObjectHolder("retrocraft:block_telepipe")
+	public static BlockTelepipe blockTelepipe;
+	
 	@GameRegistry.ObjectHolder("retrocraft:lightpillar")
 	public static BlockTorch blockLightPillar;
 	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
         blockTeleportPipe.initModel();
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockTelepipe), 0, new ModelResourceLocation(blockTelepipe.getRegistryName(), "inventory"));
+
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreGrinder), 0, new ModelResourceLocation(blockOreGrinder.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreSmelter), 0, new ModelResourceLocation(blockOreSmelter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));

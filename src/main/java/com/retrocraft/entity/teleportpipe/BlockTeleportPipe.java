@@ -151,17 +151,17 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
     }
   }
 
-//  @Override
-//  public void breakBlock(World world, BlockPos pos, IBlockState state)
-//  {
-//    TileTeleportPipe tileTeleportPipe = getTileTeleportPipe(world, pos);
-//    if (tileTeleportPipe != null && tileTeleportPipe.isGlobal())
-//    {
-//      GlobalTeleportPipes.get(world)
-//          .removeGlobalTeleportPipe(new TeleportPipeEntry(tileTeleportPipe));
-//    }
-//    super.breakBlock(world, pos, state);
-//  }
+  @Override
+  public void breakBlock(World world, BlockPos pos, IBlockState state)
+  {
+    TileTeleportPipe tileTeleportPipe = getTileEntity(world, pos);
+    if (tileTeleportPipe != null && tileTeleportPipe.isGlobal())
+    {
+      GlobalTeleportPipe.get(world)
+          .removeGlobalTeleportPipe(new TeleportEntry(tileTeleportPipe));
+    }
+    super.breakBlock(world, pos, state);
+  }
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state,

@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.BlockBase;
 import com.retrocraft.block.BlockOre;
+import com.retrocraft.block.BlockTelepipe;
 import com.retrocraft.block.BlockTorch;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.BlockPedestal;
@@ -144,7 +145,8 @@ public class CommonProxy
 		
     /* other blocks */
     event.getRegistry().register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
-    }
+    event.getRegistry().register(new BlockTelepipe("block_telepipe").setCreativeTab(RetroCraft.creativeTab));
+	}
     
   @SubscribeEvent
   public static void registerItems(RegistryEvent.Register<Item> event) {
@@ -231,6 +233,7 @@ public class CommonProxy
 	  
 	  /* entities */
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockTeleportPipe).setRegistryName(ModBlocks.blockTeleportPipe.getRegistryName()));
+    event.getRegistry().register(new ItemBlock(ModBlocks.blockTelepipe).setRegistryName(ModBlocks.blockTelepipe.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.pedestalManolium).setRegistryName(ModBlocks.pedestalManolium.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));

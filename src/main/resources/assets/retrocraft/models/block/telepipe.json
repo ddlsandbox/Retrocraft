@@ -1,0 +1,39 @@
+{
+	"textures": {
+		"pedestal": "retrocraft:blocks/teleport_base",
+		"base": "retrocraft:blocks/teleport_base",
+		"particle": "blocks/hardened_clay_stained_lime"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"up": {
+					"uv": [0, 0, 12, 12],
+					"texture": "#base"
+				},
+				"down": {
+					"uv": [0, 0, 12, 12],
+					"texture": "#base"
+				},
+				"north": {
+					"uv": [0, 0, 12, 1],
+					"texture": "#pedestal"
+				},
+				"south": {
+					"uv": [0, 0, 12, 1],
+					"texture": "#base"
+				},
+				"west": {
+					"uv": [0, 0, 12, 1],
+					"texture": "#pedestal"
+				},
+				"east": {
+					"uv": [0, 0, 12, 1],
+					"texture": "#pedestal"
+				}
+			}
+		}
+	]
+}
