@@ -5,7 +5,6 @@ import com.retrocraft.RetroCraft;
 import com.retrocraft.block.BlockTileEntity;
 
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;

@@ -257,10 +257,11 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
       if (ClientTeleportPipes
           .getKnownTeleportPipe(tileTeleportPipe.getTeleportPipeName()) != null)
       {
-        world.spawnParticle(EnumParticleTypes.PORTAL,
-            pos.getX() + 0.5 + (rand.nextDouble() - 0.5) * 1.5,
-            pos.getY() + 0.5,
-            pos.getZ() + 0.5 + (rand.nextDouble() - 0.5) * 1.5, 0, 0, 0);
+          world.spawnParticle(EnumParticleTypes.END_ROD,
+              pos.getX() + 0.5 + (rand.nextDouble() - 0.5) * 1.5,
+              pos.getY() + 1.5,
+              pos.getZ() + 0.5 + (rand.nextDouble() - 0.5) * 1.5, 
+              0, 0, 0);
 //        world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE,
 //            pos.getX() + 0.5 + (rand.nextDouble() - 0.5) * 1.5,
 //            pos.getY() + 0.5,

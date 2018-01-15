@@ -1,14 +1,26 @@
 {
-    "variants": {
-        "facing=up": { "model": "retrocraft:telepipe" },
-        "facing=down": { "model": "retrocraft:telepipe", "x": 180 },
-        "facing=south": { "model": "retrocraft:telepipe", "x": 90 },
-        "facing=east": { "model": "retrocraft:telepipe", "x": 90, "y": 90 },
-        "facing=north": { "model": "retrocraft:telepipe", "x": 90, "y": 180 },
-        "facing=west": { "model": "retrocraft:telepipe", "x": 90, "y": 270 },
-		"inventory": {
-			"model": "retrocraft:telepipe",
-			"transform": "forge:default-block"
-		}
-    }
+  "multipart": [
+      { "when": { "facing": "up" },
+                  "apply": { "model": "retrocraft:telepipe" }
+      },
+      { "when": { "facing": "down" },
+                  "apply": { "model": "retrocraft:telepipe" }
+      },
+      { "when": { "facing": "south" },
+                  "apply": { "model": "retrocraft:telepipe", "x": 90 }
+      },
+      { "when": { "facing": "north" },
+                  "apply": { "model": "retrocraft:telepipe", "x": 90 }
+      },
+      { "when": { "facing": "east" },
+                  "apply": { "model": "retrocraft:telepipe", "x": 90, "y": 90 }
+      },
+      { "when": { "facing": "west" },
+                  "apply": { "model": "retrocraft:telepipe", "x": 90, "y": 90 }
+      }
+  ],
+  "inventory": {
+	 "model": "retrocraft:telepipe",
+	    	"transform": "forge:default-block"
+  }
 }
