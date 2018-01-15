@@ -35,6 +35,8 @@ import com.retrocraft.machine.generator.BlockSteamGenerator;
 import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.grinder.TileOreGrinder;
+import com.retrocraft.machine.multifurnace.BlockMultifurnace;
+import com.retrocraft.machine.multifurnace.TileMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.repairer.TileRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
@@ -142,7 +144,9 @@ public class CommonProxy
 		GameRegistry.registerTileEntity(TileEntityEnchanter.class, RetroCraft.modId + "_block_enchanter");
 		event.getRegistry().register(new BlockRepairer("block_repairer").setCreativeTab(RetroCraft.creativeTab));
 		GameRegistry.registerTileEntity(TileRepairer.class, RetroCraft.modId + "_block_repairer");
-		
+		event.getRegistry().register(new BlockMultifurnace("block_multifurnace").setCreativeTab(RetroCraft.creativeTab));
+    GameRegistry.registerTileEntity(TileMultifurnace.class, RetroCraft.modId + "_block_multifurnace");
+    
     /* other blocks */
     event.getRegistry().register(new BlockTorch("lightpillar").setCreativeTab(RetroCraft.creativeTab));
     event.getRegistry().register(new BlockTelepipe("block_telepipe").setCreativeTab(RetroCraft.creativeTab));
@@ -240,6 +244,7 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockEnchanter).setRegistryName(ModBlocks.blockEnchanter.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockRepairer).setRegistryName(ModBlocks.blockRepairer.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockMultifurnace).setRegistryName(ModBlocks.blockMultifurnace.getRegistryName()));
 	  
 	  /* other blocks */
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));

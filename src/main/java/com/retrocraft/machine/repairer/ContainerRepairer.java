@@ -21,10 +21,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerRepairer extends ContainerBase
 {
 
+  private final int INPUT_SLOTS_XPOS = 37;
+  private final int INPUT_SLOTS_YPOS = 17;
+  private final int OUTPUT_SLOTS_XPOS = 181;
+  private final int OUTPUT_SLOTS_YPOS = 17;
+  
   // Stores the tile entity instance for later use
   private TileRepairer tileInventoryFurnace;
 
   public static final int INPUT_SLOTS_COUNT = 1;
+  public static final int OUTPUT_SLOTS_COUNT = 1;
 
   public ContainerRepairer(InventoryPlayer invPlayer, TileRepairer tileRepairer)
   {
@@ -33,10 +39,11 @@ public class ContainerRepairer extends ContainerBase
 
     addVanillaSlots(invPlayer);
 
-    final int INPUT_SLOTS_XPOS = 37;
-    final int INPUT_SLOTS_YPOS = 17;
     addSlotToContainer(new SlotRepairableInput(tileRepairer,
         TileRepairer.INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
+    
+    addSlotToContainer(new SlotRepairableOutput(tileRepairer,
+        TileRepairer.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
   public boolean repairItem()
@@ -55,19 +62,6 @@ public class ContainerRepairer extends ContainerBase
     return tileInventoryFurnace.isUsableByPlayer(player);
   }
 
-  // This is where you specify what happens when a player shift clicks a slot in
-  // the gui
-  // (when you shift click a slot in the TileEntity Inventory, it moves it to
-  // the first available position in the hotbar and/or
-  // player inventory. When you you shift-click a hotbar or player inventory
-  // item, it moves it to the first available
-  // position in the TileEntity inventory - either input or fuel as appropriate
-  // for the item you clicked)
-  // At the very least you must override this and return EMPTY_ITEM or the game
-  // will crash when the player shift clicks a slot
-  // returns EMPTY_ITEM if the source slot is empty, or if none of the source
-  // slot items could be moved.
-  // otherwise, returns a copy of the source stack
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
   {
@@ -82,11 +76,8 @@ public class ContainerRepairer extends ContainerBase
     if (isVanillaSlot(sourceSlotIndex))
     {
 
-      // This is a vanilla container slot
-      // If the stack is repairable try to merge merge the stack into the input
-      // slots
       if (TileRepairer.isItemValidForInputSlot(sourceStack))
-      { // isEmptyItem
+      {
         if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
             customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
             false))
@@ -146,8 +137,10 @@ public class ContainerRepairer extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileInventoryFurnace.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
-        .isEmpty())
+    if (!(tileInventoryFurnace.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
+        .isEmpty()
+        || tileInventoryFurnace.getStackInSlot(TileRepairer.OUTPUT_SLOT_NUMBER)
+        .isEmpty()))
       for (IContainerListener listener : this.listeners)
       {
         // System.out.println("[RETROCRAFT] Container: Notify listeners!");
@@ -206,7 +199,7 @@ public class ContainerRepairer extends ContainerBase
 //
 //    return (int) Math.max(1, totalCost);
 //  }
-  // SlotSmeltableInput is a slot for input items
+  
   public class SlotRepairableInput extends Slot
   {
     public SlotRepairableInput(IInventory inventoryIn, int index, int xPosition,
@@ -221,6 +214,23 @@ public class ContainerRepairer extends ContainerBase
     public boolean isItemValid(ItemStack stack)
     {
       return TileRepairer.isItemValidForInputSlot(stack);
+    }
+  }
+  
+  public class SlotRepairableOutput extends Slot
+  {
+    public SlotRepairableOutput(IInventory inventoryIn, int index, int xPosition,
+        int yPosition)
+    {
+      super(inventoryIn, index, xPosition, yPosition);
+    }
+
+    // if this function returns false, the player won't be able to insert the
+    // given item into this slot
+    @Override
+    public boolean isItemValid(ItemStack stack)
+    {
+      return TileRepairer.isItemValidForOutputSlot(stack);
     }
   }
 }

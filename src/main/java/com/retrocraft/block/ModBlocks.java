@@ -5,6 +5,7 @@ import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
+import com.retrocraft.machine.multifurnace.BlockMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
 
@@ -36,8 +37,9 @@ public class ModBlocks {
 	public static BlockBase blockMachineChasis;
 	@GameRegistry.ObjectHolder("retrocraft:block_octirionchasis")
 	public static BlockBase blockOctirionChasis;
-//	
-//	public static BlockMultifurnace blockMultifurnace;
+
+	@GameRegistry.ObjectHolder("retrocraft:block_multifurnace")
+	public static BlockMultifurnace blockMultifurnace;
 	
 	@GameRegistry.ObjectHolder("retrocraft:block_enchanter")
 	public static BlockEnchanter blockEnchanter;
@@ -76,6 +78,7 @@ public class ModBlocks {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockEnchanter), 0, new ModelResourceLocation(blockEnchanter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockRepairer), 0, new ModelResourceLocation(blockRepairer.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockMultifurnace), 0, new ModelResourceLocation(blockMultifurnace.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(pedestalManolium), 0, new ModelResourceLocation(pedestalManolium.getRegistryName(), "inventory"));
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(oreManolite), 0, new ModelResourceLocation(oreManolite.getRegistryName(), "inventory"));

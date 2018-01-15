@@ -48,6 +48,7 @@ public class GuiOreGrinder extends GuiContainer
   public void drawScreen(int x, int y, float f){
       super.drawScreen(x, y, f);
       this.energy.drawOverlay(x, y);
+      this.renderHoveredToolTip(x, y);
   }
   
   @Override

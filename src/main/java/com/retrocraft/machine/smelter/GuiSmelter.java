@@ -48,8 +48,9 @@ public class GuiSmelter extends GuiContainer
   {
     super.drawScreen(x, y, f);
     this.energy.drawOverlay(x, y);
+    this.renderHoveredToolTip(x, y);
   }
-
+  
   @Override
   public void drawGuiContainerForegroundLayer(int x, int y)
   {

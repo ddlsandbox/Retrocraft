@@ -1,8 +1,9 @@
 package com.retrocraft.machine.repairer;
 
-import java.util.Arrays;
-
 import javax.annotation.Nullable;
+
+import com.retrocraft.util.ItemStackHandlerCustom;
+import com.retrocraft.util.StackUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,15 +33,38 @@ import net.minecraft.world.EnumSkyBlock;
 public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	// Create and initialize the itemStacks variable that will store store the itemStacks
 	public static final int INPUT_SLOTS_COUNT = 1;
-	public static final int TOTAL_SLOTS_COUNT = INPUT_SLOTS_COUNT;
+	public static final int OUTPUT_SLOTS_COUNT = 1;
+	public static final int TOTAL_SLOTS_COUNT = INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
 
 	public static final int INPUT_SLOT_NUMBER = 0;
+	public static final int OUTPUT_SLOT_NUMBER = 1;
 
-	private ItemStack[] itemStacks;
+	private ItemStackHandlerCustom slots;
 
 	public TileRepairer()
 	{
-		itemStacks = new ItemStack[TOTAL_SLOTS_COUNT];
+	  this.slots = new ItemStackHandlerCustom(TOTAL_SLOTS_COUNT){
+      @Override
+      public boolean canInsert(ItemStack stack, int slot){
+          return TileRepairer.this.isItemValidForSlot(slot, stack);
+      }
+
+      @Override
+      public boolean canExtract(ItemStack stack, int slot){
+          return slot == OUTPUT_SLOT_NUMBER;
+      }
+
+      @Override
+      public int getSlotLimit(int slot){
+          return 1;
+      }
+
+      @Override
+      protected void onContentsChanged(int slot){
+          super.onContentsChanged(slot);
+          TileRepairer.this.markDirty();
+      }
+  };
 		clear();
 	}
 
@@ -50,7 +74,7 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	public void update() {
 		// The block update (for renderer) is only required on client side, but the lighting is required on both, since
 		//    the client needs it for rendering and the server needs it for crop growth etc
-		if (itemStacks[INPUT_SLOT_NUMBER].getCount() == 1) {
+		if (StackUtil.isValid(this.slots.getStackInSlot(INPUT_SLOT_NUMBER))) {
 			if (world.isRemote) {
 				IBlockState iblockstate = this.world.getBlockState(pos);
 				final int FLAGS = 3;  // I'm not sure what these flags do, exactly.
@@ -68,12 +92,14 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	 */
 	public boolean repairItem()
 	{
-		final ItemStack inputStack = itemStacks[INPUT_SLOT_NUMBER];
-		if (inputStack.isEmpty())
+		final ItemStack inputStack  = slots.getStackInSlot(INPUT_SLOT_NUMBER);
+		final ItemStack outputStack = slots.getStackInSlot(OUTPUT_SLOT_NUMBER);
+		if (inputStack.isEmpty() || !outputStack.isEmpty())
 			return false;
 		
 		inputStack.setItemDamage(0);
-//		itemStacks[FIRST_OUTPUT_SLOT] = inputStack.copy();
+		slots.setStackInSlot(OUTPUT_SLOT_NUMBER, inputStack.copy());
+		slots.setStackInSlot(INPUT_SLOT_NUMBER, StackUtil.getNull());
 		
 		markDirty();
 		return true;
@@ -82,26 +108,21 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	// Gets the number of slots in the inventory
 	@Override
 	public int getSizeInventory() {
-		return itemStacks.length;
+		return slots.getSlots();
 	}
 
 	// returns true if all of the slots in the inventory are empty
 	@Override
 	public boolean isEmpty()
 	{
-		for (ItemStack itemstack : itemStacks) {
-			if (!itemstack.isEmpty()) {  // isEmpty()
-				return false;
-			}
-		}
-
-		return true;
+	  return slots.getStackInSlot(INPUT_SLOT_NUMBER).isEmpty()
+	      && slots.getStackInSlot(OUTPUT_SLOT_NUMBER).isEmpty();
 	}
 
 	// Gets the stack in the given slot
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		return itemStacks[i];
+		return slots.getStackInSlot(i);
 	}
 
 	/**
@@ -132,24 +153,18 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	// overwrites the stack in the given slotIndex with the given stack
 	@Override
 	public void setInventorySlotContents(int slotIndex, ItemStack itemstack) {
-		itemStacks[slotIndex] = itemstack;
+	  slots.setStackInSlot(slotIndex, itemstack);
 		if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()) {  // isEmpty();  getStackSize()
 			itemstack.setCount(getInventoryStackLimit());  //setStackSize()
 		}
 		markDirty();
 	}
 
-	// This is the maximum number if items allowed in each slot
-	// This only affects things such as hoppers trying to insert items you need to use the container to enforce this for players
-	// inserting items via the gui
 	@Override
 	public int getInventoryStackLimit() {
 		return 1;
 	}
 
-	// Return true if the given player is able to use this block. In this case it checks that
-	// 1) the world tileentity hasn't been replaced in the meantime, and
-	// 2) the player isn't too far away from the centre of the block
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		if (this.world.getTileEntity(this.pos) != this) return false;
@@ -160,12 +175,15 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		return player.getDistanceSq(pos.getX() + X_CENTRE_OFFSET, pos.getY() + Y_CENTRE_OFFSET, pos.getZ() + Z_CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ;
 	}
 
-	// Return true if the given stack is allowed to be inserted in the given slot
-	// Unlike the vanilla furnace, we allow anything to be placed in the fuel slots
 	static public boolean isItemValidForInputSlot(ItemStack itemStack)
 	{
 		return itemStack.getItemDamage() > 0;
 	}
+	
+	static public boolean isItemValidForOutputSlot(ItemStack itemStack)
+  {
+    return false;
+  }
 
 	//------------------------------
 
@@ -175,18 +193,12 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	{
 		super.writeToNBT(parentNBTTagCompound); // The super call is required to save and load the tiles location
 
-//		// Save the stored item stacks
-
-		// to use an analogy with Java, this code generates an array of hashmaps
-		// The itemStack in each slot is converted to an NBTTagCompound, which is effectively a hashmap of key->value pairs such
-		//   as slot=1, id=2353, count=1, etc
-		// Each of these NBTTagCompound are then inserted into NBTTagList, which is similar to an array.
 		NBTTagList dataForAllSlots = new NBTTagList();
-		for (int i = 0; i < this.itemStacks.length; ++i) {
-			if (!this.itemStacks[i].isEmpty()) {  //isEmpty()
+		for (int i = 0; i < slots.getSlots(); ++i) {
+			if (!this.getStackInSlot(i).isEmpty()) {  //isEmpty()
 				NBTTagCompound dataForThisSlot = new NBTTagCompound();
 				dataForThisSlot.setByte("Slot", (byte) i);
-				this.itemStacks[i].writeToNBT(dataForThisSlot);
+				this.getStackInSlot(i).writeToNBT(dataForThisSlot);
 				dataForAllSlots.appendTag(dataForThisSlot);
 			}
 		}
@@ -194,7 +206,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		return parentNBTTagCompound;
 	}
 
-	// This is where you load the data that you saved in writeToNBT
 	@Override
 	public void readFromNBT(NBTTagCompound nbtTagCompound)
 	{
@@ -202,12 +213,11 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		final byte NBT_TYPE_COMPOUND = 10;       // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);
 
-		Arrays.fill(itemStacks, ItemStack.EMPTY);           // set all slots to empty EMPTY_ITEM
 		for (int i = 0; i < dataForAllSlots.tagCount(); ++i) {
 			NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
 			byte slotNumber = dataForOneSlot.getByte("Slot");
-			if (slotNumber >= 0 && slotNumber < this.itemStacks.length) {
-				this.itemStacks[slotNumber] = new ItemStack(dataForOneSlot);
+			if (slotNumber >= 0 && slotNumber < slots.getSlots()) {
+				slots.setStackInSlot(slotNumber, new ItemStack(dataForOneSlot));
 			}
 		}
 	}
@@ -247,7 +257,8 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	// set all slots to empty
 	@Override
 	public void clear() {
-		Arrays.fill(itemStacks, ItemStack.EMPTY);  //EMPTY_ITEM
+	  slots.setStackInSlot(INPUT_SLOT_NUMBER, StackUtil.getNull());
+	  slots.setStackInSlot(OUTPUT_SLOT_NUMBER, StackUtil.getNull());
 	}
 
 	// will add a key for this container to the lang file so we can name it in the GUI

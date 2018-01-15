@@ -231,6 +231,7 @@ public class GuiEnchanter extends GuiContainer
 
     super.drawScreen(mouseX, mouseY, partialTicks);
     this.updateEnchantmentLabels();
+    this.renderHoveredToolTip(mouseX, mouseY);
 
     final int maxWidth = this.guiLeft - 20;
     final List<List<String>> information = new ArrayList<>();
