@@ -136,7 +136,6 @@ public class TileRepairer extends TileEntityInventory
         if (this.repairTimeRemaining <= 0)
         {
           repaired = true;
-          //repairItem();
           this.repairTimeRemaining = REPAIR_TIME = 0;
         }
         this.storage.extractEnergyInternal(ENERGY_USE, false);
@@ -213,9 +212,9 @@ public class TileRepairer extends TileEntityInventory
     {
       setStackInSlot(OUTPUT_SLOT_NUMBER, inputStack.copy());
       setStackInSlot(INPUT_SLOT_NUMBER, StackUtil.getNull());
+      markDirty();
     }
     
-    markDirty();
     return itemDamage;
   }
   

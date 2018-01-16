@@ -113,7 +113,7 @@ public class GuiRepairer extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 	  final String name = RetroCraft.proxy
-        .localize(ModBlocks.blockOreGrinder.getUnlocalizedName() + ".name");
+        .localize(ModBlocks.blockRepairer.getUnlocalizedName() + ".name");
     final int LABEL_XPOS = (xSize) / 2
         - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;
