@@ -7,30 +7,21 @@ import com.retrocraft.util.StackUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumSkyBlock;
 
-/**
- * User: brandon3055
- * Date: 06/01/2015
- *
- * TileInventorySmelting is an advanced sided inventory that works like a vanilla furnace except that it has 5 input and output slots,
- * 4 fuel slots and cooks at up to four times the speed.
- * The input slots are used sequentially rather than in parallel, i.e. the first slot cooks, then the second, then the third, etc
- * The fuel slots are used in parallel.  The more slots burning in parallel, the faster the cook time.
- * The code is heavily based on TileEntityFurnace.
- */
-public class TileRepairer extends TileEntity implements IInventory, ITickable {
+public class TileRepairer extends TileEntity implements ISidedInventory, ITickable {
 	// Create and initialize the itemStacks variable that will store store the itemStacks
 	public static final int INPUT_SLOTS_COUNT = 1;
 	public static final int OUTPUT_SLOTS_COUNT = 1;
@@ -39,6 +30,10 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	public static final int INPUT_SLOT_NUMBER = 0;
 	public static final int OUTPUT_SLOT_NUMBER = 1;
 
+  private static final int[] SLOTS_TOP = new int[] {0};
+  private static final int[] SLOTS_BOTTOM = new int[] {1};
+  private static final int[] SLOTS_SIDES = new int[] {0,1};
+  
 	private ItemStackHandlerCustom slots;
 
 	public TileRepairer()
@@ -74,7 +69,8 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 	public void update() {
 		// The block update (for renderer) is only required on client side, but the lighting is required on both, since
 		//    the client needs it for rendering and the server needs it for crop growth etc
-		if (StackUtil.isValid(this.slots.getStackInSlot(INPUT_SLOT_NUMBER))) {
+		if (StackUtil.isValid(this.slots.getStackInSlot(INPUT_SLOT_NUMBER)) 
+		    || StackUtil.isValid(this.slots.getStackInSlot(OUTPUT_SLOT_NUMBER))) {
 			if (world.isRemote) {
 				IBlockState iblockstate = this.world.getBlockState(pos);
 				final int FLAGS = 3;  // I'm not sure what these flags do, exactly.
@@ -84,12 +80,6 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 		}
 	}
 
-	/**
-	 * checks that there is an item to be smelted in one of the input slots and that there is room for the result in the output slots
-	 * If desired, performs the smelt
-	 * @param performSmelt if true, perform the smelt.  if false, check whether smelting is possible, but don't change the inventory
-	 * @return false if no items can be smelted, true otherwise
-	 */
 	public boolean repairItem()
 	{
 		final ItemStack inputStack  = slots.getStackInSlot(INPUT_SLOT_NUMBER);
@@ -322,5 +312,23 @@ public class TileRepairer extends TileEntity implements IInventory, ITickable {
 
 	@Override
 	public void closeInventory(EntityPlayer player) {}
+
+  @Override
+  public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+  {
+    return slots.canExtract(stack, index);
+  }
+
+  @Override
+  public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction)
+  {
+    return this.isItemValidForSlot(index, stack);
+  }
+
+  @Override
+  public int[] getSlotsForFace(EnumFacing side)
+  {
+    return side == EnumFacing.DOWN ? SLOTS_BOTTOM : (side == EnumFacing.UP ? SLOTS_TOP : SLOTS_SIDES);
+  }
 
 }

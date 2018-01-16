@@ -89,7 +89,8 @@ public class ContainerRepairer extends ContainerBase
       {
         return ItemStack.EMPTY; // EMPTY_ITEM;
       }
-    } else if (sourceSlotIndex == customFirstSlotIndex)
+    } 
+    else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex+1)
     {
       if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex,
           vanillaFirstSlotIndex + vanillaSlotCount, false))
