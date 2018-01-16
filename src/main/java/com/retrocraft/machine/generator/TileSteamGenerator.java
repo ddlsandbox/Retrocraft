@@ -1,14 +1,17 @@
 package com.retrocraft.machine.generator;
 
+import com.retrocraft.RetroCraft;
 import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.api.energy.IEnergyProvider;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.tile.CustomEnergyStorage;
-import com.retrocraft.tile.TileInventoryBase;
+import com.retrocraft.tile.TileEntityInventory;
+import com.retrocraft.util.ItemStackHandlerCustom;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -29,7 +32,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileSteamGenerator extends TileInventoryBase
+public class TileSteamGenerator extends TileEntityInventory
     implements IEnergyProvider, ITickable, IEnergyDisplay
 {
   private static final int CAPACITY   = 320000;
@@ -45,7 +48,7 @@ public class TileSteamGenerator extends TileInventoryBase
   private static final int FIELD_COUNT                  = 3;
 
   public static final int INPUT_SLOT_NUMBER = 0;
-
+  
   public int        burnTimeRemaining;
   private int       burnTimeInitialValue;
   private int       currentEnergyProduce;
@@ -64,7 +67,7 @@ public class TileSteamGenerator extends TileInventoryBase
 
   public TileSteamGenerator()
   {
-    super("tile.steamgenerator.name", 1);
+    super("tile.steamgenerator.name", 1, 0);
 
     this.storage = new CustomEnergyStorage(CAPACITY, THROUGHPUT, THROUGHPUT);
     this.tank = new FluidTank(FLUID_CAPACITY)
@@ -89,6 +92,38 @@ public class TileSteamGenerator extends TileInventoryBase
     this.inputSides = EnumFacing.HORIZONTALS;
 
     clear();
+  }
+  
+  protected ItemStackHandlerCustom getSlots()
+  {
+    return new ItemStackHandlerCustom(totalSlotsCount){
+      @Override
+      public boolean canInsert(ItemStack stack, int slot){
+          return TileSteamGenerator.this.isItemValidForSlot(slot, stack);
+      }
+
+      @Override
+      public boolean canExtract(ItemStack stack, int slot){
+          return false;
+      }
+
+      @Override
+      public int getSlotLimit(int slot){
+          return 64;
+      }
+
+      @Override
+      protected void onContentsChanged(int slot){
+          super.onContentsChanged(slot);
+          TileSteamGenerator.this.markDirty();
+      }
+    };
+  }
+  
+  protected void setSlotSides()
+  {
+    slotsTop = slotsBottom =
+    slotsNorth = slotsEast = slotsSouth = slotsWest = new int[] {0};
   }
   
   @SideOnly(Side.CLIENT)
@@ -234,6 +269,8 @@ public class TileSteamGenerator extends TileInventoryBase
       if (burnTimeRemaining > 0 && burnTimeRemaining != lastBurnTime)
       {
         lastBurnTime = burnTimeRemaining;
+        
+        //RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_AMBIENT, pos, 0.5f);
         if (!RetroCraftConfig.disableParticles)
         {
           world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,

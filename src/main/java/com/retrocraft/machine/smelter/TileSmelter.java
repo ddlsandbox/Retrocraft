@@ -1,15 +1,20 @@
 package com.retrocraft.machine.smelter;
 
+import com.retrocraft.RetroCraft;
+import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.recipe.SmelterRecipeRegistry;
 import com.retrocraft.tile.CustomEnergyStorage;
-import com.retrocraft.tile.TileInventoryBase;
+import com.retrocraft.tile.TileEntityInventory;
+import com.retrocraft.util.ItemStackHandlerCustom;
 import com.retrocraft.util.StackUtil;
 
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -17,7 +22,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileSmelter extends TileInventoryBase
+public class TileSmelter extends TileEntityInventory
     implements IEnergyStorage, ITickable, IEnergyDisplay
 {
   private static final int CAPACITY   = RetroCraftGlobals.oreSmelterCapacity;
@@ -31,7 +36,7 @@ public class TileSmelter extends TileInventoryBase
 
   public static final int INPUT_SLOT_NUMBER  = 0;
   public static final int OUTPUT_SLOT_NUMBER = 1;
-
+  
   public int burnTimeRemaining;
   private int lastEnergy;
   private int lastBurnTime;
@@ -41,7 +46,7 @@ public class TileSmelter extends TileInventoryBase
 
   public TileSmelter()
   {
-    super("tile.oregrinder.name", 2);
+    super("tile.oregrinder.name", 1, 1);
 
     this.storage = new CustomEnergyStorage(CAPACITY, THROUGHPUT, THROUGHPUT);
 
@@ -49,6 +54,39 @@ public class TileSmelter extends TileInventoryBase
     { EnumFacing.NORTH };
 
     clear();
+  }
+  
+  protected ItemStackHandlerCustom getSlots()
+  {
+    return new ItemStackHandlerCustom(totalSlotsCount){
+      @Override
+      public boolean canInsert(ItemStack stack, int slot){
+          return TileSmelter.this.isItemValidForSlot(slot, stack);
+      }
+
+      @Override
+      public boolean canExtract(ItemStack stack, int slot){
+          return slot == OUTPUT_SLOT_NUMBER;
+      }
+
+      @Override
+      public int getSlotLimit(int slot){
+          return 1;
+      }
+
+      @Override
+      protected void onContentsChanged(int slot){
+          super.onContentsChanged(slot);
+          TileSmelter.this.markDirty();
+      }
+    };
+  }
+  
+  protected void setSlotSides()
+  {
+    slotsTop = new int[] {0};
+    slotsBottom = new int[] {1};
+    slotsNorth = slotsEast = slotsSouth = slotsWest = new int[] {0,1};
   }
 
   @SideOnly(Side.CLIENT)
@@ -109,7 +147,7 @@ public class TileSmelter extends TileInventoryBase
     super.updateEntity();
 
     boolean canSmelt = this.canSmelt(INPUT_SLOT_NUMBER, OUTPUT_SLOT_NUMBER);
-
+    boolean smelted = false;
     boolean shouldPlaySound = false;
 
     if (canSmelt)
@@ -123,6 +161,7 @@ public class TileSmelter extends TileInventoryBase
         this.burnTimeRemaining--;
         if (this.burnTimeRemaining <= 0)
         {
+          smelted = true;
           this.finishSmelting(INPUT_SLOT_NUMBER, OUTPUT_SLOT_NUMBER);
           this.burnTimeRemaining = BURN_TIME;
         }
@@ -144,15 +183,25 @@ public class TileSmelter extends TileInventoryBase
         this.lastEnergy = this.storage.getEnergyStored();
         this.lastBurnTime = this.burnTimeRemaining;
       }
-    }
-
-    if (shouldPlaySound)
+    } 
+    else
     {
-//      RetroCraft.proxy.playSound(SoundEvents.WEATHER_RAIN, pos, 0.5f);
+      if (shouldPlaySound)
+      {
+        RetroCraft.proxy.playSound(SoundEvents.BLOCK_WATER_AMBIENT, pos, 0.5f);
+        
+        if (!RetroCraftConfig.disableParticles)
+          world.spawnParticle(EnumParticleTypes.REDSTONE,
+            pos.getX() + world.rand.nextDouble(),
+            pos.getY() + 1, //  + (world.rand.nextDouble()) * 2
+            pos.getZ() + world.rand.nextDouble(), 
+            0, 0.03, 0);
+      }
       
-      // this.world.playSound(null, this.getPos().getX(), this.getPos().getY(),
-      // this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS,
-      // 0.025F, 1.0F);
+      if (smelted)
+      {
+        RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, pos, 0.5f);
+      }
     }
   }
 

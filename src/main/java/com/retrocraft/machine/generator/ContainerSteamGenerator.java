@@ -1,7 +1,6 @@
 package com.retrocraft.machine.generator;
 
 import com.retrocraft.common.ContainerBase;
-import com.retrocraft.machine.repairer.TileRepairer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +18,8 @@ public class ContainerSteamGenerator  extends ContainerBase
   private TileSteamGenerator tileGenerator;
 
   public static final int INPUT_SLOTS_COUNT = 1;
+
+  private static final int INPUT_SLOT_NUMBER = 0;
 
   public ContainerSteamGenerator(InventoryPlayer invPlayer, TileSteamGenerator tileGenerator)
   {
@@ -104,7 +105,7 @@ public class ContainerSteamGenerator  extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileGenerator.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
+    if (!tileGenerator.getStackInSlot(INPUT_SLOT_NUMBER)
         .isEmpty())
       for (IContainerListener listener : this.listeners)
       {

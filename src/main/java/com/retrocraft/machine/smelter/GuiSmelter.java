@@ -14,16 +14,15 @@ import net.minecraft.util.ResourceLocation;
 public class GuiSmelter extends GuiContainer
 {
   private ContainerSmelter containerSmelter;
-  private TileSmelter      tileSmelter;
+  private TileSmelter tileSmelter;
   private GuiEnergyDisplay energy;
 
-  private static final ResourceLocation BG_TEXTURE        = new ResourceLocation(
-      RetroCraft.modId, "textures/gui/oresmelter.png");
-  private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(
-      RetroCraft.modId, "textures/gui/inventory.png");
+  private static final ResourceLocation BG_TEXTURE = new ResourceLocation(RetroCraft.modId,
+      "textures/gui/oresmelter.png");
+  private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(RetroCraft.modId,
+      "textures/gui/inventory.png");
 
-  public GuiSmelter(InventoryPlayer invPlayer, TileSmelter tileSmelter,
-                    ContainerSmelter containerSmelter)
+  public GuiSmelter(InventoryPlayer invPlayer, TileSmelter tileSmelter, ContainerSmelter containerSmelter)
   {
     super(containerSmelter);
 
@@ -39,8 +38,7 @@ public class GuiSmelter extends GuiContainer
   public void initGui()
   {
     super.initGui();
-    this.energy = new GuiEnergyDisplay(this.guiLeft + 42, this.guiTop + 6,
-        this.tileSmelter.storage);
+    this.energy = new GuiEnergyDisplay(this.guiLeft + 42, this.guiTop + 6, this.tileSmelter.storage);
   }
 
   @Override
@@ -50,17 +48,14 @@ public class GuiSmelter extends GuiContainer
     this.energy.drawOverlay(x, y);
     this.renderHoveredToolTip(x, y);
   }
-  
+
   @Override
   public void drawGuiContainerForegroundLayer(int x, int y)
   {
-    final String name = RetroCraft.proxy
-        .localize(ModBlocks.blockOreSmelter.getUnlocalizedName() + ".name");
-    final int LABEL_XPOS = (xSize) / 2
-        - fontRenderer.getStringWidth(name) / 2;
+    final String name = RetroCraft.proxy.localize(ModBlocks.blockOreSmelter.getUnlocalizedName() + ".name");
+    final int LABEL_XPOS = (xSize) / 2 - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;
-    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS,
-        Color.cyan.getRGB());
+    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS, Color.cyan.getRGB());
   }
 
   @Override
@@ -77,8 +72,13 @@ public class GuiSmelter extends GuiContainer
     if (this.tileSmelter.burnTimeRemaining > 0)
     {
       int i = this.tileSmelter.getBurnTimeScaled(22);
-      this.drawTexturedModalRect(this.guiLeft + 80, this.guiTop + 33, 176, 83,
-          24, 22 - i);
+      this.drawTexturedModalRect(
+          this.guiLeft + 80, 
+          this.guiTop + 33, 
+          176, 
+          75, 
+          25, 
+          22 - i);
     }
 
     this.energy.draw();

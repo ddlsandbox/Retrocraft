@@ -1,7 +1,6 @@
 package com.retrocraft.machine.grinder;
 
 import com.retrocraft.common.ContainerBase;
-import com.retrocraft.machine.repairer.TileRepairer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -21,6 +20,9 @@ public class ContainerOreGrinder  extends ContainerBase
   public static final int INPUT_SLOTS_COUNT = 1;
   public static final int OUTPUT_SLOTS_COUNT = 1;
 
+  private static final int INPUT_SLOT_NUMBER = 0;
+  private static final int OUTPUT_SLOT_NUMBER = 1;
+  
   public ContainerOreGrinder(InventoryPlayer invPlayer, TileOreGrinder tileGrinder)
   {
     super(true, false);
@@ -35,12 +37,12 @@ public class ContainerOreGrinder  extends ContainerBase
     final int INPUT_SLOTS_XPOS = 80;
     final int INPUT_SLOTS_YPOS = 14;
     addSlotToContainer(new SlotInput(tileGrinder,
-        TileOreGrinder.INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
+        INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
     
     final int OUTPUT_SLOTS_XPOS = 80;
     final int OUTPUT_SLOTS_YPOS = 58;
     addSlotToContainer(new SlotInput(tileGrinder,
-        TileOreGrinder.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
+        OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
   // Checks each tick to make sure the player is still able to access the
@@ -113,7 +115,7 @@ public class ContainerOreGrinder  extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileGrinder.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
+    if (!tileGrinder.getStackInSlot(INPUT_SLOT_NUMBER)
         .isEmpty())
       for (IContainerListener listener : this.listeners)
       {

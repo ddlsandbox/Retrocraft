@@ -1,63 +1,105 @@
 package com.retrocraft.machine.grinder;
 
-import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.RetroCraft;
+import com.retrocraft.RetroCraftConfig;
+import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.recipe.GrinderRecipeRegistry;
 import com.retrocraft.tile.CustomEnergyStorage;
-import com.retrocraft.tile.TileInventoryBase;
+import com.retrocraft.tile.TileEntityInventory;
+import com.retrocraft.util.ItemStackHandlerCustom;
 import com.retrocraft.util.StackUtil;
 
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileOreGrinder extends TileInventoryBase
-    implements IEnergyStorage, ITickable, IEnergyDisplay
+public class TileOreGrinder extends TileEntityInventory implements IEnergyStorage, IEnergyDisplay
 {
-  private static final int CAPACITY   = RetroCraftGlobals.oreGrinderCapacity;
+  private static final int CAPACITY = RetroCraftGlobals.oreGrinderCapacity;
   private static final int THROUGHPUT = 1000;
 
   private static final int ENERGY_USE = RetroCraftGlobals.oreGrinderEnergyUsed;
   private static final int CRUSH_TIME = RetroCraftGlobals.oreGrinderCrushTime;
-  
+
   private static final int FIELD_CRUSH_TIME_REMAINING = 0;
-  private static final int FIELD_COUNT                = 1;
+  private static final int FIELD_COUNT = 1;
+
+  private static final int INPUT_SLOT_COUNT = 1;
+  private static final int OUTPUT_SLOT_COUNT = 1;
 
   public static final int INPUT_SLOT_NUMBER = 0;
   public static final int OUTPUT_SLOT_NUMBER = 1;
 
-  public int        crushTimeRemaining;
-  
+  public int crushTimeRemaining;
+
   private int lastEnergy;
   private int lastCrushTime;
 
   protected CustomEnergyStorage storage;
-  protected EnumFacing[]        inputSides;
 
   public TileOreGrinder()
   {
-    super("tile.oregrinder.name", 2);
+    super("tile.oregrinder.name", INPUT_SLOT_COUNT, OUTPUT_SLOT_COUNT);
 
     this.storage = new CustomEnergyStorage(CAPACITY, THROUGHPUT, THROUGHPUT);
     this.crushTimeRemaining = 0;
-    this.inputSides = new EnumFacing[] { EnumFacing.NORTH };
 
     clear();
   }
-  
+
+  protected ItemStackHandlerCustom getSlots()
+  {
+    return new ItemStackHandlerCustom(totalSlotsCount)
+    {
+      @Override
+      public boolean canInsert(ItemStack stack, int slot)
+      {
+        return TileOreGrinder.this.isItemValidForSlot(slot, stack);
+      }
+
+      @Override
+      public boolean canExtract(ItemStack stack, int slot)
+      {
+        return slot == OUTPUT_SLOT_NUMBER;
+      }
+
+      @Override
+      public int getSlotLimit(int slot)
+      {
+        return 1;
+      }
+
+      @Override
+      protected void onContentsChanged(int slot)
+      {
+        super.onContentsChanged(slot);
+        TileOreGrinder.this.markDirty();
+      }
+    };
+  }
+
+  protected void setSlotSides()
+  {
+    slotsTop = new int[]
+    { 0 };
+    slotsBottom = new int[]
+    { 1 };
+    slotsNorth = slotsEast = slotsSouth = slotsWest = new int[]
+    { 0, 1 };
+  }
+
   @SideOnly(Side.CLIENT)
   public int getEnergyScaled(int i)
   {
-    return this.storage.getEnergyStored() * i
-        / this.storage.getMaxEnergyStored();
+    return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
   }
 
   @SideOnly(Side.CLIENT)
@@ -70,25 +112,21 @@ public class TileOreGrinder extends TileInventoryBase
   {
     if (StackUtil.isValid(getStackInSlot(theInput)))
     {
-      ItemStack outputOne = GrinderRecipeRegistry
-          .getOutput(getStackInSlot(theInput));
+      ItemStack outputOne = GrinderRecipeRegistry.getOutput(getStackInSlot(theInput));
 
       if (StackUtil.isValid(outputOne))
       {
-        return (!StackUtil.isValid(getStackInSlot(theOutput))
-            || (getStackInSlot(theOutput).isItemEqual(outputOne)
-                && StackUtil.getStackSize(
-                    getStackInSlot(theOutput)) <= getStackInSlot(theOutput)
-                        .getMaxStackSize() - StackUtil.getStackSize(outputOne)));
+        return (!StackUtil.isValid(getStackInSlot(theOutput)) || (getStackInSlot(theOutput).isItemEqual(outputOne)
+            && StackUtil.getStackSize(getStackInSlot(theOutput)) <= getStackInSlot(theOutput).getMaxStackSize()
+                - StackUtil.getStackSize(outputOne)));
       }
     }
     return false;
   }
-  
+
   public void finishCrushing(int theInput, int theOutput)
   {
-    ItemStack outputOne = GrinderRecipeRegistry
-        .getOutput(getStackInSlot(theInput));
+    ItemStack outputOne = GrinderRecipeRegistry.getOutput(getStackInSlot(theInput));
     if (StackUtil.isValid(outputOne))
     {
       if (!StackUtil.isValid(getStackInSlot(theOutput)))
@@ -96,16 +134,13 @@ public class TileOreGrinder extends TileInventoryBase
         setStackInSlot(theOutput, outputOne.copy());
       } else if (getStackInSlot(theOutput).getItem() == outputOne.getItem())
       {
-        setStackInSlot(theOutput, StackUtil.addStackSize(
-            getStackInSlot(theOutput), StackUtil.getStackSize(outputOne)));
+        setStackInSlot(theOutput, StackUtil.addStackSize(getStackInSlot(theOutput), StackUtil.getStackSize(outputOne)));
       }
     }
 
-    setStackInSlot(theInput,
-        StackUtil.addStackSize(getStackInSlot(theInput), -1));
+    setStackInSlot(theInput, StackUtil.addStackSize(getStackInSlot(theInput), -1));
   }
 
-  
   @Override
   public void updateEntity()
   {
@@ -134,35 +169,39 @@ public class TileOreGrinder extends TileInventoryBase
         }
         this.storage.extractEnergyInternal(ENERGY_USE, false);
       }
-    } 
-    else
+    } else
     {
       this.crushTimeRemaining = CRUSH_TIME;
     }
 
     if (!this.world.isRemote)
     {
-      if ((this.storage.getEnergyStored() != this.lastEnergy
-          || this.lastCrushTime != this.crushTimeRemaining)
+      if ((this.storage.getEnergyStored() != this.lastEnergy || this.lastCrushTime != this.crushTimeRemaining)
           && sendUpdateWithInterval())
       {
         this.markDirty();
         this.lastEnergy = this.storage.getEnergyStored();
         this.lastCrushTime = this.crushTimeRemaining;
       }
-    }
-
-    if (shouldPlaySound)
+    } 
+    else 
     {
-      RetroCraft.proxy.playSound(SoundEvents.WEATHER_RAIN, pos, 0.5f);
-//      this.world.playSound(null, this.getPos().getX(), this.getPos().getY(),
-//          this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS,
-//          0.025F, 1.0F);
-    }
-    
-    if (crushed)
-    {
-      RetroCraft.proxy.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pos, 1f);
+      if (shouldPlaySound)
+      {
+        if (!RetroCraftConfig.disableParticles)
+          world.spawnParticle(EnumParticleTypes.REDSTONE,
+            pos.getX() + world.rand.nextDouble(),
+            pos.getY() + 1,
+            pos.getZ() + world.rand.nextDouble(), 
+            0, 0.03, 0);
+        
+        RetroCraft.proxy.playSound(SoundEvents.WEATHER_RAIN_ABOVE, pos, 0.5f);
+      }
+  
+      if (crushed)
+      {
+        RetroCraft.proxy.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, pos, 1f);
+      }
     }
   }
 
@@ -179,7 +218,7 @@ public class TileOreGrinder extends TileInventoryBase
   {
     return GrinderRecipeRegistry.existRecipeForInput(itemStack);
   }
-  
+
   @Override
   public void writeSyncableNBT(NBTTagCompound compound, NBTType type)
   {
@@ -291,5 +330,4 @@ public class TileOreGrinder extends TileInventoryBase
   {
     return this.storage.receiveEnergy(maxReceive, simulate);
   }
-
 }

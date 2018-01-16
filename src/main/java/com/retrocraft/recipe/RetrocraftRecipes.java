@@ -1,6 +1,5 @@
 package com.retrocraft.recipe;
 
-import com.retrocraft.RetroCraft;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.item.ModItems;
 
@@ -192,7 +191,10 @@ public class RetrocraftRecipes
 //		}
 
 		/* Crusher */
+		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreManolite", false), OreDictionary.getOres("dustManolite", false));
 		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreOctirion", false), OreDictionary.getOres("gemOctirion", false));
+		GrinderRecipeRegistry.addRecipe(new ItemStack(ModBlocks.oreManolite), new ItemStack(ModItems.dustManolite, 2));
+		GrinderRecipeRegistry.addRecipe(new ItemStack(ModBlocks.oreOctirion), new ItemStack(ModItems.gemOctirion, 2));
 		GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreNickel", false), OreDictionary.getOres("dustNickel", false));
     GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreIron", false), OreDictionary.getOres("dustIron", false));
     GrinderRecipeRegistry.addRecipe(OreDictionary.getOres("oreGold", false), OreDictionary.getOres("dustGold", false));
@@ -211,8 +213,8 @@ public class RetrocraftRecipes
     GrinderRecipeRegistry.registerSearchCase(new SearchCase("ore",       2, "dust"));
     GrinderRecipeRegistry.registerSearchCase(new SearchCase("ore",       2, "gem"));
 
-    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustManolite", false), OreDictionary.getOres("ingotManolium", false));
-    SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustManolazium", false), OreDictionary.getOres("ingotManolazium", false));
+    SmelterRecipeRegistry.addRecipe(new ItemStack(ModItems.dustManolite), new ItemStack(ModItems.ingotManolium));
+    SmelterRecipeRegistry.addRecipe(new ItemStack(ModItems.dustManolazium), new ItemStack(ModItems.ingotManolazium));
     SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustGold", false), OreDictionary.getOres("ingotGold", false));
     SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustIron", false), OreDictionary.getOres("ingotIron", false));
     SmelterRecipeRegistry.addRecipe(OreDictionary.getOres("dustDiamond", false), OreDictionary.getOres("gemDiamond", false));

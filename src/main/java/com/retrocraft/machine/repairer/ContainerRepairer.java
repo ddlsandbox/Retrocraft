@@ -25,12 +25,15 @@ public class ContainerRepairer extends ContainerBase
   private final int INPUT_SLOTS_YPOS = 17;
   private final int OUTPUT_SLOTS_XPOS = 181;
   private final int OUTPUT_SLOTS_YPOS = 17;
-  
+
   // Stores the tile entity instance for later use
   private TileRepairer tileInventoryFurnace;
 
   public static final int INPUT_SLOTS_COUNT = 1;
   public static final int OUTPUT_SLOTS_COUNT = 1;
+
+  private static final int INPUT_SLOT_NUMBER = 0;
+  private static final int OUTPUT_SLOT_NUMBER = 1;
 
   public ContainerRepairer(InventoryPlayer invPlayer, TileRepairer tileRepairer)
   {
@@ -39,11 +42,10 @@ public class ContainerRepairer extends ContainerBase
 
     addVanillaSlots(invPlayer);
 
-    addSlotToContainer(new SlotRepairableInput(tileRepairer,
-        TileRepairer.INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
-    
-    addSlotToContainer(new SlotRepairableOutput(tileRepairer,
-        TileRepairer.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
+    addSlotToContainer(new SlotRepairableInput(tileRepairer, INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
+
+    addSlotToContainer(
+        new SlotRepairableOutput(tileRepairer, OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
   public boolean repairItem()
@@ -68,7 +70,7 @@ public class ContainerRepairer extends ContainerBase
     Slot sourceSlot = (Slot) inventorySlots.get(sourceSlotIndex);
 
     if (sourceSlot == null || !sourceSlot.getHasStack())
-      return ItemStack.EMPTY; // EMPTY_ITEM
+      return ItemStack.EMPTY;
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
@@ -76,7 +78,7 @@ public class ContainerRepairer extends ContainerBase
     if (isVanillaSlot(sourceSlotIndex))
     {
 
-      if (TileRepairer.isItemValidForInputSlot(sourceStack))
+      if (getSlot(INPUT_SLOT_NUMBER).isItemValid(sourceStack))
       {
         if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
             customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
@@ -89,18 +91,15 @@ public class ContainerRepairer extends ContainerBase
       {
         return ItemStack.EMPTY; // EMPTY_ITEM;
       }
-    } 
-    else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex+1)
+    } else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex + 1)
     {
-      if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex,
-          vanillaFirstSlotIndex + vanillaSlotCount, false))
+      if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
       {
         return ItemStack.EMPTY;
       }
     } else
     {
-      System.err
-          .print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
+      System.err.print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
       return ItemStack.EMPTY; // EMPTY_ITEM;
     }
 
@@ -138,10 +137,7 @@ public class ContainerRepairer extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!(tileInventoryFurnace.getStackInSlot(TileRepairer.INPUT_SLOT_NUMBER)
-        .isEmpty()
-        || tileInventoryFurnace.getStackInSlot(TileRepairer.OUTPUT_SLOT_NUMBER)
-        .isEmpty()))
+    if (!tileInventoryFurnace.isEmpty())
       for (IContainerListener listener : this.listeners)
       {
         // System.out.println("[RETROCRAFT] Container: Notify listeners!");
@@ -159,52 +155,51 @@ public class ContainerRepairer extends ContainerBase
     tileInventoryFurnace.setField(id, data);
   }
 
-//  public int repairCostMax()
-//  {
-//
-//    final double repairFactor = 1.5;
-//    final ItemStack itemStack = inventorySlots.get(0).getStack();
-//    if (itemStack == null)
-//      return 0;
-//
-//    if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
-//      return 0;
-//
-//    int cost = 0;
-//
-//    final Map<Enchantment, Integer> enchantments = EnchantmentHelper
-//        .getEnchantments(itemStack);
-//
-//    for (final Enchantment enchantment : enchantments.keySet())
-//    {
-//      final Integer enchantmentLevel = enchantments.get(enchantment);
-//
-//      cost += enchantmentCost(enchantment, enchantmentLevel, 0);
-//    }
-//
-//    final int maxDamage = itemStack.getMaxDamage();
-//    final int displayDamage = itemStack.getItemDamage();
-//    int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
-//
-//    if (enchantability <= 1)
-//    {
-//      enchantability = 10;
-//    }
-//
-//    final double percentDamage = 1
-//        - (maxDamage - displayDamage) / (double) maxDamage;
-//
-//    double totalCost = (percentDamage * cost) / enchantability;
-//
-//    totalCost *= 2 * repairFactor;
-//
-//    return (int) Math.max(1, totalCost);
-//  }
-  
+  // public int repairCostMax()
+  // {
+  //
+  // final double repairFactor = 1.5;
+  // final ItemStack itemStack = inventorySlots.get(0).getStack();
+  // if (itemStack == null)
+  // return 0;
+  //
+  // if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
+  // return 0;
+  //
+  // int cost = 0;
+  //
+  // final Map<Enchantment, Integer> enchantments = EnchantmentHelper
+  // .getEnchantments(itemStack);
+  //
+  // for (final Enchantment enchantment : enchantments.keySet())
+  // {
+  // final Integer enchantmentLevel = enchantments.get(enchantment);
+  //
+  // cost += enchantmentCost(enchantment, enchantmentLevel, 0);
+  // }
+  //
+  // final int maxDamage = itemStack.getMaxDamage();
+  // final int displayDamage = itemStack.getItemDamage();
+  // int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
+  //
+  // if (enchantability <= 1)
+  // {
+  // enchantability = 10;
+  // }
+  //
+  // final double percentDamage = 1
+  // - (maxDamage - displayDamage) / (double) maxDamage;
+  //
+  // double totalCost = (percentDamage * cost) / enchantability;
+  //
+  // totalCost *= 2 * repairFactor;
+  //
+  // return (int) Math.max(1, totalCost);
+  // }
+
   public class SlotRepairableInput extends Slot
   {
-    public SlotRepairableInput(IInventory inventoryIn, int index, int xPosition,
-        int yPosition)
+    public SlotRepairableInput(IInventory inventoryIn, int index, int xPosition, int yPosition)
     {
       super(inventoryIn, index, xPosition, yPosition);
     }
@@ -214,14 +209,13 @@ public class ContainerRepairer extends ContainerBase
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-      return TileRepairer.isItemValidForInputSlot(stack);
+      return stack.getItemDamage() > 0;
     }
   }
-  
+
   public class SlotRepairableOutput extends Slot
   {
-    public SlotRepairableOutput(IInventory inventoryIn, int index, int xPosition,
-        int yPosition)
+    public SlotRepairableOutput(IInventory inventoryIn, int index, int xPosition, int yPosition)
     {
       super(inventoryIn, index, xPosition, yPosition);
     }
@@ -231,7 +225,7 @@ public class ContainerRepairer extends ContainerBase
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-      return TileRepairer.isItemValidForOutputSlot(stack);
+      return false;
     }
   }
 }
