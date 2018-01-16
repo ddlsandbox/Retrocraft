@@ -28,7 +28,6 @@ public class GuiOreGrinder extends GuiContainer
   {
     super(containerGrinder);
 
-    // Set the width and height of the gui
     this.xSize = 176;
     this.ySize = 93 + 86;
 

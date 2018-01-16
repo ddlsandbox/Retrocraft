@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileOreGrinder extends TileEntityInventory implements IEnergyStorage, IEnergyDisplay
 {
   private static final int CAPACITY = RetroCraftGlobals.oreGrinderCapacity;
-  private static final int THROUGHPUT = 1000;
+  private static final int THROUGHPUT = RetroCraftGlobals.oreGrinderThroughput;
 
   private static final int ENERGY_USE = RetroCraftGlobals.oreGrinderEnergyUsed;
   private static final int CRUSH_TIME = RetroCraftGlobals.oreGrinderCrushTime;

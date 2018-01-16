@@ -1,7 +1,7 @@
 package com.retrocraft.machine.generator;
 
-import com.retrocraft.RetroCraft;
 import com.retrocraft.RetroCraftConfig;
+import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.api.energy.IEnergyProvider;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.tile.CustomEnergyStorage;
@@ -11,7 +11,6 @@ import com.retrocraft.util.ItemStackHandlerCustom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -35,12 +34,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileSteamGenerator extends TileEntityInventory
     implements IEnergyProvider, ITickable, IEnergyDisplay
 {
-  private static final int CAPACITY   = 320000;
-  private static final int THROUGHPUT = 30000;
+  private static final int CAPACITY   = RetroCraftGlobals.steamGeneratorNrgCapacity;
+  private static final int THROUGHPUT = RetroCraftGlobals.steamGeneratorNrgThroughput;
 
-  private static final int FLUID_CAPACITY = 2 * Fluid.BUCKET_VOLUME;
+  private static final int FLUID_CAPACITY = RetroCraftGlobals.steamGeneratorFluidCapacity;
 
-  public static final double EFFICIENCY = 0.5;
+  public static final double EFFICIENCY = RetroCraftGlobals.steamGeneratorEfficiency;
 
   private static final int FIELD_BURN_TIME_REMAINING    = 0;
   private static final int FIELD_BURN_INITIAL_VALUE     = 1;

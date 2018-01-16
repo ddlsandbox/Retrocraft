@@ -26,7 +26,7 @@ public class TileSmelter extends TileEntityInventory
     implements IEnergyStorage, ITickable, IEnergyDisplay
 {
   private static final int CAPACITY   = RetroCraftGlobals.oreSmelterCapacity;
-  private static final int THROUGHPUT = 1000;
+  private static final int THROUGHPUT = RetroCraftGlobals.oreSmelterThroughput;
 
   private static final int ENERGY_USE = RetroCraftGlobals.oreSmelterEnergyUsed;
   private static final int BURN_TIME  = RetroCraftGlobals.oreSmelterBurnTime;

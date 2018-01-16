@@ -13,7 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerOreGrinder  extends ContainerBase
 {
-
+  private static final int INPUT_SLOTS_XPOS  = 80;
+  private static final int INPUT_SLOTS_YPOS  = 14;
+  private static final int OUTPUT_SLOTS_XPOS = 80;
+  private static final int OUTPUT_SLOTS_YPOS = 58;
+  
   // Stores the tile entity instance for later use
   private TileOreGrinder tileGrinder;
 
@@ -34,13 +38,10 @@ public class ContainerOreGrinder  extends ContainerBase
 
     addVanillaSlots(invPlayer);
 
-    final int INPUT_SLOTS_XPOS = 80;
-    final int INPUT_SLOTS_YPOS = 14;
+    
     addSlotToContainer(new SlotInput(tileGrinder,
         INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
     
-    final int OUTPUT_SLOTS_XPOS = 80;
-    final int OUTPUT_SLOTS_YPOS = 58;
     addSlotToContainer(new SlotInput(tileGrinder,
         OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }

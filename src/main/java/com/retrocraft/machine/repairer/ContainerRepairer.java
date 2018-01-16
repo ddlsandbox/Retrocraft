@@ -21,10 +21,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerRepairer extends ContainerBase
 {
 
-  private final int INPUT_SLOTS_XPOS = 37;
-  private final int INPUT_SLOTS_YPOS = 17;
-  private final int OUTPUT_SLOTS_XPOS = 181;
-  private final int OUTPUT_SLOTS_YPOS = 17;
+  private static final int INPUT_SLOTS_XPOS  = 80;
+  private static final int INPUT_SLOTS_YPOS  = 14;
+  private static final int OUTPUT_SLOTS_XPOS = 80;
+  private static final int OUTPUT_SLOTS_YPOS = 58;
 
   // Stores the tile entity instance for later use
   private TileRepairer tileInventoryFurnace;
@@ -39,7 +39,11 @@ public class ContainerRepairer extends ContainerBase
   {
     super(true, true);
     this.tileInventoryFurnace = tileRepairer;
-
+    this.guiInventoryPosX = 8;
+    this.guiInventoryPosY = 97;
+    this.guiHotbarPosX    = 8;
+    this.guiHotbarPosY    = 155;
+    
     addVanillaSlots(invPlayer);
 
     addSlotToContainer(new SlotRepairableInput(tileRepairer, INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
@@ -50,7 +54,7 @@ public class ContainerRepairer extends ContainerBase
 
   public boolean repairItem()
   {
-    boolean repairOK = tileInventoryFurnace.repairItem();
+    boolean repairOK = tileInventoryFurnace.repairItem() > -1;
     tileInventoryFurnace.update();
     tileInventoryFurnace.markDirty();
     return repairOK;

@@ -1,5 +1,7 @@
 package com.retrocraft;
 
+import net.minecraftforge.fluids.Fluid;
+
 /* Not configurable global definitions */
 
 public class RetroCraftGlobals
@@ -9,11 +11,26 @@ public class RetroCraftGlobals
 
   public static int defaultCapacity      = 30000;
 
-  public static int oreGrinderCapacity   = 30000;
+  /* generators */
+  
+  public static int steamGeneratorNrgCapacity   = 10000;
+  public static int steamGeneratorNrgThroughput = 1000;
+  public static int steamGeneratorFluidCapacity = 2 * Fluid.BUCKET_VOLUME;
+  public static double steamGeneratorEfficiency = 0.5;
+  
+  /* machines */
+  
+  public static int oreGrinderCapacity   = 5000;
   public static int oreGrinderCrushTime  = 100;
   public static int oreGrinderEnergyUsed = 40;
-
-  public static int oreSmelterCapacity   = 30000;
+  public static int oreGrinderThroughput = 200;
+  
+  public static int oreSmelterCapacity   = 5000;
   public static int oreSmelterBurnTime   = 100;
   public static int oreSmelterEnergyUsed = 30;
+  public static int oreSmelterThroughput = 200;
+  
+  public static int repairerCapacity   = 10000;
+  public static int repairerEnergyUsed = 30;
+  public static int repairerThroughput = 200;
 }
