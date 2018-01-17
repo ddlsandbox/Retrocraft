@@ -3,6 +3,7 @@ package com.retrocraft.block;
 import java.util.Random;
 
 import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -36,7 +37,11 @@ public class BlockTorch extends BlockBase
   {
     super(Material.CIRCUITS, name);
     this.setTickRandomly(true);
-    //this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
+
+    this.setHarvestLevel("pickaxe", 0);
+    this.setHardness(1.5F);
+    this.setResistance(3.0F);
+    this.setSoundType(SoundType.METAL);
   }
 
   @Override

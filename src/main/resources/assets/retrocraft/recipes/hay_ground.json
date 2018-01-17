@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "retrocraft:hay_ground",
+    "count": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "dirt"
+    },
+    {
+      "item": "minecraft:hay_block"
+    }
+  ]
+}
+

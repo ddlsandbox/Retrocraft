@@ -1,17 +1,20 @@
 {
   "result": {
-    "item": "retrocraft:block_machinechasis",
+    "item": "retrocraft:block_pedestal",
     "count": 1
   },
   "type": "forge:ore_shaped",
   "pattern": [
-    "ISI",
-    "SSS",
-    "ISI"
+    "MMM",
+    " C ",
+    " S "
   ],
   "key": {
-    "I": {
+    "M": {
       "item": "retrocraft:ingot_manolium"
+    },
+    "C": {
+      "item": "retrocraft:mechanical_core"
     },
     "S": {
       "item": "minecraft:stone",
@@ -19,3 +22,4 @@
     }
   }
 }
+

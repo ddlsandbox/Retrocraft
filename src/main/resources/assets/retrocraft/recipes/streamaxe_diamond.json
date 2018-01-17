@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:streamaxe_diamond",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MM",
+    "MI",
+    " I"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:diamond_block"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

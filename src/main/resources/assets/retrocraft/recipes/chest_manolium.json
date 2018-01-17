@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "retrocraft:chest_manolium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "M M",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:ingot_manolium"
+    }
+  }
+}
+

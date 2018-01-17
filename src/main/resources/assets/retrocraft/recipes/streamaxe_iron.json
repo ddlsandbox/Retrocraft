@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:streamaxe_iron",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MM",
+    "MI",
+    " I"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:iron_block"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

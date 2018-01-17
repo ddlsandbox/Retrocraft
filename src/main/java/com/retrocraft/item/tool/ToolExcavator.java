@@ -18,6 +18,7 @@ public class ToolExcavator extends ItemSpade implements ItemModelProvider {
 
 	private String name;
 	private static int mineRadius = 1, mineDepth = 0;
+	private boolean isBasicMaterial;
 	
 	private static Material[] materials = { Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW,
 			Material.CRAFTED_SNOW, Material.CLAY };
@@ -27,6 +28,12 @@ public class ToolExcavator extends ItemSpade implements ItemModelProvider {
 		setRegistryName(name);
 		setUnlocalizedName(name);
 		this.name = name;
+		this.isBasicMaterial = 
+        (material == ToolMaterial.WOOD
+        || material == ToolMaterial.STONE
+        || material == ToolMaterial.IRON
+        || material == ToolMaterial.GOLD
+        || material == ToolMaterial.DIAMOND);
 	}
 
 	@Override
@@ -36,7 +43,8 @@ public class ToolExcavator extends ItemSpade implements ItemModelProvider {
 	
 	@Override
 	public ToolExcavator setCreativeTab(CreativeTabs tab) {
-		super.setCreativeTab(tab);
+	  if (!isBasicMaterial || RetroCraft.getConfig().supportBasicMaterials)
+	    super.setCreativeTab(tab);
 
 		return this;
 	}

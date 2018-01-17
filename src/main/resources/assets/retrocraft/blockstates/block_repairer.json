@@ -1,27 +1,27 @@
 {
-	"forge_marker": 1,
+  "forge_marker": 1,
    "defaults": {
          "model": "retrocraft:block_repairer",
          "uvlock": true
    },
-	"variants": {
-      "normal": [{}],
-      "facing": {
-         "west": {
-         },
-         "north": {
-           "y": 90
-         },
-         "east": {
-           "y": 180
-         },
-         "south": {
-           "y": -90
-         }
+  "variants": {
+    "normal": [{}],
+    "facing": {
+      "west": {
       },
-		"inventory": {
-			"model": "retrocraft:block_repairer",
-			"transform": "forge:default-block"
-		}
-	}
+      "north": {
+        "y": 90
+      },
+      "east": {
+        "y": 180
+      },
+      "south": {
+        "y": -90
+      }
+    },
+    "inventory": {
+      "model": "retrocraft:block_repairer",
+      "transform": "forge:default-block"
+    }
+  }
 }

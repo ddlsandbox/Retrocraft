@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:streamaxe_manolazium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MM",
+    "MI",
+    " I"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:block_manolazium"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

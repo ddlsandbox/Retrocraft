@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "retrocraft:legs_manolium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MMM",
+    "M M",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:ingot_manolium"
+    }
+  }
+}
+

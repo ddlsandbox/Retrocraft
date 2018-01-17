@@ -14,6 +14,8 @@ item.dust_manolazium.name=Polvo de Manolazium
 item.ingot_manolium.name=Lingote de Manolium
 item.ingot_manolazium.name=Lingote de Manolazium
 
+tile.hay_ground.name=Suelo de Paja
+tile.manure_ground.name=Suelo de Esterco
 item.manure.name=Esterco
 
 tile.block_manolium.name=Bloque de Manolium

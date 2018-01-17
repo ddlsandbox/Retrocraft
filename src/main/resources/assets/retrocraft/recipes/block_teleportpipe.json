@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "retrocraft:block_teleportpipe",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SSS",
+    "ECE",
+    "OOO"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone",
+      "data": 0
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "C": {
+      "item": "retrocraft:magical_core"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}
+

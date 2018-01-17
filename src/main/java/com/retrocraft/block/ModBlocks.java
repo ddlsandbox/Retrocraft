@@ -31,6 +31,11 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:block_octirion")
 	public static BlockBase blockOctirion;
 	
+	@GameRegistry.ObjectHolder("retrocraft:hay_ground")
+  public static BlockHayGround blockHayGround;
+	@GameRegistry.ObjectHolder("retrocraft:manure_ground")
+  public static BlockBase blockManureGround;
+	
 	@GameRegistry.ObjectHolder("retrocraft:block_pedestal")
 	public static BlockPedestal pedestalManolium;
 
@@ -91,6 +96,9 @@ public class ModBlocks {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManolium), 0, new ModelResourceLocation(blockManolium.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManolazium), 0, new ModelResourceLocation(blockManolazium.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOctirion), 0, new ModelResourceLocation(blockOctirion.getRegistryName(), "inventory"));
+        
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockHayGround), 0, new ModelResourceLocation(blockHayGround.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManureGround), 0, new ModelResourceLocation(blockManureGround.getRegistryName(), "inventory"));
         
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockMachineChasis), 0, new ModelResourceLocation(blockMachineChasis.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOctirionChasis), 0, new ModelResourceLocation(blockOctirionChasis.getRegistryName(), "inventory"));

@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:chest_manolazium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "M M",
+    "CCC",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:ingot_manolazium"
+    },
+    "C": {
+      "item": "retrocraft:magical_core"
+    }
+  }
+}
+

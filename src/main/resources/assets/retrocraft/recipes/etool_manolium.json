@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "retrocraft:etool_manolium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ABC",
+    " I ",
+    " I "
+  ],
+  "key": {
+    "A": {
+      "item": "retrocraft:excavator_manolium"
+    },
+    "B": {
+      "item": "retrocraft:hammer_manolium"
+    },
+    "C": {
+      "item": "retrocraft:streamaxe_manolium"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

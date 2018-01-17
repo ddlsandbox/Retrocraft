@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "retrocraft:ingot_manolazium",
+    "count": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "retrocraft:ingot_manolium"
+    },
+    {
+      "item": "retrocraft:gem_octirion"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ]
+}
+

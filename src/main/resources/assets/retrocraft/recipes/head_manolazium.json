@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "retrocraft:head_manolazium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "CMC",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:ingot_manolazium"
+    },
+    "C": {
+      "item": "retrocraft:magical_core"
+    }
+  }
+}
+

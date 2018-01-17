@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:sword_manolazium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "M",
+    "M",
+    "I"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:ingot_manolazium"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

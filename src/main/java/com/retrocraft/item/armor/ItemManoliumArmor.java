@@ -6,11 +6,13 @@ import com.retrocraft.item.ModItems;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class ItemManoliumArmor extends ItemArmor implements ItemModelProvider
@@ -93,16 +95,16 @@ public class ItemManoliumArmor extends ItemArmor implements ItemModelProvider
   {
     super.onArmorTick(world, player, itemStack);
     
-//    if (itemStack.getItem() == ModItems.manolaziumHead)
-//      player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 12 * 20, 0, true, false));
-//    else if (itemStack.getItem() == ModItems.manolaziumChest)
-//    {
-//      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 12 * 20, 1, true, false));
-//    }
-//    else if (itemStack.getItem() == ModItems.manolaziumFeet)
-//    {
-//      player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 12 * 20, 2, true, false));
-//      player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 12 * 20, 4, true, false));
-//    }
+    if (itemStack.getItem() == ModItems.manolaziumHead)
+      player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 12 * 20, 0, true, false));
+    else if (itemStack.getItem() == ModItems.manolaziumChest)
+    {
+      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 12 * 20, 1, true, false));
+    }
+    else if (itemStack.getItem() == ModItems.manolaziumFeet)
+    {
+      player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 12 * 20, 2, true, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 12 * 20, 4, true, false));
+    }
   }
 }

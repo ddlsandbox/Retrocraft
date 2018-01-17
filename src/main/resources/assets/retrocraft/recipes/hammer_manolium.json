@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:hammer_manolium",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MMM",
+    " I ",
+    " I "
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:block_manolium"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

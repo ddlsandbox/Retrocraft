@@ -14,6 +14,8 @@ item.dust_manolazium.name=Manolazium Dust
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
 
+tile.hay_ground.name=Hay Ground
+tile.manure_ground.name=Manure Ground
 item.manure.name=Manure
 
 tile.block_manolium.name=Block of Manolium

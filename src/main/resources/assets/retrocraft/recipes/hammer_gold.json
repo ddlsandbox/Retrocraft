@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:hammer_gold",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "MMM",
+    " I ",
+    " I "
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:gold_block"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  }
+}
+

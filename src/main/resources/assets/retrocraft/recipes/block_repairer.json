@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "retrocraft:block_repairer",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "GAG",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "G": {
+      "item": "retrocraft:gem_octirion"
+    },
+    "C": {
+      "item": "retrocraft:magical_core"
+    },
+    "A": {
+      "item": "minecraft:anvil",
+      "data": 0
+    },
+    "M": {
+      "item": "retrocraft:block_machinechasis"
+    }
+  }
+}
+

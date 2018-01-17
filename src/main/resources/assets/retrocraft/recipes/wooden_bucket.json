@@ -1,0 +1,67 @@
+{
+  "result": {
+    "item": "retrocraft:wooden_bucket",
+    "data": 0,
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "P P",
+    "PSP"
+  ],
+  "key": {
+    "P":  [
+      {
+        "item": "minecraft:planks",
+        "data": 0
+      },
+      {
+        "item": "minecraft:planks",
+        "data": 1
+      },
+      {
+        "item": "minecraft:planks",
+        "data": 2
+      },
+      {
+        "item": "minecraft:planks",
+        "data": 3
+      },
+      {
+        "item": "minecraft:planks",
+        "data": 4
+      },
+      {
+        "item": "minecraft:planks",
+        "data": 5
+      }
+    ],
+    "S":  [
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 0
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 1
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 2
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 3
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 4
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 5
+      }
+    ]
+  }
+}
+

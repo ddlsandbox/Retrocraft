@@ -11,15 +11,26 @@ import net.minecraft.util.math.RayTraceResult;
 
 public class ToolBase extends ItemPickaxe
 {
-
+  protected String name;
   protected Material[] materials;
-
+  protected boolean isBasicMaterial;
+  
   private static int mineRadius = 1, mineDepth = 0;
 
-  public ToolBase(ToolMaterial material, Material[] breakableMaterials)
+  public ToolBase(String name, ToolMaterial material, Material[] breakableMaterials)
   {
     super(material);
+    this.name = name;
     this.materials = breakableMaterials;
+    this.isBasicMaterial = 
+        (material == ToolMaterial.WOOD
+        || material == ToolMaterial.STONE
+        || material == ToolMaterial.IRON
+        || material == ToolMaterial.GOLD
+        || material == ToolMaterial.DIAMOND);
+    
+    setRegistryName(name);
+    setUnlocalizedName(name);
   }  
 
   @Override

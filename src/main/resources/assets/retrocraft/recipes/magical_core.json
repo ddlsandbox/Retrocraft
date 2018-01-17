@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:magical_core",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "retrocraft:gem_octirion"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    }
+  }
+}
+

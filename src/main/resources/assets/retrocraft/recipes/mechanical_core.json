@@ -1,21 +1,21 @@
 {
   "result": {
-    "item": "retrocraft:block_machinechasis",
+    "item": "retrocraft:mechanical_core",
     "count": 1
   },
   "type": "forge:ore_shaped",
   "pattern": [
-    "ISI",
-    "SSS",
-    "ISI"
+    "MMM",
+    "MDM",
+    "MMM"
   ],
   "key": {
-    "I": {
+    "M": {
       "item": "retrocraft:ingot_manolium"
     },
-    "S": {
-      "item": "minecraft:stone",
-      "data": 0
+    "D": {
+      "item": "minecraft:diamond"
     }
   }
 }
+
