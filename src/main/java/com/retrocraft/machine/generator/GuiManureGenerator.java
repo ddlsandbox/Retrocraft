@@ -5,29 +5,26 @@ import java.awt.Color;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.machine.GuiEnergyDisplay;
-import com.retrocraft.machine.GuiFluidDisplay;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiSteamGenerator extends GuiContainer
+public class GuiManureGenerator extends GuiContainer
 {
-  private TileSteamGenerator tileGenerator;
+  private TileManureGenerator tileGenerator;
   private GuiEnergyDisplay energy;
-  private GuiFluidDisplay fluid;
-  
 
   private static final ResourceLocation BG_TEXTURE        = new ResourceLocation(
-      RetroCraft.modId, "textures/gui/steamgenerator.png");
+      RetroCraft.modId, "textures/gui/manuregenerator.png");
   private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(
       RetroCraft.modId, "textures/gui/inventory.png");
 
-  public GuiSteamGenerator(InventoryPlayer invPlayer, TileSteamGenerator tileGenerator,
-                           ContainerSteamGenerator containerSteamGenerator)
+  public GuiManureGenerator(InventoryPlayer invPlayer, TileManureGenerator tileGenerator,
+                           ContainerManureGenerator containerManureGenerator)
   {
-    super(containerSteamGenerator);
+    super(containerManureGenerator);
 
     // Set the width and height of the gui
     this.xSize = 176;
@@ -40,8 +37,6 @@ public class GuiSteamGenerator extends GuiContainer
   public void initGui()
   {
     super.initGui();
-    this.fluid = new GuiFluidDisplay(this.guiLeft + 42, this.guiTop + 6,
-        this.tileGenerator.tank, false, false);
     this.energy = new GuiEnergyDisplay(this.guiLeft + 116, this.guiTop + 6,
         this.tileGenerator.storage);
   }
@@ -50,7 +45,6 @@ public class GuiSteamGenerator extends GuiContainer
   public void drawScreen(int x, int y, float f){
       super.drawScreen(x, y, f);
       this.energy.drawOverlay(x, y);
-      this.fluid.drawOverlay(x, y);
   }
   
   @Override
@@ -84,7 +78,6 @@ public class GuiSteamGenerator extends GuiContainer
     }
 
     this.energy.draw();
-    this.fluid.draw();
   }
 
 }

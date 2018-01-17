@@ -14,6 +14,8 @@ item.dust_manolazium.name=Manolazium Dust
 item.ingot_manolium.name=Manolium Ingot
 item.ingot_manolazium.name=Manolazium Ingot
 
+item.manure.name=Manure
+
 tile.block_manolium.name=Block of Manolium
 tile.block_manolazium.name=Block of Manolazium
 tile.block_octirion.name=Block of Octiron
@@ -66,8 +68,10 @@ item.wooden_bucket.name=Wooden Bucket
 item.wooden_bucket_water.name=Wooden Bucket of Water
 item.wooden_bucket_milk.name=Wooden Bucket of Milk
 
+item.backpack.name=Backpack
+
 # Entities
-tile.multifurnace.name=Multifurnace
+tile.block_multifurnace.name=Multifurnace
 
 tile.block_enchanter.name=The Enchanter
 tooltip.enchanter.playerlevel=Player Level
@@ -78,6 +82,7 @@ tooltip.enchanter.additem=Place an item in the table
 tile.block_repairer.name=Repairer
 tile.block_pedestal.name=Pedestal
 tile.block_steamgenerator.name=Steam Generator
+tile.block_manuregenerator.name=Manure Generator
 tile.block_oregrinder.name=Ore Grinder
 tile.block_oresmelter.name=Ore Smelter
 tile.block_electricforge.name=Electric Forge
@@ -87,6 +92,7 @@ tile.lightpillar.name=Light Pillar
 
 # TeleportPipes
 tile.block_teleportPipe.name=Teleport Pipe
+tile.block_telepipe.name=Teleport connector
 
 retrocraft:noDimensionWarp=You cannot warp between worlds.
 retrocraft:teleportPipeBroken=The bound pipe has been moved or destroyed.

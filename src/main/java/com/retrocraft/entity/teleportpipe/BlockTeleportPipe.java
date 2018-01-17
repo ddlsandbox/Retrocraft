@@ -56,30 +56,6 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
       new ModelResourceLocation(getRegistryName(), "inventory"));
   }
   
-//  @Override
-//  protected BlockStateContainer createBlockState()
-//  {
-//    return new BlockStateContainer(this, FACING);
-//  }
-
-//  @Override
-//  public int getMetaFromState(IBlockState state)
-//  {
-//    int meta = state.getValue(FACING).getIndex();
-//    return meta;
-//  }
-
-//  @Override
-//  public IBlockState getStateFromMeta(int meta)
-//  {
-//    EnumFacing facing = EnumFacing.getFront(meta & 7);
-//    if (facing.getAxis() == EnumFacing.Axis.Y)
-//    {
-//      facing = EnumFacing.NORTH;
-//    }
-//    return getDefaultState().withProperty(FACING, facing);
-//  }
-
   @Override
   public boolean isOpaqueCube(IBlockState state)
   {

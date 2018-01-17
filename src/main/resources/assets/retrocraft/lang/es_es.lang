@@ -14,6 +14,8 @@ item.dust_manolazium.name=Polvo de Manolazium
 item.ingot_manolium.name=Lingote de Manolium
 item.ingot_manolazium.name=Lingote de Manolazium
 
+item.manure.name=Esterco
+
 tile.block_manolium.name=Bloque de Manolium
 tile.block_manolazium.name=Bloque de Manolazium
 tile.block_octirion.name=Bloque de Octiron
@@ -66,8 +68,10 @@ item.wooden_bucket.name=Cubo de Madera
 item.wooden_bucket_water.name=Cubo de Agua de Madera
 item.wooden_bucket_milk.name=Cubo de Leche de Madera
 
+item.backpack.name=Mochila
+
 # Entities
-tile.multifurnace.name=Multihorno
+tile.block_multifurnace.name=Multihorno
 
 tile.block_enchanter.name=Encanter
 tooltip.enchanter.playerlevel=Nivel actual
@@ -78,6 +82,7 @@ tooltip.enchanter.additem=Coloca un item en la mesa
 tile.block_repairer.name=Reparador
 tile.block_pedestal.name=Pedestal
 tile.block_steamgenerator.name=Generador de Vapor
+tile.block_manuregenerator.name=Generador de Esterco
 tile.block_oregrinder.name=Machacamenas
 tile.block_oresmelter.name=Fundición
 tile.block_electricforge.name=Forja Eléctrica
@@ -87,6 +92,7 @@ tile.lightpillar.name=Pilar de luz
 
 # TeleportPipes
 tile.block_teleportPipe.name=Tubería de Teletransporte
+tile.block_telepipe.name=Conector de Teletransporte
 
 retrocraft:noDimensionWarp=No te puedes transportar entre dimensiones.
 retrocraft:teleportPipeBroken=La otra tubería ha desaparecido.

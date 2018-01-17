@@ -17,102 +17,109 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems {
 
-	/* dust */
-	@GameRegistry.ObjectHolder("retrocraft:dust_manolite")
-	public static ItemOre dustManolite;
-	@GameRegistry.ObjectHolder("retrocraft:dust_manolazium")
-	public static ItemOre dustManolazium;
-	@GameRegistry.ObjectHolder("retrocraft:gem_octirion")
-	public static ItemOre gemOctirion;
+  /* dust */
+  @GameRegistry.ObjectHolder("retrocraft:dust_manolite")
+  public static ItemOre dustManolite;
+  @GameRegistry.ObjectHolder("retrocraft:dust_manolazium")
+  public static ItemOre dustManolazium;
+  @GameRegistry.ObjectHolder("retrocraft:gem_octirion")
+  public static ItemOre gemOctirion;
 
-	/* ingot */
-	@GameRegistry.ObjectHolder("retrocraft:ingot_manolium")
-	public static ItemOre ingotManolium;
-	@GameRegistry.ObjectHolder("retrocraft:ingot_manolazium")
-	public static ItemOre ingotManolazium;
+  /* ingot */
+  @GameRegistry.ObjectHolder("retrocraft:ingot_manolium")
+  public static ItemOre ingotManolium;
+  @GameRegistry.ObjectHolder("retrocraft:ingot_manolazium")
+  public static ItemOre ingotManolazium;
 
-	@GameRegistry.ObjectHolder("retrocraft:mechanical_core")
-	public static ItemOre mechanicalCore;
-	@GameRegistry.ObjectHolder("retrocraft:magical_core")
-	public static ItemOre magicalCore;
+  @GameRegistry.ObjectHolder("retrocraft:mechanical_core")
+  public static ItemOre mechanicalCore;
+  @GameRegistry.ObjectHolder("retrocraft:magical_core")
+  public static ItemOre magicalCore;
 
-	/* tools */
-	
-  	@GameRegistry.ObjectHolder("retrocraft:hammer_stone")
-  	public static ToolHammer stoneHammer;
-  	@GameRegistry.ObjectHolder("retrocraft:hammer_iron")
-  	public static ToolHammer ironHammer;
-	@GameRegistry.ObjectHolder("retrocraft:hammer_gold")
-  	public static ToolHammer goldHammer;
-  	@GameRegistry.ObjectHolder("retrocraft:hammer_diamond")
-  	public static ToolHammer diamondHammer;
-	@GameRegistry.ObjectHolder("retrocraft:hammer_manolium")
-  	public static ToolHammer manoliumHammer;
+  /* misc */
+  
+  @GameRegistry.ObjectHolder("retrocraft:manure")
+  public static ItemManure manure;
+  
+  /* tools */
 
-	@GameRegistry.ObjectHolder("retrocraft:excavator_stone")
-	public static ToolExcavator stoneExcavator;
-	@GameRegistry.ObjectHolder("retrocraft:excavator_iron")
-	public static ToolExcavator ironExcavator;
-	@GameRegistry.ObjectHolder("retrocraft:excavator_gold")
-	public static ToolExcavator goldExcavator;
-	@GameRegistry.ObjectHolder("retrocraft:excavator_diamond")
-	public static ToolExcavator diamondExcavator;
-	@GameRegistry.ObjectHolder("retrocraft:excavator_manolium")
-	public static ToolExcavator manoliumExcavator;
-	@GameRegistry.ObjectHolder("retrocraft:excavator_manolazium")
-	public static ToolExcavator manolaziumExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:hammer_stone")
+  public static ToolHammer stoneHammer;
+  @GameRegistry.ObjectHolder("retrocraft:hammer_iron")
+  public static ToolHammer ironHammer;
+  @GameRegistry.ObjectHolder("retrocraft:hammer_gold")
+  public static ToolHammer goldHammer;
+  @GameRegistry.ObjectHolder("retrocraft:hammer_diamond")
+  public static ToolHammer diamondHammer;
+  @GameRegistry.ObjectHolder("retrocraft:hammer_manolium")
+  public static ToolHammer manoliumHammer;
 
-	@GameRegistry.ObjectHolder("retrocraft:streamaxe_stone")
-	public static ToolStreamAxe stoneStreamAxe;
-	@GameRegistry.ObjectHolder("retrocraft:streamaxe_iron")
-	public static ToolStreamAxe ironStreamAxe;
-	@GameRegistry.ObjectHolder("retrocraft:streamaxe_gold")
-	public static ToolStreamAxe goldStreamAxe;
-	@GameRegistry.ObjectHolder("retrocraft:streamaxe_diamond")
-	public static ToolStreamAxe diamondStreamAxe;
-	@GameRegistry.ObjectHolder("retrocraft:streamaxe_manolium")
-	public static ToolStreamAxe manoliumStreamAxe;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_stone")
+  public static ToolExcavator stoneExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_iron")
+  public static ToolExcavator ironExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_gold")
+  public static ToolExcavator goldExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_diamond")
+  public static ToolExcavator diamondExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_manolium")
+  public static ToolExcavator manoliumExcavator;
+  @GameRegistry.ObjectHolder("retrocraft:excavator_manolazium")
+  public static ToolExcavator manolaziumExcavator;
 
-	@GameRegistry.ObjectHolder("retrocraft:etool_manolium")
-	public static ToolEverything manoliumETool;
-	@GameRegistry.ObjectHolder("retrocraft:etool_manolazium")
-	public static ToolEverything manolaziumETool;
+  @GameRegistry.ObjectHolder("retrocraft:streamaxe_stone")
+  public static ToolStreamAxe stoneStreamAxe;
+  @GameRegistry.ObjectHolder("retrocraft:streamaxe_iron")
+  public static ToolStreamAxe ironStreamAxe;
+  @GameRegistry.ObjectHolder("retrocraft:streamaxe_gold")
+  public static ToolStreamAxe goldStreamAxe;
+  @GameRegistry.ObjectHolder("retrocraft:streamaxe_diamond")
+  public static ToolStreamAxe diamondStreamAxe;
+  @GameRegistry.ObjectHolder("retrocraft:streamaxe_manolium")
+  public static ToolStreamAxe manoliumStreamAxe;
 
-	/* armor */
-	@GameRegistry.ObjectHolder("retrocraft:head_manolium")
-	public static ItemManoliumArmor manoliumHead;
-	@GameRegistry.ObjectHolder("retrocraft:head_manolazium")
-	public static ItemManoliumArmor manolaziumHead;
-	@GameRegistry.ObjectHolder("retrocraft:chest_manolium")
-	public static ItemManoliumArmor manoliumChest;
-	@GameRegistry.ObjectHolder("retrocraft:chest_manolazium")
-	public static ItemManoliumArmor manolaziumChest;
-	@GameRegistry.ObjectHolder("retrocraft:legs_manolium")
-	public static ItemManoliumArmor manoliumLegs;
-	@GameRegistry.ObjectHolder("retrocraft:legs_manolazium")
-	public static ItemManoliumArmor manolaziumLegs;
-	@GameRegistry.ObjectHolder("retrocraft:feet_manolium")
-	public static ItemManoliumArmor manoliumFeet;
-	@GameRegistry.ObjectHolder("retrocraft:feet_manolazium")
-	public static ItemManoliumArmor manolaziumFeet;
-	
-	/* weapons */
-	@GameRegistry.ObjectHolder("retrocraft:sword_manolium")
-	public static ItemSword manoliumSword;
-	@GameRegistry.ObjectHolder("retrocraft:sword_manolazium")
-	public static ItemSword manolaziumSword;
-	@GameRegistry.ObjectHolder("retrocraft:sword_octirion")
-	public static ItemSword octirionSword;
+  @GameRegistry.ObjectHolder("retrocraft:etool_manolium")
+  public static ToolEverything manoliumETool;
+  @GameRegistry.ObjectHolder("retrocraft:etool_manolazium")
+  public static ToolEverything manolaziumETool;
 
-	@GameRegistry.ObjectHolder("retrocraft:backpack")
-	public static ItemBackpack backpack;
-	 
-	@GameRegistry.ObjectHolder("retrocraft:wooden_bucket")
-	public static ItemWoodenBucket woodenBucket;
-//	public static ItemWoodenBucket woodenWaterBucket;
-	@GameRegistry.ObjectHolder("retrocraft:wooden_bucket_milk")
-	public static ItemWoodenMilkBucket woodenMilkBucket;
+  /* armor */
+  @GameRegistry.ObjectHolder("retrocraft:head_manolium")
+  public static ItemManoliumArmor manoliumHead;
+  @GameRegistry.ObjectHolder("retrocraft:head_manolazium")
+  public static ItemManoliumArmor manolaziumHead;
+  @GameRegistry.ObjectHolder("retrocraft:chest_manolium")
+  public static ItemManoliumArmor manoliumChest;
+  @GameRegistry.ObjectHolder("retrocraft:chest_manolazium")
+  public static ItemManoliumArmor manolaziumChest;
+  @GameRegistry.ObjectHolder("retrocraft:legs_manolium")
+  public static ItemManoliumArmor manoliumLegs;
+  @GameRegistry.ObjectHolder("retrocraft:legs_manolazium")
+  public static ItemManoliumArmor manolaziumLegs;
+  @GameRegistry.ObjectHolder("retrocraft:feet_manolium")
+  public static ItemManoliumArmor manoliumFeet;
+  @GameRegistry.ObjectHolder("retrocraft:feet_manolazium")
+  public static ItemManoliumArmor manolaziumFeet;
 
+  /* weapons */
+  @GameRegistry.ObjectHolder("retrocraft:sword_manolium")
+  public static ItemSword manoliumSword;
+  @GameRegistry.ObjectHolder("retrocraft:sword_manolazium")
+  public static ItemSword manolaziumSword;
+  @GameRegistry.ObjectHolder("retrocraft:sword_octirion")
+  public static ItemSword octirionSword;
+
+  @GameRegistry.ObjectHolder("retrocraft:backpack")
+  public static ItemBackpack backpack;
+
+  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket")
+  public static ItemWoodenBucket woodenBucket;
+  
+  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket_water")
+  public static ItemWoodenBucket woodenWaterBucket;
+  
+  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket_milk")
+  public static ItemWoodenMilkBucket woodenMilkBucket;
 	
 	
 	public static void init() {
@@ -138,7 +145,10 @@ public class ModItems {
 		mechanicalCore.initModel();
 		magicalCore.initModel();
 		
+		manure.initModel();
+		
 		ModelLoader.setCustomModelResourceLocation(woodenBucket, 0, new ModelResourceLocation(woodenBucket.getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(woodenWaterBucket, 0, new ModelResourceLocation(woodenWaterBucket.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(woodenMilkBucket, 0, new ModelResourceLocation(woodenMilkBucket.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(backpack, 0, new ModelResourceLocation(backpack.getRegistryName(), "inventory"));
 		

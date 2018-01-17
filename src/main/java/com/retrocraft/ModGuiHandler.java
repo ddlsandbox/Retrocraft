@@ -8,8 +8,11 @@ import com.retrocraft.item.backpack.GuiBackpack;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
+import com.retrocraft.machine.generator.ContainerManureGenerator;
 import com.retrocraft.machine.generator.ContainerSteamGenerator;
+import com.retrocraft.machine.generator.GuiManureGenerator;
 import com.retrocraft.machine.generator.GuiSteamGenerator;
+import com.retrocraft.machine.generator.TileManureGenerator;
 import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.grinder.ContainerOreGrinder;
 import com.retrocraft.machine.grinder.GuiOreGrinder;
@@ -39,16 +42,17 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
  */
 public class ModGuiHandler implements IGuiHandler
 {
-  public static final int ENCHANTER      = 0;
-  public static final int REPAIRER       = 1;
-  public static final int MULTIFURNACE   = 2;
-  public static final int STEAMGENERATOR = 3;
-  public static final int OREGRINDER     = 4;
-  public static final int ORESMELTER     = 5;
-  public static final int ELECTRIC_FORGE = 6;
-  public static final int ADVANCED_FORGE = 7;
-  public static final int TELEPORT       = 8;
-  public static final int BACKPACK       = 9;
+  public static final int STEAMGENERATOR  = 0;
+  public static final int MANUREGENERATOR = 1;
+  public static final int ENCHANTER       = 2;
+  public static final int REPAIRER        = 3;
+  public static final int MULTIFURNACE    = 4;
+  public static final int OREGRINDER      = 5;
+  public static final int ORESMELTER      = 6;
+  public static final int ELECTRIC_FORGE  = 7;
+  public static final int ADVANCED_FORGE  = 8;
+  public static final int TELEPORT        = 9;
+  public static final int BACKPACK        = 10;
 
   @Override
   public Container getServerGuiElement(int ID, EntityPlayer player, World world,
@@ -60,6 +64,12 @@ public class ModGuiHandler implements IGuiHandler
      */
     switch (ID)
     {
+    case STEAMGENERATOR:
+      return new ContainerSteamGenerator(player.inventory,
+          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)));
+    case MANUREGENERATOR:
+      return new ContainerManureGenerator(player.inventory,
+          (TileManureGenerator) world.getTileEntity(new BlockPos(x, y, z)));
     case ENCHANTER:
       return new ContainerEnchanter(player.inventory,
           (TileEntityEnchanter) world.getTileEntity(new BlockPos(x, y, z)));
@@ -69,9 +79,6 @@ public class ModGuiHandler implements IGuiHandler
     case REPAIRER:
       return new ContainerRepairer(player.inventory,
           (TileRepairer) world.getTileEntity(new BlockPos(x, y, z)));
-    case STEAMGENERATOR:
-      return new ContainerSteamGenerator(player.inventory,
-          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)));
     case OREGRINDER:
       return new ContainerOreGrinder(player.inventory,
           (TileOreGrinder) world.getTileEntity(new BlockPos(x, y, z)));
@@ -100,6 +107,16 @@ public class ModGuiHandler implements IGuiHandler
   {
     switch (ID)
     {
+    case STEAMGENERATOR:
+      return new GuiSteamGenerator(player.inventory,
+          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)),
+          new ContainerSteamGenerator(player.inventory,
+              (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z))));
+    case MANUREGENERATOR:
+      return new GuiManureGenerator(player.inventory,
+          (TileManureGenerator) world.getTileEntity(new BlockPos(x, y, z)),
+          new ContainerManureGenerator(player.inventory,
+              (TileManureGenerator) world.getTileEntity(new BlockPos(x, y, z))));
     case ENCHANTER:
       return new GuiEnchanter(getServerGuiElement(ID, player, world, x, y, z),
           player.inventory);
@@ -111,11 +128,6 @@ public class ModGuiHandler implements IGuiHandler
           (TileRepairer) world.getTileEntity(new BlockPos(x, y, z)),
           new ContainerRepairer(player.inventory,
               (TileRepairer) world.getTileEntity(new BlockPos(x, y, z))));
-    case STEAMGENERATOR:
-      return new GuiSteamGenerator(player.inventory,
-          (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z)),
-          new ContainerSteamGenerator(player.inventory,
-              (TileSteamGenerator) world.getTileEntity(new BlockPos(x, y, z))));
     case OREGRINDER:
       return new GuiOreGrinder(player.inventory,
           (TileOreGrinder) world.getTileEntity(new BlockPos(x, y, z)),

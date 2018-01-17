@@ -1,0 +1,70 @@
+{
+   "parent": "block/orientable",
+	"textures": {
+		"base": "retrocraft:blocks/steam_generator_side",
+		"pipe": "retrocraft:blocks/steam_generator_side",
+		"pipetop": "blocks/obsidian",
+      "front": "retrocraft:blocks/steam_generator_front",
+		"particle": "blocks/iron_block"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"down": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#base",
+					"cullface": "down"
+				},
+            "up": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#base"
+				},
+				"north": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#front"
+				},
+				"south": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#base"
+				},
+				"west": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#base"
+				},
+				"east": {
+					"uv": [0, 0, 16, 16],
+					"texture": "#base"
+				}
+			}
+		},
+		{
+			"from": [6, 12, 6],
+			"to": [10, 16, 10],
+			"faces": {
+				"up": {
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipetop"
+				},
+				"north": {
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipe"
+				},
+				"south": {
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipe"
+				},
+				"west": {
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipe"
+				},
+				"east": {
+					"uv": [6, 6, 10, 10],
+					"texture": "#pipe"
+				}
+			}
+		}
+	]
+}
+

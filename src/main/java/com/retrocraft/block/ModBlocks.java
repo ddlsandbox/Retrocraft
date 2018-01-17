@@ -3,6 +3,7 @@ package com.retrocraft.block;
 import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
+import com.retrocraft.machine.generator.BlockManureGenerator;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.multifurnace.BlockMultifurnace;
@@ -50,6 +51,9 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:block_steamgenerator")
 	public static BlockSteamGenerator blockGenerator;
 
+	@GameRegistry.ObjectHolder("retrocraft:block_manuregenerator")
+  public static BlockManureGenerator blockManureGenerator;
+	
 	@GameRegistry.ObjectHolder("retrocraft:block_oregrinder")
 	public static BlockOreGrinder blockOreGrinder;
 	
@@ -76,6 +80,7 @@ public class ModBlocks {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreGrinder), 0, new ModelResourceLocation(blockOreGrinder.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockOreSmelter), 0, new ModelResourceLocation(blockOreSmelter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockGenerator), 0, new ModelResourceLocation(blockGenerator.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockManureGenerator), 0, new ModelResourceLocation(blockManureGenerator.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockEnchanter), 0, new ModelResourceLocation(blockEnchanter.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockRepairer), 0, new ModelResourceLocation(blockRepairer.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(blockMultifurnace), 0, new ModelResourceLocation(blockMultifurnace.getRegistryName(), "inventory"));

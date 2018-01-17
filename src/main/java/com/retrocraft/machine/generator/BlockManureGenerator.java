@@ -2,31 +2,21 @@ package com.retrocraft.machine.generator;
 
 import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.block.BlockTileEntity;
 import com.retrocraft.block.BlockTileEntityOrientable;
 
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockSteamGenerator extends BlockTileEntityOrientable<TileSteamGenerator>
+public class BlockManureGenerator extends BlockTileEntityOrientable<TileManureGenerator>
 {
   
-  public static final PropertyDirection FACING = BlockHorizontal.FACING;
-  
-  public BlockSteamGenerator(String name)
+  public BlockManureGenerator(String name)
   {
     super(Material.ROCK, name);
     this.setTickRandomly(true);
@@ -47,22 +37,22 @@ public class BlockSteamGenerator extends BlockTileEntityOrientable<TileSteamGene
   }
 
   @Override
-  public BlockSteamGenerator setCreativeTab(CreativeTabs tab)
+  public BlockManureGenerator setCreativeTab(CreativeTabs tab)
   {
     super.setCreativeTab(tab);
     return this;
   }
 
   @Override
-  public Class<TileSteamGenerator> getTileEntityClass()
+  public Class<TileManureGenerator> getTileEntityClass()
   {
-    return TileSteamGenerator.class;
+    return TileManureGenerator.class;
   }
 
   @Override
-  public TileSteamGenerator createTileEntity(World world, IBlockState state)
+  public TileManureGenerator createTileEntity(World world, IBlockState state)
   {
-    return new TileSteamGenerator();
+    return new TileManureGenerator();
   }
 
   @Override
@@ -73,7 +63,7 @@ public class BlockSteamGenerator extends BlockTileEntityOrientable<TileSteamGene
     if (worldIn.isRemote)
       return true;
 
-    playerIn.openGui(RetroCraft.instance, ModGuiHandler.STEAMGENERATOR, worldIn,
+    playerIn.openGui(RetroCraft.instance, ModGuiHandler.MANUREGENERATOR, worldIn,
         pos.getX(), pos.getY(), pos.getZ());
     return true;
   }

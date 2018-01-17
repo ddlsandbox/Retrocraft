@@ -76,80 +76,90 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn,
-      EntityPlayer playerIn, EnumHand hand)
+      EntityPlayer player, EnumHand hand)
   {
     boolean flag = this.isFull == Blocks.AIR;
 
-    ItemStack itemStackIn = playerIn.getHeldItem(hand);
+    ItemStack itemStackIn = player.getHeldItem(hand);
     if (!worldIn.isRemote && itemStackIn != null)
     {
-      RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, flag);
+      RayTraceResult raytraceresult = this.rayTrace(worldIn, player, flag);
 
-      if (raytraceresult != null
-          && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
+      if (raytraceresult != null)
       {
-        BlockPos blockpos = raytraceresult.getBlockPos();
-
-        if (!worldIn.isBlockModifiable(playerIn, blockpos))
+        if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) 
         {
-          return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
-        } else if (flag)
-        {
-          if (!playerIn.canPlayerEdit(blockpos.offset(raytraceresult.sideHit),
-              raytraceresult.sideHit, itemStackIn))
+          BlockPos blockpos = raytraceresult.getBlockPos();
+  
+          if (!worldIn.isBlockModifiable(player, blockpos))
           {
             return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
-          } else
+          } 
+          else if (flag)
           {
-            IBlockState iblockstate = worldIn.getBlockState(blockpos);
-            Material material = iblockstate.getMaterial();
-
-            if (material == Material.WATER
-                && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
-                    .intValue() == 0)
+            if (!player.canPlayerEdit(blockpos.offset(raytraceresult.sideHit),
+                raytraceresult.sideHit, itemStackIn))
             {
-              worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
-              playerIn.addStat(StatList.getObjectUseStats(this));
-              RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_FILL, playerIn.getPosition(), 1.0F);
-              return ActionResult.newResult(EnumActionResult.SUCCESS,
-                  this.fillBucket(itemStackIn, playerIn, ModItems.woodenBucket)); /*TODO: Change into waterBucket */
-            } else if (material == Material.LAVA
-                && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
-                    .intValue() == 0)
+              return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+            } else
             {
-              RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, playerIn.getPosition(), 1.0F);
-              worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
-                  (double) blockpos.getX() + Math.random(), (double) blockpos.getY() + Math.random(),
-                  (double) blockpos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
-              playerIn.addStat(StatList.getObjectUseStats(this));
-              return ActionResult.newResult(EnumActionResult.SUCCESS, 
-                  ItemStack.EMPTY);
+              IBlockState iblockstate = worldIn.getBlockState(blockpos);
+              Material material = iblockstate.getMaterial();
+  
+              if (material == Material.WATER
+                  && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
+                      .intValue() == 0)
+              {
+                worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
+                player.addStat(StatList.getObjectUseStats(this));
+                RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_FILL,
+                    player.getPosition(), 1.0F);
+                return ActionResult.newResult(EnumActionResult.SUCCESS,
+                    this.fillBucket(itemStackIn, player,
+                        ModItems.woodenWaterBucket)); 
+              } else if (material == Material.LAVA
+                  && ((Integer) iblockstate.getValue(BlockLiquid.LEVEL))
+                      .intValue() == 0)
+              {
+                RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    player.getPosition(), 1.0F);
+                worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE,
+                    (double) blockpos.getX() + Math.random(),
+                    (double) blockpos.getY() + Math.random(),
+                    (double) blockpos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D,
+                    new int[0]);
+                player.addStat(StatList.getObjectUseStats(this));
+                return ActionResult.newResult(EnumActionResult.SUCCESS,
+                    ItemStack.EMPTY);
+              } 
+              else
+              {
+                return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+              }
+            }
+          }
+          else
+          {
+            boolean flag1 = worldIn.getBlockState(blockpos).getBlock()
+                .isReplaceable(worldIn, blockpos);
+            BlockPos blockpos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP
+                ? blockpos : blockpos.offset(raytraceresult.sideHit);
+  
+            if (!player.canPlayerEdit(blockpos1, raytraceresult.sideHit,
+                itemStackIn))
+            {
+              return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
+            } else if (this.tryPlaceContainedLiquid(player, worldIn, blockpos1))
+            {
+              player.addStat(StatList.getObjectUseStats(this));
+              return !player.capabilities.isCreativeMode
+                  ? ActionResult.newResult(EnumActionResult.SUCCESS,
+                      new ItemStack(ModItems.woodenBucket))
+                  : ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
             } else
             {
               return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
             }
-          }
-        } else
-        {
-          boolean flag1 = worldIn.getBlockState(blockpos).getBlock()
-              .isReplaceable(worldIn, blockpos);
-          BlockPos blockpos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP
-              ? blockpos : blockpos.offset(raytraceresult.sideHit);
-
-          if (!playerIn.canPlayerEdit(blockpos1, raytraceresult.sideHit,
-              itemStackIn))
-          {
-            return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
-          } else if (this.tryPlaceContainedLiquid(playerIn, worldIn, blockpos1))
-          {
-            playerIn.addStat(StatList.getObjectUseStats(this));
-            return !playerIn.capabilities.isCreativeMode
-                ? ActionResult.newResult(EnumActionResult.SUCCESS,
-                    new ItemStack(ModItems.woodenBucket))
-                : ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
-          } else
-          {
-            return ActionResult.newResult(EnumActionResult.FAIL, itemStackIn);
           }
         }
       }
@@ -207,7 +217,8 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
           int l = posIn.getX();
           int i = posIn.getY();
           int j = posIn.getZ();
-          RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, posIn, 1f);
+          RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, posIn,
+              1f);
 
           for (int k = 0; k < 8; ++k)
           {
@@ -222,7 +233,8 @@ public class ItemWoodenBucket extends Item implements ItemModelProvider
             pos.destroyBlock(posIn, true);
           }
 
-          RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_EMPTY, posIn, 1.0f);
+          RetroCraft.proxy.playSound(SoundEvents.ITEM_BUCKET_EMPTY, posIn,
+              1.0f);
           pos.setBlockState(posIn, this.isFull.getDefaultState(), 11);
         }
 

@@ -18,6 +18,7 @@ import com.retrocraft.entity.teleportpipe.MessageTeleportPipes;
 import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
 import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
+import com.retrocraft.item.ItemManure;
 import com.retrocraft.item.ItemOre;
 import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
@@ -31,7 +32,9 @@ import com.retrocraft.item.tool.ToolStreamAxe;
 import com.retrocraft.item.weapon.ItemSword;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
+import com.retrocraft.machine.generator.BlockManureGenerator;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
+import com.retrocraft.machine.generator.TileManureGenerator;
 import com.retrocraft.machine.generator.TileSteamGenerator;
 import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.grinder.TileOreGrinder;
@@ -52,6 +55,7 @@ import com.retrocraft.network.PacketUpdatePedestal;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -62,6 +66,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -136,6 +141,8 @@ public class CommonProxy
     GameRegistry.registerTileEntity(TileEntityPedestal.class, RetroCraft.modId + "_block_pedestal");
 		event.getRegistry().register(new BlockSteamGenerator("block_steamgenerator").setCreativeTab(RetroCraft.creativeTab));
 		GameRegistry.registerTileEntity(TileSteamGenerator.class, RetroCraft.modId + "_block_steamgenerator");
+		event.getRegistry().register(new BlockManureGenerator("block_manuregenerator").setCreativeTab(RetroCraft.creativeTab));
+    GameRegistry.registerTileEntity(TileManureGenerator.class, RetroCraft.modId + "_block_manuregenerator");
 		event.getRegistry().register(new BlockOreGrinder("block_oregrinder").setCreativeTab(RetroCraft.creativeTab));
 		GameRegistry.registerTileEntity(TileOreGrinder.class, RetroCraft.modId + "_block_oregrinder");
 		event.getRegistry().register(new BlockSmelter("block_oresmelter").setCreativeTab(RetroCraft.creativeTab));
@@ -163,7 +170,11 @@ public class CommonProxy
 
 	  event.getRegistry().register(new ItemOre("mechanical_core", "mechanicalCore").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemOre("magical_core", "magicalCore").setCreativeTab(RetroCraft.creativeTab));
+	  
+	  event.getRegistry().register(new ItemManure("manure").setCreativeTab(RetroCraft.creativeTab));
+	  
 	  event.getRegistry().register(new ItemWoodenBucket("wooden_bucket", Blocks.AIR).setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemWoodenBucket("wooden_bucket_water", Blocks.FLOWING_WATER).setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ItemBackpack("backpack").setCreativeTab(RetroCraft.creativeTab));
 	  
@@ -240,6 +251,7 @@ public class CommonProxy
     event.getRegistry().register(new ItemBlock(ModBlocks.blockTelepipe).setRegistryName(ModBlocks.blockTelepipe.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.pedestalManolium).setRegistryName(ModBlocks.pedestalManolium.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
+	  event.getRegistry().register(new ItemBlock(ModBlocks.blockManureGenerator).setRegistryName(ModBlocks.blockManureGenerator.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreGrinder).setRegistryName(ModBlocks.blockOreGrinder.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockOreSmelter).setRegistryName(ModBlocks.blockOreSmelter.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockEnchanter).setRegistryName(ModBlocks.blockEnchanter.getRegistryName()));
@@ -250,6 +262,12 @@ public class CommonProxy
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
 
 	  
+  }
+  
+  @SubscribeEvent
+  public void onEntitySpawn(EntityJoinWorldEvent event)
+  {
+   if (event.getEntity() instanceof EntityLiving) System.out.println("[RETROCRAFT] Something has born!");
   }
   
   public void registerItemRenderer(Item item, int meta, String id)

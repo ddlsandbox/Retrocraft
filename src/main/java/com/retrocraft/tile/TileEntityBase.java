@@ -149,7 +149,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
       if (this instanceof IEnergyProvider)
       {
         IEnergyProvider provider = (IEnergyProvider) this;
-        if (provider.canConnectEnergy(null)) // TODO Change for canProvideEnergy
+        if (provider.canConnectEnergy(null))
         {
           int total = provider.getThroughputOut(null);
           if (total > 0)

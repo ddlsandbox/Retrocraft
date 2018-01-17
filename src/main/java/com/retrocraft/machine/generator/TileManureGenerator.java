@@ -3,41 +3,34 @@ package com.retrocraft.machine.generator;
 import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.api.energy.IEnergyProvider;
+import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.IEnergyDisplay;
 import com.retrocraft.tile.CustomEnergyStorage;
 import com.retrocraft.tile.TileEntityInventory;
 import com.retrocraft.util.ItemStackHandlerCustom;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileSteamGenerator extends TileEntityInventory
+public class TileManureGenerator extends TileEntityInventory
     implements IEnergyProvider, ITickable, IEnergyDisplay
 {
-  private static final int CAPACITY       = RetroCraftGlobals.steamGeneratorNrgCapacity;
-  private static final int THROUGHPUT     = RetroCraftGlobals.steamGeneratorNrgThroughput;
-  private static final int FLUID_CAPACITY = RetroCraftGlobals.steamGeneratorFluidCapacity;
-  private static final int EFFICIENCY   = RetroCraftGlobals.steamGeneratorEfficiency;
+  private static final int CAPACITY   = RetroCraftGlobals.manureGeneratorNrgCapacity;
+  private static final int THROUGHPUT = RetroCraftGlobals.manureGeneratorNrgThroughput;
+  private static final int EFFICIENCY = RetroCraftGlobals.manureGeneratorEfficiency;
 
   private static final int FIELD_BURN_TIME_REMAINING    = 0;
   private static final int FIELD_BURN_INITIAL_VALUE     = 1;
@@ -52,37 +45,19 @@ public class TileSteamGenerator extends TileEntityInventory
   private boolean   cachedBurningState = false;
 
   private int lastEnergy;
-  private int lastTank;
   private int lastBurnTime;
   private int lastEnergyProduce;
   private int lastMaxBurnTime;
 
   protected CustomEnergyStorage storage;
-  public final FluidTank        tank;
   protected EnumFacing[]        outputSides;
   protected EnumFacing[]        inputSides;
 
-  public TileSteamGenerator()
+  public TileManureGenerator()
   {
-    super("tile.steamgenerator.name", 1, 0);
+    super("tile.manuregenerator.name", 1, 0);
 
     this.storage = new CustomEnergyStorage(CAPACITY, 0, THROUGHPUT);
-    this.tank = new FluidTank(FLUID_CAPACITY)
-    {
-      @Override
-      public boolean canDrain()
-      {
-        return false;
-      }
-
-      @Override
-      public boolean canFillFluidType(
-          FluidStack stack)
-      {
-        Fluid fluid = stack.getFluid();
-        return fluid == FluidRegistry.WATER;
-      }
-    };
     
     this.currentEnergyProduce = EFFICIENCY;
     this.outputSides = EnumFacing.values();
@@ -96,7 +71,7 @@ public class TileSteamGenerator extends TileEntityInventory
     return new ItemStackHandlerCustom(totalSlotsCount){
       @Override
       public boolean canInsert(ItemStack stack, int slot){
-          return TileSteamGenerator.this.isItemValidForSlot(slot, stack);
+          return TileManureGenerator.this.isItemValidForSlot(slot, stack);
       }
 
       @Override
@@ -112,7 +87,7 @@ public class TileSteamGenerator extends TileEntityInventory
       @Override
       protected void onContentsChanged(int slot){
           super.onContentsChanged(slot);
-          TileSteamGenerator.this.markDirty();
+          TileManureGenerator.this.markDirty();
       }
     };
   }
@@ -161,7 +136,6 @@ public class TileSteamGenerator extends TileEntityInventory
   {
     ItemStack itemStack = getStackInSlot(INPUT_SLOT_NUMBER);
     boolean inventoryChanged = false;
-    int waterUsed = 100;
     
     if (burnTimeRemaining > 0)
     {
@@ -170,9 +144,8 @@ public class TileSteamGenerator extends TileEntityInventory
 
     if (burnTimeRemaining == 0)
     {
-      if (!itemStack.isEmpty() && getItemBurnTime(itemStack) > 0 && tank.getFluidAmount() >= waterUsed)
+      if (!itemStack.isEmpty() && getItemBurnTime(itemStack) > 0)
       {
-        tank.drainInternal(waterUsed, true);
         burnTimeRemaining = burnTimeInitialValue = getItemBurnTime(itemStack);
         itemStack.shrink(1);
         inventoryChanged = true;
@@ -192,8 +165,9 @@ public class TileSteamGenerator extends TileEntityInventory
 
   public static short getItemBurnTime(ItemStack stack)
   {
-    int burntime = TileEntityFurnace.getItemBurnTime(stack); // just use the
-                                                             // vanilla values
+    Item item = stack.getItem();
+    int burntime = item == ModItems.manure ? 1600 : 0;
+
     return (short) MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
   }
 
@@ -202,27 +176,6 @@ public class TileSteamGenerator extends TileEntityInventory
   {
     super.updateEntity();
     ItemStack itemStack = getStackInSlot(INPUT_SLOT_NUMBER);
-    
-    boolean hasSpace = (tank.getCapacity()
-        - tank.getFluidAmount() >= Fluid.BUCKET_VOLUME);
-    if (hasSpace)
-    {
-      for (EnumFacing facing : inputSides)
-      {
-        BlockPos pos = this.pos.offset(facing);
-        if (this.world.isBlockLoaded(pos))
-        {
-          Block entity = this.world.getBlockState(pos).getBlock();
-          
-          if (entity != null && entity.equals(Blocks.WATER))
-          {
-            this.world.setBlockToAir(pos);
-            this.tank.fillInternal(new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME), true);
-            this.markDirty();
-          }
-        }
-      }
-    }
     
     /* update block (working/notworking) */
     if (cachedBurningState == itemStack.isEmpty())
@@ -247,7 +200,6 @@ public class TileSteamGenerator extends TileEntityInventory
       }
 
       if ((this.storage.getEnergyStored() != this.lastEnergy
-          || this.tank.getFluidAmount() != this.lastTank
           || this.lastBurnTime != this.burnTimeRemaining
           || this.lastEnergyProduce != this.currentEnergyProduce
           || this.lastMaxBurnTime != this.burnTimeInitialValue)
@@ -255,7 +207,6 @@ public class TileSteamGenerator extends TileEntityInventory
       {
         this.markDirty();
         this.lastEnergy = this.storage.getEnergyStored();
-        this.lastTank = this.tank.getFluidAmount();
         this.lastBurnTime = this.burnTimeRemaining;
         this.lastEnergyProduce = this.currentEnergyProduce;
         this.lastMaxBurnTime = this.burnTimeInitialValue;
@@ -291,7 +242,7 @@ public class TileSteamGenerator extends TileEntityInventory
 
   static public boolean isItemValidForFuelSlot(ItemStack itemStack)
   {
-    return TileEntityFurnace.getItemBurnTime(itemStack) > 0;
+    return getItemBurnTime(itemStack) > 0;
   }
   
   @Override
@@ -304,7 +255,6 @@ public class TileSteamGenerator extends TileEntityInventory
       compound.setInteger("CurrentEnergy", this.currentEnergyProduce);
     }
     this.storage.writeToNBT(compound);
-    this.tank.writeToNBT(compound);
     super.writeSyncableNBT(compound, type);
   }
 
@@ -318,7 +268,6 @@ public class TileSteamGenerator extends TileEntityInventory
       this.currentEnergyProduce = compound.getInteger("CurrentEnergy");
     }
     this.storage.readFromNBT(compound);
-    this.tank.readFromNBT(compound);
     super.readSyncableNBT(compound, type);
   }
 
@@ -367,7 +316,7 @@ public class TileSteamGenerator extends TileEntityInventory
   public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
   {
     if (slotIndex == INPUT_SLOT_NUMBER)
-      return TileSteamGenerator.isItemValidForFuelSlot(itemStack);
+      return TileManureGenerator.isItemValidForFuelSlot(itemStack);
     return false;
   }
 

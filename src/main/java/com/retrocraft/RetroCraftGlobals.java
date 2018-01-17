@@ -14,9 +14,13 @@ public class RetroCraftGlobals
   /* generators */
   
   public static int steamGeneratorNrgCapacity   = 10000;
-  public static int steamGeneratorNrgThroughput = 1000;
+  public static int steamGeneratorNrgThroughput = 120;
+  public static int steamGeneratorEfficiency    = 30;
   public static int steamGeneratorFluidCapacity = 2 * Fluid.BUCKET_VOLUME;
-  public static double steamGeneratorEfficiency = 0.5;
+  
+  public static int manureGeneratorNrgCapacity   = 10000;
+  public static int manureGeneratorNrgThroughput = 240;
+  public static int manureGeneratorEfficiency    = 50;
   
   /* machines */
   
