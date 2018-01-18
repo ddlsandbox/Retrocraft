@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
 
 public class ClientTeleportPipes
 {

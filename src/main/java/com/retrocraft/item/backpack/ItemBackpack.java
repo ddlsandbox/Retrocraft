@@ -6,8 +6,6 @@ import com.retrocraft.item.ItemBase;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -40,28 +38,4 @@ public class ItemBackpack extends ItemBase
     }
     return ActionResult.newResult(EnumActionResult.SUCCESS, held);
   }
-
-  public void updateBackpack(ItemStack stack, BackpackInfo backpackInfo)
-  {
-    if (!stack.hasTagCompound())
-      stack.setTagCompound(new NBTTagCompound());
-
-    stack.getTagCompound().setTag("packInfo", backpackInfo.serializeNBT());
-    if (backpackInfo.getInventory() != null)
-    {
-      NBTTagList invTag = new NBTTagList();
-      for (int i = 0; i < backpackInfo.getInventory().getSlots(); i++)
-        invTag.appendTag(backpackInfo.getInventory().getStackInSlot(i).serializeNBT());
-
-      stack.getTagCompound().setTag("packInv", invTag);
-    }
-  }
-
-  // @Override
-  // @SideOnly(Side.CLIENT)
-  // public void registerIcons(IconRegister iconRegister)
-  // {
-  // this.itemIcon = iconRegister.registerIcon("inventoryitemmod:" +
-  // this.getUnlocalizedName().substring(5));
-  // }
 }

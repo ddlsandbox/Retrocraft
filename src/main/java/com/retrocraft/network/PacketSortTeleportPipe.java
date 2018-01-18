@@ -1,25 +1,27 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.network;
 
 import javax.annotation.Nullable;
 
-import com.retrocraft.network.PacketHandler;
+import com.retrocraft.machine.teleportpipe.PlayerTeleportData;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportManager;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSortTeleportPipe implements IMessage
+public class PacketSortTeleportPipe implements IMessage
 {
 
   private int index;
   private int otherIndex;
 
-  public MessageSortTeleportPipe()
+  public PacketSortTeleportPipe()
   {
   }
 
-  public MessageSortTeleportPipe(int index, int otherIndex)
+  public PacketSortTeleportPipe(int index, int otherIndex)
   {
     this.index = index;
     this.otherIndex = otherIndex;
@@ -50,11 +52,11 @@ public class MessageSortTeleportPipe implements IMessage
   }
 
   public static class Handler
-      implements IMessageHandler<MessageSortTeleportPipe, IMessage>
+      implements IMessageHandler<PacketSortTeleportPipe, IMessage>
   {
     @Override
     @Nullable
-    public IMessage onMessage(final MessageSortTeleportPipe message,
+    public IMessage onMessage(final PacketSortTeleportPipe message,
         final MessageContext ctx)
     {
       PacketHandler.getThreadListener(ctx).addScheduledTask(new Runnable()

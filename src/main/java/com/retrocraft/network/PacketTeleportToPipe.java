@@ -1,9 +1,10 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.network;
 
 import javax.annotation.Nullable;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.network.PacketHandler;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportManager;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,18 +14,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageTeleportToPipe implements IMessage
+public class PacketTeleportToPipe implements IMessage
 {
 
   private TeleportEntry teleportPipe;
   private EnumHand      hand;
   private TeleportEntry fromTeleportPipe;
 
-  public MessageTeleportToPipe()
+  public PacketTeleportToPipe()
   {
   }
 
-  public MessageTeleportToPipe(TeleportEntry teleportPipe, EnumHand hand,
+  public PacketTeleportToPipe(TeleportEntry teleportPipe, EnumHand hand,
                                    @Nullable TeleportEntry fromTeleportPipe)
   {
     this.teleportPipe = teleportPipe;
@@ -64,11 +65,11 @@ public class MessageTeleportToPipe implements IMessage
   }
 
   public static class Handler
-      implements IMessageHandler<MessageTeleportToPipe, IMessage>
+      implements IMessageHandler<PacketTeleportToPipe, IMessage>
   {
     @Override
     @Nullable
-    public IMessage onMessage(final MessageTeleportToPipe message,
+    public IMessage onMessage(final PacketTeleportToPipe message,
         final MessageContext ctx)
     {
       PacketHandler.getThreadListener(ctx).addScheduledTask(new Runnable()

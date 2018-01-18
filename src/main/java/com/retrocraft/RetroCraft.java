@@ -10,52 +10,30 @@
 package com.retrocraft;
 
 import com.retrocraft.block.ModBlocks;
-import com.retrocraft.entity.ModEntities;
 import com.retrocraft.item.ModItems;
-import com.retrocraft.item.armor.ArmorMaterials;
+import com.retrocraft.item.RetrocraftMaterials;
 import com.retrocraft.network.PacketHandler;
 import com.retrocraft.recipe.RetrocraftRecipes;
 import com.retrocraft.server.CommonProxy;
 import com.retrocraft.tab.RetroCraftCreativeTab;
 import com.retrocraft.world.ModWorldGen;
 
-import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@Mod.EventBusSubscriber
 @Mod(modid = RetroCraft.modId, name = RetroCraft.name, version = RetroCraft.version, acceptedMinecraftVersions = "[1.12.2]")
 public class RetroCraft
 {
-
-  public static final Item.ToolMaterial manoliumToolMaterial   = EnumHelper
-      .addToolMaterial("MANOLIUM", 2,                                         /* harvest level */
-          500,                                                                /* durability */
-          8f,                                                                 /* efficiency */
-          4f,                                                                 /* damage */
-          20);                                                                /* enchantability */
-  
-  public static final Item.ToolMaterial manolaziumToolMaterial = EnumHelper
-      .addToolMaterial("MANOLAZIUM", 3,                                       /* harvest level */
-          1500,                                                               /* durability */
-          10f,                                                                /* efficiency */
-          8f,                                                                 /* damage */
-          30);                                                                /* enchantability */
-  
-  public static final Item.ToolMaterial octirionToolMaterial = EnumHelper
-	      .addToolMaterial("OCTIRION", 4,                                         /* harvest level */
-	          2000,                                                               /* durability */
-	          15f,                                                                /* efficiency */
-	          12f,                                                                /* damage */
-	          30);                                                                /* enchantability */
-
   @SidedProxy(serverSide = "com.retrocraft.server.CommonProxy", clientSide = "com.retrocraft.client.ClientProxy")
   public static CommonProxy                 proxy;
   public static final RetroCraftCreativeTab creativeTab = new RetroCraftCreativeTab();
@@ -84,11 +62,10 @@ public class RetroCraft
       configuration.save();
     }
     
-    ArmorMaterials.init();
+    RetrocraftMaterials.init();
     
     ModBlocks.init();
     ModItems.init();
-    ModEntities.init();
 
     GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
 
@@ -120,5 +97,12 @@ public class RetroCraft
   public void setConfig(RetroCraftConfig config)
   {
     this.config = config;
+  }
+  
+  /* events */
+  
+  @SubscribeEvent
+  public static void registerModels(ModelRegistryEvent event) {
+    proxy.loadModels();
   }
 }

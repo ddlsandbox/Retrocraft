@@ -1,4 +1,4 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.machine.teleportpipe;
 
 import java.util.Collection;
 import java.util.Map;

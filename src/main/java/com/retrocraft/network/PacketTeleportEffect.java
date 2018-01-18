@@ -1,9 +1,8 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.network;
 
 import javax.annotation.Nullable;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.network.PacketHandler;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -14,16 +13,16 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageTeleportEffect implements IMessage
+public class PacketTeleportEffect implements IMessage
 {
 
   private BlockPos pos;
 
-  public MessageTeleportEffect()
+  public PacketTeleportEffect()
   {
   }
 
-  public MessageTeleportEffect(BlockPos pos)
+  public PacketTeleportEffect(BlockPos pos)
   {
     this.pos = pos;
   }
@@ -46,11 +45,11 @@ public class MessageTeleportEffect implements IMessage
   }
 
   public static class Handler
-      implements IMessageHandler<MessageTeleportEffect, IMessage>
+      implements IMessageHandler<PacketTeleportEffect, IMessage>
   {
     @Override
     @Nullable
-    public IMessage onMessage(final MessageTeleportEffect message,
+    public IMessage onMessage(final PacketTeleportEffect message,
         MessageContext ctx)
     {
       PacketHandler.getThreadListener(ctx).addScheduledTask(new Runnable()

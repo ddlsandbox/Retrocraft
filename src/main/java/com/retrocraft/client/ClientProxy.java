@@ -7,12 +7,12 @@ import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.TESRPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
-import com.retrocraft.entity.teleportpipe.PlayerTeleportData;
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
 import com.retrocraft.entity.teleportpipe.gui.GuiTeleportPipeList;
 import com.retrocraft.item.ModItems;
 import com.retrocraft.machine.enchanter.TESREnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
+import com.retrocraft.machine.teleportpipe.PlayerTeleportData;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
 import com.retrocraft.server.CommonProxy;
 
 import net.minecraft.client.Minecraft;
@@ -24,18 +24,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber
 public class ClientProxy extends CommonProxy
 {
 
@@ -47,7 +43,8 @@ public class ClientProxy extends CommonProxy
   }
 
   @Override
-  public void init(FMLInitializationEvent event){
+  public void init(FMLInitializationEvent event)
+  {
       new ClientEvents();
       
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPedestal.class,
@@ -57,7 +54,8 @@ public class ClientProxy extends CommonProxy
   }
 
   @Override
-  public void postInit(FMLPostInitializationEvent event){
+  public void postInit(FMLPostInitializationEvent event)
+  {
   }
   
   public void registerItemRenderer(Item item, int meta, String id)
@@ -76,6 +74,8 @@ public class ClientProxy extends CommonProxy
   @Override
   public void loadModels()
   {
+    ModBlocks.initModels();
+    ModItems.initModels();
   }
 
   @Override
@@ -96,11 +96,4 @@ public class ClientProxy extends CommonProxy
     Minecraft.getMinecraft()
         .displayGuiScreen(new GuiTeleportPipeList(teleportPipes, hand, fromTeleportPipe));
   }
-  
-  @SubscribeEvent
-  public static void registerModels(ModelRegistryEvent event) {
-      ModBlocks.initModels();
-      ModItems.initModels();
-  }
-
 }

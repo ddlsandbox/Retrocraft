@@ -1,6 +1,6 @@
 package com.retrocraft.entity.teleportpipe.gui;
 
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

@@ -1,4 +1,4 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.machine.teleportpipe;
 
 import javax.annotation.Nullable;
 

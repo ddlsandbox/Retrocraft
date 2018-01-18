@@ -1,6 +1,5 @@
 package com.retrocraft;
 
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.entity.teleportpipe.gui.ContainerEditTeleportNameDummy;
 import com.retrocraft.entity.teleportpipe.gui.GuiEditTeleportPipe;
 import com.retrocraft.item.backpack.ContainerBackpack;
@@ -26,11 +25,10 @@ import com.retrocraft.machine.repairer.TileRepairer;
 import com.retrocraft.machine.smelter.ContainerSmelter;
 import com.retrocraft.machine.smelter.GuiSmelter;
 import com.retrocraft.machine.smelter.TileSmelter;
+import com.retrocraft.machine.teleportpipe.TileTeleportPipe;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -92,9 +90,7 @@ public class ModGuiHandler implements IGuiHandler
     case TELEPORT:
       return new ContainerEditTeleportNameDummy();
     case BACKPACK:
-      EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
-      ItemStack stack = player.getHeldItem(hand); //ToDo: Helper method (not necessarily held item)
-      return new ContainerBackpack(stack, player.inventory, hand);
+      return new ContainerBackpack(player.getHeldItemMainhand(), player.inventory);
     default:
       return null;
     }
@@ -146,9 +142,7 @@ public class ModGuiHandler implements IGuiHandler
       return new GuiEditTeleportPipe(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     case BACKPACK:
-      EnumHand hand = x == 1 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
-      ItemStack stack = player.getHeldItem(hand); //ToDo: Helper method (not necessarily held item)
-      return new GuiBackpack(new ContainerBackpack(stack, player.inventory, hand));
+      return new GuiBackpack(player.getHeldItemMainhand(), player.inventory, false);
     default:
       return null;
     }

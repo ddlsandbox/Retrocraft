@@ -35,7 +35,7 @@ public class GuiRepairer extends GuiContainer {
 		super(containerRepairer);
 
 		this.xSize = 176;
-    this.ySize = 93 + 86;
+    this.ySize = 100 + 86;
 
 		this.tileRepairer = tileRepairer;
 	}
@@ -44,7 +44,7 @@ public class GuiRepairer extends GuiContainer {
     public void initGui () {
         
         super.initGui();
-        this.energy = new GuiEnergyDisplay(this.guiLeft + 42, this.guiTop + 6,
+        this.energy = new GuiEnergyDisplay(this.guiLeft + 116, this.guiTop + 9,
             this.tileRepairer.storage);
     }
     
@@ -90,10 +90,10 @@ public class GuiRepairer extends GuiContainer {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		
     this.mc.getTextureManager().bindTexture(INVENTORY_TEXTURE);
-    this.drawTexturedModalRect(this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+    this.drawTexturedModalRect(this.guiLeft, this.guiTop + 100, 0, 0, 176, 86);
 
     this.mc.getTextureManager().bindTexture(BG_TEXTURE);
-    this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 93);
+    this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 100);
     
     if (this.tileRepairer.repairTimeRemaining > 0)
     {

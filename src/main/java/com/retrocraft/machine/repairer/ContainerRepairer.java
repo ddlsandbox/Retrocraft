@@ -40,9 +40,11 @@ public class ContainerRepairer extends ContainerBase
     super(true, true);
     this.tileInventoryFurnace = tileRepairer;
     this.guiInventoryPosX = 8;
-    this.guiInventoryPosY = 97;
+    this.guiInventoryPosY = 104;
     this.guiHotbarPosX    = 8;
-    this.guiHotbarPosY    = 155;
+    this.guiHotbarPosY    = 162;
+    this.guiEquipmentPosX = 45;
+    this.guiEquipmentPosY = 8;
     
     addVanillaSlots(invPlayer);
 
@@ -95,7 +97,8 @@ public class ContainerRepairer extends ContainerBase
       {
         return ItemStack.EMPTY; // EMPTY_ITEM;
       }
-    } else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex + 1)
+    } 
+    else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex + 1)
     {
       if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
       {

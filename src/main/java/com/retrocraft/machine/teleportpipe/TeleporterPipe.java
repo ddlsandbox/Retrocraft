@@ -1,4 +1,4 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.machine.teleportpipe;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;

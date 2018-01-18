@@ -8,9 +8,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.teleportpipe.MessageSortTeleportPipe;
-import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
+import com.retrocraft.network.PacketSortTeleportPipe;
+import com.retrocraft.network.PacketTeleportToPipe;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -140,7 +140,7 @@ public class GuiTeleportPipeList extends GuiScreen
     } 
     else if (button instanceof GuiButtonTeleportPipeEntry)
     {
-      RetroCraft.network.sendToServer(new MessageTeleportToPipe(
+      RetroCraft.network.sendToServer(new PacketTeleportToPipe(
           ((GuiButtonTeleportPipeEntry) button).getTeleportPipe(), hand, fromTeleportPipe));
       mc.displayGuiScreen(null);
     } 
@@ -159,7 +159,7 @@ public class GuiTeleportPipeList extends GuiScreen
       entries[index] = entries[otherIndex];
       entries[otherIndex] = swap;
       RetroCraft.network
-          .sendToServer(new MessageSortTeleportPipe(index, otherIndex));
+          .sendToServer(new PacketSortTeleportPipe(index, otherIndex));
       updateList();
     }
   }

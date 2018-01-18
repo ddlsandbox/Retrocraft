@@ -1,8 +1,10 @@
-package com.retrocraft.entity.teleportpipe;
+package com.retrocraft.machine.teleportpipe;
 
 import javax.annotation.Nullable;
 
 import com.retrocraft.RetroCraft;
+import com.retrocraft.network.PacketTeleportEffect;
+import com.retrocraft.network.PacketTeleportPipes;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,7 +30,7 @@ public class TeleportManager
     if (player instanceof EntityPlayerMP)
     {
       PlayerTeleportData teleportPipeData = PlayerTeleportData.fromPlayer(player);
-      RetroCraft.network.sendTo(new MessageTeleportPipes(
+      RetroCraft.network.sendTo(new PacketTeleportPipes(
           teleportPipeData.getTeleportPipes(), teleportPipeData.getLastFreeWarp(),
           teleportPipeData.getLastWarpStoneUse()), (EntityPlayerMP) player);
     }
@@ -157,7 +159,7 @@ public class TeleportManager
 
   public static void sendTeleportEffect(World world, BlockPos pos)
   {
-    RetroCraft.network.sendToAllAround(new MessageTeleportEffect(pos),
+    RetroCraft.network.sendToAllAround(new PacketTeleportEffect(pos),
         new NetworkRegistry.TargetPoint(world.provider.getDimension(),
             pos.getX(), pos.getY(), pos.getZ(), 64));
   }

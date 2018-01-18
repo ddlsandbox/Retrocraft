@@ -2,7 +2,7 @@ package com.retrocraft.entity.teleportpipe.gui;
 
 import com.google.common.collect.Lists;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

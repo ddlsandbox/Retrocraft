@@ -3,8 +3,8 @@ package com.retrocraft.entity.teleportpipe.gui;
 import java.io.IOException;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.entity.teleportpipe.MessageEditTeleportPipe;
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
+import com.retrocraft.machine.teleportpipe.TileTeleportPipe;
+import com.retrocraft.network.PacketEditTeleportPipe;
 
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
@@ -74,7 +74,7 @@ public class GuiEditTeleportPipe extends GuiContainer
   {
     if (button == btnDone)
     {
-      RetroCraft.network.sendToServer(new MessageEditTeleportPipe(
+      RetroCraft.network.sendToServer(new PacketEditTeleportPipe(
           tileTeleportPipe.getPos(), textField.getText(), chkGlobal.isChecked()));
       FMLClientHandler.instance().getClientPlayerEntity().closeScreen();
     }

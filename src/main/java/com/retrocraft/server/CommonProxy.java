@@ -11,19 +11,11 @@ import com.retrocraft.block.BlockTorch;
 import com.retrocraft.block.ModBlocks;
 import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
-import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
-import com.retrocraft.entity.teleportpipe.MessageEditTeleportPipe;
-import com.retrocraft.entity.teleportpipe.MessageSortTeleportPipe;
-import com.retrocraft.entity.teleportpipe.MessageTeleportEffect;
-import com.retrocraft.entity.teleportpipe.MessageTeleportPipes;
-import com.retrocraft.entity.teleportpipe.MessageTeleportToPipe;
-import com.retrocraft.entity.teleportpipe.TeleportEntry;
-import com.retrocraft.entity.teleportpipe.TileTeleportPipe;
 import com.retrocraft.item.ItemManure;
 import com.retrocraft.item.ItemOre;
 import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
-import com.retrocraft.item.armor.ArmorMaterials;
+import com.retrocraft.item.RetrocraftMaterials;
 import com.retrocraft.item.armor.ItemManoliumArmor;
 import com.retrocraft.item.backpack.ItemBackpack;
 import com.retrocraft.item.tool.ToolEverything;
@@ -45,12 +37,20 @@ import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.repairer.TileRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
 import com.retrocraft.machine.smelter.TileSmelter;
+import com.retrocraft.machine.teleportpipe.BlockTeleportPipe;
+import com.retrocraft.machine.teleportpipe.TeleportEntry;
+import com.retrocraft.machine.teleportpipe.TileTeleportPipe;
 import com.retrocraft.network.PacketConfig;
+import com.retrocraft.network.PacketEditTeleportPipe;
 import com.retrocraft.network.PacketEnchant;
 import com.retrocraft.network.PacketRepairer;
 import com.retrocraft.network.PacketRequestUpdateEnchanter;
 import com.retrocraft.network.PacketRequestUpdatePedestal;
 import com.retrocraft.network.PacketServerToClient;
+import com.retrocraft.network.PacketSortTeleportPipe;
+import com.retrocraft.network.PacketTeleportEffect;
+import com.retrocraft.network.PacketTeleportPipes;
+import com.retrocraft.network.PacketTeleportToPipe;
 import com.retrocraft.network.PacketUpdateEnchanter;
 import com.retrocraft.network.PacketUpdatePedestal;
 
@@ -100,15 +100,15 @@ public class CommonProxy
         messageId++, Side.CLIENT);
     RetroCraft.network.registerMessage(new PacketConfig.Handler(), PacketConfig.class, 
         messageId++, Side.CLIENT);
-    RetroCraft.network.registerMessage(new MessageTeleportPipes.Handler(), MessageTeleportPipes.class, 
+    RetroCraft.network.registerMessage(new PacketTeleportPipes.Handler(), PacketTeleportPipes.class, 
         messageId++, Side.CLIENT);
-    RetroCraft.network.registerMessage(new MessageEditTeleportPipe.Handler(), MessageEditTeleportPipe.class, 
+    RetroCraft.network.registerMessage(new PacketEditTeleportPipe.Handler(), PacketEditTeleportPipe.class, 
         messageId++, Side.SERVER);
-    RetroCraft.network.registerMessage(new MessageTeleportToPipe.Handler(), MessageTeleportToPipe.class, 
+    RetroCraft.network.registerMessage(new PacketTeleportToPipe.Handler(), PacketTeleportToPipe.class, 
         messageId++, Side.SERVER);
-    RetroCraft.network.registerMessage(new MessageTeleportEffect.Handler(), MessageTeleportEffect.class, 
+    RetroCraft.network.registerMessage(new PacketTeleportEffect.Handler(), PacketTeleportEffect.class, 
         messageId++, Side.CLIENT);
-    RetroCraft.network.registerMessage(new MessageSortTeleportPipe.Handler(), MessageSortTeleportPipe.class, 
+    RetroCraft.network.registerMessage(new PacketSortTeleportPipe.Handler(), PacketSortTeleportPipe.class, 
         messageId++, Side.SERVER);
   }
 
@@ -124,7 +124,8 @@ public class CommonProxy
   }
 
 	@SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+  public static void registerBlocks(RegistryEvent.Register<Block> event) 
+	{
 	  
 	  /* ores */
 		event.getRegistry().register(new BlockOre("ore_manolite", "oreManolite", 2).setCreativeTab(RetroCraft.creativeTab));
@@ -169,7 +170,8 @@ public class CommonProxy
 	}
     
   @SubscribeEvent
-  public static void registerItems(RegistryEvent.Register<Item> event) {
+  public static void registerItems(RegistryEvent.Register<Item> event)
+  {
     
     /* dust */
     
@@ -188,8 +190,8 @@ public class CommonProxy
 	  event.getRegistry().register(new ToolExcavator(ToolMaterial.IRON, "excavator_iron").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolExcavator(ToolMaterial.GOLD, "excavator_gold").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolExcavator(ToolMaterial.DIAMOND, "excavator_diamond").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolExcavator(RetroCraft.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolExcavator(RetroCraft.manolaziumToolMaterial, "excavator_manolazium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolExcavator(RetrocraftMaterials.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolExcavator(RetrocraftMaterials.manolaziumToolMaterial, "excavator_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  
 	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.STONE, "streamaxe_stone").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolStreamAxe(ToolMaterial.IRON, "streamaxe_iron").setCreativeTab(RetroCraft.creativeTab));
@@ -202,39 +204,39 @@ public class CommonProxy
 		event.getRegistry().register(new ToolHammer(ToolMaterial.IRON, "hammer_iron").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new ToolHammer(ToolMaterial.GOLD, "hammer_gold").setCreativeTab(RetroCraft.creativeTab));
 		event.getRegistry().register(new ToolHammer(ToolMaterial.DIAMOND, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolHammer(RetroCraft.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolHammer(RetroCraft.manolaziumToolMaterial, "hammer_manolazium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolHammer(RetrocraftMaterials.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolHammer(RetrocraftMaterials.manolaziumToolMaterial, "hammer_manolazium").setCreativeTab(RetroCraft.creativeTab));
 
-	  event.getRegistry().register(new ToolEverything(RetroCraft.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ToolEverything(RetroCraft.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolEverything(RetrocraftMaterials.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ToolEverything(RetrocraftMaterials.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  
 	  /* armor */
 	  
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "head_manolium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "head_manolium", 0,
 				EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "head_manolazium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "head_manolazium", 0,
 				EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab));
 
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "chest_manolium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "chest_manolium", 0,
 				EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "chest_manolazium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "chest_manolazium", 0,
 				EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab));
 
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "legs_manolium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "legs_manolium", 0,
 				EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "legs_manolazium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "legs_manolazium", 0,
 				EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab));
 
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manoliumArmorMaterial, "feet_manolium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "feet_manolium", 0,
 				EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemManoliumArmor(ArmorMaterials.manolaziumArmorMaterial, "feet_manolazium", 0,
+	  event.getRegistry().register(new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "feet_manolazium", 0,
 				EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab));
 	  
 	  /* weapons */
 	  
-	  event.getRegistry().register(new ItemSword(RetroCraft.manoliumToolMaterial, "sword_manolium").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemSword(RetroCraft.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
-	  event.getRegistry().register(new ItemSword(RetroCraft.octirionToolMaterial, "sword_octirion").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemSword(RetrocraftMaterials.manoliumToolMaterial, "sword_manolium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemSword(RetrocraftMaterials.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab));
+	  event.getRegistry().register(new ItemSword(RetrocraftMaterials.octirionToolMaterial, "sword_octirion").setCreativeTab(RetroCraft.creativeTab));
 
 	  /* misc */
 	  
@@ -277,8 +279,6 @@ public class CommonProxy
     event.getRegistry().register(new ItemBlock(ModBlocks.blockOctirionChasis).setRegistryName(ModBlocks.blockOctirionChasis.getRegistryName()));
     event.getRegistry().register(new ItemBlock(ModBlocks.blockTelepipe).setRegistryName(ModBlocks.blockTelepipe.getRegistryName()));
 	  event.getRegistry().register(new ItemBlock(ModBlocks.blockLightPillar).setRegistryName(ModBlocks.blockLightPillar.getRegistryName()));
-
-	  
   }
   
     @SubscribeEvent
@@ -304,34 +304,30 @@ public class CommonProxy
       }
        
     }
-
-//  @SubscribeEvent
-//  public void onEntitySpawn(EntityJoinWorldEvent event)
-//  {
-//   if (event.getEntity() instanceof EntityLiving) System.out.println("[RETROCRAFT] Something has born!");
-//  }
   
   public void registerItemRenderer(Item item, int meta, String id)
   {
+    /* do nothing */
   }
   
   public void registerRenderers()
   {
+    /* do nothing */
   }
 
   public void loadModels()
   {
-
+    /* do nothing */
   }
 
   public void playSound(SoundEvent sound, BlockPos pos, float pitch)
   {
-
+    /* do nothing */
   }
 
   public void openTeleportPipeSelection(EnumHand hand,
       @Nullable TeleportEntry fromTeleportPipe)
   {
-
+    /* do nothing */
   }
 }

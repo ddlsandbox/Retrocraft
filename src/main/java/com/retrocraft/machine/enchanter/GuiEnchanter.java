@@ -1,5 +1,6 @@
 package com.retrocraft.machine.enchanter;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +14,6 @@ import com.retrocraft.block.ModBlocks;
 import com.retrocraft.network.PacketEnchant;
 import com.retrocraft.util.StackUtil;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,7 +24,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiContainer
 {
 
@@ -321,13 +323,13 @@ public class GuiEnchanter extends GuiContainer
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
   {
-    String name = RetroCraft.proxy
+    final String name = RetroCraft.proxy
         .localize(ModBlocks.blockEnchanter.getUnlocalizedName() + ".name");
-    FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-    fontRenderer.drawString(name,
-        xSize / 2 - fontRenderer.getStringWidth(name) / 2, /* x */
-        2, /* z */
-        0x404040);
+    final int LABEL_XPOS = (xSize) / 2
+        - fontRenderer.getStringWidth(name) / 2;
+    final int LABEL_YPOS = -10;
+    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS,
+        Color.cyan.getRGB());
   }
 
   

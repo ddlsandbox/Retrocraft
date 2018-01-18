@@ -1,7 +1,6 @@
 package com.retrocraft.block;
 
 import com.retrocraft.block.pedestal.BlockPedestal;
-import com.retrocraft.entity.teleportpipe.BlockTeleportPipe;
 import com.retrocraft.machine.enchanter.BlockEnchanter;
 import com.retrocraft.machine.generator.BlockManureGenerator;
 import com.retrocraft.machine.generator.BlockSteamGenerator;
@@ -9,6 +8,7 @@ import com.retrocraft.machine.grinder.BlockOreGrinder;
 import com.retrocraft.machine.multifurnace.BlockMultifurnace;
 import com.retrocraft.machine.repairer.BlockRepairer;
 import com.retrocraft.machine.smelter.BlockSmelter;
+import com.retrocraft.machine.teleportpipe.BlockTeleportPipe;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
