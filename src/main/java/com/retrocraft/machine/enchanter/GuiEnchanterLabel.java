@@ -18,8 +18,8 @@ public class GuiEnchanterLabel extends Gui
   public int              startingYPos;
   public int              xPos;
   public int              yPos;
-  public static final int HEIGHT = 18;
-  public static final int WIDTH  = 143;
+  public static final int HEIGHT = 13;
+  public static final int WIDTH  = 140;
 
   private int    sliderX;
   public boolean dragging = false;
@@ -58,9 +58,9 @@ public class GuiEnchanterLabel extends Gui
     fontRenderer.drawString(getTranslatedName(), xPos + 5, yPos + HEIGHT / 4,
         0x55aaff00);
     if (locked)
-      drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x44aaffff);
+      drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x44ff0000);
     else
-      drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x44aa55ff);
+      drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x4400ff00);
   }
 
   public String getTranslatedName()

@@ -39,9 +39,9 @@ public class ContainerEnchanter extends ContainerBase
     super(true, true);
 
     guiHotbarPosX = 43;
-    guiHotbarPosY = 149;
+    guiHotbarPosY = 194;
     guiInventoryPosX = 43;
-    guiInventoryPosY = 91;
+    guiInventoryPosY = 136;
     guiEquipmentPosX = 7;
     guiEquipmentPosY = 24;
 
