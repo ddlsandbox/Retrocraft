@@ -97,19 +97,6 @@ public class ContainerEnchanter extends ContainerBase
     super.onContainerClosed(player);
   }
 
-  // This is where you specify what happens when a player shift clicks a slot in
-  // the gui
-  // (when you shift click a slot in the TileEntity Inventory, it moves it to
-  // the first available position in the hotbar and/or
-  // player inventory. When you you shift-click a hotbar or player inventory
-  // item, it moves it to the first available
-  // position in the TileEntity inventory - either input or fuel as appropriate
-  // for the item you clicked)
-  // At the very least you must override this and return EMPTY_ITEM or the game
-  // will crash when the player shift clicks a slot
-  // returns EMPTY_ITEM if the source slot is empty, or if none of the source
-  // slot items could be moved.
-  // otherwise, returns a copy of the source stack
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
   {
@@ -120,9 +107,6 @@ public class ContainerEnchanter extends ContainerBase
     {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
-
-      // int containerSlots = inventorySlots.size()
-      // - player.inventory.mainInventory.size();
 
       if (isVanillaSlot(sourceSlotIndex))
       {
@@ -327,7 +311,7 @@ public class ContainerEnchanter extends ContainerBase
 
       if (!player.capabilities.isCreativeMode)
       {
-        player.addExperience(-serverCost);
+        player.addExperienceLevel(-serverCost);
       }
     }
 
@@ -366,66 +350,10 @@ public class ContainerEnchanter extends ContainerBase
   {
 
     return -enchantmentCost(enchantment, level, enchantmentLevel) + 1;
-    // final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
-    // .getStack();
-    // final double costFactor = 1.0;
-    //
-    // if (itemStack == null)
-    // return 0;
-    //
-    // final int maxLevel = enchantment.getMaxLevel();
-    //
-    // if (enchantmentLevel > maxLevel)
-    // return 0;
-    //
-    // final int averageCost = (enchantment.getMinEnchantability(level)
-    // + enchantment.getMaxEnchantability(level)) / 2;
-    // int enchantability =
-    // itemStack.getItem().getItemEnchantability(itemStack);
-    //
-    // if (enchantability <= 1)
-    // enchantability = 10;
-    //
-    // int adjustedCost = (int) (averageCost
-    // * (enchantmentLevel - level - maxLevel)
-    // / ((double) maxLevel * enchantability));
-    //
-    // // int temp = (int) (adjustedCost * (60 / (bookCases() + 1)));
-    // // temp /= 20;
-    // // if (temp > adjustedCost) {
-    // // adjustedCost = temp;
-    // // }
-    //
-    // adjustedCost *= (costFactor / 4D);
-    //
-    // if (enchantability > 1)
-    // adjustedCost *= Math.log(enchantability) / 2;
-    // else
-    // adjustedCost /= 10;
-    //
-    // final int enchantmentCost = enchantmentCost(enchantment, level - 1,
-    // enchantmentLevel);
-    //
-    // return Math.min(adjustedCost, -enchantmentCost);
   }
 
   /* Client Synchronization */
 
-  // This is where you check if any values have changed and if so send an update
-  // to any clients accessing this container
-  // The container itemstacks are tested in Container.detectAndSendChanges, so
-  // we don't need to do that
-  // We iterate through all of the TileEntity Fields to find any which have
-  // changed, and send them.
-  // You don't have to use fields if you don't wish to; just manually match the
-  // ID in sendProgressBarUpdate with the value in
-  // updateProgressBar()
-  // The progress bar values are restricted to shorts. If you have a larger
-  // value (eg int), it's not a good idea to try and split it
-  // up into two shorts because the progress bar values are sent independently,
-  // and unless you add synchronisation logic at the
-  // receiving side, your int value will be wrong until the second short
-  // arrives. Use a custom packet instead.
   @Override
   public void detectAndSendChanges()
   {

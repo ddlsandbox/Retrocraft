@@ -68,7 +68,12 @@ public class GuiEnchanter extends GuiContainer
   {
     super.initGui();
     buttonList.add(
-        new GuiButton(0, guiLeft + BUTTON_X, guiTop + BUTTON_Z, 18, 14, "E"));
+        new GuiButton(0, 
+            guiLeft + BUTTON_X, 
+            guiTop + BUTTON_Z, 
+            18, 
+            18, 
+            "E"));
   }
 
   @Override
