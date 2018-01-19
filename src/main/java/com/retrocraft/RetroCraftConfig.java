@@ -10,6 +10,7 @@ public class RetroCraftConfig
   
   public float enchantmentCostFactor = 1.5f;
   public boolean allowDisenchanting;
+  public int allowOverpower;
   
   public int     blocksPerXPLevel;
   public boolean restrictRenameToOwner;
@@ -51,11 +52,13 @@ public class RetroCraftConfig
     
     /* enchanting */
     
-    enchantmentCostFactor = config.getFloat("Enchantment cost factor", "enchant_and_repair", 1.5f, 0f,
+    enchantmentCostFactor = config.getFloat("Enchantment cost factor", "enchant", 1.5f, 0f,
         10.0f,
         "Factor applied to enchanter experience costs.");
-    allowDisenchanting = config.getBoolean("Allow disenchanting", "enchant_and_repair", true,
+    allowDisenchanting = config.getBoolean("Allow disenchanting", "enchant", true,
         "If true, items can be disenchanted.");
+    allowOverpower = config.getInt("Allow overpowered enchantments", "enchant", 0, 0, 400,
+        "If greater than 0, level enchantments can go up to.");
     
     /* teleporting */
     

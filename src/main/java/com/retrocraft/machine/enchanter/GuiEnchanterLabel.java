@@ -22,7 +22,8 @@ public class GuiEnchanterLabel extends Gui
   public static final int HEIGHT = 13;
   public static final int WIDTH  = 140/2-2;
 
-  private int    sliderX;
+  private int sliderX;
+  private int maxLevel;
   public boolean dragging = false;
 
   public boolean show   = true;
@@ -38,6 +39,9 @@ public class GuiEnchanterLabel extends Gui
     this.yPos = startingYPos = y;
 
     this.sliderX = xPos + 1;
+    this.maxLevel = RetroCraft.getConfig().allowOverpower>0
+        ? (enchantment.getMaxLevel()==1?1:RetroCraft.getConfig().allowOverpower)
+        : enchantment.getMaxLevel();
   }
 
   public void draw(FontRenderer fontRenderer)
@@ -51,10 +55,10 @@ public class GuiEnchanterLabel extends Gui
     }
 
     final int indexX = dragging ? sliderX
-        : enchantmentLevel <= enchantment.getMaxLevel()
+        : enchantmentLevel <= maxLevel
             ? (int) (xPos + 1
                 + (WIDTH - 6)
-                    * (enchantmentLevel / (double) enchantment.getMaxLevel()))
+                    * (enchantmentLevel / (double) maxLevel))
             : xPos + 1 + WIDTH - 6;
 
     drawRect(indexX, yPos + 1, indexX + 5, yPos - 1 + HEIGHT, 0xff000000);
@@ -121,9 +125,9 @@ public class GuiEnchanterLabel extends Gui
 
     final float index = xPos / (float) (WIDTH + 10);
     final int tempLevel = (int) Math
-        .floor(this.initialLevel > this.enchantment.getMaxLevel()
+        .floor(this.initialLevel > maxLevel
             ? this.initialLevel * index
-            : this.enchantment.getMaxLevel() * index);
+            : maxLevel * index);
 
     if (tempLevel >= this.initialLevel
         || RetroCraft.getConfig().allowDisenchanting
@@ -156,8 +160,9 @@ public class GuiEnchanterLabel extends Gui
 
     float index = xPos / (float) WIDTH;
     final int tempLevel = (int) Math
-        .floor(initialLevel > enchantment.getMaxLevel() ? initialLevel * index
-            : enchantment.getMaxLevel() * index);
+        .floor(initialLevel > maxLevel 
+            ? initialLevel * index
+            : maxLevel * index);
 
     if (tempLevel >= initialLevel)
     {

@@ -182,8 +182,8 @@ public class GuiEnchanter extends GuiContainer
     {
       if (item.dragging)
       {
-        item.scroll(adjustedMouseX - ENCHANTLIST_X, // TODO: or 36??
-            ENCHANTLIST_X + guiLeft);
+        item.scroll(adjustedMouseX - item.xPos + guiLeft, // TODO: or 36??
+            item.xPos);
       }
     }
   }
