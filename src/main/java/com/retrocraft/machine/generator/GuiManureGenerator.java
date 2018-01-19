@@ -51,7 +51,7 @@ public class GuiManureGenerator extends GuiContainer
   public void drawGuiContainerForegroundLayer(int x, int y)
   {
     final String name = RetroCraft.proxy
-        .localize(ModBlocks.blockGenerator.getUnlocalizedName() + ".name");
+        .localize(ModBlocks.blockManureGenerator.getUnlocalizedName() + ".name");
     final int LABEL_XPOS = (xSize) / 2
         - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;
