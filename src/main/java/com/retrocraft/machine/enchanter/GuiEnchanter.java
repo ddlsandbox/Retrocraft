@@ -35,8 +35,8 @@ public class GuiEnchanter extends GuiContainer
   private static final int BUTTON_Z = 36;
 
   private static final int ENCHANTLIST_X     = 62;
-  private static final int ENCHANTLIST_Z_MIN = 18;
-  private static final int ENCHANTLIST_Z_MAX = 132;
+  private static final int ENCHANTLIST_Y_MIN = 18;
+  private static final int ENCHANTLIST_Y_MAX = 132;
 
   private InventoryPlayer              playerInv;
   private ArrayList<GuiEnchanterLabel> enchantmentArray = new ArrayList<GuiEnchanterLabel>();
@@ -116,31 +116,20 @@ public class GuiEnchanter extends GuiContainer
     GlStateManager.disableDepth();
     GlStateManager.color(1, 1, 1, 1);
 
-    /*
-     * bind the background texture that we’ve specified in our BG_TEXTURE field
-     * to Minecraft’s rendering engine, so that when we render a rectangle with
-     * a texture on it, the correct texture is used.
-     */
     mc.getTextureManager().bindTexture(BG_TEXTURE);
 
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-    // enchantmentArray = convertMapToGuiItems(
-    // container.getEnchantments(),
-    // ENCHANTLIST_X + guiLeft,
-    // ENCHANTLIST_Z_MIN + guiTop);
-
     for (final GuiEnchanterLabel item : enchantmentArray)
     {
-      item.show(item.yPos >= guiTop + ENCHANTLIST_Z_MIN
-          && item.yPos < guiTop + ENCHANTLIST_Z_MAX);
+      item.show(item.yPos >= guiTop + ENCHANTLIST_Y_MIN
+          && item.yPos < guiTop + ENCHANTLIST_Y_MAX);
       item.draw(fontRenderer);
     }
 
     final int adjustedMouseX = mouseX - guiLeft;
     final int adjustedMouseY = mouseY - guiTop;
 
-    // mc.renderEngine.bindTexture(texture);
     int tempY = adjustedMouseY - 16;
     if (tempY <= 0)
     {
@@ -256,7 +245,7 @@ public class GuiEnchanter extends GuiContainer
           this.fontRenderer);
     }
 
-    final GuiEnchanterLabel label = this.getSelectedLabel(mouseX, mouseY);
+    final GuiEnchanterLabel label = this.getItemFromPos(mouseX, mouseY);
 
     if (isShiftKeyDown() && label != null && label.enchantment != null)
     {
@@ -293,36 +282,6 @@ public class GuiEnchanter extends GuiContainer
     fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS, Color.cyan.getRGB());
   }
 
-  /**
-   * Gets the GuiEnchantmentLabel that the mouse is currently hovering over.
-   * 
-   * @param mouseX
-   *          The X position of the mouse.
-   * @param mouseY
-   *          The Y position of the mouse.
-   * @return GuiEnchantmentLabel The current label being hovered over.
-   */
-  private GuiEnchanterLabel getSelectedLabel(int mouseX, int mouseY)
-  {
-
-    if (mouseX < this.guiLeft + ENCHANTLIST_X
-        || mouseX > this.guiLeft + this.xSize - 32)
-      return null;
-
-    for (final GuiEnchanterLabel label : this.enchantmentArray)
-    {
-
-      if (!label.show)
-        continue;
-
-      if (mouseY >= label.yPos
-          && mouseY <= label.yPos + GuiEnchanterLabel.HEIGHT)
-        return label;
-    }
-
-    return null;
-  }
-
   @Override
   public void updateScreen()
   {
@@ -337,7 +296,7 @@ public class GuiEnchanter extends GuiContainer
     {
       this.enchantments = container.getEnchantments();
       enchantmentArray = convertMapToGuiItems(this.enchantments,
-          ENCHANTLIST_X + guiLeft, ENCHANTLIST_Z_MIN + guiTop);
+          ENCHANTLIST_X + guiLeft, ENCHANTLIST_Y_MIN + guiTop);
     }
     totalCost = 0;
 
@@ -531,7 +490,9 @@ public class GuiEnchanter extends GuiContainer
   {
 
     if (x < guiLeft + ENCHANTLIST_X
-        || x > guiLeft + ENCHANTLIST_X + GuiEnchanterLabel.WIDTH + 5)
+     || x > guiLeft + ENCHANTLIST_X + 2*GuiEnchanterLabel.WIDTH + 5
+     || y < guiTop + ENCHANTLIST_Y_MIN
+     || y > guiTop + ENCHANTLIST_Y_MAX)
     {
       return null;
     }
@@ -542,7 +503,8 @@ public class GuiEnchanter extends GuiContainer
       {
         continue;
       }
-      if (y >= item.yPos && y <= item.yPos + GuiEnchanterLabel.HEIGHT)
+      if (y >= item.yPos && y <= item.yPos + GuiEnchanterLabel.HEIGHT
+       && x >= item.xPos && x <= item.xPos + GuiEnchanterLabel.WIDTH)
       {
         return item;
       }
@@ -598,12 +560,15 @@ public class GuiEnchanter extends GuiContainer
       return temp;
 
     int i = 0;
-    int yPos = y;
+    boolean j = false;
+    int xPos, yPos;
     for (Enchantment obj : map.keySet())
     {
-      temp.add(new GuiEnchanterLabel(container, obj, map.get(obj), x, yPos));
-      i++;
-      yPos = y + i * 13;
+      xPos = j?(x+GuiEnchanterLabel.WIDTH + 4):x;
+      yPos = y + i * GuiEnchanterLabel.HEIGHT;
+      temp.add(new GuiEnchanterLabel(container, obj, map.get(obj), xPos, yPos));
+      if (j) ++i;
+      j = !j;
     }
 
     return temp;

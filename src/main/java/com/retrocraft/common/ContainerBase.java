@@ -61,8 +61,6 @@ public class ContainerBase extends Container
   
   protected void addVanillaSlots(InventoryPlayer invPlayer)
   {
- // Add the players hotbar to the gui - the [xpos, ypos] location of each
-    // item
     for (int x = 0; x < hotbarSlotCount; x++)
     {
       int slotNumber = x;

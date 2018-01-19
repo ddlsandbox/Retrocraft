@@ -4,6 +4,7 @@ import com.retrocraft.RetroCraft;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.enchantment.Enchantment;
 
 public class GuiEnchanterLabel extends Gui
@@ -19,7 +20,7 @@ public class GuiEnchanterLabel extends Gui
   public int              xPos;
   public int              yPos;
   public static final int HEIGHT = 13;
-  public static final int WIDTH  = 140;
+  public static final int WIDTH  = 140/2-2;
 
   private int    sliderX;
   public boolean dragging = false;
@@ -41,7 +42,9 @@ public class GuiEnchanterLabel extends Gui
 
   public void draw(FontRenderer fontRenderer)
   {
-
+    
+    final float fontScale = 0.5f;
+    
     if (!show)
     {
       return;
@@ -55,8 +58,15 @@ public class GuiEnchanterLabel extends Gui
             : xPos + 1 + WIDTH - 6;
 
     drawRect(indexX, yPos + 1, indexX + 5, yPos - 1 + HEIGHT, 0xff000000);
-    fontRenderer.drawString(getTranslatedName(), xPos + 5, yPos + HEIGHT / 4,
-        0x55aaff00);
+    
+    GlStateManager.scale(fontScale, fontScale, fontScale);
+    fontRenderer.drawString(
+        getTranslatedName(), 
+        (int) ((xPos + 5)/fontScale), 
+        (int) ((yPos + HEIGHT / 4)/fontScale),
+        0xff0000ff);
+    GlStateManager.scale(1.0/fontScale, 1.0/fontScale, 1.0/fontScale);
+    
     if (locked)
       drawRect(xPos, yPos + 1, xPos + WIDTH, yPos - 1 + HEIGHT, 0x44ff0000);
     else

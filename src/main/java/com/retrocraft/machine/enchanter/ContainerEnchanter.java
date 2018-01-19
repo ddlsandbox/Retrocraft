@@ -91,10 +91,10 @@ public class ContainerEnchanter extends ContainerBase
   }
 
   @Override
-  public void onContainerClosed(EntityPlayer p_onContainerClosed_1_)
+  public void onContainerClosed(EntityPlayer player)
   {
     // TODO Drop item?
-    super.onContainerClosed(p_onContainerClosed_1_);
+    super.onContainerClosed(player);
   }
 
   // This is where you specify what happens when a player shift clicks a slot in
@@ -191,8 +191,8 @@ public class ContainerEnchanter extends ContainerBase
         * RetroCraft.getConfig().enchantmentCostFactor);
     final int returnAmount = (oldCost - newCost) / 2;
     return -returnAmount;
-//        -EnchantHelper
-//        .getExperienceFromLevel(returnAmount > 0 ? returnAmount : 0);
+    // -EnchantHelper
+    // .getExperienceFromLevel(returnAmount > 0 ? returnAmount : 0);
   }
 
   private void addEnchantsFor(ItemStack itemStack,
