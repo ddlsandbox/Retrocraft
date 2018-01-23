@@ -218,7 +218,6 @@ public class TileManureGenerator extends TileEntityInventory
       {
         lastBurnTime = burnTimeRemaining;
         
-        //RetroCraft.proxy.playSound(SoundEvents.BLOCK_FIRE_AMBIENT, pos, 0.5f);
         if (!RetroCraftConfig.disableParticles)
         {
           world.spawnParticle(EnumParticleTypes.SMOKE_LARGE,

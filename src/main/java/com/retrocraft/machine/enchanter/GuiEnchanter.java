@@ -24,6 +24,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -99,7 +100,7 @@ public class GuiEnchanter extends GuiContainer
         RetroCraft.network.sendToServer(new PacketEnchant(enchants, totalCost));
       } catch (Exception e)
       {
-        playerInv.player.sendMessage(new TextComponentString(e.getMessage()));
+        playerInv.player.sendMessage(new TextComponentString("GUI Exception: " + e.getMessage()));
       }
     }
     return;
@@ -345,8 +346,10 @@ public class GuiEnchanter extends GuiContainer
           .enchantmentCost(label.enchantment, label.enchantmentLevel, level);
 
       if (!this.container.canPurchase(this.playerInv.player, cost))
+        playerInv.player.sendMessage(
+            new TextComponentTranslation("enchanter.notEnoughLevels", cost));
 
-        while (label.enchantmentLevel > 0)
+        while (label.enchantmentLevel > level)
         {
 
           label.dragging = false;
@@ -459,7 +462,10 @@ public class GuiEnchanter extends GuiContainer
 
       if (!container.canPurchase(playerInv.player, temp))
       {
-        while (item.enchantmentLevel > 0)
+        playerInv.player.sendMessage(
+            new TextComponentTranslation("enchanter.notEnoughLevels", temp));
+        
+        while (item.enchantmentLevel > level)
         {
           item.dragging = false;
           item.enchantmentLevel--;

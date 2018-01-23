@@ -17,15 +17,14 @@ public class GuiSteamGenerator extends GuiContainer
   private TileSteamGenerator tileGenerator;
   private GuiEnergyDisplay energy;
   private GuiFluidDisplay fluid;
-  
 
-  private static final ResourceLocation BG_TEXTURE        = new ResourceLocation(
-      RetroCraft.modId, "textures/gui/steamgenerator.png");
-  private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(
-      RetroCraft.modId, "textures/gui/inventory.png");
+  private static final ResourceLocation BG_TEXTURE = new ResourceLocation(RetroCraft.modId,
+      "textures/gui/steamgenerator.png");
+  private static final ResourceLocation INVENTORY_TEXTURE = new ResourceLocation(RetroCraft.modId,
+      "textures/gui/inventory.png");
 
   public GuiSteamGenerator(InventoryPlayer invPlayer, TileSteamGenerator tileGenerator,
-                           ContainerSteamGenerator containerSteamGenerator)
+      ContainerSteamGenerator containerSteamGenerator)
   {
     super(containerSteamGenerator);
 
@@ -40,29 +39,27 @@ public class GuiSteamGenerator extends GuiContainer
   public void initGui()
   {
     super.initGui();
-    this.fluid = new GuiFluidDisplay(this.guiLeft + 42, this.guiTop + 6,
-        this.tileGenerator.tank, false, false);
-    this.energy = new GuiEnergyDisplay(this.guiLeft + 116, this.guiTop + 6,
-        this.tileGenerator.storage);
+    this.fluid = new GuiFluidDisplay(this.guiLeft + 42, this.guiTop + 6, this.tileGenerator.tank, false, false);
+    this.energy = new GuiEnergyDisplay(this.guiLeft + 116, this.guiTop + 6, this.tileGenerator.storage);
   }
 
   @Override
-  public void drawScreen(int x, int y, float f){
-      super.drawScreen(x, y, f);
-      this.energy.drawOverlay(x, y);
-      this.fluid.drawOverlay(x, y);
+  public void drawScreen(int mouseX, int mouseY, float f)
+  {
+    this.drawDefaultBackground();
+    super.drawScreen(mouseX, mouseY, f);
+    this.energy.drawOverlay(mouseX, mouseY);
+    this.fluid.drawOverlay(mouseX, mouseY);
+    this.renderHoveredToolTip(mouseX, mouseY);
   }
-  
+
   @Override
   public void drawGuiContainerForegroundLayer(int x, int y)
   {
-    final String name = RetroCraft.proxy
-        .localize(ModBlocks.blockGenerator.getUnlocalizedName() + ".name");
-    final int LABEL_XPOS = (xSize) / 2
-        - fontRenderer.getStringWidth(name) / 2;
+    final String name = RetroCraft.proxy.localize(ModBlocks.blockGenerator.getUnlocalizedName() + ".name");
+    final int LABEL_XPOS = (xSize) / 2 - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;
-    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS,
-        Color.cyan.getRGB());
+    fontRenderer.drawString(name, LABEL_XPOS, LABEL_YPOS, Color.cyan.getRGB());
   }
 
   @Override
@@ -79,8 +76,7 @@ public class GuiSteamGenerator extends GuiContainer
     if (this.tileGenerator.burnTimeRemaining > 0)
     {
       int i = this.tileGenerator.getBurningScaled(13);
-      this.drawTexturedModalRect(this.guiLeft + 81, this.guiTop + 28 + 12 - i,
-          176, 96 - i, 14, i);
+      this.drawTexturedModalRect(this.guiLeft + 81, this.guiTop + 28 + 12 - i, 176, 96 - i, 14, i);
     }
 
     this.energy.draw();

@@ -19,7 +19,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -100,44 +99,46 @@ public class ContainerEnchanter extends ContainerBase
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
   {
-    ItemStack itemstack = ItemStack.EMPTY;
+    ItemStack copyOfSourceStack = StackUtil.getNull();
     Slot slot = inventorySlots.get(sourceSlotIndex);
 
     if (slot != null && slot.getHasStack())
     {
-      ItemStack itemstack1 = slot.getStack();
-      itemstack = itemstack1.copy();
+      ItemStack sourceStack = slot.getStack();
+      copyOfSourceStack = sourceStack.copy();
 
       if (isVanillaSlot(sourceSlotIndex))
       {
-        if (!this.mergeItemStack(itemstack1, customFirstSlotIndex,
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex,
             customFirstSlotIndex + 1, false))
         {
-          return ItemStack.EMPTY;
+          return StackUtil.getNull();
         }
-      } else
+      } 
+      else
       {
-        if (!this.mergeItemStack(itemstack1, vanillaFirstSlotIndex,
-            vanillaFirstSlotIndex + vanillaSlotCount, true))
+        /* test equipment slots first */
+        if (!this.mergeItemStack(sourceStack, equipmentFirstSlotIndex, equipmentFirstSlotIndex + equipmentSlotCount, true) &&
+            !this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
         {
-          return ItemStack.EMPTY;
+          return StackUtil.getNull();
         }
       }
 
-      if (itemstack1.getCount() == 0)
+      if (sourceStack.getCount() == 0)
       {
-        slot.putStack(ItemStack.EMPTY);
+        slot.putStack(StackUtil.getNull());
       }
 
-      if (itemstack1.getCount() == itemstack.getCount())
+      if (sourceStack.getCount() == copyOfSourceStack.getCount())
       {
-        return ItemStack.EMPTY;
+        return StackUtil.getNull();
       }
 
-      slot.onTake(player, itemstack1);
+      slot.onTake(player, sourceStack);
     }
 
-    return itemstack;
+    return copyOfSourceStack;
   }
 
   public ItemStack getItem()
@@ -238,8 +239,6 @@ public class ContainerEnchanter extends ContainerBase
 
     if (player.experienceLevel < cost)
     {
-      player.sendMessage(
-          new TextComponentString("Not enough levels. Required " + cost));
       return false;
     }
     return true;
@@ -318,7 +317,7 @@ public class ContainerEnchanter extends ContainerBase
     enchanter.enchantCurrent(map);
     readItems();
     enchanter.markDirty();
-    // enchanter.sendUpdate();
+
     return true;
   }
 
@@ -340,9 +339,6 @@ public class ContainerEnchanter extends ContainerBase
 
     return EnchantHelper.calculateEnchantmentCost(enchantment,
         enchantmentLevel + level);
-    // return EnchantHelper.getExperienceFromLevel(
-    // EnchantHelper.calculateEnchantmentCost(enchantment, enchantmentLevel +
-    // level));
   }
 
   public int disenchantmentCost(Enchantment enchantment, int enchantmentLevel,
@@ -358,34 +354,6 @@ public class ContainerEnchanter extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-
-    // boolean allFieldsHaveChanged = false;
-    // boolean fieldHasChanged [] = new
-    // boolean[tileInventoryFurnace.getFieldCount()];
-    // if (cachedFields == null) {
-    // cachedFields = new int[tileInventoryFurnace.getFieldCount()];
-    // allFieldsHaveChanged = true;
-    // }
-    // for (int i = 0; i < cachedFields.length; ++i) {
-    // if (allFieldsHaveChanged || cachedFields[i] !=
-    // tileInventoryFurnace.getField(i)) {
-    // cachedFields[i] = tileInventoryFurnace.getField(i);
-    // fieldHasChanged[i] = true;
-    // }
-    // }
-    //
-    // // go through the list of listeners (players using this container) and
-    // update them if necessary
-    // for (IContainerListener listener : this.listeners) {
-    // for (int fieldID = 0; fieldID < tileInventoryFurnace.getFieldCount();
-    // ++fieldID) {
-    // if (fieldHasChanged[fieldID]) {
-    // // Note that although sendProgressBarUpdate takes 2 ints on a server
-    // these are truncated to shorts
-    // listener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
-    // }
-    // }
-    // }
   }
 
 }

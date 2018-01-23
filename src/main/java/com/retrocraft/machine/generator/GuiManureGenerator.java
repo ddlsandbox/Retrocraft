@@ -42,9 +42,12 @@ public class GuiManureGenerator extends GuiContainer
   }
 
   @Override
-  public void drawScreen(int x, int y, float f){
-      super.drawScreen(x, y, f);
-      this.energy.drawOverlay(x, y);
+  public void drawScreen(int mouseX, int mouseY, float f)
+  {
+    this.drawDefaultBackground();
+    super.drawScreen(mouseX, mouseY, f);
+    this.energy.drawOverlay(mouseX, mouseY);
+    this.renderHoveredToolTip(mouseX, mouseY);
   }
   
   @Override

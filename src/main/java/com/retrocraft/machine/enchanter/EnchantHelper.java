@@ -178,8 +178,6 @@ public class EnchantHelper
     cost = cost + (enchantment.getRarity() == Rarity.COMMON ? 1
         : enchantment.getRarity() == Rarity.UNCOMMON ? 5
             : enchantment.getRarity() == Rarity.RARE ? 10 : 20);
-    
-    System.out.println("[RETROCRAFT] Cost for level " + level + " = " + cost);
     return cost;
   }
 }

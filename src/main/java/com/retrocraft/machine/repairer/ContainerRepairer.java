@@ -1,6 +1,7 @@
 package com.retrocraft.machine.repairer;
 
 import com.retrocraft.common.ContainerBase;
+import com.retrocraft.util.StackUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -76,7 +77,7 @@ public class ContainerRepairer extends ContainerBase
     Slot sourceSlot = (Slot) inventorySlots.get(sourceSlotIndex);
 
     if (sourceSlot == null || !sourceSlot.getHasStack())
-      return ItemStack.EMPTY;
+      return StackUtil.getNull();
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
@@ -86,34 +87,31 @@ public class ContainerRepairer extends ContainerBase
 
       if (getSlot(INPUT_SLOT_NUMBER).isItemValid(sourceStack))
       {
-        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
-            customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex,
+            customFirstSlotIndex + 1,
             false))
         {
-          return ItemStack.EMPTY;
+          return StackUtil.getNull();
         }
-        //
       } else
       {
-        return ItemStack.EMPTY; // EMPTY_ITEM;
+        return StackUtil.getNull();
       }
-    } 
-    else if (sourceSlotIndex == customFirstSlotIndex || sourceSlotIndex == customFirstSlotIndex + 1)
-    {
-      if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
-      {
-        return ItemStack.EMPTY;
-      }
-    } else
-    {
-      System.err.print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
-      return ItemStack.EMPTY; // EMPTY_ITEM;
     }
-
+    else
+    {
+      /* test equipment slots first */
+      if (!this.mergeItemStack(sourceStack, equipmentFirstSlotIndex, equipmentFirstSlotIndex + equipmentSlotCount, true) &&
+          !this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
+      {
+        return StackUtil.getNull();
+      }
+    }
+    
     // If stack size == 0 (the entire stack was moved) set slot contents to null
     if (sourceStack.getCount() == 0)
-    { // getStackSize()
-      sourceSlot.putStack(ItemStack.EMPTY); // Empty Item
+    {
+      sourceSlot.putStack(StackUtil.getNull());
     } else
     {
       sourceSlot.onSlotChanged();
@@ -161,48 +159,6 @@ public class ContainerRepairer extends ContainerBase
   {
     tileInventoryFurnace.setField(id, data);
   }
-
-  // public int repairCostMax()
-  // {
-  //
-  // final double repairFactor = 1.5;
-  // final ItemStack itemStack = inventorySlots.get(0).getStack();
-  // if (itemStack == null)
-  // return 0;
-  //
-  // if (!itemStack.isItemEnchanted() || !itemStack.isItemDamaged())
-  // return 0;
-  //
-  // int cost = 0;
-  //
-  // final Map<Enchantment, Integer> enchantments = EnchantmentHelper
-  // .getEnchantments(itemStack);
-  //
-  // for (final Enchantment enchantment : enchantments.keySet())
-  // {
-  // final Integer enchantmentLevel = enchantments.get(enchantment);
-  //
-  // cost += enchantmentCost(enchantment, enchantmentLevel, 0);
-  // }
-  //
-  // final int maxDamage = itemStack.getMaxDamage();
-  // final int displayDamage = itemStack.getItemDamage();
-  // int enchantability = itemStack.getItem().getItemEnchantability(itemStack);
-  //
-  // if (enchantability <= 1)
-  // {
-  // enchantability = 10;
-  // }
-  //
-  // final double percentDamage = 1
-  // - (maxDamage - displayDamage) / (double) maxDamage;
-  //
-  // double totalCost = (percentDamage * cost) / enchantability;
-  //
-  // totalCost *= 2 * repairFactor;
-  //
-  // return (int) Math.max(1, totalCost);
-  // }
 
   public class SlotRepairableInput extends Slot
   {

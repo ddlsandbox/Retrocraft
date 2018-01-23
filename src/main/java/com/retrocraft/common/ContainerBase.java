@@ -35,6 +35,7 @@ public class ContainerBase extends Container
   protected int inventorySlotCount;
   protected int vanillaSlotCount;
   protected int vanillaFirstSlotIndex = 0;
+  protected int equipmentFirstSlotIndex = 0;
 
   protected int customFirstSlotIndex;
 
@@ -55,7 +56,8 @@ public class ContainerBase extends Container
     inventorySlotCount = inventoryColumnCount * inventoryRowCount;
     vanillaSlotCount = inventorySlotCount + hotbarSlotCount
         + equipmentSlotCount;
-    
+
+    equipmentFirstSlotIndex = vanillaFirstSlotIndex + inventorySlotCount + hotbarSlotCount;
     customFirstSlotIndex = vanillaFirstSlotIndex + vanillaSlotCount;
   }
   
@@ -116,5 +118,5 @@ public class ContainerBase extends Container
   {
     return true;
   }
-
+  
 }

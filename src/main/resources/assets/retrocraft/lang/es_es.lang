@@ -110,6 +110,7 @@ gui.retrocraft:editTeleportPipe.enterName=Introduce el nombre de la tubería:
 gui.retrocraft:editTeleportPipe.isGlobal=es Global
 
 #Vanilla Enchantment Descriptions
+enchanter.notEnoughLevels=No tienes suficientes niveles. Necesitas %d
 enchantment.minecraft.protection.desc=Reduces damage from most sources. 
 enchantment.minecraft.fire_protection.desc=Reduces the effects of fire damage. Also reduces the burn time when set on fire.
 enchantment.minecraft.feather_falling.desc=Reduces fall damage and ender pearl teleportation damage.
