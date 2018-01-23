@@ -1,6 +1,7 @@
 package com.retrocraft.machine.multifurnace;
 
 import com.retrocraft.common.ContainerBase;
+import com.retrocraft.util.ItemUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -110,11 +111,11 @@ public class ContainerMultifurnace extends ContainerBase {
 		if (isVanillaSlot(sourceSlotIndex)) {
 			// This is a vanilla container slot so merge the stack into one of the furnace slots
 			// If the stack is smeltable try to merge merge the stack into the input slots
-			if (!TileMultifurnace.getSmeltingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
+			if (!ItemUtil.getSmeltingResultForItem(sourceStack).isEmpty()){  //isEmptyItem
 				if (!mergeItemStack(sourceStack, inputFirstSlotIndex, inputFirstSlotIndex + INPUT_SLOTS_COUNT, false)){
 					return ItemStack.EMPTY;  //EMPTY_ITEM;
 				}
-			}	else if (TileMultifurnace.getItemBurnTime(sourceStack) > 0) {
+			}	else if (ItemUtil.getItemBurnTime(sourceStack) > 0) {
 				if (!mergeItemStack(sourceStack, fuelFirstSlotIndex, fuelFirstSlotIndex + FUEL_SLOTS_COUNT, true)) {
 					// Setting the boolean to true places the stack in the bottom slot first
 					return ItemStack.EMPTY;  //EMPTY_ITEM;

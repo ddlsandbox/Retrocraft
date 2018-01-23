@@ -49,6 +49,8 @@ item.excavator_diamond.name=Diamond Excavator
 item.excavator_manolium.name=Manolium Excavator
 item.excavator_manolazium.name=Manolazium Excavator
 
+item.tool_smelter.name=Portable Smelter
+
 item.etool_manolium.name=Manolium MegaTool
 item.etool_manolazium.name=Manolazium MegaTool
 

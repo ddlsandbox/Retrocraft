@@ -1,9 +1,11 @@
-package com.retrocraft.item;
+package com.retrocraft.item.tool;
 
 import javax.annotation.Nullable;
 
 import com.retrocraft.FluidHandler;
 import com.retrocraft.RetroCraft;
+import com.retrocraft.item.ItemModelProvider;
+import com.retrocraft.item.ModItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;

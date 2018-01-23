@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
+import com.retrocraft.util.ItemUtil;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -169,10 +171,10 @@ public class TileMultifurnace extends TileEntity implements IInventory, ITickabl
 				++burningCount;
 			}
 			if (burnTimeRemaining[i] == 0) {
-				if (!itemStacks[fuelSlotNumber].isEmpty() && getItemBurnTime(itemStacks[fuelSlotNumber]) > 0) {  // isEmpty()
+				if (!itemStacks[fuelSlotNumber].isEmpty() && ItemUtil.getItemBurnTime(itemStacks[fuelSlotNumber]) > 0) {  // isEmpty()
 					// If the stack in this slot is not null and is fuel, set burnTimeRemaining & burnTimeInitialValue to the
 					// item's burn time and decrease the stack size
-					burnTimeRemaining[i] = burnTimeInitialValue[i] = getItemBurnTime(itemStacks[fuelSlotNumber]);
+					burnTimeRemaining[i] = burnTimeInitialValue[i] = ItemUtil.getItemBurnTime(itemStacks[fuelSlotNumber]);
 					itemStacks[fuelSlotNumber].shrink(1);
 					++burningCount;
 					inventoryChanged = true;
@@ -215,7 +217,7 @@ public class TileMultifurnace extends TileEntity implements IInventory, ITickabl
 		// finds the first input slot which is smeltable and whose result fits into an output slot (stacking if possible)
 		for (int inputSlot = FIRST_INPUT_SLOT; inputSlot < FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT; inputSlot++)	{
 			if (!itemStacks[inputSlot].isEmpty()) {  //isEmpty()
-				result = getSmeltingResultForItem(itemStacks[inputSlot]);
+				result = ItemUtil.getSmeltingResultForItem(itemStacks[inputSlot]);
   			if (!result.isEmpty()) {  //isEmpty()
 					// find the first suitable output slot- either empty, or with identical item that has enough space
 					for (int outputSlot = FIRST_OUTPUT_SLOT; outputSlot < FIRST_OUTPUT_SLOT + OUTPUT_SLOTS_COUNT; outputSlot++) {
@@ -259,15 +261,7 @@ public class TileMultifurnace extends TileEntity implements IInventory, ITickabl
 		return true;
 	}
 
-	// returns the smelting result for the given stack. Returns null if the given stack can not be smelted
-	public static ItemStack getSmeltingResultForItem(ItemStack stack) { return FurnaceRecipes.instance().getSmeltingResult(stack); }
-
-	// returns the number of ticks the given item will burn. Returns 0 if the given item is not a valid fuel
-	public static short getItemBurnTime(ItemStack stack)
-	{
-		int burntime = TileEntityFurnace.getItemBurnTime(stack);  // just use the vanilla values
-		return (short)MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
-	}
+	
 
 	// Gets the number of slots in the inventory
 	@Override

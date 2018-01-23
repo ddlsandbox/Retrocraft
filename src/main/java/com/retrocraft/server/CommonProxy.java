@@ -13,11 +13,12 @@ import com.retrocraft.block.pedestal.BlockPedestal;
 import com.retrocraft.block.pedestal.TileEntityPedestal;
 import com.retrocraft.item.ItemManure;
 import com.retrocraft.item.ItemOre;
-import com.retrocraft.item.ItemWoodenBucket;
 import com.retrocraft.item.ItemWoodenMilkBucket;
 import com.retrocraft.item.RetrocraftMaterials;
+import com.retrocraft.item.ToolSmelter;
 import com.retrocraft.item.armor.ItemManoliumArmor;
 import com.retrocraft.item.backpack.ItemBackpack;
+import com.retrocraft.item.tool.ItemWoodenBucket;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
 import com.retrocraft.item.tool.ToolHammer;
@@ -207,6 +208,8 @@ public class CommonProxy
 	  event.getRegistry().register(new ToolHammer(RetrocraftMaterials.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolHammer(RetrocraftMaterials.manolaziumToolMaterial, "hammer_manolazium").setCreativeTab(RetroCraft.creativeTab));
 
+	  event.getRegistry().register(new ToolSmelter("tool_smelter").setCreativeTab(RetroCraft.creativeTab));
+	  
 	  event.getRegistry().register(new ToolEverything(RetrocraftMaterials.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab));
 	  event.getRegistry().register(new ToolEverything(RetrocraftMaterials.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab));
 	  

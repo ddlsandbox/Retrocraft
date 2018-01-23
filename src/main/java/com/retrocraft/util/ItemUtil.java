@@ -15,8 +15,11 @@ import java.util.List;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 public final class ItemUtil
 {
@@ -128,5 +131,20 @@ public final class ItemUtil
   {
     return ItemStack.areItemsEqual(stack1, stack2)
         && ItemStack.areItemStackTagsEqual(stack1, stack2);
+  }
+  
+  // returns the smelting result for the given stack. Returns null if the given
+  // stack can not be smelted
+  public static ItemStack getSmeltingResultForItem(ItemStack stack)
+  {
+    return FurnaceRecipes.instance().getSmeltingResult(stack);
+  }
+
+  // returns the number of ticks the given item will burn. Returns 0 if the given
+  // item is not a valid fuel
+  public static short getItemBurnTime(ItemStack stack)
+  {
+    int burntime = TileEntityFurnace.getItemBurnTime(stack); // just use the vanilla values
+    return (short) MathHelper.clamp(burntime, 0, Short.MAX_VALUE);
   }
 }

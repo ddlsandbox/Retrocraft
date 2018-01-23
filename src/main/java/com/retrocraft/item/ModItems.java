@@ -2,6 +2,7 @@ package com.retrocraft.item;
 
 import com.retrocraft.item.armor.ItemManoliumArmor;
 import com.retrocraft.item.backpack.ItemBackpack;
+import com.retrocraft.item.tool.ItemWoodenBucket;
 import com.retrocraft.item.tool.ToolEverything;
 import com.retrocraft.item.tool.ToolExcavator;
 import com.retrocraft.item.tool.ToolHammer;
@@ -97,6 +98,9 @@ public class ModItems {
   @GameRegistry.ObjectHolder("retrocraft:feet_manolazium")
   public static ItemManoliumArmor manolaziumFeet;
 
+  @GameRegistry.ObjectHolder("retrocraft:tool_smelter")
+  public static ToolSmelter toolSmelter;
+  
   /* weapons */
   
   @GameRegistry.ObjectHolder("retrocraft:sword_manolium")
@@ -178,6 +182,8 @@ public class ModItems {
 		ModelLoader.setCustomModelResourceLocation(manolaziumLegs, 0, new ModelResourceLocation(manolaziumLegs.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(manoliumFeet, 0, new ModelResourceLocation(manoliumFeet.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(manolaziumFeet, 0, new ModelResourceLocation(manolaziumFeet.getRegistryName(), "inventory"));
+
+		ModelLoader.setCustomModelResourceLocation(toolSmelter, 0, new ModelResourceLocation(toolSmelter.getRegistryName(), "inventory"));
 		
 		ModelLoader.setCustomModelResourceLocation(manoliumSword, 0, new ModelResourceLocation(manoliumSword.getRegistryName(), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(manolaziumSword, 0, new ModelResourceLocation(manolaziumSword.getRegistryName(), "inventory"));

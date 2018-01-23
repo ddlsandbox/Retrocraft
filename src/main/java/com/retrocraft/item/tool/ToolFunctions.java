@@ -135,7 +135,6 @@ public abstract class ToolFunctions
       world.playBroadcastSound(2001, blockPos, Block.getStateId(blockState));
       if (block.removedByPlayer(blockState, world, blockPos, player, true))
       {
-        System.out.println("[RETROCRAFT] S by Player Destroy " + blockPos);
         block.onBlockDestroyedByPlayer(world, blockPos, blockState);
       }
       ItemStack itemstack = player.getHeldItemMainhand();
