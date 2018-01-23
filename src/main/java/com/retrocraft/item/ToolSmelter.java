@@ -23,6 +23,8 @@ public class ToolSmelter extends ItemBase
   public ToolSmelter(String name)
   {
     super(name);
+    
+    this.setMaxStackSize(1);
     this.setMaxDamage(maxDamage);
   }
 

@@ -18,12 +18,14 @@ import net.minecraft.world.World;
 
 public class ToolReplacer extends ItemBase
 {
-
+  private int maxDamage = 100;
+  
   public ToolReplacer(String name)
   {
     super(name);
 
-    setMaxStackSize(1);
+    this.setMaxStackSize(1);
+    this.setMaxDamage(maxDamage);
   }
 
   // Without this method, your inventory will NOT work!!!
@@ -47,18 +49,23 @@ public class ToolReplacer extends ItemBase
       ContainerReplacer container = new ContainerReplacer(heldStack, player.inventory);
       ItemStack contained = container.getSlot(0).getStack(); 
             
-      if (contained.isEmpty())
+      if (currentDamage >= maxDamage || contained.isEmpty())
         return EnumActionResult.FAIL;
       
       IBlockState newState = Block.getBlockFromItem(contained.getItem()).getDefaultState();
       
       world.setBlockState(pos, newState);
-      contained.setCount(contained.getCount() - 1);
-
-      if (contained.getCount() > 0)
-        container.putStackInSlot(0, contained);
-      else
-        container.putStackInSlot(0, StackUtil.getNull());
+      
+      if (!player.isCreative())
+      {
+        contained.setCount(contained.getCount() - 1);
+  
+        if (contained.getCount() > 0)
+          container.putStackInSlot(0, contained);
+        else
+          container.putStackInSlot(0, StackUtil.getNull());
+        container.onContainerClosed(player);
+      }
       
       heldStack.setItemDamage(currentDamage + 1);
       return EnumActionResult.SUCCESS;

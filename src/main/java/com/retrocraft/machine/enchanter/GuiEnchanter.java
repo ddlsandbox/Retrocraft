@@ -225,10 +225,6 @@ public class GuiEnchanter extends GuiContainer
                 I18n.format("tooltip.enchanter.levelneed"), finalCost),
             maxWidth));
       }
-    // information.add(this.fontRenderer.listFormattedStringToWidth(
-    // String.format("%s: %s", I18n.format("tooltip.eplus.maxlevel"),
-    // this.container.getEnchantingPower()),
-    // maxWidth));
 
     if (!StackUtil.isValid(this.container.getItem()))
       information.add(this.fontRenderer.listFormattedStringToWidth(

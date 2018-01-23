@@ -46,6 +46,7 @@ public class ContainerReplacer extends Container
       @Override
       public boolean isItemValid(ItemStack stack)
       {
+        /* TODO: Restrict to blocks */
         return true;
       }
     });
