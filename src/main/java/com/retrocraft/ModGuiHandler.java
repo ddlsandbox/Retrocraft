@@ -4,6 +4,8 @@ import com.retrocraft.entity.teleportpipe.gui.ContainerEditTeleportNameDummy;
 import com.retrocraft.entity.teleportpipe.gui.GuiEditTeleportPipe;
 import com.retrocraft.item.backpack.ContainerBackpack;
 import com.retrocraft.item.backpack.GuiBackpack;
+import com.retrocraft.item.replacer.ContainerReplacer;
+import com.retrocraft.item.replacer.GuiReplacer;
 import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import com.retrocraft.machine.enchanter.GuiEnchanter;
 import com.retrocraft.machine.enchanter.TileEntityEnchanter;
@@ -51,6 +53,7 @@ public class ModGuiHandler implements IGuiHandler
   public static final int ADVANCED_FORGE  = 8;
   public static final int TELEPORT        = 9;
   public static final int BACKPACK        = 10;
+  public static final int REPLACER        = 11;
 
   @Override
   public Container getServerGuiElement(int ID, EntityPlayer player, World world,
@@ -91,6 +94,8 @@ public class ModGuiHandler implements IGuiHandler
       return new ContainerEditTeleportNameDummy();
     case BACKPACK:
       return new ContainerBackpack(player.getHeldItemMainhand(), player.inventory);
+    case REPLACER:
+      return new ContainerReplacer(player.getHeldItemMainhand(), player.inventory);
     default:
       return null;
     }
@@ -143,6 +148,8 @@ public class ModGuiHandler implements IGuiHandler
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     case BACKPACK:
       return new GuiBackpack(player.getHeldItemMainhand(), player.inventory, false);
+    case REPLACER:
+      return new GuiReplacer(player.getHeldItemMainhand(), player.inventory, false);
     default:
       return null;
     }

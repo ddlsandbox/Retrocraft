@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -17,10 +18,12 @@ import net.minecraft.world.World;
 
 public class ToolSmelter extends ItemBase
 {
-
+  private int maxDamage = 100;
+  
   public ToolSmelter(String name)
   {
     super(name);
+    this.setMaxDamage(maxDamage);
   }
 
   @Override
@@ -28,9 +31,13 @@ public class ToolSmelter extends ItemBase
       BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9,
       float par10)
   {
-    ItemStack result = ItemUtil.getSmeltingResultForItem(new ItemStack(world.getBlockState(pos).getBlock()));
+    ItemStack heldStack = player.getHeldItem(hand);
+    int currentDamage = heldStack.getItemDamage();
     
-    if (result.isEmpty())
+    ItemStack source = Item.getItemFromBlock(world.getBlockState(pos).getBlock()).getDefaultInstance();
+    ItemStack result = ItemUtil.getSmeltingResultForItem(source);
+    
+    if (currentDamage >= maxDamage || result.isEmpty())
       return EnumActionResult.FAIL;
     
     IBlockState newState = Block.getBlockFromItem(result.getItem()).getDefaultState();
@@ -39,10 +46,12 @@ public class ToolSmelter extends ItemBase
     
     if (!world.isRemote && newState.getBlock() == Blocks.AIR)
     {
-      EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result);
+      EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result.copy());
+      item.setPickupDelay(10);
       world.spawnEntity(item);
     }
 
+    heldStack.setItemDamage(currentDamage + 1);
     return EnumActionResult.SUCCESS;
   }
 

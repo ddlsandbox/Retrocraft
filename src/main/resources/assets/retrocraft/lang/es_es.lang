@@ -50,6 +50,7 @@ item.excavator_manolium.name=Excavadora de Manolium
 item.excavator_manolazium.name=Excavadora de Manolazium
 
 item.tool_smelter.name=Cocedor Portable
+item.tool_replacer.name=Reemplazador Portable
 
 item.etool_manolium.name=Tochoherramienta de Manolium
 item.etool_manolazium.name=Tochoherramienta de Manolazium
