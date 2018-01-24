@@ -1,5 +1,6 @@
 package com.retrocraft.item;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemDye;
@@ -18,6 +19,13 @@ public class ItemManure extends ItemBase
     super(name);
   }
 
+  @Override
+  public ItemManure setCreativeTab(CreativeTabs tab)
+  {
+    super.setCreativeTab(tab);
+    return this;
+  }
+  
   @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world,
       BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9,

@@ -34,7 +34,7 @@ public class ModBlocks {
 	@GameRegistry.ObjectHolder("retrocraft:hay_ground")
   public static BlockHayGround blockHayGround;
 	@GameRegistry.ObjectHolder("retrocraft:manure_ground")
-  public static BlockBase blockManureGround;
+  public static BlockManureGround blockManureGround;
 	
 	@GameRegistry.ObjectHolder("retrocraft:block_pedestal")
 	public static BlockPedestal pedestalManolium;

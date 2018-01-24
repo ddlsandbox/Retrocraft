@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "retrocraft:block_steamgenerator",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SRS",
+    "SMS",
+    "SCS"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:block_machinechasis"
+    },
+    "C": {
+      "item": "minecraft:coal",
+      "data": 0
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:cobblestone",
+      "data": 0
+    }
+  }
+}
+

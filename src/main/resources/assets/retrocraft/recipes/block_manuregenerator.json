@@ -1,0 +1,31 @@
+{
+  "result": {
+    "item": "retrocraft:block_manuregenerator",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SRS",
+    "XCX",
+    "SMS"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:mechanical_core"
+    },
+    "C": {
+      "item": "retrocraft:block_machinechasis"
+    },
+    "X": {
+      "item": "retrocraft:manure"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:cobblestone",
+      "data": 0
+    }
+  }
+}
+

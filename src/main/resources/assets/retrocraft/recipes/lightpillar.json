@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "retrocraft:lightpillar",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "T",
+    "I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  }
+}
+

@@ -80,6 +80,7 @@ public class TileRepairer extends TileEntityInventory
           if (slot == INPUT_SLOT_NUMBER && StackUtil.isNotNull(stack))
           {
             TileRepairer.this.REPAIR_TIME = stack.getMaxDamage();
+            TileRepairer.this.repairTimeRemaining = stack.getItemDamage();
           }
           TileRepairer.this.markDirty();
       }

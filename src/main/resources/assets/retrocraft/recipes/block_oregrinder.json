@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "retrocraft:block_oregrinder",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SRS",
+    "XCX",
+    "SXS"
+  ],
+  "key": {
+    "C": {
+      "item": "retrocraft:block_machinechasis"
+    },
+    "X": {
+      "item": "minecraft:flint"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:cobblestone",
+      "data": 0
+    }
+  }
+}
+

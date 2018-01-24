@@ -342,8 +342,9 @@ public class GuiEnchanter extends GuiContainer
           .enchantmentCost(label.enchantment, label.enchantmentLevel, level);
 
       if (!this.container.canPurchase(this.playerInv.player, cost))
+      {
         playerInv.player.sendMessage(
-            new TextComponentTranslation("enchanter.notEnoughLevels", cost));
+          new TextComponentTranslation("enchanter.notEnoughLevels", cost));
 
         while (label.enchantmentLevel > level)
         {
@@ -356,10 +357,9 @@ public class GuiEnchanter extends GuiContainer
           if (this.container.canPurchase(this.playerInv.player, cost))
             break;
         }
-
+      }
       this.totalCost = cost;
     }
-
     else if (label.enchantmentLevel < level && !label.locked)
       this.totalCost += this.container.getRebate(label.enchantment,
           label.enchantmentLevel, level);

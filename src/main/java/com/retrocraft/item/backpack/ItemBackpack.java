@@ -4,6 +4,7 @@ import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.item.ItemBase;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,6 +22,13 @@ public class ItemBackpack extends ItemBase
     setMaxStackSize(1);
   }
 
+  @Override
+  public ItemBackpack setCreativeTab(CreativeTabs tab)
+  {
+    super.setCreativeTab(tab);
+    return this;
+  }
+  
   // Without this method, your inventory will NOT work!!!
   @Override
   public int getMaxItemUseDuration(ItemStack stack)

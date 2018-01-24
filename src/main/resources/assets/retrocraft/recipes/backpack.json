@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "retrocraft:backpack",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "XXX",
+    "XMX",
+    "XXX"
+  ],
+  "key": {
+    "M": {
+      "item": "retrocraft:mechanical_core"
+    },
+    "X": {
+      "item": "minecraft:leather"
+    }
+  }
+}
+

@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "retrocraft:block_octirionchasis",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "ISI",
+    "SMS",
+    "ISI"
+  ],
+  "key": {
+    "I": {
+      "item": "retrocraft:gem_octirion"
+    },
+    "M": {
+      "item": "retrocraft:magical_core"
+    },
+    "S": {
+      "item": "minecraft:stone",
+      "data": 0
+    }
+  }
+}

@@ -1,33 +1,56 @@
 package com.retrocraft.item.replacer;
 
+import java.util.HashSet;
+
 import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
-import com.retrocraft.item.ItemBase;
+import com.retrocraft.item.RetrocraftMaterials;
 import com.retrocraft.util.StackUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ToolReplacer extends ItemBase
+public class ToolReplacer extends ItemTool
 {
-  private int maxDamage = 100;
+  private int maxDamage = 200;
   
   public ToolReplacer(String name)
   {
-    super(name);
+    super(RetrocraftMaterials.manoliumToolMaterial, new HashSet<Block>());
 
+    setUnlocalizedName(name);
+    setRegistryName(name);
+    
     this.setMaxStackSize(1);
     this.setMaxDamage(maxDamage);
   }
+  
+  @SideOnly(Side.CLIENT)
+  public void initModel() {
+      ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+  }
 
+  @Override
+  public ToolReplacer setCreativeTab(CreativeTabs tab)
+  {
+    super.setCreativeTab(tab);
+    return this;
+  }
+  
   // Without this method, your inventory will NOT work!!!
   @Override
   public int getMaxItemUseDuration(ItemStack stack)
@@ -53,6 +76,10 @@ public class ToolReplacer extends ItemBase
         return EnumActionResult.FAIL;
       
       IBlockState newState = Block.getBlockFromItem(contained.getItem()).getDefaultState();
+      
+      IBlockState localBlockState = world.getBlockState(pos);
+      localBlockState.getBlock().harvestBlock(world, player, pos, localBlockState, world.getTileEntity(pos),
+          player.getHeldItemMainhand());
       
       world.setBlockState(pos, newState);
       

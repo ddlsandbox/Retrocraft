@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "retrocraft:block_enchanter",
+    "count": 1
+  },
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SRS",
+    "XCX",
+    "SXS"
+  ],
+  "key": {
+    "C": {
+      "item": "retrocraft:block_octirionchasis"
+    },
+    "X": {
+      "item": "minecraft:book"
+    },
+    "R": {
+      "item": "retrocraft:magical_core"
+    },
+    "S": {
+      "item": "retrocraft:gem_octirion",
+      "data": 0
+    }
+  }
+}
+

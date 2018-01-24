@@ -1,17 +1,20 @@
 {
   "result": {
-    "item": "retrocraft:hammer_manolazium",
+    "item": "retrocraft:sword_octirion",
     "count": 1
   },
   "type": "forge:ore_shaped",
   "pattern": [
-    "MMM",
-    " I ",
-    " I "
+    "M",
+    "C",
+    "I"
   ],
   "key": {
     "M": {
-      "item": "retrocraft:ingot_manolazium"
+      "item": "retrocraft:gem_octirion"
+    },
+    "C": {
+      "item": "retrocraft:magical_core"
     },
     "I": {
       "item": "minecraft:stick"

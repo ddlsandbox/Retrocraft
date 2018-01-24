@@ -4,6 +4,7 @@ import com.retrocraft.util.ItemUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -29,6 +30,13 @@ public class ToolSmelter extends ItemBase
   }
 
   @Override
+  public ToolSmelter setCreativeTab(CreativeTabs tab)
+  {
+    super.setCreativeTab(tab);
+    return this;
+  }
+  
+  @Override
   public EnumActionResult onItemUse(EntityPlayer player, World world,
       BlockPos pos, EnumHand hand, EnumFacing side, float par8, float par9,
       float par10)
@@ -42,15 +50,18 @@ public class ToolSmelter extends ItemBase
     if (currentDamage >= maxDamage || result.isEmpty())
       return EnumActionResult.FAIL;
     
-    IBlockState newState = Block.getBlockFromItem(result.getItem()).getDefaultState();
-    
-    world.setBlockState(pos, newState);
-    
-    if (!world.isRemote && newState.getBlock() == Blocks.AIR)
+    if (!world.isRemote)
     {
-      EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result.copy());
-      item.setPickupDelay(10);
-      world.spawnEntity(item);
+      IBlockState newState = Block.getBlockFromItem(result.getItem()).getDefaultState();
+      
+      world.setBlockState(pos, newState, 3);
+      
+      if (newState.getBlock() == Blocks.AIR)
+      {
+        EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result.copy());
+        item.setPickupDelay(10);
+        world.spawnEntity(item);
+      }
     }
 
     heldStack.setItemDamage(currentDamage + 1);

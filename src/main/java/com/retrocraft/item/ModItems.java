@@ -1,5 +1,6 @@
 package com.retrocraft.item;
 
+import com.retrocraft.RetroCraft;
 import com.retrocraft.item.armor.ItemManoliumArmor;
 import com.retrocraft.item.backpack.ItemBackpack;
 import com.retrocraft.item.replacer.ToolReplacer;
@@ -11,8 +12,10 @@ import com.retrocraft.item.tool.ToolStreamAxe;
 import com.retrocraft.item.weapon.ItemSword;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,122 +23,154 @@ public class ModItems {
 
   /* dust */
   
-  @GameRegistry.ObjectHolder("retrocraft:dust_manolite")
   public static ItemOre dustManolite;
-  @GameRegistry.ObjectHolder("retrocraft:dust_manolazium")
   public static ItemOre dustManolazium;
-  @GameRegistry.ObjectHolder("retrocraft:gem_octirion")
   public static ItemOre gemOctirion;
 
   /* ingot */
   
-  @GameRegistry.ObjectHolder("retrocraft:ingot_manolium")
   public static ItemOre ingotManolium;
-  @GameRegistry.ObjectHolder("retrocraft:ingot_manolazium")
   public static ItemOre ingotManolazium;
 
   /* tools */
 
-  @GameRegistry.ObjectHolder("retrocraft:hammer_stone")
   public static ToolHammer stoneHammer;
-  @GameRegistry.ObjectHolder("retrocraft:hammer_iron")
   public static ToolHammer ironHammer;
-  @GameRegistry.ObjectHolder("retrocraft:hammer_gold")
   public static ToolHammer goldHammer;
-  @GameRegistry.ObjectHolder("retrocraft:hammer_diamond")
   public static ToolHammer diamondHammer;
-  @GameRegistry.ObjectHolder("retrocraft:hammer_manolium")
   public static ToolHammer manoliumHammer;
-  @GameRegistry.ObjectHolder("retrocraft:hammer_manolazium")
   public static ToolHammer manolaziumHammer;
 
-  @GameRegistry.ObjectHolder("retrocraft:excavator_stone")
   public static ToolExcavator stoneExcavator;
-  @GameRegistry.ObjectHolder("retrocraft:excavator_iron")
   public static ToolExcavator ironExcavator;
-  @GameRegistry.ObjectHolder("retrocraft:excavator_gold")
   public static ToolExcavator goldExcavator;
-  @GameRegistry.ObjectHolder("retrocraft:excavator_diamond")
   public static ToolExcavator diamondExcavator;
-  @GameRegistry.ObjectHolder("retrocraft:excavator_manolium")
   public static ToolExcavator manoliumExcavator;
-  @GameRegistry.ObjectHolder("retrocraft:excavator_manolazium")
   public static ToolExcavator manolaziumExcavator;
 
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_stone")
   public static ToolStreamAxe stoneStreamAxe;
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_iron")
   public static ToolStreamAxe ironStreamAxe;
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_gold")
   public static ToolStreamAxe goldStreamAxe;
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_diamond")
   public static ToolStreamAxe diamondStreamAxe;
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_manolium")
   public static ToolStreamAxe manoliumStreamAxe;
-  @GameRegistry.ObjectHolder("retrocraft:streamaxe_manolazium")
   public static ToolStreamAxe manolaziumStreamAxe;
 
-  @GameRegistry.ObjectHolder("retrocraft:etool_manolium")
   public static ToolEverything manoliumETool;
-  @GameRegistry.ObjectHolder("retrocraft:etool_manolazium")
   public static ToolEverything manolaziumETool;
 
   /* armor */
   
-  @GameRegistry.ObjectHolder("retrocraft:head_manolium")
   public static ItemManoliumArmor manoliumHead;
-  @GameRegistry.ObjectHolder("retrocraft:head_manolazium")
   public static ItemManoliumArmor manolaziumHead;
-  @GameRegistry.ObjectHolder("retrocraft:chest_manolium")
   public static ItemManoliumArmor manoliumChest;
-  @GameRegistry.ObjectHolder("retrocraft:chest_manolazium")
   public static ItemManoliumArmor manolaziumChest;
-  @GameRegistry.ObjectHolder("retrocraft:legs_manolium")
   public static ItemManoliumArmor manoliumLegs;
-  @GameRegistry.ObjectHolder("retrocraft:legs_manolazium")
   public static ItemManoliumArmor manolaziumLegs;
-  @GameRegistry.ObjectHolder("retrocraft:feet_manolium")
   public static ItemManoliumArmor manoliumFeet;
-  @GameRegistry.ObjectHolder("retrocraft:feet_manolazium")
   public static ItemManoliumArmor manolaziumFeet;
 
-  @GameRegistry.ObjectHolder("retrocraft:tool_smelter")
   public static ToolSmelter toolSmelter;
-  @GameRegistry.ObjectHolder("retrocraft:tool_replacer")
   public static ToolReplacer toolReplacer;
   
   /* weapons */
   
-  @GameRegistry.ObjectHolder("retrocraft:sword_manolium")
   public static ItemSword manoliumSword;
-  @GameRegistry.ObjectHolder("retrocraft:sword_manolazium")
   public static ItemSword manolaziumSword;
-  @GameRegistry.ObjectHolder("retrocraft:sword_octirion")
   public static ItemSword octirionSword;
 
   /* misc */
   
-  @GameRegistry.ObjectHolder("retrocraft:mechanical_core")
   public static ItemOre mechanicalCore;
-  @GameRegistry.ObjectHolder("retrocraft:magical_core")
   public static ItemOre magicalCore;
-  @GameRegistry.ObjectHolder("retrocraft:manure")
   public static ItemManure manure;
-  @GameRegistry.ObjectHolder("retrocraft:backpack")
   public static ItemBackpack backpack;
-  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket")
   public static ItemWoodenBucket woodenBucket;
-  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket_water")
   public static ItemWoodenBucket woodenWaterBucket;
-  @GameRegistry.ObjectHolder("retrocraft:wooden_bucket_milk")
   public static ItemWoodenMilkBucket woodenMilkBucket;
 	
 	
 	public static void init() {
+/* dust */
+    
+    dustManolite = new ItemOre("dust_manolite", "dustManolite").setCreativeTab(RetroCraft.creativeTab);
+    dustManolazium = new ItemOre("dust_manolazium", "dustManolazium").setCreativeTab(RetroCraft.creativeTab);
+    gemOctirion = new ItemOre("gem_octirion", "gemOctirion").setCreativeTab(RetroCraft.creativeTab);
+
+    /* ingot */
+    
+    ingotManolium = new ItemOre("ingot_manolium", "ingotManolium").setCreativeTab(RetroCraft.creativeTab);
+    ingotManolazium = new ItemOre("ingot_manolazium", "ingotManolazium").setCreativeTab(RetroCraft.creativeTab);
+
+    /* tools */
+    
+    stoneExcavator = new ToolExcavator(ToolMaterial.STONE, "excavator_stone").setCreativeTab(RetroCraft.creativeTab);
+    ironExcavator = new ToolExcavator(ToolMaterial.IRON, "excavator_iron").setCreativeTab(RetroCraft.creativeTab);
+    goldExcavator = new ToolExcavator(ToolMaterial.GOLD, "excavator_gold").setCreativeTab(RetroCraft.creativeTab);
+    diamondExcavator = new ToolExcavator(ToolMaterial.DIAMOND, "excavator_diamond").setCreativeTab(RetroCraft.creativeTab);
+    manoliumExcavator = new ToolExcavator(RetrocraftMaterials.manoliumToolMaterial, "excavator_manolium").setCreativeTab(RetroCraft.creativeTab);
+    manolaziumExcavator = new ToolExcavator(RetrocraftMaterials.manolaziumToolMaterial, "excavator_manolazium").setCreativeTab(RetroCraft.creativeTab);
+    
+    stoneStreamAxe = new ToolStreamAxe(ToolMaterial.STONE, "streamaxe_stone").setCreativeTab(RetroCraft.creativeTab);
+    ironStreamAxe = new ToolStreamAxe(ToolMaterial.IRON, "streamaxe_iron").setCreativeTab(RetroCraft.creativeTab);
+    goldStreamAxe = new ToolStreamAxe(ToolMaterial.GOLD, "streamaxe_gold").setCreativeTab(RetroCraft.creativeTab);
+    diamondStreamAxe = new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_diamond").setCreativeTab(RetroCraft.creativeTab);
+    manoliumStreamAxe = new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_manolium").setCreativeTab(RetroCraft.creativeTab);
+    manolaziumStreamAxe = new ToolStreamAxe(ToolMaterial.DIAMOND, "streamaxe_manolazium").setCreativeTab(RetroCraft.creativeTab);
+
+    stoneHammer = new ToolHammer(ToolMaterial.STONE, "hammer_stone").setCreativeTab(RetroCraft.creativeTab);
+    ironHammer = new ToolHammer(ToolMaterial.IRON, "hammer_iron").setCreativeTab(RetroCraft.creativeTab);
+    goldHammer = new ToolHammer(ToolMaterial.GOLD, "hammer_gold").setCreativeTab(RetroCraft.creativeTab);
+    diamondHammer = new ToolHammer(ToolMaterial.DIAMOND, "hammer_diamond").setCreativeTab(RetroCraft.creativeTab);
+    manoliumHammer = new ToolHammer(RetrocraftMaterials.manoliumToolMaterial, "hammer_manolium").setCreativeTab(RetroCraft.creativeTab);
+    manolaziumHammer = new ToolHammer(RetrocraftMaterials.manolaziumToolMaterial, "hammer_manolazium").setCreativeTab(RetroCraft.creativeTab);
+
+    toolSmelter = new ToolSmelter("tool_smelter").setCreativeTab(RetroCraft.creativeTab);
+    toolReplacer = new ToolReplacer("tool_replacer").setCreativeTab(RetroCraft.creativeTab);
+    
+    manoliumETool = new ToolEverything(RetrocraftMaterials.manoliumToolMaterial, "etool_manolium").setCreativeTab(RetroCraft.creativeTab);
+    manolaziumETool = new ToolEverything(RetrocraftMaterials.manolaziumToolMaterial, "etool_manolazium").setCreativeTab(RetroCraft.creativeTab);
+    
+    /* armor */
+    
+    manoliumHead = new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "head_manolium", 0,
+        EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab);
+    manolaziumHead = new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "head_manolazium", 0,
+        EntityEquipmentSlot.HEAD).setCreativeTab(RetroCraft.creativeTab);
+
+    manoliumChest = new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "chest_manolium", 0,
+        EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab);
+    manolaziumChest = new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "chest_manolazium", 0,
+        EntityEquipmentSlot.CHEST).setCreativeTab(RetroCraft.creativeTab);
+
+    manoliumLegs = new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "legs_manolium", 0,
+        EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab);
+    manolaziumLegs = new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "legs_manolazium", 0,
+        EntityEquipmentSlot.LEGS).setCreativeTab(RetroCraft.creativeTab);
+
+    manoliumFeet = new ItemManoliumArmor(RetrocraftMaterials.manoliumArmorMaterial, "feet_manolium", 0,
+        EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab);
+    manolaziumFeet = new ItemManoliumArmor(RetrocraftMaterials.manolaziumArmorMaterial, "feet_manolazium", 0,
+        EntityEquipmentSlot.FEET).setCreativeTab(RetroCraft.creativeTab);
+    
+    /* weapons */
+    
+    manoliumSword = new ItemSword(RetrocraftMaterials.manoliumToolMaterial, "sword_manolium").setCreativeTab(RetroCraft.creativeTab);
+    manolaziumSword = new ItemSword(RetrocraftMaterials.manolaziumToolMaterial, "sword_manolazium").setCreativeTab(RetroCraft.creativeTab);
+    octirionSword = new ItemSword(RetrocraftMaterials.octirionToolMaterial, "sword_octirion").setCreativeTab(RetroCraft.creativeTab);
+
+    /* misc */
+    
+    manure = new ItemManure("manure").setCreativeTab(RetroCraft.creativeTab);
+    mechanicalCore = new ItemOre("mechanical_core", "mechanicalCore").setCreativeTab(RetroCraft.creativeTab);
+    magicalCore = new ItemOre("magical_core", "magicalCore").setCreativeTab(RetroCraft.creativeTab);
+    woodenBucket = new ItemWoodenBucket("wooden_bucket", Blocks.AIR).setCreativeTab(RetroCraft.creativeTab);
+    woodenWaterBucket = new ItemWoodenBucket("wooden_bucket_water", Blocks.FLOWING_WATER).setCreativeTab(RetroCraft.creativeTab);
+    woodenMilkBucket = new ItemWoodenMilkBucket("wooden_bucket_milk").setCreativeTab(RetroCraft.creativeTab);
+    backpack = new ItemBackpack("backpack").setCreativeTab(RetroCraft.creativeTab);
 	}
 
 	@SideOnly(Side.CLIENT)
-    public static void initModels() {
+  public static void initModels() {
 		dustManolite.initModel();
 		dustManolazium.initModel();
 
