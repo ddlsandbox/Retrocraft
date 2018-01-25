@@ -6,6 +6,8 @@ import net.minecraftforge.fluids.Fluid;
 
 public abstract class RetroCraftGlobals
 {
+  public static final int TICKS_PER_SECOND = 20;
+  
   public static final double manoliumSwordDamage     = 4.0;
   public static final int    manoliumSwordDurability = 1750;
 

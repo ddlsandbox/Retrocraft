@@ -1,6 +1,7 @@
 package com.retrocraft.item.armor;
 
 import com.retrocraft.RetroCraft;
+import com.retrocraft.RetroCraftGlobals;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ModItems;
 
@@ -46,32 +47,6 @@ public class ItemManoliumArmor extends ItemArmor implements ItemModelProvider
     return EnumRarity.UNCOMMON;
   }
 
-  // /**
-  // * returns a list of items with the same ID, but different meta (eg: dye
-  // returns 16 items)
-  // */
-  // @SuppressWarnings({ "rawtypes", "unchecked" })
-  // @Override
-  // public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List
-  // par3List) {
-  // ItemStack istack = new ItemStack(par1, 1, 0);
-  // switch (this.armorType) {
-  // case 0:
-  // istack.addEnchantment(Enchantment.projectileProtection, 2);
-  // break;
-  // case 1:
-  // istack.addEnchantment(Enchantment.blastProtection, 2);
-  // break;
-  // case 2:
-  // istack.addEnchantment(Enchantment.fireProtection, 2);
-  // break;
-  // case 3:
-  // istack.addEnchantment(Enchantment.featherFalling, 2);
-  // break;
-  // }
-  // par3List.add(istack);
-  // }
-
   /**
    * Return whether this item is repairable in an anvil.
    */
@@ -96,15 +71,15 @@ public class ItemManoliumArmor extends ItemArmor implements ItemModelProvider
     super.onArmorTick(world, player, itemStack);
     
     if (itemStack.getItem() == ModItems.manolaziumHead)
-      player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 12 * 20, 0, true, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 12 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
     else if (itemStack.getItem() == ModItems.manolaziumChest)
     {
-      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 12 * 20, 1, true, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 12 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
     }
     else if (itemStack.getItem() == ModItems.manolaziumFeet)
     {
-      player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 12 * 20, 2, true, false));
-      player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 12 * 20, 4, true, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 4 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 4 * RetroCraftGlobals.TICKS_PER_SECOND, 1, false, false));
     }
   }
 }

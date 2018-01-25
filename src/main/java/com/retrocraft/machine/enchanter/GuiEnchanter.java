@@ -569,11 +569,11 @@ public class GuiEnchanter extends GuiContainer
     int i = 0;
     boolean j = false;
     int xPos, yPos;
-    for (Enchantment obj : map.keySet())
+    for (Enchantment enchantment : map.keySet())
     {
       xPos = j?(x+GuiEnchanterLabel.WIDTH + 4):x;
       yPos = y + i * GuiEnchanterLabel.HEIGHT;
-      temp.add(new GuiEnchanterLabel(container, obj, map.get(obj), xPos, yPos));
+      temp.add(new GuiEnchanterLabel(enchantment, map.get(enchantment), xPos, yPos));
       if (j) ++i;
       j = !j;
     }

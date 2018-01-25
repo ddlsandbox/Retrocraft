@@ -13,7 +13,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiEnchanterLabel extends Gui
 {
 
-  private final ContainerEnchanter container;
   public final Enchantment enchantment;
   public int               enchantmentLevel;
   public final int         initialLevel;
@@ -32,9 +31,8 @@ public class GuiEnchanterLabel extends Gui
   public boolean show   = true;
   public boolean locked = false;
 
-  public GuiEnchanterLabel(ContainerEnchanter container, Enchantment enchantment, int level, int x, int y)
+  public GuiEnchanterLabel(Enchantment enchantment, int level, int x, int y)
   {
-    this.container = container;
     this.enchantment = enchantment;
     this.enchantmentLevel = level;
     this.initialLevel = level;
