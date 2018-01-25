@@ -90,7 +90,6 @@ public abstract class ToolFunctions
 
     if (!ForgeHooks.canHarvestBlock(block, player, world, blockPos) || refStrength / strength > 10f)
     {
-      System.out.println("[RETROCRAFT] Return by strength dif... " + blockPos);
       return;
     }
 
@@ -98,7 +97,6 @@ public abstract class ToolFunctions
         player.capabilities.isCreativeMode ? GameType.CREATIVE : GameType.SURVIVAL, player, blockPos);
     if (event == -1)
     {
-      System.out.println("[RETROCRAFT] Return by event... " + blockPos);
       return;
     }
 
@@ -123,7 +121,6 @@ public abstract class ToolFunctions
 
       if (block.removedByPlayer(blockState, world, blockPos, player, true))
       {
-        System.out.println("[RETROCRAFT] C by Player Destroy " + blockPos);
         block.onBlockDestroyedByPlayer(world, blockPos, blockState);
         block.harvestBlock(world, player, blockPos, blockState, world.getTileEntity(blockPos),
             player.getHeldItemMainhand());
@@ -140,7 +137,6 @@ public abstract class ToolFunctions
       ItemStack itemstack = player.getHeldItemMainhand();
       if (itemstack != null)
       {
-        System.out.println("[RETROCRAFT] Destroy " + blockPos);
         itemstack.onBlockDestroyed(world, blockState, blockPos, player);
         if (itemstack.getCount() == 0)
         {

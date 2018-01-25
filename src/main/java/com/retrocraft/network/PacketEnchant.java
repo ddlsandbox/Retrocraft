@@ -8,6 +8,7 @@ import com.retrocraft.machine.enchanter.ContainerEnchanter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -80,7 +81,8 @@ public class PacketEnchant implements IMessage
           serverPlayer.openContainer.detectAndSendChanges();
         } catch (Exception e)
         {
-          System.out.println("[RETROCRAFT] Enchant handler exception");
+          System.err.println("[RETROCRAFT] Enchant handler exception: " + e.getMessage());
+          serverPlayer.sendMessage(new TextComponentString(e.getMessage()));
         }
       }
 

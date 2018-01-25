@@ -9,7 +9,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -44,26 +43,24 @@ public class ToolSmelter extends ItemBase
     ItemStack heldStack = player.getHeldItem(hand);
     int currentDamage = heldStack.getItemDamage();
     
-    ItemStack source = Item.getItemFromBlock(world.getBlockState(pos).getBlock()).getDefaultInstance();
+    IBlockState sourceBlockState = world.getBlockState(pos);
+    ItemStack source = new ItemStack(sourceBlockState.getBlock(), 1);
     ItemStack result = ItemUtil.getSmeltingResultForItem(source);
     
     if (currentDamage >= maxDamage || result.isEmpty())
       return EnumActionResult.FAIL;
     
-    if (!world.isRemote)
+    IBlockState newState = Block.getBlockFromItem(result.getItem()).getDefaultState();
+      
+    world.setBlockState(pos, newState, 3);
+      
+    if (!world.isRemote && newState.getBlock() == Blocks.AIR)
     {
-      IBlockState newState = Block.getBlockFromItem(result.getItem()).getDefaultState();
-      
-      world.setBlockState(pos, newState, 3);
-      
-      if (newState.getBlock() == Blocks.AIR)
-      {
-        EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result.copy());
-        item.setPickupDelay(10);
-        world.spawnEntity(item);
-      }
+      EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), result.copy());
+      item.setPickupDelay(10);
+      world.spawnEntity(item);
     }
-
+      
     heldStack.setItemDamage(currentDamage + 1);
     return EnumActionResult.SUCCESS;
   }

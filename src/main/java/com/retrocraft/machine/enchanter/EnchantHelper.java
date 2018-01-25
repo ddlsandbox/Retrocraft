@@ -119,7 +119,6 @@ public class EnchantHelper
 
     while (currentExp >= levelCap)
     {
-
       currentExp -= levelCap;
       currentLevel += 1;
       levelCap = getExperienceToLevel(currentLevel, currentLevel + 1);
@@ -170,7 +169,6 @@ public class EnchantHelper
 
   public static int calculateEnchantmentCost(Enchantment enchantment, int level)
   {
-
     int cost = (int) Math.floor(Math.max(1F,
         1F + 2F * level * ((float) level / enchantment.getMaxLevel())
             + (10 - enchantment.getRarity().getWeight()) * 0.2F));
@@ -178,6 +176,7 @@ public class EnchantHelper
     cost = cost + (enchantment.getRarity() == Rarity.COMMON ? 1
         : enchantment.getRarity() == Rarity.UNCOMMON ? 5
             : enchantment.getRarity() == Rarity.RARE ? 10 : 20);
-    return cost;
+    
+    return getExperienceFromLevel(cost);
   }
 }

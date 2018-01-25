@@ -260,6 +260,16 @@ public class ContainerEnchanter extends ContainerBase
     {
       final Integer level = map.get(enchantment);
       final Integer startingLevel = enchantments.get(enchantment);
+      
+      int serverMaxLevel = RetroCraft.getConfig().allowOverpower>0
+          ? (enchantment.getMaxLevel()==1?1:RetroCraft.getConfig().allowOverpower)
+          : enchantment.getMaxLevel();
+          
+      if (level > serverMaxLevel)
+      {
+        throw new Exception("Level is higher than maximum. 'allowOverpower' in config file should be " + RetroCraft.getConfig().allowOverpower);
+      }
+          
       if (level > startingLevel)
         serverCost += enchantmentCost(enchantment, level, startingLevel);
       else if (level < startingLevel)
@@ -321,8 +331,8 @@ public class ContainerEnchanter extends ContainerBase
     return true;
   }
 
-  public int enchantmentCost(Enchantment enchantment, int enchantmentLevel,
-      Integer level)
+  public int enchantmentCost(Enchantment enchantment, int newLevel,
+      Integer startingLevel)
   {
 
     final ItemStack itemStack = inventorySlots.get(customFirstSlotIndex)
@@ -330,15 +340,18 @@ public class ContainerEnchanter extends ContainerBase
     if (itemStack == null)
       return 0;
 
-    final int maxLevel = enchantment.getMaxLevel();
+//    final int maxLevel = enchantment.getMaxLevel();
 
-    if (enchantmentLevel > maxLevel)
-    {
-      return 0;
-    }
+//    if (newLevel > maxLevel)
+//    {
+//      int maxLevelCost = EnchantHelper.calculateEnchantmentCost(enchantment,
+//          maxLevel);
+//      return 0;
+//    }
 
-    return EnchantHelper.calculateEnchantmentCost(enchantment,
-        enchantmentLevel + level);
+    int cost0 = startingLevel==0?0:EnchantHelper.calculateEnchantmentCost(enchantment,startingLevel);
+    int cost1 = EnchantHelper.calculateEnchantmentCost(enchantment,newLevel);
+    return EnchantHelper.getLevelsFromExperience(cost1 - cost0);
   }
 
   public int disenchantmentCost(Enchantment enchantment, int enchantmentLevel,
