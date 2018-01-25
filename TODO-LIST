@@ -1,9 +1,7 @@
-"Multifurnace"
-
-  - Combination of regular furnace and hoppers that contains 3 inventories for
-    items, fuel and output.
-  - Custom textures
-
+Bluff manolazium armor
+Sync enchanter config client/server
+Fix portable smelter
+Remove "breakextrablock" massive logging
 
 "Armor"
 
@@ -19,13 +17,9 @@
            Flying?
   - Warhammer: Hitback
 
-"Waypoint/Teleporters"
-
-Fix "Enchanter"
+Upgrade "Enchanter"
 
   - Multistructure for reducing enchanting level requirements
-
-Split "Enchanter" + "Repairer"
 
 Decoration:
 
