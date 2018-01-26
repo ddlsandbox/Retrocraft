@@ -5,7 +5,6 @@ import com.retrocraft.util.StackUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -27,7 +26,6 @@ public class ContainerRepairer extends ContainerBase
   private static final int OUTPUT_SLOTS_XPOS = 80;
   private static final int OUTPUT_SLOTS_YPOS = 58;
 
-  // Stores the tile entity instance for later use
   private TileRepairer tileInventoryFurnace;
 
   public static final int INPUT_SLOTS_COUNT = 1;
@@ -63,8 +61,6 @@ public class ContainerRepairer extends ContainerBase
     return repairOK;
   }
 
-  // Checks each tick to make sure the player is still able to access the
-  // inventory and if not closes the gui
   @Override
   public boolean canInteractWith(EntityPlayer player)
   {
@@ -81,7 +77,6 @@ public class ContainerRepairer extends ContainerBase
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
-    // Check if the slot clicked is one of the vanilla container slots
     if (isVanillaSlot(sourceSlotIndex))
     {
 
@@ -93,7 +88,8 @@ public class ContainerRepairer extends ContainerBase
         {
           return StackUtil.getNull();
         }
-      } else
+      }
+      else
       {
         return StackUtil.getNull();
       }
@@ -108,7 +104,6 @@ public class ContainerRepairer extends ContainerBase
       }
     }
     
-    // If stack size == 0 (the entire stack was moved) set slot contents to null
     if (sourceStack.getCount() == 0)
     {
       sourceSlot.putStack(StackUtil.getNull());
@@ -123,36 +118,12 @@ public class ContainerRepairer extends ContainerBase
 
   /* Client Synchronization */
 
-  // This is where you check if any values have changed and if so send an update
-  // to any clients accessing this container
-  // The container itemstacks are tested in Container.detectAndSendChanges, so
-  // we don't need to do that
-  // We iterate through all of the TileEntity Fields to find any which have
-  // changed, and send them.
-  // You don't have to use fields if you don't wish to; just manually match the
-  // ID in sendProgressBarUpdate with the value in
-  // updateProgressBar()
-  // The progress bar values are restricted to shorts. If you have a larger
-  // value (eg int), it's not a good idea to try and split it
-  // up into two shorts because the progress bar values are sent independently,
-  // and unless you add synchronisation logic at the
-  // receiving side, your int value will be wrong until the second short
-  // arrives. Use a custom packet instead.
   @Override
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileInventoryFurnace.isEmpty())
-      for (IContainerListener listener : this.listeners)
-      {
-        // System.out.println("[RETROCRAFT] Container: Notify listeners!");
-      }
   }
 
-  // Called when a progress bar update is received from the server. The two
-  // values (id and data) are the same two
-  // values given to sendProgressBarUpdate. In this case we are using fields so
-  // we just pass them to the tileEntity.
   @SideOnly(Side.CLIENT)
   @Override
   public void updateProgressBar(int id, int data)
@@ -167,8 +138,6 @@ public class ContainerRepairer extends ContainerBase
       super(inventoryIn, index, xPosition, yPosition);
     }
 
-    // if this function returns false, the player won't be able to insert the
-    // given item into this slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
@@ -183,8 +152,6 @@ public class ContainerRepairer extends ContainerBase
       super(inventoryIn, index, xPosition, yPosition);
     }
 
-    // if this function returns false, the player won't be able to insert the
-    // given item into this slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {

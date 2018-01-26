@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerSmelter extends ContainerBase
 {
 
-  // Stores the tile entity instance for later use
   private TileSmelter tileSmelter;
   private int burnTimeRemaining;
 
@@ -44,8 +43,6 @@ public class ContainerSmelter extends ContainerBase
         TileSmelter.OUTPUT_SLOT_NUMBER, OUTPUT_SLOTS_XPOS, OUTPUT_SLOTS_YPOS));
   }
 
-  // Checks each tick to make sure the player is still able to access the
-  // inventory and if not closes the gui
   @Override
   public boolean canInteractWith(EntityPlayer player)
   {
@@ -58,29 +55,29 @@ public class ContainerSmelter extends ContainerBase
     Slot sourceSlot = (Slot) inventorySlots.get(sourceSlotIndex);
 
     if (sourceSlot == null || !sourceSlot.getHasStack())
-      return ItemStack.EMPTY; // EMPTY_ITEM
+      return ItemStack.EMPTY;
     
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
-    // Check if the slot clicked is one of the vanilla container slots
     if (isVanillaSlot(sourceSlotIndex))
     {
       if (TileSmelter.isItemValidForInputSlot(sourceStack))
-      { // isEmptyItem
-        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
-            customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
+      {
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex,
+            customFirstSlotIndex + 1,
             false))
         {
           return ItemStack.EMPTY;
         }
         sourceSlot.onSlotChange(copyOfSourceStack, sourceStack);
-        //
-      } else
-      {
-        return ItemStack.EMPTY; // EMPTY_ITEM;
       }
-    } else if (sourceSlotIndex >= customFirstSlotIndex)
+      else
+      {
+        return ItemStack.EMPTY;
+      }
+    }
+    else if (sourceSlotIndex >= customFirstSlotIndex)
     {
       if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex,
           vanillaFirstSlotIndex + vanillaSlotCount, false))
@@ -94,16 +91,16 @@ public class ContainerSmelter extends ContainerBase
       return ItemStack.EMPTY; // EMPTY_ITEM;
     }
 
-    // If stack size == 0 (the entire stack was moved) set slot contents to null
     if (sourceStack.getCount() == 0)
-    { // getStackSize()
-      sourceSlot.putStack(ItemStack.EMPTY); // Empty Item
-    } else
+    {
+      sourceSlot.putStack(ItemStack.EMPTY);
+    }
+    else
     {
       sourceSlot.onSlotChanged();
     }
 
-    sourceSlot.onTake(player, sourceStack); // onPickupFromSlot()
+    sourceSlot.onTake(player, sourceStack);
     return copyOfSourceStack;
   }
 
@@ -126,14 +123,10 @@ public class ContainerSmelter extends ContainerBase
 
     for (IContainerListener listener : this.listeners)
     {
-//      IContainerListener icontainerlistener = (IContainerListener) this.listeners
-//          .get(i);
 
       if (this.burnTimeRemaining != this.tileSmelter.getField(0))
       {
-    	  //TODO
-//        listener.sendProgressBarUpdate(this, 0,
-//            this.tileSmelter.getField(0));
+        listener.sendWindowProperty(this, 0, this.tileSmelter.getField(0));
       }
     }
 

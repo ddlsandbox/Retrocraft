@@ -18,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
@@ -162,7 +161,6 @@ public class TileEntityEnchanter extends TileEntity implements ITickable {
 	public final void sendUpdate() {
 		if (this.world != null && !this.world.isRemote) {
 			NBTTagCompound compound = new NBTTagCompound();
-			// this.writeSyncableNBT(compound, NBTType.SYNC);
 			this.writeToNBT(compound);
 
 			NBTTagCompound data = new NBTTagCompound();

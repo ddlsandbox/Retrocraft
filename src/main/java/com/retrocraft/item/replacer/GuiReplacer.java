@@ -22,19 +22,16 @@ public class GuiReplacer extends GuiContainer
   private static final ResourceLocation INV_LOC = new ResourceLocation(
       RetroCraft.modId, "textures/gui/inventory.png");
 
-  private final ContainerReplacer container;
-
-  public GuiReplacer(ItemStack sack, InventoryPlayer inventory, boolean isVoid)
+  public GuiReplacer(ItemStack sack, InventoryPlayer inventory)
   {
-    this(isVoid, new ContainerReplacer(sack, inventory));
+    this(new ContainerReplacer(sack, inventory));
   }
 
-  private GuiReplacer(boolean isVoid, ContainerReplacer container)
+  private GuiReplacer(ContainerReplacer container)
   {
     super(container);
     this.xSize = 176;
     this.ySize = 93 + 86;
-    this.container = container;
   }
 
   @Override
@@ -53,7 +50,7 @@ public class GuiReplacer extends GuiContainer
   public void drawGuiContainerForegroundLayer(int x, int y)
   {
     final String name = RetroCraft.proxy
-        .localize(ModItems.backpack.getUnlocalizedName() + ".name");
+        .localize(ModItems.toolReplacer.getUnlocalizedName() + ".name");
     final int LABEL_XPOS = (xSize) / 2
         - fontRenderer.getStringWidth(name) / 2;
     final int LABEL_YPOS = -10;

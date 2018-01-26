@@ -38,8 +38,6 @@ public class PacketRepairer implements IMessage {
 
 			EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
-			int amount = message.toSend;
-
 			if (serverPlayer.openContainer instanceof ContainerRepairer) {
 				try {
 					((ContainerRepairer) serverPlayer.openContainer).repairItem();

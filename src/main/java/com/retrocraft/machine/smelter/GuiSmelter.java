@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiSmelter extends GuiContainer
 {
-  private ContainerSmelter containerSmelter;
   private TileSmelter tileSmelter;
   private GuiEnergyDisplay energy;
 
@@ -30,7 +29,6 @@ public class GuiSmelter extends GuiContainer
     this.xSize = 176;
     this.ySize = 93 + 86;
 
-    this.containerSmelter = containerSmelter;
     this.tileSmelter = tileSmelter;
   }
 

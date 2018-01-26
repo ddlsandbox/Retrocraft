@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiOreGrinder extends GuiContainer
 {
-  private ContainerOreGrinder containerGrinder;
   private TileOreGrinder tileGrinder;
   private GuiEnergyDisplay energy;
   
@@ -31,7 +30,6 @@ public class GuiOreGrinder extends GuiContainer
     this.xSize = 176;
     this.ySize = 93 + 86;
 
-    this.containerGrinder = containerGrinder;
     this.tileGrinder = tileGrinder;
   }
 

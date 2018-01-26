@@ -16,21 +16,24 @@ import net.minecraft.world.World;
 
 public abstract class BlockTileEntityOrientable<TE extends TileEntity> extends BlockTileEntity<TE>
 {
+
+  private final PropertyDirection FACING;
   
-  public BlockTileEntityOrientable(Material material, String name)
+  public BlockTileEntityOrientable(Material material, String name, PropertyDirection facing)
   {
     super(material, name);
+    
+    FACING = facing;
   }
-
-  private static final PropertyDirection FACING = BlockHorizontal.FACING;
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state,
       EntityLivingBase player, ItemStack stack)
   {
 
-    world.setBlockState(pos, state.withProperty(BlockHorizontal.FACING,
-        player.getHorizontalFacing().getOpposite()), 2);
+    if (FACING == BlockHorizontal.FACING)
+      world.setBlockState(pos, state.withProperty(FACING,
+          player.getHorizontalFacing().getOpposite()), 2);
 
     super.onBlockPlacedBy(world, pos, state, player, stack);
   }
@@ -38,33 +41,43 @@ public abstract class BlockTileEntityOrientable<TE extends TileEntity> extends B
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    return this.getDefaultState().withProperty(BlockHorizontal.FACING,
-        EnumFacing.getHorizontal(meta));
+    EnumFacing efacing = (FACING == BlockHorizontal.FACING)
+        ? EnumFacing.getHorizontal(meta)
+        : EnumFacing.getFront(meta);
+    return this.getDefaultState().withProperty(FACING,
+        efacing);
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
+    if (FACING == BlockHorizontal.FACING)
+    {
+      return state.getValue(FACING).getHorizontalIndex();
+    }
+    else
+    {
+      return state.getValue(FACING).getIndex();
+    }
   }
 
   @Override
   protected BlockStateContainer createBlockState()
   {
-    return new BlockStateContainer(this, BlockHorizontal.FACING);
+    return new BlockStateContainer(this, FACING);
   }
 
   @Override
   public IBlockState withRotation(IBlockState state, Rotation rot)
   {
-    return state.withProperty(BlockHorizontal.FACING,
-        rot.rotate(state.getValue(BlockHorizontal.FACING)));
+    return state.withProperty(FACING,
+        rot.rotate(state.getValue(FACING)));
   }
 
   @Override
   public IBlockState withMirror(IBlockState state, Mirror mirror)
   {
     return this.withRotation(state,
-        mirror.toRotation(state.getValue(BlockHorizontal.FACING)));
+        mirror.toRotation(state.getValue(FACING)));
   }
 }

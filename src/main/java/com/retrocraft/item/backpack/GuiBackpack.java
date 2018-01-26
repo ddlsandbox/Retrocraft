@@ -22,19 +22,16 @@ public class GuiBackpack extends GuiContainer
   private static final ResourceLocation INV_LOC = new ResourceLocation(
       RetroCraft.modId, "textures/gui/inventory.png");
 
-  private final ContainerBackpack container;
-
-  public GuiBackpack(ItemStack sack, InventoryPlayer inventory, boolean isVoid)
+  public GuiBackpack(ItemStack sack, InventoryPlayer inventory)
   {
-    this(isVoid, new ContainerBackpack(sack, inventory));
+    this(new ContainerBackpack(sack, inventory));
   }
 
-  private GuiBackpack(boolean isVoid, ContainerBackpack container)
+  private GuiBackpack(ContainerBackpack container)
   {
     super(container);
     this.xSize = 176;
     this.ySize = 126 + 86;
-    this.container = container;
   }
 
   @Override

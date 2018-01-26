@@ -208,6 +208,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
     return this instanceof IEnergyProvider;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public <T> T getCapability(Capability<T> capability, EnumFacing facing)
   {

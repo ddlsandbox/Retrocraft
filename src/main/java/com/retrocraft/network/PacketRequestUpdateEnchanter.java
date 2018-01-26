@@ -5,8 +5,6 @@ import com.retrocraft.machine.enchanter.TileEntityEnchanter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -43,8 +41,8 @@ public class PacketRequestUpdateEnchanter implements IMessage {
 	public static class Handler implements IMessageHandler<PacketRequestUpdateEnchanter, PacketUpdateEnchanter> {
 		@Override
 		public PacketUpdateEnchanter onMessage(PacketRequestUpdateEnchanter message, MessageContext ctx) {
-			World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
-			TileEntityEnchanter te = (TileEntityEnchanter)world.getTileEntity(message.pos);
+			//World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension);
+			//TileEntityEnchanter te = (TileEntityEnchanter)world.getTileEntity(message.pos);
 			EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 			serverPlayer.openContainer.detectAndSendChanges();
 			

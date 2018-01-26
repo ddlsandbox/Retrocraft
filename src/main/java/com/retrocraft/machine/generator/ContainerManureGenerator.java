@@ -4,7 +4,6 @@ import com.retrocraft.common.ContainerBase;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,12 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerManureGenerator  extends ContainerBase
 {
 
-  // Stores the tile entity instance for later use
   private TileManureGenerator tileGenerator;
 
   public static final int INPUT_SLOTS_COUNT = 1;
-
-  private static final int INPUT_SLOT_NUMBER = 0;
 
   public ContainerManureGenerator(InventoryPlayer invPlayer, TileManureGenerator tileGenerator)
   {
@@ -38,8 +34,6 @@ public class ContainerManureGenerator  extends ContainerBase
         TileManureGenerator.INPUT_SLOT_NUMBER, INPUT_SLOTS_XPOS, INPUT_SLOTS_YPOS));
   }
 
-  // Checks each tick to make sure the player is still able to access the
-  // inventory and if not closes the gui
   @Override
   public boolean canInteractWith(EntityPlayer player)
   {
@@ -56,46 +50,47 @@ public class ContainerManureGenerator  extends ContainerBase
     ItemStack sourceStack = sourceSlot.getStack();
     ItemStack copyOfSourceStack = sourceStack.copy();
 
-    // Check if the slot clicked is one of the vanilla container slots
     if (isVanillaSlot(sourceSlotIndex))
     {
       if (TileManureGenerator.isItemValidForFuelSlot(sourceStack))
-      { // isEmptyItem
-        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, // TileRepairer.INPUT_SLOT_NUMBER,
-            customFirstSlotIndex + 1, // TileRepairer.INPUT_SLOT_NUMBER+1,
+      {
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex,
+            customFirstSlotIndex + 1,
             false))
         {
           return ItemStack.EMPTY;
         }
-        //
-      } else
+      } 
+      else
       {
-        return ItemStack.EMPTY; // EMPTY_ITEM;
+        return ItemStack.EMPTY;
       }
-    } else if (sourceSlotIndex == customFirstSlotIndex)
+    } 
+    else if (sourceSlotIndex == customFirstSlotIndex)
     {
       if (!this.mergeItemStack(sourceStack, vanillaFirstSlotIndex,
           vanillaFirstSlotIndex + vanillaSlotCount, false))
       {
         return ItemStack.EMPTY;
       }
-    } else
+    } 
+    else
     {
       System.err
           .print("[RETROCRAFT] Error: Invalid slotIndex:" + sourceSlotIndex);
-      return ItemStack.EMPTY; // EMPTY_ITEM;
+      return ItemStack.EMPTY;
     }
 
-    // If stack size == 0 (the entire stack was moved) set slot contents to null
     if (sourceStack.getCount() == 0)
-    { // getStackSize()
-      sourceSlot.putStack(ItemStack.EMPTY); // Empty Item
-    } else
+    {
+      sourceSlot.putStack(ItemStack.EMPTY);
+    } 
+    else
     {
       sourceSlot.onSlotChanged();
     }
 
-    sourceSlot.onTake(player, sourceStack); // onPickupFromSlot()
+    sourceSlot.onTake(player, sourceStack);
     return copyOfSourceStack;
   }
 
@@ -105,12 +100,6 @@ public class ContainerManureGenerator  extends ContainerBase
   public void detectAndSendChanges()
   {
     super.detectAndSendChanges();
-    if (!tileGenerator.getStackInSlot(INPUT_SLOT_NUMBER)
-        .isEmpty())
-      for (IContainerListener listener : this.listeners)
-      {
-        // System.out.println("[RETROCRAFT] Container: Notify listeners!");
-      }
   }
 
   @SideOnly(Side.CLIENT)
@@ -120,7 +109,6 @@ public class ContainerManureGenerator  extends ContainerBase
     tileGenerator.setField(id, data);
   }
 
-  // SlotSmeltableInput is a slot for input items
   public class SlotFuel extends Slot
   {
     public SlotFuel(IInventory inventoryIn, int index, int xPosition,
@@ -129,8 +117,6 @@ public class ContainerManureGenerator  extends ContainerBase
       super(inventoryIn, index, xPosition, yPosition);
     }
 
-    // if this function returns false, the player won't be able to insert the
-    // given item into this slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {

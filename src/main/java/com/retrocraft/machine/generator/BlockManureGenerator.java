@@ -4,6 +4,7 @@ import com.retrocraft.ModGuiHandler;
 import com.retrocraft.RetroCraft;
 import com.retrocraft.block.BlockTileEntityOrientable;
 
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +19,7 @@ public class BlockManureGenerator extends BlockTileEntityOrientable<TileManureGe
   
   public BlockManureGenerator(String name)
   {
-    super(Material.ROCK, name);
+    super(Material.ROCK, name, BlockHorizontal.FACING);
     this.setTickRandomly(true);
   }
 

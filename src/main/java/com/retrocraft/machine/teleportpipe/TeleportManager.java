@@ -132,7 +132,7 @@ public class TeleportManager
       player.sendMessage(chatComponent);
       return false;
     }
-    World targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
+//    World targetWorld = DimensionManager.getWorld(teleportPipe.getDimensionId());
 //    EnumFacing facing = targetWorld.getBlockState(teleportPipe.getPos())
 //        .getValue(BlockTeleportPipe.FACING);
     BlockPos targetPos = teleportPipe.getPos().offset(EnumFacing.UP);

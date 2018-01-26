@@ -32,14 +32,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
 {
 
-  //public static final PropertyDirection FACING = BlockHorizontal.FACING;
-
   public BlockTeleportPipe(String name)
   {
     super(Material.ROCK, name);
 
-//    setRegistryName(RetroCraft.modId, "teleportPipe");
-//    setUnlocalizedName(getRegistryName().toString());
     setHardness(5f);
     setResistance(2000f);
   }
@@ -87,20 +83,6 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
     return super.getPlayerRelativeBlockHardness(state, player, world, pos);
   }
 
-//  @Override
-//  public boolean canPlaceBlockAt(World world, BlockPos pos)
-//  {
-//    Block blockBelow = world.getBlockState(pos.down()).getBlock();
-//    if (blockBelow == this)
-//    {
-//      return false;
-//    }
-//    Block blockAbove = world.getBlockState(pos.up(2)).getBlock();
-//    return blockAbove != this && 
-//        super.canPlaceBlockAt(world, pos) && 
-//        world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos.up());
-//  }
-
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state,
       EntityLivingBase placer, ItemStack stack)
@@ -110,8 +92,6 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
     {
       facing = EnumFacing.NORTH;
     }
-    
-    //world.setBlockState(pos, this.getDefaultState().withProperty(FACING, facing));
     
     if (!world.isRemote && placer instanceof EntityPlayer
         && (!RetroCraft.getConfig().creativeModeOnly
@@ -238,10 +218,6 @@ public class BlockTeleportPipe extends BlockTileEntity<TileTeleportPipe>
               pos.getY() + 1.5,
               pos.getZ() + 0.5 + (rand.nextDouble() - 0.5) * 1.5, 
               0, 0, 0);
-//        world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE,
-//            pos.getX() + 0.5 + (rand.nextDouble() - 0.5) * 1.5,
-//            pos.getY() + 0.5,
-//            pos.getZ() + 0.5 + (rand.nextDouble() - 0.5) * 1.5, 0, 0, 0);
       }
     }
   }

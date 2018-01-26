@@ -86,10 +86,6 @@ public class ModGuiHandler implements IGuiHandler
     case ORESMELTER:
       return new ContainerSmelter(player.inventory,
           (TileSmelter) world.getTileEntity(new BlockPos(x, y, z)));
-//    case ELECTRIC_FORGE:
-//      return new ContainerElectricForge(player);
-//    case ADVANCED_FORGE:
-//      return new ContainerAdvancedForge(player);
     case TELEPORT:
       return new ContainerEditTeleportNameDummy();
     case BACKPACK:
@@ -139,17 +135,13 @@ public class ModGuiHandler implements IGuiHandler
           (TileSmelter) world.getTileEntity(new BlockPos(x, y, z)),
           new ContainerSmelter(player.inventory,
               (TileSmelter) world.getTileEntity(new BlockPos(x, y, z))));
-//    case ELECTRIC_FORGE:
-//      return new GuiElectricForge(player);
-//    case ADVANCED_FORGE:
-//      return new GuiAdvancedForge(player);
     case TELEPORT:
       return new GuiEditTeleportPipe(
           (TileTeleportPipe) world.getTileEntity(new BlockPos(x, y, z)));
     case BACKPACK:
-      return new GuiBackpack(player.getHeldItemMainhand(), player.inventory, false);
+      return new GuiBackpack(player.getHeldItemMainhand(), player.inventory);
     case REPLACER:
-      return new GuiReplacer(player.getHeldItemMainhand(), player.inventory, false);
+      return new GuiReplacer(player.getHeldItemMainhand(), player.inventory);
     default:
       return null;
     }

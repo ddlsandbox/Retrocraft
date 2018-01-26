@@ -1,7 +1,6 @@
 package com.retrocraft.item.weapon;
 
 import com.retrocraft.RetroCraft;
-import com.retrocraft.RetroCraftConfig;
 import com.retrocraft.item.ItemModelProvider;
 import com.retrocraft.item.ModItems;
 
