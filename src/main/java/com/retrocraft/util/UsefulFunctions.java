@@ -1,5 +1,11 @@
 package com.retrocraft.util;
 
+import com.retrocraft.RetroCraft;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+
 public class UsefulFunctions
 {
   /** linearly interpolate for y between [x1, y1] to [x2, y2] using x
@@ -24,5 +30,21 @@ public class UsefulFunctions
     if (x >= x2) return y2;
     double xFraction = (x - x1) / (x2 - x1);
     return y1 + xFraction * (y2 - y1);
+  }
+  
+  public static int teleportXpCost(EntityPlayer player, BlockPos to)
+  {
+    int blocksPerLevel   = RetroCraft.getConfig().blocksPerXPLevel;
+    boolean enableXPCost = blocksPerLevel > 0;
+    
+    if (enableXPCost && !player.isCreative())
+    {
+      MathHelper.clamp(
+        (int) Math.sqrt(player.getDistanceSqToCenter(to))
+            / blocksPerLevel,
+        0, 3);
+    }
+    
+    return 0;
   }
 }

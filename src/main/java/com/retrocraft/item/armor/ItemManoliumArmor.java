@@ -74,7 +74,11 @@ public class ItemManoliumArmor extends ItemArmor implements ItemModelProvider
       player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 12 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
     else if (itemStack.getItem() == ModItems.manolaziumChest)
     {
-      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 12 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
+      player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 4 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
+    }
+    else if (itemStack.getItem() == ModItems.manolaziumLegs)
+    {
+      player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 4 * RetroCraftGlobals.TICKS_PER_SECOND, 0, false, false));
     }
     else if (itemStack.getItem() == ModItems.manolaziumFeet)
     {

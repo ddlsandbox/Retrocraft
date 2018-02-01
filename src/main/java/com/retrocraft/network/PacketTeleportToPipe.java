@@ -2,14 +2,13 @@ package com.retrocraft.network;
 
 import javax.annotation.Nullable;
 
-import com.retrocraft.RetroCraft;
 import com.retrocraft.machine.teleportpipe.TeleportEntry;
 import com.retrocraft.machine.teleportpipe.TeleportManager;
+import com.retrocraft.util.UsefulFunctions;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -78,14 +77,7 @@ public class PacketTeleportToPipe implements IMessage
         public void run()
         {
           EntityPlayer player = ctx.getServerHandler().player;
-          int dist = (int) Math.sqrt(
-              player.getDistanceSqToCenter(message.getTeleportPipe().getPos()));
-          int xpLevelCost = 0;
-          if (!player.capabilities.isCreativeMode)
-            xpLevelCost = RetroCraft.getConfig().blocksPerXPLevel > 0
-                ? MathHelper.clamp(
-                    dist / RetroCraft.getConfig().blocksPerXPLevel, 0, 3)
-                : 0;
+          int xpLevelCost = UsefulFunctions.teleportXpCost(player, message.getTeleportPipe().getPos());
 
           if (player.experienceLevel < xpLevelCost)
           {

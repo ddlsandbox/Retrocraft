@@ -1,8 +1,8 @@
 package com.retrocraft.entity.teleportpipe.gui;
 
 import com.google.common.collect.Lists;
-import com.retrocraft.RetroCraft;
 import com.retrocraft.machine.teleportpipe.TeleportEntry;
+import com.retrocraft.util.UsefulFunctions;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -33,13 +32,7 @@ public class GuiButtonTeleportPipeEntry extends GuiButton
         + teleportPipe.getName());
     this.teleportPipe = teleportPipe;
     EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity();
-    boolean enableXPCost = RetroCraft.getConfig().blocksPerXPLevel > 0;
-    this.xpLevelCost = (enableXPCost)
-            ? MathHelper.clamp(
-                (int) Math.sqrt(player.getDistanceSqToCenter(teleportPipe.getPos()))
-                    / RetroCraft.getConfig().blocksPerXPLevel,
-                0, 3)
-            : 0;
+    this.xpLevelCost = UsefulFunctions.teleportXpCost(player, teleportPipe.getPos());
 
     if (player.experienceLevel < xpLevelCost)
     {
