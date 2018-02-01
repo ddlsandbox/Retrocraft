@@ -109,7 +109,7 @@ public class ComponentVillageTelehouse extends StructureVillagePieces.House1
       Rotation rotation;
       if (facing == EnumFacing.SOUTH)
       {
-        mirror = Mirror.FRONT_BACK;
+        mirror = Mirror.NONE;
         rotation = Rotation.NONE;
       } 
       else if (facing == EnumFacing.WEST)
