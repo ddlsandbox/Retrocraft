@@ -6,7 +6,6 @@ import com.retrocraft.block.BlockTileEntityOrientable;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +16,6 @@ import net.minecraft.world.World;
 
 public class BlockSteamGenerator extends BlockTileEntityOrientable<TileSteamGenerator>
 {
-  
-  public static final PropertyDirection FACING = BlockHorizontal.FACING;
-  
   public BlockSteamGenerator(String name)
   {
     super(Material.ROCK, name, BlockHorizontal.FACING);

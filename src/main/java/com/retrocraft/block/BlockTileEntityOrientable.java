@@ -17,13 +17,13 @@ import net.minecraft.world.World;
 public abstract class BlockTileEntityOrientable<TE extends TileEntity> extends BlockTileEntity<TE>
 {
 
-  private final PropertyDirection FACING;
+  private static final PropertyDirection FACING = BlockHorizontal.FACING;
   
   public BlockTileEntityOrientable(Material material, String name, PropertyDirection facing)
   {
     super(material, name);
     
-    FACING = facing;
+    //FACING = facing;
   }
 
   @Override
@@ -31,8 +31,7 @@ public abstract class BlockTileEntityOrientable<TE extends TileEntity> extends B
       EntityLivingBase player, ItemStack stack)
   {
 
-    if (FACING == BlockHorizontal.FACING)
-      world.setBlockState(pos, state.withProperty(FACING,
+    world.setBlockState(pos, state.withProperty(FACING,
           player.getHorizontalFacing().getOpposite()), 2);
 
     super.onBlockPlacedBy(world, pos, state, player, stack);
@@ -41,24 +40,14 @@ public abstract class BlockTileEntityOrientable<TE extends TileEntity> extends B
   @Override
   public IBlockState getStateFromMeta(int meta)
   {
-    EnumFacing efacing = (FACING == BlockHorizontal.FACING)
-        ? EnumFacing.getHorizontal(meta)
-        : EnumFacing.getFront(meta);
     return this.getDefaultState().withProperty(FACING,
-        efacing);
+        EnumFacing.getHorizontal(meta));
   }
 
   @Override
   public int getMetaFromState(IBlockState state)
   {
-    if (FACING == BlockHorizontal.FACING)
-    {
       return state.getValue(FACING).getHorizontalIndex();
-    }
-    else
-    {
-      return state.getValue(FACING).getIndex();
-    }
   }
 
   @Override

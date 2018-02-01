@@ -54,6 +54,8 @@ public class ItemSword extends net.minecraft.item.ItemSword implements ItemModel
       if (world.getWorldTime() % 20 == 0)
         RetroCraft.proxy.playSound(SoundEvents.BLOCK_CHORUS_FLOWER_GROW,
             player.getPosition(), 1.0F);
+      
+      player.fallDistance = 0f;
     }
     return ActionResult.newResult(EnumActionResult.FAIL, held);
   }
