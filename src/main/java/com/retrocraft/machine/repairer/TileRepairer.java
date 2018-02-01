@@ -105,7 +105,9 @@ public class TileRepairer extends TileEntityInventory
   @SideOnly(Side.CLIENT)
   public int getRepairTimeScaled(int maxScale)
   {
-    return this.repairTimeRemaining * maxScale / REPAIR_TIME;
+    return REPAIR_TIME>0
+        ? this.repairTimeRemaining * maxScale / REPAIR_TIME
+        : 0;
   }
 
   public boolean canRepairOn()
