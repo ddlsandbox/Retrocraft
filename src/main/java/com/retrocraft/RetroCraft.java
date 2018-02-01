@@ -37,7 +37,7 @@ public class RetroCraft
 
   public static final String modId   = "retrocraft";
   public static final String name    = "RetroCraft Mod";
-  public static final String version = "0.3.1";
+  public static final String version = "0.4.0";
 
   public static SimpleNetworkWrapper network;
 
