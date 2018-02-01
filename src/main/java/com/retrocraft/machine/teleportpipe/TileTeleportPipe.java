@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.retrocraft.util.NameGenerator;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -53,15 +55,23 @@ public class TileTeleportPipe extends TileEntity
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
   {
     super.onDataPacket(net, pkt);
+    generateName();
     readFromNBT(pkt.getNbtCompound());
   }
 
   @Override
   public NBTTagCompound getUpdateTag()
   {
+    generateName();
     return writeToNBT(new NBTTagCompound());
   }
 
+  private void generateName() {
+    if(teleportPipeName.isEmpty()) {
+      teleportPipeName = NameGenerator.getName(world.getBiome(pos), world.rand);
+    }
+  }
+  
   @Nullable
   @Override
   public SPacketUpdateTileEntity getUpdatePacket()

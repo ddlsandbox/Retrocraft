@@ -7,8 +7,13 @@ import com.retrocraft.network.PacketHandler;
 import com.retrocraft.recipe.RetrocraftRecipes;
 import com.retrocraft.server.CommonProxy;
 import com.retrocraft.tab.RetroCraftCreativeTab;
+import com.retrocraft.world.ComponentVillageTelehouse;
+import com.retrocraft.world.ComponentVillageTeleport;
 import com.retrocraft.world.ModWorldGen;
+import com.retrocraft.world.TeleportCreationHandler;
+import com.retrocraft.world.VillageTelehouseCreationHandler;
 
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 @Mod.EventBusSubscriber
 @Mod(modid = RetroCraft.modId, name = RetroCraft.name, version = RetroCraft.version, acceptedMinecraftVersions = "[1.12.2]")
@@ -61,6 +67,11 @@ public class RetroCraft
     GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
 
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    
+    VillagerRegistry.instance().registerVillageCreationHandler(new TeleportCreationHandler());
+    VillagerRegistry.instance().registerVillageCreationHandler(new VillageTelehouseCreationHandler());
+    MapGenStructureIO.registerStructureComponent(ComponentVillageTeleport.class, "retrocraft:teleport_station");
+    MapGenStructureIO.registerStructureComponent(ComponentVillageTelehouse.class, "retrocraft:teleport_house");
     
     proxy.preInit(event);
   }
