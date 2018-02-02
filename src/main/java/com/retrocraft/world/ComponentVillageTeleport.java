@@ -22,9 +22,9 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 public class ComponentVillageTeleport extends StructureVillagePieces.Village
 {
 
-  private static final int TELESTATION_X = 5;
-  private static final int TELESTATION_Y = 7;
-  private static final int TELESTATION_Z = 5;
+  private static final int TELESTATION_X = 7;
+  private static final int TELESTATION_Y = 6;
+  private static final int TELESTATION_Z = 7;
 
   private static final ResourceLocation VILLAGE_TELEPORT_ID = new ResourceLocation(RetroCraft.modId,
       "teleport_station");
@@ -48,7 +48,7 @@ public class ComponentVillageTeleport extends StructureVillagePieces.Village
         return true;
       }
 
-      this.boundingBox.offset(0, averageGroundLvl - this.boundingBox.minY, 0);
+      this.boundingBox.offset(0, averageGroundLvl - this.boundingBox.minY - 1, 0);
     }
     BlockPos pos = new BlockPos(this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.minZ);
     TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();

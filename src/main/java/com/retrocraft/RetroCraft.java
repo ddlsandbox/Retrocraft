@@ -69,9 +69,9 @@ public class RetroCraft
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     
     VillagerRegistry.instance().registerVillageCreationHandler(new TeleportCreationHandler());
-    VillagerRegistry.instance().registerVillageCreationHandler(new VillageTelehouseCreationHandler());
+//    VillagerRegistry.instance().registerVillageCreationHandler(new VillageTelehouseCreationHandler());
     MapGenStructureIO.registerStructureComponent(ComponentVillageTeleport.class, "retrocraft:teleport_station");
-    MapGenStructureIO.registerStructureComponent(ComponentVillageTelehouse.class, "retrocraft:teleport_house");
+//    MapGenStructureIO.registerStructureComponent(ComponentVillageTelehouse.class, "retrocraft:teleport_house");
     
     proxy.preInit(event);
   }
