@@ -61,26 +61,8 @@ public class ContainerBase extends Container
     customFirstSlotIndex = vanillaFirstSlotIndex + vanillaSlotCount;
   }
   
-  protected void addVanillaSlots(InventoryPlayer invPlayer)
+  protected void addEquipmentSlots(InventoryPlayer invPlayer)
   {
-    for (int x = 0; x < hotbarSlotCount; x++)
-    {
-      int slotNumber = x;
-      addSlotToContainer(new Slot(invPlayer, slotNumber,
-          guiHotbarPosX + guiSlotSpacingX * x, guiHotbarPosY));
-    }
-    
-    for (int y = 0; y < inventoryRowCount; y++)
-    {
-      for (int x = 0; x < inventoryColumnCount; x++)
-      {
-        int slotNumber = hotbarSlotCount + y * inventoryColumnCount + x;
-        int xpos = guiInventoryPosX + x * guiSlotSpacingX;
-        int ypos = guiInventoryPosY + y * guiSlotSpacingY;
-        addSlotToContainer(new Slot(invPlayer, slotNumber, xpos, ypos));
-      }
-    }
-    
     for (int k = 0; k < equipmentSlotCount; k++)
     {
       final int armorType = k;
@@ -105,6 +87,39 @@ public class ContainerBase extends Container
         }
       });
     }
+  }
+  
+  protected void addHotbarSlots(InventoryPlayer invPlayer)
+  {
+    for (int x = 0; x < hotbarSlotCount; x++)
+    {
+      int slotNumber = x;
+      addSlotToContainer(new Slot(invPlayer, slotNumber,
+          guiHotbarPosX + guiSlotSpacingX * x, guiHotbarPosY));
+    }
+  }
+  
+  protected void addInventorySlots(InventoryPlayer invPlayer)
+  {
+    for (int y = 0; y < inventoryRowCount; y++)
+    {
+      for (int x = 0; x < inventoryColumnCount; x++)
+      {
+        int slotNumber = hotbarSlotCount + y * inventoryColumnCount + x;
+        int xpos = guiInventoryPosX + x * guiSlotSpacingX;
+        int ypos = guiInventoryPosY + y * guiSlotSpacingY;
+        addSlotToContainer(new Slot(invPlayer, slotNumber, xpos, ypos));
+      }
+    }
+  }
+  
+  protected void addVanillaSlots(InventoryPlayer invPlayer)
+  {
+    addHotbarSlots(invPlayer);
+    
+    addInventorySlots(invPlayer);
+    
+    addEquipmentSlots(invPlayer);
   }
 
   protected boolean isVanillaSlot(int slotIndex)

@@ -1,12 +1,12 @@
 package com.retrocraft.item.backpack;
 
+import com.retrocraft.common.ContainerBase;
 import com.retrocraft.util.ItemStackHandlerCustom;
 import com.retrocraft.util.StackUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerBackpack extends Container
+public class ContainerBackpack extends ContainerBase
 {
 
   private final ItemStackHandlerCustom bagInventory;
@@ -28,7 +28,15 @@ public class ContainerBackpack extends Container
   
   public ContainerBackpack(ItemStack sack, InventoryPlayer inventory)
   {
+    super(true, false);
+    
     this.inventory = inventory;
+    
+    guiHotbarPosX = 8;
+    guiHotbarPosY = BACKPACK_INV_HEIGHT+62;
+    guiInventoryPosX = 8;
+    guiInventoryPosY = BACKPACK_INV_HEIGHT+4;
+    
     this.bagInventory = new ItemStackHandlerCustom(BACKPACK_SIZE)
     {
       @Override
@@ -38,6 +46,8 @@ public class ContainerBackpack extends Container
       };
     };
     this.sack = sack;
+    
+    addVanillaSlots(inventory);
 
     for (int i = 0; i < BACKPACK_ROWS; i++)
     {
@@ -58,34 +68,7 @@ public class ContainerBackpack extends Container
         });
       }
     }
-
-    /* inventory */
-    for (int i = 0; i < 3; i++)
-    {
-      for (int j = 0; j < 9; j++)
-      {
-        this.addSlotToContainer(
-            new Slot(
-                inventory, 
-                j + i * 9 + 9, 
-                8 + j * 18, 
-                (BACKPACK_INV_HEIGHT+4) + i * 18));
-      }
-    }
     
-    /* hotbar */
-    for (int i = 0; i < 9; i++)
-    {
-      if (i == inventory.currentItem)
-      {
-        this.addSlotToContainer(
-            new SlotImmovable(inventory, i, 8 + i * 18, BACKPACK_INV_HEIGHT+62));
-      } else
-      {
-        this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, BACKPACK_INV_HEIGHT+62));
-      }
-    }
-
     ItemStack stack = inventory.getCurrentItem();
     if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBackpack)
     {
@@ -107,45 +90,58 @@ public class ContainerBackpack extends Container
   }
 
   @Override
+  protected void addHotbarSlots(InventoryPlayer invPlayer)
+  {
+    for (int x = 0; x < hotbarSlotCount; x++)
+    {
+      int slotNumber = x;
+      if (x == invPlayer.currentItem)
+      {
+        this.addSlotToContainer(
+            new SlotImmovable(invPlayer, slotNumber,
+                guiHotbarPosX + guiSlotSpacingX * x, guiHotbarPosY));
+      } else
+      {
+        this.addSlotToContainer(new Slot(invPlayer, slotNumber,
+            guiHotbarPosX + guiSlotSpacingX * x, guiHotbarPosY));
+      }
+    }
+  }
+  
+  @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot)
   {
+    Slot theSlot = inventorySlots.get(slot);
+    
     int inventoryStart = this.bagInventory.getSlots();
     int inventoryEnd = inventoryStart + 26;
     int hotbarStart = inventoryEnd + 1;
     int hotbarEnd = hotbarStart + 8;
 
-    Slot theSlot = this.inventorySlots.get(slot);
-
     if (theSlot != null && theSlot.getHasStack())
     {
-      ItemStack newStack = theSlot.getStack();
-      ItemStack currentStack = newStack.copy();
+      ItemStack sourceStack = theSlot.getStack();
+      ItemStack copyOfSourceStack = sourceStack.copy();
 
-      // Other Slots in Inventory excluded
-      if (slot >= inventoryStart)
+      if (isVanillaSlot(slot))
       {
-        if (!this.mergeItemStack(newStack, 0, BACKPACK_SIZE, false))
+        /* try putting in backpack */
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex, 
+            customFirstSlotIndex + BACKPACK_SIZE, false))
         {
-          if (slot >= inventoryStart && slot <= inventoryEnd)
-          {
-            if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false))
-            {
-              return StackUtil.getNull();
-            }
-          } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1
-              && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false))
-          {
-            return StackUtil.getNull();
-          }
+          return StackUtil.getNull();
         }
-        //
       }
-      else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false))
+      else
+      {
+        if (!this.mergeItemStack(sourceStack, 
+            vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
       {
         return StackUtil.getNull();
       }
+      }
 
-      if (!StackUtil.isValid(newStack))
+      if (!StackUtil.isValid(sourceStack))
       {
         theSlot.putStack(StackUtil.getNull());
       } else
@@ -153,15 +149,59 @@ public class ContainerBackpack extends Container
         theSlot.onSlotChanged();
       }
 
-      if (StackUtil.getStackSize(newStack) == StackUtil.getStackSize(currentStack))
+      if (StackUtil.getStackSize(sourceStack) == StackUtil.getStackSize(copyOfSourceStack))
       {
         return StackUtil.getNull();
       }
-      theSlot.onTake(player, newStack);
+      theSlot.onTake(player, sourceStack);
 
-      return currentStack;
+      return copyOfSourceStack;
     }
     return StackUtil.getNull();
+  }
+  
+  public ItemStack atransferStackInSlot(EntityPlayer player, int sourceSlotIndex)
+  {
+    ItemStack copyOfSourceStack = StackUtil.getNull();
+    Slot slot = inventorySlots.get(sourceSlotIndex);
+
+    if (slot != null && slot.getHasStack())
+    {
+      ItemStack sourceStack = slot.getStack();
+      copyOfSourceStack = sourceStack.copy();
+
+      if (isVanillaSlot(sourceSlotIndex))
+      {
+        if (!this.mergeItemStack(sourceStack, customFirstSlotIndex,
+            customFirstSlotIndex + 1, false))
+        {
+          return StackUtil.getNull();
+        }
+      } 
+      else
+      {
+        /* test equipment slots first */
+        if (!this.mergeItemStack(sourceStack, equipmentFirstSlotIndex, equipmentFirstSlotIndex + equipmentSlotCount, true) &&
+            !this.mergeItemStack(sourceStack, vanillaFirstSlotIndex, vanillaFirstSlotIndex + vanillaSlotCount, false))
+        {
+          return StackUtil.getNull();
+        }
+      }
+
+      if (sourceStack.getCount() == 0)
+      {
+        slot.putStack(StackUtil.getNull());
+      }
+
+      if (sourceStack.getCount() == copyOfSourceStack.getCount())
+      {
+        return StackUtil.getNull();
+      }
+
+      slot.onTake(player, sourceStack);
+    }
+
+    return copyOfSourceStack;
   }
 
   @Override
