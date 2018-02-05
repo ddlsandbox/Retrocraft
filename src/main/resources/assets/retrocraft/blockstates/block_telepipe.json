@@ -1,22 +1,23 @@
 {
   "multipart": [
-      { "when": { "facing": "up" },
-                  "apply": { "model": "retrocraft:telepipe" }
+      { "apply": { "model": "retrocraft:telepipe" }},
+      { "when": { "up": true },
+                  "apply": { "model": "retrocraft:telepipe_side" , "uvlock": true }
       },
-      { "when": { "facing": "down" },
-                  "apply": { "model": "retrocraft:telepipe" }
+      { "when": { "down": true },
+                  "apply": { "model": "retrocraft:telepipe_side", "x": 180, "uvlock": true }
       },
-      { "when": { "facing": "south" },
-                  "apply": { "model": "retrocraft:telepipe", "x": 90 }
+      { "when": { "south": true },
+                  "apply": { "model": "retrocraft:telepipe_side", "x": 90, "y": 180, "uvlock": true }
       },
-      { "when": { "facing": "north" },
-                  "apply": { "model": "retrocraft:telepipe", "x": 90 }
+      { "when": { "north": true },
+                  "apply": { "model": "retrocraft:telepipe_side", "x": 90, "uvlock": true }
       },
-      { "when": { "facing": "east" },
-                  "apply": { "model": "retrocraft:telepipe", "x": 90, "y": 90 }
+      { "when": { "east": true },
+                  "apply": { "model": "retrocraft:telepipe_side", "x": 90, "y": 90, "uvlock": true }
       },
-      { "when": { "facing": "west" },
-                  "apply": { "model": "retrocraft:telepipe", "x": 90, "y": 90 }
+      { "when": { "west": true },
+                  "apply": { "model": "retrocraft:telepipe_side", "x": 90, "y": 270, "uvlock": true }
       }
   ],
   "inventory": {
