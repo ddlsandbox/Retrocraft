@@ -70,6 +70,7 @@ public class CommonProxy
   public void preInit(FMLPreInitializationEvent event)
   { 
     int messageId = 1;
+    
     RetroCraft.network.registerMessage(new PacketUpdatePedestal.Handler(), PacketUpdatePedestal.class, 
         messageId++, Side.CLIENT);
     RetroCraft.network.registerMessage(new PacketRequestUpdatePedestal.Handler(), PacketRequestUpdatePedestal.class, 

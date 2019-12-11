@@ -89,16 +89,16 @@ public abstract class TileEntityInventory extends TileEntityBase implements ISid
   public ItemStack decrStackSize(int index, int count)
   {
     ItemStack itemStackInSlot = getStackInSlot(index);
-    if (itemStackInSlot.isEmpty()) return ItemStack.EMPTY;  //isEmpty(), EMPTY_ITEM
+    if (itemStackInSlot.isEmpty()) return StackUtil.getNull();
 
     ItemStack itemStackRemoved;
-    if (itemStackInSlot.getCount() <= count) { //getStackSize
+    if (itemStackInSlot.getCount() <= count) {
       itemStackRemoved = itemStackInSlot;
-      setInventorySlotContents(index, ItemStack.EMPTY); // EMPTY_ITEM
+      setInventorySlotContents(index, StackUtil.getNull());
     } else {
       itemStackRemoved = itemStackInSlot.splitStack(count);
-      if (itemStackInSlot.getCount() == 0) { //getStackSize
-        setInventorySlotContents(index, ItemStack.EMPTY); //EMPTY_ITEM
+      if (itemStackInSlot.getCount() == 0) {
+        setInventorySlotContents(index, StackUtil.getNull());
       }
     }
     markDirty();

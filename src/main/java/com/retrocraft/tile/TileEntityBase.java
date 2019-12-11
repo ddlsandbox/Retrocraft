@@ -1,5 +1,7 @@
 package com.retrocraft.tile;
 
+import javax.annotation.Nullable;
+
 import com.retrocraft.RetroCraft;
 import com.retrocraft.api.energy.IEnergyProvider;
 import com.retrocraft.network.PacketHandler;
@@ -26,15 +28,15 @@ import net.minecraftforge.items.IItemHandler;
 public abstract class TileEntityBase extends TileEntity implements ITickable
 {
   public static final int TILE_ENTITY_UPDATE_INTERVAL = 10;
-  
+
   public enum NBTType
   {
     SAVE_TILE, SYNC, SAVE_BLOCK
   }
 
-  protected int          ticksElapsed;
+  protected int ticksElapsed;
   protected TileEntity[] tilesAround = new TileEntity[6];
-  protected boolean      hasSavedDataOnChangeOrWorldStart;
+  protected boolean hasSavedDataOnChangeOrWorldStart;
 
   public TileEntityBase()
   {
@@ -55,18 +57,21 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
   }
 
   @Override
+  @Nullable
   public final SPacketUpdateTileEntity getUpdatePacket()
   {
-    NBTTagCompound compound = new NBTTagCompound();
+    NBTTagCompound compound = getUpdateTag();
     this.writeSyncableNBT(compound, NBTType.SYNC);
-    return new SPacketUpdateTileEntity(this.pos, -1, compound);
+    final int METADATA = 0;
+    return new SPacketUpdateTileEntity(this.pos, METADATA, compound);
   }
 
   @Override
-  public final void onDataPacket(NetworkManager net,
-      SPacketUpdateTileEntity pkt)
+  public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
   {
     this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
+    NBTTagCompound updateTagDescribingTileEntityState = pkt.getNbtCompound();
+    handleUpdateTag(updateTagDescribingTileEntityState);
   }
 
   @Override
@@ -80,27 +85,28 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
   @Override
   public final void handleUpdateTag(NBTTagCompound compound)
   {
-    this.readSyncableNBT(compound, NBTType.SYNC);
+    this.readFromNBT(compound);
+    //this.readSyncableNBT(compound, NBTType.SYNC);
   }
 
-  public final void sendUpdate(){
-    if(this.world != null && !this.world.isRemote){
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeSyncableNBT(compound, NBTType.SYNC);
+  public final void sendUpdate()
+  {
+    if (this.world != null && !this.world.isRemote)
+    {
+      NBTTagCompound compound = new NBTTagCompound();
+      this.writeSyncableNBT(compound, NBTType.SYNC);
 
-        NBTTagCompound data = new NBTTagCompound();
-        data.setTag("Data", compound);
-        data.setInteger("X", this.pos.getX());
-        data.setInteger("Y", this.pos.getY());
+      NBTTagCompound data = new NBTTagCompound();
+      data.setTag("Data", compound);
+      data.setInteger("X", this.pos.getX());
+      data.setInteger("Y", this.pos.getY());
       data.setInteger("Z", this.pos.getZ());
-      RetroCraft.network.sendToAllAround(
-          new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER),
-          new NetworkRegistry.TargetPoint(this.world.provider.getDimension(),
-              this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(),
-              64));
+      RetroCraft.network.sendToAllAround(new PacketServerToClient(data, PacketHandler.TILE_ENTITY_HANDLER),
+          new NetworkRegistry.TargetPoint(this.world.provider.getDimension(), this.getPos().getX(),
+              this.getPos().getY(), this.getPos().getZ(), 64));
     }
-}
-  
+  }
+
   public void writeSyncableNBT(NBTTagCompound compound, NBTType type)
   {
     if (type != NBTType.SAVE_BLOCK)
@@ -128,8 +134,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
   }
 
   @Override
-  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState,
-      IBlockState newState)
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
   {
     return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
   }
@@ -259,27 +264,22 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
     {
       this.sendUpdate();
       return true;
-    } 
-    else
+    } else
     {
       return false;
     }
   }
 
-  protected static void doEnergyInteraction(TileEntity tileFrom,
-      TileEntity tileTo, EnumFacing sideTo, int maxTransfer)
+  protected static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, EnumFacing sideTo, int maxTransfer)
   {
     if (maxTransfer > 0)
     {
       EnumFacing opp = sideTo == null ? null : sideTo.getOpposite();
-      if (tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo)
-          && tileTo.hasCapability(CapabilityEnergy.ENERGY, opp))
+      if (tileFrom.hasCapability(CapabilityEnergy.ENERGY, sideTo) && tileTo.hasCapability(CapabilityEnergy.ENERGY, opp))
       {
 
-        IEnergyStorage handlerFrom = tileFrom
-            .getCapability(CapabilityEnergy.ENERGY, sideTo);
-        IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY,
-            opp);
+        IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
+        IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
 
         if (handlerFrom != null && handlerTo != null)
         {

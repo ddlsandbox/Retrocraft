@@ -46,21 +46,21 @@ public final class RetrocraftMaterials
     
     manoliumToolMaterial = addToolMaterial("TM_MANOLIUM", 
         2,   /* harvest level */
-        500, /* durability */
+        1000, /* durability */
         8f,  /* efficiency */
         4f,  /* damage */
         20); /* enchantability */
     
     manolaziumToolMaterial = addToolMaterial("TM_MANOLAZIUM", 
         3,     /* harvest level */
-        1500,  /* durability */
+        3000,  /* durability */
         10f,   /* efficiency */
         8f,    /* damage */
         30);   /* enchantability */
     
     octirionToolMaterial = addToolMaterial("TM_OCTIRION", 
         4,    /* harvest level */
-        2000, /* durability */
+        4000, /* durability */
         15f,  /* efficiency */
         12f,  /* damage */
         30);  /* enchantability */
