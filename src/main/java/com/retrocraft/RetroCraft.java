@@ -8,10 +8,16 @@ import com.retrocraft.recipe.RetrocraftRecipes;
 import com.retrocraft.server.CommonProxy;
 import com.retrocraft.tab.RetroCraftCreativeTab;
 import com.retrocraft.world.ComponentVillageFort;
+import com.retrocraft.world.ComponentVillageHouse1;
 import com.retrocraft.world.ComponentVillageTeleport;
+import com.retrocraft.world.ComponentVillageTower;
+import com.retrocraft.world.ComponentVillageTree;
 import com.retrocraft.world.FortCreationHandler;
+import com.retrocraft.world.House1CreationHandler;
 import com.retrocraft.world.ModWorldGen;
 import com.retrocraft.world.TeleportCreationHandler;
+import com.retrocraft.world.TowerCreationHandler;
+import com.retrocraft.world.TreeCreationHandler;
 
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -68,10 +74,17 @@ public class RetroCraft
 
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     
+    // house 1 --> dim: 13,14,17
     VillagerRegistry.instance().registerVillageCreationHandler(new TeleportCreationHandler());
     VillagerRegistry.instance().registerVillageCreationHandler(new FortCreationHandler());
+    VillagerRegistry.instance().registerVillageCreationHandler(new TowerCreationHandler());
+    VillagerRegistry.instance().registerVillageCreationHandler(new House1CreationHandler());
+    VillagerRegistry.instance().registerVillageCreationHandler(new TreeCreationHandler());
     MapGenStructureIO.registerStructureComponent(ComponentVillageTeleport.class, "retrocraft:teleport_station");
     MapGenStructureIO.registerStructureComponent(ComponentVillageFort.class, "retrocraft:fort");
+    MapGenStructureIO.registerStructureComponent(ComponentVillageTower.class, "retrocraft:tower");
+    MapGenStructureIO.registerStructureComponent(ComponentVillageHouse1.class, "retrocraft:house1");
+    MapGenStructureIO.registerStructureComponent(ComponentVillageTree.class, "retrocraft:tree");
 
     //  VillagerRegistry.instance().registerVillageCreationHandler(new VillageTelehouseCreationHandler());
     //    MapGenStructureIO.registerStructureComponent(ComponentVillageTelehouse.class, "retrocraft:teleport_house");

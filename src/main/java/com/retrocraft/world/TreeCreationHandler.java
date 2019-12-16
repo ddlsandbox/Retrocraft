@@ -10,19 +10,19 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
 
-public class VillageTelehouseCreationHandler implements IVillageCreationHandler
+public class TreeCreationHandler implements IVillageCreationHandler
 {
 
   @Override
   public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int size)
   {
-    return new StructureVillagePieces.PieceWeight(ComponentVillageTelehouse.class, 3, 1);
+    return new StructureVillagePieces.PieceWeight(ComponentVillageTree.class, 3, 1);
   }
 
   @Override
   public Class<? extends StructureVillagePieces.Village> getComponentClass()
   {
-    return ComponentVillageTelehouse.class;
+    return ComponentVillageTree.class;
   }
 
   @Override
@@ -31,7 +31,7 @@ public class VillageTelehouseCreationHandler implements IVillageCreationHandler
       StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random, int x, int y, int z,
       EnumFacing facing, int type)
   {
-    return ComponentVillageTelehouse.buildComponent(pieces, x, y, z, facing);
+    return ComponentVillageTree.buildComponent(villagePiece, startPiece, pieces, random, x, y, z, facing, type);
   }
 
 }
